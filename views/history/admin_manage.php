@@ -97,7 +97,7 @@
 			));
 			*/
 
-			$this->widget('application.components.system.OGridView', array(
+			$this->widget('application.libraries.core.components.system.OGridView', array(
 				'id'=>'ommu-page-view-history-grid',
 				'dataProvider'=>$model->search(),
 				'filter'=>$model,

@@ -79,7 +79,7 @@
 				'template' => '{view}|{update}|{delete}',
 			));
 
-			$this->widget('application.components.system.OGridView', array(
+			$this->widget('application.libraries.core.components.system.OGridView', array(
 				'id'=>'ommu-languages-grid',
 				'dataProvider'=>$model->search(),
 				'filter'=>$model,
@@ -95,7 +95,7 @@
 <?php if($setting->site_type == 1) {?>
 <div class="form mt-15" name="post-on">
 
-	<?php $form=$this->beginWidget('application.components.system.OActiveForm', array(
+	<?php $form=$this->beginWidget('application.libraries.core.components.system.OActiveForm', array(
 		'action' => Yii::app()->controller->createUrl('settings'),
 		'id'=>'ommu-settings-form',
 		'enableAjaxValidation'=>true,

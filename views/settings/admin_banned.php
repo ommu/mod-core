@@ -21,7 +21,7 @@
 
 <div class="form" name="post-on">
 
-	<?php $form=$this->beginWidget('application.components.system.OActiveForm', array(
+	<?php $form=$this->beginWidget('application.libraries.core.components.system.OActiveForm', array(
 		'id'=>'ommu-settings-form',
 		'enableAjaxValidation'=>true,
 		//'htmlOptions' => array('enctype' => 'multipart/form-data')

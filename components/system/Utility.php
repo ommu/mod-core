@@ -303,7 +303,7 @@ class Utility
 				$YMLPath = Yii::getPathOfAlias('ommu.'.$parent).DS.$module.'.yaml';
 			}
 		} else
-			$YMLPath = Yii::getPathOfAlias('application.ommu').DS.'ommu.yaml';
+			$YMLPath = Yii::getPathOfAlias('application.libraries.core').DS.'core.yaml';
 			
 		if(file_exists($YMLPath)) {
 			$moduleInfo = self::getArrayFromYML($YMLPath);

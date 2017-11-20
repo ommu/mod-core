@@ -41,7 +41,7 @@ EOP;
 
 <div class="form" name="post-on">
 
-	<?php $form=$this->beginWidget('application.components.system.OActiveForm', array(
+	<?php $form=$this->beginWidget('application.libraries.core.components.system.OActiveForm', array(
 		'id'=>'ommu-settings-form',
 		'enableAjaxValidation'=>true,
 		//'htmlOptions' => array('enctype' => 'multipart/form-data')
@@ -101,7 +101,7 @@ EOP;
 					<?php 
 					$model->construction_date = date('d-m-Y', strtotime($model->construction_date));
 					//echo $form->textField($model,'construction_date',array('maxlength'=>10, 'class'=>'span-3'));
-					$this->widget('application.components.system.CJuiDatePicker',array(
+					$this->widget('application.libraries.core.components.system.CJuiDatePicker',array(
 						'model'=>$model, 
 						'attribute'=>'construction_date',
 						'options'=>array(
@@ -150,7 +150,7 @@ EOP;
 						$model->event_startdate = !$model->isNewRecord ? (!in_array(date('Y-m-d', strtotime($model->event_startdate)), array('0000-00-00','1970-01-01')) ? date('d-m-Y', strtotime($model->event_startdate)) : '00-00-0000') : '';
 					//$model->event_startdate = date('d-m-Y', strtotime($model->event_startdate));
 					//echo $form->textField($model,'event_startdate',array('maxlength'=>10, 'class'=>'span-3'));
-					$this->widget('application.components.system.CJuiDatePicker',array(
+					$this->widget('application.libraries.core.components.system.CJuiDatePicker',array(
 						'model'=>$model, 
 						'attribute'=>'event_startdate',
 						'options'=>array(
@@ -172,7 +172,7 @@ EOP;
 						$model->event_finishdate = !$model->isNewRecord ? (!in_array(date('Y-m-d', strtotime($model->event_finishdate)), array('0000-00-00','1970-01-01')) ? date('d-m-Y', strtotime($model->event_finishdate)) : '00-00-0000') : '';
 					//$model->event_finishdate = date('d-m-Y', strtotime($model->event_finishdate));
 					//echo $form->textField($model,'event_finishdate',array('maxlength'=>10, 'class'=>'span-3'));
-					$this->widget('application.components.system.CJuiDatePicker',array(
+					$this->widget('application.libraries.core.components.system.CJuiDatePicker',array(
 						'model'=>$model, 
 						'attribute'=>'event_finishdate',
 						'options'=>array(

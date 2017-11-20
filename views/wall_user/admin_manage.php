@@ -65,7 +65,7 @@
 		<?php //begin.Grid Item ?>
 		<?php 
 			$columnData   = $columns;
-			$this->widget('application.components.system.OGridView', array(
+			$this->widget('application.libraries.core.components.system.OGridView', array(
 				'id'=>'ommu-wall-user-grid',
 				'dataProvider'=>$model->search(),
 				'filter'=>$model,
