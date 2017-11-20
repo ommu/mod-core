@@ -1,7 +1,7 @@
 <?php
 /**
  * Ommu Pages (ommu-pages)
- * @var $this PageController
+ * @var $this ContentController
  * @var $model OmmuPages
  * @var $form CActiveForm
  * version: 1.3.0

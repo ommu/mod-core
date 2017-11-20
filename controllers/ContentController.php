@@ -1,7 +1,7 @@
 <?php
 /**
- * PageController
- * Handle PageController
+ * ContentController
+ * Handle ContentController
  * version: 1.3.0
  * Reference start
  *
@@ -25,7 +25,7 @@
  *----------------------------------------------------------------------------------------------------------
  */
 
-class PageController extends Controller
+class ContentController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
