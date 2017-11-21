@@ -12,13 +12,16 @@
  *	getKeyIndex
  *	getUrlTitle
  *	deleteFolder
+ *	flashSuccess
+ *	flashError
+ *	getArrayFromYML
+ *	getModuleInfo
+ *	getContentMenu
+ *	getModuleMenu
 
  
  *	getConnected
  *	isServerAvailible
- *	getContentMenu 
- *	flashSuccess
- *	flashError
  *	getDifferenceDay
  *	getLocalDayName
  *	getLocalMonthName
@@ -206,73 +209,29 @@ class Utility
 			return false;
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
 	/**
-	 * get alternatif connected domain for inlis sso server
-	 * @param type $operator not yet using
-	 * @return type
+	 * Provide style for success message
+	 *
+	 * @param mixed $msg
 	 */
-	public static function getConnected($serverOptions) {
-		if(Yii::app()->params['server_options']['default'] == true)
-			$connectedUrl = Yii::app()->params['server_options']['default_host'];
-			
-		else {
-			$connectedUrl = 'neither-connected';
-			
-			foreach($serverOptions as $val) {
-				if(self::isServerAvailible($val)) {
-					$connectedUrl = $val;
-					break;
-				}
-			}
-			file_put_contents('assets/utility_server_actived.txt', $connectedUrl);
-		}
-
-		return $connectedUrl;
+	 public static function flashSuccess($msg) {
+		$result  = '<div class="errorSummary success"><p>';
+		$result .= $msg.'</p></div>';
+		return $result;
 	}
 
-	//returns true, if domain is availible, false if not
-	public static function isServerAvailible($domain) 
-	{
-		if(Yii::app()->params['server_options']['status'] == true) {
-			//check, if a valid url is provided
-			if (!filter_var($domain, FILTER_VALIDATE_URL))
-				return false;
-
-			//initialize curl
-			$curlInit = curl_init($domain);
-			curl_setopt($curlInit,CURLOPT_CONNECTTIMEOUT,10);
-			curl_setopt($curlInit,CURLOPT_HEADER,true);
-			curl_setopt($curlInit,CURLOPT_NOBODY,true);
-			curl_setopt($curlInit,CURLOPT_RETURNTRANSFER,true);
-
-			//get answer
-			$response = curl_exec($curlInit);
-			curl_close($curlInit);
-			if($response)
-				return true;
-
-			return false;
-		
-		} else
-			return false;
+	/**
+	 * Provide style for error message
+	 *
+	 * @param mixed $msg
+	 */
+	public static function flashError($msg) {
+		if($msg != ''){
+			$result  = '<div class="errorSummary"><p>';
+			$result .= $msg.'</p></div>';
+		}
+		return $result;
 	}
 	
 	/**
@@ -299,7 +258,7 @@ class Utility
 	*/
 	public static function getModuleInfo($module=null, $parent=null)
 	{
-		define('DS', DIRECTORY_SEPARATOR);		
+		define('DS', DIRECTORY_SEPARATOR);
 		if($module != null) {
 			$YMLPath = Yii::getPathOfAlias('ommu.'.$module).DS.$module.'.yaml';
 			if($parent != null) {
@@ -377,7 +336,6 @@ class Utility
 			$moduleMenuData = array_filter($moduleMenu, function($a) {
 				$siteType = explode(',', $a['urlRules']['siteType']);
 				$userLevel = explode(',', $a['urlRules']['userLevel']);
-				
 				return in_array(OmmuSettings::getInfo('site_type'), $siteType) && in_array(Yii::app()->user->level, $userLevel);
 			});
 			return array_values($moduleMenuData);
@@ -385,29 +343,73 @@ class Utility
 		} else
 			return false;
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	/**
-	 * Provide style for success message
-	 *
-	 * @param mixed $msg
+	 * get alternatif connected domain for inlis sso server
+	 * @param type $operator not yet using
+	 * @return type
 	 */
-	 public static function flashSuccess($msg) {
-		$result  = '<div class="errorSummary success"><p>';
-		$result .= $msg.'</p></div>';
-		return $result;
+	public static function getConnected($serverOptions) {
+		if(Yii::app()->params['server_options']['default'] == true)
+			$connectedUrl = Yii::app()->params['server_options']['default_host'];
+			
+		else {
+			$connectedUrl = 'neither-connected';
+			
+			foreach($serverOptions as $val) {
+				if(self::isServerAvailible($val)) {
+					$connectedUrl = $val;
+					break;
+				}
+			}
+			file_put_contents('assets/utility_server_actived.txt', $connectedUrl);
+		}
+
+		return $connectedUrl;
 	}
 
-	/**
-	 * Provide style for error message
-	 *
-	 * @param mixed $msg
-	 */
-	public static function flashError($msg) {
-		if($msg != ''){
-			$result  = '<div class="errorSummary"><p>';
-			$result .= $msg.'</p></div>';
-		}
-		return $result;
+	//returns true, if domain is availible, false if not
+	public static function isServerAvailible($domain) 
+	{
+		if(Yii::app()->params['server_options']['status'] == true) {
+			//check, if a valid url is provided
+			if (!filter_var($domain, FILTER_VALIDATE_URL))
+				return false;
+
+			//initialize curl
+			$curlInit = curl_init($domain);
+			curl_setopt($curlInit,CURLOPT_CONNECTTIMEOUT,10);
+			curl_setopt($curlInit,CURLOPT_HEADER,true);
+			curl_setopt($curlInit,CURLOPT_NOBODY,true);
+			curl_setopt($curlInit,CURLOPT_RETURNTRANSFER,true);
+
+			//get answer
+			$response = curl_exec($curlInit);
+			curl_close($curlInit);
+			if($response)
+				return true;
+
+			return false;
+		
+		} else
+			return false;
 	}
 	
 	/**
