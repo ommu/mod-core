@@ -44,7 +44,7 @@ class ContentController extends Controller
 				$arrThemes = Utility::getCurrentTemplate('admin');
 				Yii::app()->theme = $arrThemes['folder'];
 				$this->layout = $arrThemes['layout'];
-				Utility::applyViewPath(__dir__);
+				Utility::applyViewPath(__dir__, false);
 			}
 		} else {
 			$arrThemes = Utility::getCurrentTemplate('public');
