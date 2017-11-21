@@ -57,15 +57,32 @@ class Ommu extends CApplicationComponent
 		/**
 		 * controllerMap
 		 */
+		$controllerMap = array();
+
+		// controllerMap for themes
 		$themePath = Yii::getPathOfAlias('webroot.themes.'.$theme).DS.$theme.'.yaml';
 		$themeYML = Spyc::YAMLLoad($themePath);
 		$controllerTheme = $themeYML['controller'];
-		$controllerMap = array();
 		if(!empty($controllerTheme)) {
 			foreach($controllerTheme as $key => $val)
 				$controllerMap[$key] = 'webroot.themes.'.$theme.'.controllers.'.$val;
-			Yii::app()->controllerMap = $controllerMap;
 		}
+
+		// controllerMap for core module
+		$coreControllerPath = Yii::getPathOfAlias('application.libraries.core.controllers');
+		foreach (new DirectoryIterator($coreControllerPath) as $fileInfo) {
+			if($fileInfo->isDot())
+				continue;
+			
+			if($fileInfo->isFile() && !in_array($fileInfo->getFilename(), array('index.php','.DS_Store'))) {
+				$getFilename = $fileInfo->getFilename();
+				$controller = strtolower(preg_replace('(Controller.php)', '', $getFilename));
+				$controllerMap[$controller] = array(
+					'class'=>'application.libraries.core.controllers.'.preg_replace('(.php)', '', $getFilename),
+				);
+			}
+		}
+		Yii::app()->controllerMap = $controllerMap;
 
 		/**
 		 * set url manager

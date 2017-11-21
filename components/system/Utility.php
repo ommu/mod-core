@@ -80,22 +80,34 @@ class Utility
 	 * @return string the root directory of view files. Defaults to 'moduleDir/views' where
 	 * moduleDir is the directory containing the module class.
 	 */
-	public function applyViewPath($path)
+	public function applyViewPath($path, $core=false)
 	{
+		//echo $path.'<br/>';
 		$module = strtolower(Yii::app()->controller->module->id);
 		$basePath = Yii::app()->basePath;
+		//echo $basePath.'<br/>';
 		$modulePath = Yii::app()->modulePath;
 		$viewPath = Yii::app()->controller->module->viewPath;
 		if($module == null)
 			$viewPath = Yii::app()->viewPath;
+		//echo Yii::app()->viewPath.'<br/>';
+		//echo $viewPath.'<br/>';
 		
 		$path = preg_replace('(controllers)', 'views', $path);
+		//echo $path.'<br/>';
 		$viewPathSlashes = addcslashes($viewPath, '/');
+		//echo $viewPathSlashes.'<br/>';
 		if(!preg_match("/$viewPathSlashes/", $path)) {
+			//exit();
 			Yii::app()->controller->module->viewPath = join('/', [$modulePath, $module, 'views']);
-			if($module == null)
-				Yii::app()->viewPath = join('/', [$basePath, 'views']);
+			if($module == null) {
+				if($core == true)
+					Yii::app()->viewPath = join('/', [$basePath, 'views']);
+				else
+					Yii::app()->viewPath = $path;
+			}
 		}
+		echo Yii::app()->viewPath;
 	}
 
 	/**
