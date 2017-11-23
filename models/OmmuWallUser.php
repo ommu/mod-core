@@ -55,7 +55,8 @@ class OmmuWallUser extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ommu_core_wall_user';
+		preg_match("/dbname=([^;]+)/i", $this->dbConnection->connectionString, $matches);
+		return $matches[1].'.ommu_core_wall_user';
 	}
 
 	/**

@@ -49,7 +49,8 @@ class OmmuPluginPhrase extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ommu_core_plugin_phrase';
+		preg_match("/dbname=([^;]+)/i", $this->dbConnection->connectionString, $matches);
+		return $matches[1].'.ommu_core_plugin_phrase';
 	}
 
 	/**

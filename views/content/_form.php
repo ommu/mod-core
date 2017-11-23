@@ -17,11 +17,11 @@
 $js=<<<EOP
 	$('input#OmmuPages_media_show').change(function(){
 		var type = $(this).parents('form').attr('action');
-		var checked = $(this).attr('checked');
-		if(checked == 'checked') {
-			$('form[action="'+type+'"]').find('div#media').slideDown();
+		var id = $(this).prop('checked');
+		if(id == true) {
+			$('form[action="'+type+'"] div#media').slideDown();
 		} else {
-			$('form[action="'+type+'"]').find('div#media').slideUp();
+			$('form[action="'+type+'"] div#media').slideUp();
 		}
 	});
 EOP;
@@ -43,13 +43,10 @@ EOP;
 			<div class="left">
 
 				<div class="clearfix">
-					<?php echo $form->labelEx($model,'title_i'); ?>
+					<?php echo $form->labelEx($model,'name_i'); ?>
 					<div class="desc">
-						<?php
-							if(!$model->getErrors())
-						$model->title_i = Phrase::trans($model->name);
-						echo $form->textField($model,'title_i',array('maxlength'=>256,'class'=>'span-6')); ?>
-						<?php echo $form->error($model,'title_i'); ?>
+						<?php echo $form->textField($model,'name_i',array('maxlength'=>256,'class'=>'span-6')); ?>
+						<?php echo $form->error($model,'name_i'); ?>
 					</div>
 				</div>
 				
@@ -57,12 +54,10 @@ EOP;
 					<?php echo $form->labelEx($model,'quote_i'); ?>
 					<div class="desc">
 						<?php 
-						if(!$model->getErrors())
-							$model->quote_i = Phrase::trans($model->quote);
-						//echo $form->textArea($model,'body',array('rows'=>6, 'cols'=>50, 'class'=>'span-10 small'));
+						//echo $form->textArea($model,'quote_i',array('rows'=>6, 'cols'=>50));
 						$this->widget('application.vendor.yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 							'model'=>$model,
-							'attribute'=>quote_i,
+							'attribute'=>'quote_i',
 							// Redactor options
 							'options'=>array(
 								//'lang'=>'fi',
@@ -82,15 +77,13 @@ EOP;
 				</div>
 
 				<div class="clearfix">
-					<?php echo $form->labelEx($model,'description_i'); ?>
+					<?php echo $form->labelEx($model,'desc_i'); ?>
 					<div class="desc">
 						<?php
-						if(!$model->getErrors())
-							$model->description_i = Phrase::trans($model->desc);
-						//echo $form->textArea($model,'description_i',array('rows'=>6, 'cols'=>50));
+						//echo $form->textArea($model,'desc_i',array('rows'=>6, 'cols'=>50));
 						$this->widget('application.vendor.yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 							'model'=>$model,
-							'attribute'=>description_i,
+							'attribute'=>'desc_i',
 							// Redactor options
 							'options'=>array(
 								//'lang'=>'fi',
@@ -107,16 +100,16 @@ EOP;
 								'fullscreen' => array('js' => array('fullscreen.js')),
 							),
 						)); ?>
-						<?php echo $form->error($model,'description_i'); ?>
+						<?php echo $form->error($model,'desc_i'); ?>
 					</div>
 				</div>
 
 				<?php /*<div class="clearfix">
-					<?php echo $form->labelEx($model,'description_i'); ?>
+					<?php echo $form->labelEx($model,'desc_i'); ?>
 					<div class="desc">
 						<?php
-						$model->description_i = Phrase::trans($model->desc);
-						//echo $form->textArea($model,'description_i',array('rows'=>6, 'cols'=>50));
+						$model->desc_i = Phrase::trans($model->desc);
+						//echo $form->textArea($model,'desc_i',array('rows'=>6, 'cols'=>50));
 						$options = array(
 							'lang' => 'en',
 							'buttons' => array('html', '|', 'bold', 'italic', '|',
@@ -126,10 +119,10 @@ EOP;
 						);
 						$this->widget('application.extensions.imperavi-redactor.ImperaviRedactorWidget', array(
 							'model'=>$model,
-							'attribute'=>'description_i',
+							'attribute'=>'desc_i',
 							'options'   => $options
 						)); ?>
-						<?php echo $form->error($model,'description_i'); ?>
+						<?php echo $form->error($model,'desc_i'); ?>
 					</div>
 				</div> */?>
 
@@ -152,6 +145,7 @@ EOP;
 							<?php echo $form->error($model,'media_show'); ?>
 						</div>
 					</div>
+					
 					<div id="media" <?php echo $model->media_show == 0 ? 'class="hide"' : '';?>>
 						<?php if($model->media != '') {
 							$model->old_media_i = $model->media;

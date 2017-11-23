@@ -39,8 +39,8 @@
 class OmmuPages extends CActiveRecord
 {
 	public $defaultColumns = array();
-	public $title_i;
-	public $description_i;
+	public $name_i;
+	public $desc_i;
 	public $quote_i;
 	public $old_media_i;
 	
@@ -64,7 +64,8 @@ class OmmuPages extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ommu_core_pages';
+		preg_match("/dbname=([^;]+)/i", $this->dbConnection->connectionString, $matches);
+		return $matches[1].'.ommu_core_pages';
 	}
 
 	/**
@@ -76,17 +77,17 @@ class OmmuPages extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('
-				title_i, description_i', 'required'),
+				name_i, desc_i', 'required'),
 			array('publish, media_show, media_type', 'numerical', 'integerOnly'=>true),
 			array('
-				title_i', 'length', 'max'=>256),
+				name_i', 'length', 'max'=>256),
 			//array('media', 'file', 'types' => 'jpg, jpeg, png, gif', 'allowEmpty' => true),
 			array('media, creation_date, modified_date, 
 				quote_i, old_media_i', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('page_id, publish, name, desc, quote, media, media_show, media_type, creation_date, creation_id, modified_date, modified_id, updated_date,
-				title_i, description_i, quote_i, creation_search, modified_search, view_search', 'safe', 'on'=>'search'),
+				name_i, desc_i, quote_i, creation_search, modified_search, view_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -99,9 +100,9 @@ class OmmuPages extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'view' => array(self::BELONGS_TO, 'ViewPages', 'page_id'),
-			'title' => array(self::BELONGS_TO, 'OmmuSystemPhrase', 'name'),
-			'description' => array(self::BELONGS_TO, 'OmmuSystemPhrase', 'desc'),
-			'quote' => array(self::BELONGS_TO, 'OmmuSystemPhrase', 'quote'),
+			'title' => array(self::BELONGS_TO, 'SourceMessage', 'name'),
+			'description' => array(self::BELONGS_TO, 'SourceMessage', 'desc'),
+			'quote_r' => array(self::BELONGS_TO, 'SourceMessage', 'quote'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
 		);
@@ -126,8 +127,8 @@ class OmmuPages extends CActiveRecord
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'updated_date' => Yii::t('attribute', 'Updated Date'),
-			'title_i' => Yii::t('attribute', 'Title'),
-			'description_i' => Yii::t('attribute', 'Page'),
+			'name_i' => Yii::t('attribute', 'Title'),
+			'desc_i' => Yii::t('attribute', 'Page'),
 			'quote_i' => Yii::t('attribute', 'Quote'),
 			'old_media_i' => Yii::t('attribute', 'Old Media'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
@@ -148,27 +149,21 @@ class OmmuPages extends CActiveRecord
 		$criteria=new CDbCriteria;
 		
 		// Custom Search
-		$defaultLang = OmmuLanguages::getDefault('code');
-		if(isset(Yii::app()->session['language']))
-			$language = Yii::app()->session['language'];
-		else 
-			$language = $defaultLang;
-		
 		$criteria->with = array(
 			'view' => array(
 				'alias'=>'view',
 			),
 			'title' => array(
 				'alias'=>'title',
-				'select'=>$language,
+				'select'=>'message',
 			),
 			'description' => array(
 				'alias'=>'description',
-				'select'=>$language,
+				'select'=>'message',
 			),
-			'quote' => array(
-				'alias'=>'quote',
-				'select'=>$language,
+			'quote_r' => array(
+				'alias'=>'quote_r',
+				'select'=>'message',
 			),
 			'creation' => array(
 				'alias'=>'creation',
@@ -199,22 +194,16 @@ class OmmuPages extends CActiveRecord
 		$criteria->compare('t.media_type',$this->media_type);
 		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
 			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
-		if(isset($_GET['creation']))
-			$criteria->compare('t.creation_id',$_GET['creation']);
-		else
-			$criteria->compare('t.creation_id',$this->creation_id);
+		$criteria->compare('t.creation_id', isset($_GET['creation']) ? $_GET['creation'] : $this->creation_id);
 		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00', '0000-00-00')))
 			$criteria->compare('date(t.modified_date)',date('Y-m-d', strtotime($this->modified_date)));
-		if(isset($_GET['modified']))
-			$criteria->compare('t.modified_id',$_GET['modified']);
-		else
-			$criteria->compare('t.modified_id',$this->modified_id);
+		$criteria->compare('t.modified_id', isset($_GET['modified']) ? $_GET['modified'] : $this->modified_id);
 		if($this->updated_date != null && !in_array($this->updated_date, array('0000-00-00 00:00:00', '0000-00-00')))
 			$criteria->compare('date(t.updated_date)',date('Y-m-d', strtotime($this->updated_date)));
 		
-		$criteria->compare('title.'.$language,strtolower($this->title_i),true);
-		$criteria->compare('description.'.$language,strtolower($this->description_i),true);
-		$criteria->compare('quote.'.$language,strtolower($this->quote_i),true);
+		$criteria->compare('title.message', strtolower($this->name_i), true);
+		$criteria->compare('description.message', strtolower($this->desc_i), true);
+		$criteria->compare('quote_r.message', strtolower($this->quote_i), true);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search),true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search),true);
 		$criteria->compare('view.views',$this->view_search);
@@ -284,8 +273,8 @@ class OmmuPages extends CActiveRecord
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
 			$this->defaultColumns[] = array(
-				'name' => 'title_i',
-				'value' => 'Phrase::trans($data->name)',
+				'name' => 'name_i',
+				'value' => '$data->title->message',
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_search',
@@ -353,7 +342,7 @@ class OmmuPages extends CActiveRecord
 			else
 				$this->modified_id = Yii::app()->user->id;
 			
-			$media = CUploadedFile::getInstance($this, 'media');		
+			$media = CUploadedFile::getInstance($this, 'media');
 			if($media->name != '') {
 				$extension = pathinfo($media->name, PATHINFO_EXTENSION);
 				if(!in_array(strtolower($extension), array('bmp','gif','jpg','png')))
@@ -361,6 +350,18 @@ class OmmuPages extends CActiveRecord
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * This is invoked when a record is populated with data from a find() call.
+	 */
+	protected function afterFind()
+	{
+		$this->name_i = $this->title->message;
+		$this->desc_i = $this->description->message;
+		$this->quote_i = $this->quote_r->message;
+		
+		parent::afterFind();
 	}
 	
 	/**
@@ -370,46 +371,49 @@ class OmmuPages extends CActiveRecord
 	{
 		$controller = strtolower(Yii::app()->controller->id);
 		$action = strtolower(Yii::app()->controller->action->id);
-		$location = Utility::getUrlTitle($controller);
+
+		$location = $controller;
 		
 		if(parent::beforeSave()) {
-			if($this->isNewRecord || (!$this->isNewRecord && $this->name == 0)) {
-				$title=new OmmuSystemPhrase;
-				$title->location = $location.'_title';
-				$title->en_us = $this->title_i;
-				if($title->save())
-					$this->name = $title->phrase_id;
+			if($this->isNewRecord || (!$this->isNewRecord && !$this->name)) {
+				$name=new SourceMessage;
+				$name->message = $this->name_i;
+				$name->location = $location.'_title';
+				if($name->save())
+					$this->name = $name->id;
+				
+				$this->slug = Utility::getUrlTitle($this->name_i);
 				
 			} else {
-				$title = OmmuSystemPhrase::model()->findByPk($this->name);
-				$title->en_us = $this->title_i;
-				$title->save();
+				$name = SourceMessage::model()->findByPk($this->name);
+				$name->message = $this->name_i;
+				$name->save();
 			}
 			
-			if($this->isNewRecord || (!$this->isNewRecord && $this->desc == 0)) {
-				$desc=new OmmuSystemPhrase;
+			if($this->isNewRecord || (!$this->isNewRecord && !$this->desc)) {
+				$desc=new SourceMessage;
+				$desc->message = $this->desc_i;
 				$desc->location = $location.'_description';
-				$desc->en_us = $this->description_i;
 				if($desc->save())
-					$this->desc = $desc->phrase_id;
+					$this->desc = $desc->id;
 				
 			} else {
-				$desc = OmmuSystemPhrase::model()->findByPk($this->desc);
-				$desc->en_us = $this->description_i;
+				$desc = SourceMessage::model()->findByPk($this->desc);
+				$desc->message = $this->desc_i;
 				$desc->save();
 			}
 			
-			if($this->isNewRecord || (!$this->isNewRecord && $this->quote == 0)) {
-				$quote=new OmmuSystemPhrase;
-				$quote->location = $location.'_quotes';
-				$quote->en_us = $this->quote_i;
+			if($this->isNewRecord || (!$this->isNewRecord && !$this->quote)) {
+				$quote=new SourceMessage;
+				$quote->message = $this->quote_i;
+				$quote->location = $location.'_quote';
 				if($quote->save())
-					$this->quote = $quote->phrase_id;
+					$this->quote = $quote->id;
 				
 			} else {
-				$quote = OmmuSystemPhrase::model()->findByPk($this->quote);
-				$quote->en_us = $this->quote_i;
-				$quote->save();	
+				$quote = SourceMessage::model()->findByPk($this->quote);
+				$quote->message = $this->quote_i;
+				$quote->save();
 			}
 				
 			//upload new photo

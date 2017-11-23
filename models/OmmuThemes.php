@@ -57,7 +57,8 @@ class OmmuThemes extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ommu_core_themes';
+		preg_match("/dbname=([^;]+)/i", $this->dbConnection->connectionString, $matches);
+		return $matches[1].'.ommu_core_themes';
 	}
 
 	/**

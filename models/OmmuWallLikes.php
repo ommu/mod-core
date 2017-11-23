@@ -55,7 +55,8 @@ class OmmuWallLikes extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ommu_core_wall_likes';
+		preg_match("/dbname=([^;]+)/i", $this->dbConnection->connectionString, $matches);
+		return $matches[1].'.ommu_core_wall_likes';
 	}
 
 	/**

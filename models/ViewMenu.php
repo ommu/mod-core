@@ -44,7 +44,8 @@ class ViewMenus extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '_view_core_menus';
+		preg_match("/dbname=([^;]+)/i", $this->dbConnection->connectionString, $matches);
+		return $matches[1].'._view_core_menus';
 	}
 
 	/**

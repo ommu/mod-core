@@ -46,24 +46,24 @@ content_menu	:
 		urlRules: {module, manage, siteType: "0,1", userLevel: 1}
 		urlPath: {url: module/manage, attr: type=all, icon: -}
 		
-# controller page
+# controller content
 	- urlTitle: Add Pages
-		urlRules: {page, manage, siteType: "0,1", userLevel: "1,2"}
+		urlRules: {content, manage, siteType: "0,1", userLevel: "1,2"}
 		urlPath: {url: add, attr: -, icon: -}
 	- urlTitle: Back to Manage
-		urlRules: {page, "add,edit,view", siteType: "0,1", userLevel: "1,2"}
+		urlRules: {content, "add,edit,view", siteType: "0,1", userLevel: "1,2"}
 		urlPath: {url: manage, attr: -, icon: -}
-	- urlTitle: Update Pages
-		urlRules: {page, view, siteType: "0,1", userLevel: "1,2"}
+	- urlTitle: Update Page
+		urlRules: {content, view, siteType: "0,1", userLevel: "1,2"}
 		urlPath: {url: manage, attr: id=$_GET*id, icon: -}
-	- urlTitle: View Pages
-		urlRules: {page, edit, siteType: "0,1", userLevel: "1,2"}
+	- urlTitle: View Page
+		urlRules: {content, edit, siteType: "0,1", userLevel: "1,2"}
 		urlPath: {url: view, attr: id=$_GET*id, icon: -}
 		
 # controller view
 	- urlTitle: Back to Pages
 		urlRules: {view, manage, siteType: "0,1", userLevel: "1,2"}
-		urlPath: {url: page/manage, attr: -, icon: -}
+		urlPath: {url: content/manage, attr: -, icon: -}
 	- urlTitle: View Page Views Data
 		urlRules: {view, manage, siteType: "0,1", userLevel: "1,2"}
 		urlPath: {url: history/manage, attr: -, icon: -}

@@ -65,7 +65,8 @@ class OmmuPlugins extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ommu_core_plugins';
+		preg_match("/dbname=([^;]+)/i", $this->dbConnection->connectionString, $matches);
+		return $matches[1].'.ommu_core_plugins';
 	}
 
 	/**
