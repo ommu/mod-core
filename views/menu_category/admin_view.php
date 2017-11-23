@@ -34,11 +34,11 @@
 			),
 			array(
 				'name'=>'name',
-				'value'=>Phrase::trans($model->name),
+				'value'=>$model->title->message,
 			),
 			array(
 				'name'=>'desc',
-				'value'=>$model->desc != 0 ? Phrase::trans($model->desc) : '-',
+				'value'=>$model->desc ? $model->description->message : '-',
 			),
 			array(
 				'name'=>'cat_code',

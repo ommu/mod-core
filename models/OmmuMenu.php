@@ -45,7 +45,7 @@
 class OmmuMenu extends CActiveRecord
 {
 	public $defaultColumns = array();
-	public $title_i;
+	public $name_i;
 	
 	// Variable Search
 	public $parent_search;
@@ -81,17 +81,17 @@ class OmmuMenu extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('publish, cat_id, url,
-				title_i', 'required'),
+				name_i', 'required'),
 			array('publish, cat_id, parent, orders, creation_id, modified_id', 'numerical', 'integerOnly'=>true),
 			array('name, creation_id, modified_id', 'length', 'max'=>11),
 			array('
-				title_i', 'length', 'max'=>32),
+				name_i', 'length', 'max'=>32),
 			array('attr, sitetype_access, userlevel_access,
-				title_i', 'safe'),
+				name_i', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, publish, cat_id, parent, orders, name, url, attr, sitetype_access, userlevel_access, creation_date, creation_id, modified_date, modified_id, updated_date,
-				title_i, parent_search, creation_search, modified_search', 'safe', 'on'=>'search'),
+				name_i, parent_search, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -104,7 +104,7 @@ class OmmuMenu extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'view' => array(self::BELONGS_TO, 'ViewMenus', 'id'),
-			'title' => array(self::BELONGS_TO, 'OmmuSystemPhrase', 'name'),
+			'title' => array(self::BELONGS_TO, 'SourceMessage', 'name'),
 			'cat' => array(self::BELONGS_TO, 'OmmuMenuCategory', 'cat_id'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
@@ -134,7 +134,7 @@ class OmmuMenu extends CActiveRecord
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'updated_date' => Yii::t('attribute', 'Updated Date'),
-			'title_i' => Yii::t('attribute', 'Menu'),
+			'name_i' => Yii::t('attribute', 'Menu'),
 			'parent_search' => Yii::t('attribute', 'Parent'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
@@ -160,16 +160,10 @@ class OmmuMenu extends CActiveRecord
 		$criteria=new CDbCriteria;
 		
 		// Custom Search
-		$defaultLang = OmmuLanguages::getDefault('code');
-		if(isset(Yii::app()->session['language']))
-			$language = Yii::app()->session['language'];
-		else 
-			$language = $defaultLang;
-		
 		$criteria->with = array(
 			'title' => array(
 				'alias'=>'title',
-				'select'=>$language,
+				'select'=>'message',
 			),
 			'parentmenu' => array(
 				'alias'=>'parentmenu',
@@ -177,7 +171,7 @@ class OmmuMenu extends CActiveRecord
 			),
 			'parentmenu.title' => array(
 				'alias'=>'parentmenu_title',
-				'select'=>$language,
+				'select'=>'message',
 			),
 			'creation' => array(
 				'alias'=>'creation',
@@ -213,21 +207,15 @@ class OmmuMenu extends CActiveRecord
 		$criteria->compare('t.userlevel_access',strtolower($this->userlevel_access),true);
 		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
 			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
-		if(isset($_GET['creation']))
-			$criteria->compare('t.creation_id',$_GET['creation']);
-		else
-			$criteria->compare('t.creation_id',$this->creation_id);
+		$criteria->compare('t.creation_id', isset($_GET['creation']) ? $_GET['creation'] : $this->creation_id);
 		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00', '0000-00-00')))
 			$criteria->compare('date(t.modified_date)',date('Y-m-d', strtotime($this->modified_date)));
-		if(isset($_GET['modified']))
-			$criteria->compare('t.modified_id',$_GET['modified']);
-		else
-			$criteria->compare('t.modified_id',$this->modified_id);
+		$criteria->compare('t.modified_id', isset($_GET['modified']) ? $_GET['modified'] : $this->modified_id);
 		if($this->updated_date != null && !in_array($this->updated_date, array('0000-00-00 00:00:00', '0000-00-00')))
 			$criteria->compare('date(t.updated_date)',date('Y-m-d', strtotime($this->updated_date)));
 		
-		$criteria->compare('title.'.$language,strtolower($this->title_i),true);
-		$criteria->compare('parentmenu_title.'.$language,strtolower($this->parent_search),true);
+		$criteria->compare('title.message', strtolower($this->name_i), true);
+		$criteria->compare('parentmenu_title.message', strtolower($this->parent_search), true);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search),true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search),true);
 
@@ -300,18 +288,18 @@ class OmmuMenu extends CActiveRecord
 			if(!isset($_GET['category'])) {
 				$this->defaultColumns[] = array(
 					'name' => 'cat_id',
-					'value' => 'Phrase::trans($data->cat->name)',
+					'value' => '$data->cat->title->message',
 					'filter'=> OmmuMenuCategory::getCategory(),
 					'type' => 'raw',
 				);
 			}
 			$this->defaultColumns[] = array(
-				'name' => 'title_i',
-				'value' => 'Phrase::trans($data->name)',
+				'name' => 'name_i',
+				'value' => '$data->title->message',
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'parent_search',
-				'value' => '$data->parent != 0 ? Phrase::trans($data->parentmenu->name) : "-"',
+				'value' => '$data->parent ? $data->parentmenu->title->message : "-"',
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_search',
@@ -397,7 +385,7 @@ class OmmuMenu extends CActiveRecord
 			$items = array();
 			if($model != null) {
 				foreach($model as $key => $val) {
-					$items[$val->id] = Phrase::trans($val->name);
+					$items[$val->id] = $val->title->message;
 				}
 				return $items;
 			} else {
@@ -405,6 +393,16 @@ class OmmuMenu extends CActiveRecord
 			}
 		} else
 			return $model;
+	}
+
+	/**
+	 * This is invoked when a record is populated with data from a find() call.
+	 */
+	protected function afterFind()
+	{
+		$this->name_i = $this->title->message;
+		
+		parent::afterFind();
 	}
 
 	/**
@@ -426,20 +424,22 @@ class OmmuMenu extends CActiveRecord
 	protected function beforeSave() 
 	{
 		$controller = strtolower(Yii::app()->controller->id);
-		$location = Utility::getUrlTitle($controller);
+		$action = strtolower(Yii::app()->controller->action->id);
+
+		$location = $controller;
 		
 		if(parent::beforeSave()) {
-			if($this->isNewRecord || (!$this->isNewRecord && $this->name == 0)) {
-				$title=new OmmuSystemPhrase;
-				$title->location = $location.'_title';
-				$title->en_us = $this->title_i;
-				if($title->save())
-					$this->name = $title->phrase_id;
+			if($this->isNewRecord || (!$this->isNewRecord && !$this->name)) {
+				$name=new SourceMessage;
+				$name->message = $this->name_i;
+				$name->location = $location.'_title';
+				if($name->save())
+					$this->name = $name->id;
 				
 			} else {
-				$title = OmmuSystemPhrase::model()->findByPk($this->name);
-				$title->en_us = $this->title_i;
-				$title->save();
+				$name = SourceMessage::model()->findByPk($this->name);
+				$name->message = $this->name_i;
+				$name->save();
 			}
 			
 			$this->sitetype_access = serialize($this->sitetype_access);

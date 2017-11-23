@@ -50,6 +50,21 @@ class OmmuPages extends CActiveRecord
 	public $view_search;
 
 	/**
+	 * Behaviors for this model
+	 */
+	public function behaviors() 
+	{
+		return array(
+			'sluggable' => array(
+				'class'=>'ext.yii-behavior-sluggable.SluggableBehavior',
+				'columns' => array('title.message'),
+				'unique' => true,
+				'update' => true,
+			),
+		);
+	}
+
+	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
 	 * @return OmmuPages the static model class

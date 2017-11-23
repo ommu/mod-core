@@ -58,13 +58,10 @@
 		<?php }?>
 
 		<div class="clearfix">
-			<?php echo $form->labelEx($model,'title_i'); ?>
+			<?php echo $form->labelEx($model,'name_i'); ?>
 			<div class="desc">
-				<?php
-				if(!$model->getErrors())
-					$model->title_i = Phrase::trans($model->name);
-				echo $form->textField($model,'title_i',array('maxlength'=>32,'class'=>'span-8')); ?>
-				<?php echo $form->error($model,'title_i'); ?>
+				<?php echo $form->textField($model,'name_i',array('maxlength'=>32,'class'=>'span-8')); ?>
+				<?php echo $form->error($model,'name_i'); ?>
 			</div>
 		</div>
 

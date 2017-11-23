@@ -34,27 +34,27 @@
 			),
 			array(
 				'name'=>'cat_id',
-				'value'=>Phrase::trans($model->cat->name),
+				'value'=>$model->cat_id ? $model->cat->title->message : '-',
+			),
+			array(
+				'name'=>'name',
+				'value'=>$model->title->message,
 			),
 			array(
 				'name'=>'parent',
-				'value'=>$model->parent != 0 ? Phrase::trans($model->parentmenu->name) : '-',
+				'value'=>$model->parent ? $model->parentmenu->title->message : '-',
 			),
 			array(
 				'name'=>'orders',
 				'value'=>$model->orders,
 			),
 			array(
-				'name'=>'name',
-				'value'=>Phrase::trans($model->name),
-			),
-			array(
 				'name'=>'url',
-				'value'=>$model->url != '' ? $model->url : '-',
+				'value'=>$model->url ? $model->url : '-',
 			),
 			array(
 				'name'=>'attr',
-				'value'=>$model->attr != '' ? $model->attr : '-',
+				'value'=>$model->attr ? $model->attr : '-',
 			),
 			array(
 				'name'=>'sitetype_access',
