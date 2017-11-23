@@ -2,7 +2,8 @@
 SQLyog Ultimate v12.09 (64 bit)
 MySQL - 10.1.16-MariaDB : Database - ommu_db_core
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -230,14 +231,14 @@ DELIMITER $$
 
 
 DELIMITER ;
-
-/* Trigger structure for table `ommu_core_zone_districts` */
+ommu_core_zone_district
+/* Trigger structure for table `ommu_core_zone_district` */
 
 DELIMITER $$
 
 /*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `coreBeforeInsertZoneDistricts` */$$
-
-/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `coreBeforeInsertZoneDistricts` BEFORE INSERT ON `ommu_core_zone_districts` FOR EACH ROW BEGIN
+ommu_core_zone_district
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `coreBeforeInsertZoneDistricts` BEFORE INSERT ON `ommu_core_zone_district` FOR EACH ROW BEGIN
 	DECLARE `city_id_tr` INT;
 	
 	/*CALL getOmmuZoneCityIdWithDistrictMfdonline(NEW.mfdonline, city_id_tr);*/
@@ -274,8 +275,8 @@ DELIMITER $$
 /*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `coreBeforeInsertZoneVillage` BEFORE INSERT ON `ommu_core_zone_village` FOR EACH ROW BEGIN
 	DECLARE `district_id_tr` INT;
 	
-	IF (NEW.district_id IS NULL) THEN
-		SELECT `district_id` INTO district_id_tr FROM `ommu_core_zone_districts` WHERE `mfdonline`=LEFT(NEW.mfdonline,7);
+	IF (NEW.district_id IS NULL) THENommu_core_zone_district
+		SELECT `district_id` INTO district_id_tr FROM `ommu_core_zone_district` WHERE `mfdonline`=LEFT(NEW.mfdonline,7);
 		IF (district_id_tr IS NOT NULL) THEN
 			SET NEW.district_id = district_id_tr;
 		END IF;
@@ -1247,14 +1248,14 @@ DELIMITER $$
 
 
 DELIMITER ;
-
-/* Trigger structure for table `ommu_core_zone_districts` */
+ommu_core_zone_district
+/* Trigger structure for table `ommu_core_zone_district` */
 
 DELIMITER $$
 
 /*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `coreBeforeUpdateZoneDistricts` */$$
-
-/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `coreBeforeUpdateZoneDistricts` BEFORE UPDATE ON `ommu_core_zone_districts` FOR EACH ROW BEGIN
+ommu_core_zone_district
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `coreBeforeUpdateZoneDistricts` BEFORE UPDATE ON `ommu_core_zone_district` FOR EACH ROW BEGIN
 	DECLARE column_update_count INT;
 	DECLARE `city_id_tr` INT;
 	
@@ -1347,8 +1348,8 @@ DELIMITER $$
 	SET NEW.village_name = TRIM(NEW.village_name);
 	SET NEW.zipcode = TRIM(NEW.zipcode);
 	
-	IF (NEW.mfdonline <> OLD.mfdonline) THEN
-		SELECT `district_id` INTO district_id_tr FROM `ommu_core_zone_districts` WHERE `mfdonline`=LEFT(NEW.mfdonline,7);
+	IF (NEW.mfdonline <> OLD.mfdonline) THENommu_core_zone_district
+		SELECT `district_id` INTO district_id_tr FROM `ommu_core_zone_district` WHERE `mfdonline`=LEFT(NEW.mfdonline,7);
 		IF (district_id_tr IS NOT NULL) THEN
 			SET NEW.district_id = district_id_tr;
 		END IF;
@@ -1441,8 +1442,8 @@ DELIMITER ;
 DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getOmmuZoneCityId`(IN `district_id_sp` INT, OUT `city_id_sp` INT)
-BEGIN
-	SELECT `city_id` INTO city_id_sp FROM `ommu_core_zone_districts` WHERE `district_id`=district_id_sp;
+BEGINommu_core_zone_district
+	SELECT `city_id` INTO city_id_sp FROM `ommu_core_zone_district` WHERE `district_id`=district_id_sp;
     END */$$
 DELIMITER ;
 
@@ -1679,8 +1680,8 @@ DROP TABLE IF EXISTS `_view_core_zone_village`;
 
 /*!50001 DROP TABLE IF EXISTS `_view_core_zone_districts` */;
 /*!50001 DROP VIEW IF EXISTS `_view_core_zone_districts` */;
-
-/*!50001 CREATE ALGORITHM=TEMPTABLE DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `_view_core_zone_districts` AS select `a`.`district_id` AS `district_id`,`a`.`district_name` AS `district_name`,`b`.`city_name` AS `city_name`,`b`.`province_name` AS `province_name` from (`ommu_core_zone_districts` `a` left join `_view_core_zone_city` `b` on((`a`.`city_id` = `b`.`city_id`))) group by `a`.`district_id` */;
+ommu_core_zone_district
+/*!50001 CREATE ALGORITHM=TEMPTABLE DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `_view_core_zone_districts` AS select `a`.`district_id` AS `district_id`,`a`.`district_name` AS `district_name`,`b`.`city_name` AS `city_name`,`b`.`province_name` AS `province_name` from (`ommu_core_zone_district` `a` left join `_view_core_zone_city` `b` on((`a`.`city_id` = `b`.`city_id`))) group by `a`.`district_id` */;
 
 /*View structure for view _view_core_zone_village */
 

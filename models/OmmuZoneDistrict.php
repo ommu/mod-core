@@ -1,6 +1,6 @@
 <?php
 /**
- * OmmuZoneDistricts
+ * OmmuZoneDistrict
  * version: 1.3.0
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
@@ -19,9 +19,9 @@
  *
  * --------------------------------------------------------------------------------------
  *
- * This is the model class for table "ommu_core_zone_districts".
+ * This is the model class for table "ommu_core_zone_district".
  *
- * The followings are the available columns in table 'ommu_core_zone_districts':
+ * The followings are the available columns in table 'ommu_core_zone_district':
  * @property string $district_id
  * @property integer $publish
  * @property string $city_id
@@ -34,7 +34,7 @@
  * @property string $modified_id
  * @property string $updated_date
  */
-class OmmuZoneDistricts extends CActiveRecord
+class OmmuZoneDistrict extends CActiveRecord
 {
 	public $defaultColumns = array();
 	
@@ -47,7 +47,7 @@ class OmmuZoneDistricts extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return OmmuZoneDistricts the static model class
+	 * @return OmmuZoneDistrict the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -59,7 +59,7 @@ class OmmuZoneDistricts extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ommu_core_zone_districts';
+		return 'ommu_core_zone_district';
 	}
 
 	/**

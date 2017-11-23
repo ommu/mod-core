@@ -1,8 +1,8 @@
 <?php
 /**
- * Ommu Zone Districts (ommu-zone-districts)
+ * Ommu Zone Districts (ommu-zone-district)
  * @var $this ZonedistrictController
- * @var $model OmmuZoneDistricts
+ * @var $model OmmuZoneDistrict
  * @var $form CActiveForm
  * version: 1.3.0
  *
@@ -20,7 +20,7 @@
 ?>
 
 <?php $form=$this->beginWidget('application.libraries.core.components.system.OActiveForm', array(
-	'id'=>'ommu-zone-districts-form',
+	'id'=>'ommu-zone-district-form',
 	'enableAjaxValidation'=>true,
 	//'htmlOptions' => array('enctype' => 'multipart/form-data')
 )); ?>

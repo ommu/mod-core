@@ -98,7 +98,7 @@ class OmmuZoneCity extends CActiveRecord
 			'province' => array(self::BELONGS_TO, 'OmmuZoneProvince', 'province_id'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
-			'districts' => array(self::HAS_MANY, 'OmmuZoneDistricts', 'city_id'),
+			'districts' => array(self::HAS_MANY, 'OmmuZoneDistrict', 'city_id'),
 		);
 	}
 

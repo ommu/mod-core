@@ -1,8 +1,8 @@
 <?php
 /**
- * Ommu Zone Districts (ommu-zone-districts)
+ * Ommu Zone Districts (ommu-zone-district)
  * @var $this ZonedistrictController
- * @var $model OmmuZoneDistricts
+ * @var $model OmmuZoneDistrict
  * version: 1.3.0
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
@@ -49,7 +49,7 @@
 </div>
 <?php //end.Grid Option ?>
 
-<div id="partial-ommu-zone-districts">
+<div id="partial-ommu-zone-district">
 	<?php //begin.Messages ?>
 	<div id="ajax-message">
 	<?php
@@ -97,7 +97,7 @@
 			));
 
 			$this->widget('application.libraries.core.components.system.OGridView', array(
-				'id'=>'ommu-zone-districts-grid',
+				'id'=>'ommu-zone-district-grid',
 				'dataProvider'=>$model->search(),
 				'filter'=>$model,
 				'afterAjaxUpdate' => 'reinstallDatePicker',

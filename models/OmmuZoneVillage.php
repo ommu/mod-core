@@ -96,7 +96,7 @@ class OmmuZoneVillage extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'view' => array(self::BELONGS_TO, 'ViewZoneVillage', 'village_id'),
-			'district' => array(self::BELONGS_TO, 'OmmuZoneDistricts', 'district_id'),
+			'district' => array(self::BELONGS_TO, 'OmmuZoneDistrict', 'district_id'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
 		);

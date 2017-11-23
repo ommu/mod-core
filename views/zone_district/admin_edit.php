@@ -1,8 +1,8 @@
 <?php
 /**
- * Ommu Zone Districts (ommu-zone-districts)
+ * Ommu Zone Districts (ommu-zone-district)
  * @var $this ZonedistrictController
- * @var $model OmmuZoneDistricts
+ * @var $model OmmuZoneDistrict
  * @var $form CActiveForm
  * version: 1.3.0
  *

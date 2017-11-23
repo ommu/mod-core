@@ -2,7 +2,7 @@
 /**
  * ZonedistrictController
  * @var $this ZonedistrictController
- * @var $model OmmuZoneDistricts
+ * @var $model OmmuZoneDistrict
  * @var $form CActiveForm
  * version: 1.3.0
  * Reference start
@@ -103,10 +103,10 @@ class ZonedistrictController extends Controller
 	 */
 	public function actionManage() 
 	{
-		$model=new OmmuZoneDistricts('search');
+		$model=new OmmuZoneDistrict('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['OmmuZoneDistricts'])) {
-			$model->attributes=$_GET['OmmuZoneDistricts'];
+		if(isset($_GET['OmmuZoneDistrict'])) {
+			$model->attributes=$_GET['OmmuZoneDistrict'];
 		}
 
 		$columnTemp = array();
@@ -134,13 +134,13 @@ class ZonedistrictController extends Controller
 	 */
 	public function actionAdd() 
 	{
-		$model=new OmmuZoneDistricts;
+		$model=new OmmuZoneDistrict;
 
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
-		if(isset($_POST['OmmuZoneDistricts'])) {
-			$model->attributes=$_POST['OmmuZoneDistricts'];
+		if(isset($_POST['OmmuZoneDistrict'])) {
+			$model->attributes=$_POST['OmmuZoneDistrict'];
 			
 			$jsonError = CActiveForm::validate($model);
 			if(strlen($jsonError) > 2) {
@@ -152,7 +152,7 @@ class ZonedistrictController extends Controller
 						echo CJSON::encode(array(
 							'type' => 5,
 							'get' => Yii::app()->controller->createUrl('manage'),
-							'id' => 'partial-ommu-zone-districts',
+							'id' => 'partial-ommu-zone-district',
 							'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Districts success created.').'</strong></div>',
 						));
 					} else {
@@ -188,8 +188,8 @@ class ZonedistrictController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
-		if(isset($_POST['OmmuZoneDistricts'])) {
-			$model->attributes=$_POST['OmmuZoneDistricts'];
+		if(isset($_POST['OmmuZoneDistrict'])) {
+			$model->attributes=$_POST['OmmuZoneDistrict'];
 			
 			$jsonError = CActiveForm::validate($model);
 			if(strlen($jsonError) > 2) {
@@ -201,7 +201,7 @@ class ZonedistrictController extends Controller
 						echo CJSON::encode(array(
 							'type' => 5,
 							'get' => Yii::app()->controller->createUrl('manage'),
-							'id' => 'partial-ommu-zone-districts',
+							'id' => 'partial-ommu-zone-district',
 							'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Districts success updated.').'</strong></div>',
 						));
 					} else {
@@ -239,19 +239,19 @@ class ZonedistrictController extends Controller
 			$criteria->addInCondition('id', $id);
 
 			if($actions == 'publish') {
-				OmmuZoneDistricts::model()->updateAll(array(
+				OmmuZoneDistrict::model()->updateAll(array(
 					'publish' => 1,
 				),$criteria);
 			} elseif($actions == 'unpublish') {
-				OmmuZoneDistricts::model()->updateAll(array(
+				OmmuZoneDistrict::model()->updateAll(array(
 					'publish' => 0,
 				),$criteria);
 			} elseif($actions == 'trash') {
-				OmmuZoneDistricts::model()->updateAll(array(
+				OmmuZoneDistrict::model()->updateAll(array(
 					'publish' => 2,
 				),$criteria);
 			} elseif($actions == 'delete') {
-				OmmuZoneDistricts::model()->deleteAll($criteria);
+				OmmuZoneDistrict::model()->deleteAll($criteria);
 			}
 		}
 
@@ -278,7 +278,7 @@ class ZonedistrictController extends Controller
 				echo CJSON::encode(array(
 					'type' => 5,
 					'get' => Yii::app()->controller->createUrl('manage'),
-					'id' => 'partial-ommu-zone-districts',
+					'id' => 'partial-ommu-zone-district',
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Districts success deleted.').'</strong></div>',
 				));
 			}
@@ -316,7 +316,7 @@ class ZonedistrictController extends Controller
 				echo CJSON::encode(array(
 					'type' => 5,
 					'get' => Yii::app()->controller->createUrl('manage'),
-					'id' => 'partial-ommu-zone-districts',
+					'id' => 'partial-ommu-zone-district',
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Districts success updated.').'</strong></div>',
 				));
 			}
@@ -349,7 +349,7 @@ class ZonedistrictController extends Controller
 				$criteria->params = array(':district' => '%' . strtolower($_GET['term']) . '%');
 				$criteria->order = "district_name ASC";
 				$criteria->limit = $limit;
-				$model = OmmuZoneDistricts::model()->findAll($criteria);
+				$model = OmmuZoneDistrict::model()->findAll($criteria);
 
 				if($model) {
 					foreach($model as $items) {
@@ -370,7 +370,7 @@ class ZonedistrictController extends Controller
 			Yii::app()->end();
 			
 		} else {
-			$model = OmmuZoneDistricts::getDistrict($id);
+			$model = OmmuZoneDistrict::getDistrict($id);
 			$message['data'] = '<option value="">'.Yii::t('phrase', 'Select one').'</option>';
 			foreach($model as $key => $val) {
 				$message['data'] .= '<option value="'.$key.'">'.$val.'</option>';
@@ -386,7 +386,7 @@ class ZonedistrictController extends Controller
 	 */
 	public function loadModel($id) 
 	{
-		$model = OmmuZoneDistricts::model()->findByPk($id);
+		$model = OmmuZoneDistrict::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404, Yii::t('phrase', 'The requested page does not exist.'));
 		return $model;
@@ -398,7 +398,7 @@ class ZonedistrictController extends Controller
 	 */
 	protected function performAjaxValidation($model) 
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='ommu-zone-districts-form') {
+		if(isset($_POST['ajax']) && $_POST['ajax']==='ommu-zone-district-form') {
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
