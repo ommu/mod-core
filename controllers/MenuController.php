@@ -215,7 +215,7 @@ class MenuController extends Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 600;
 
-		$this->pageTitle = Yii::t('phrase', 'Update Menu: $menu_name from category $category_name', array('$menu_name'=>Phrase::trans($model->name),'$category_name'=>Phrase::trans($model->cat->name)));
+		$this->pageTitle = Yii::t('phrase', 'Update Menu: $menu_name category $category_name', array('$menu_name'=>$model->title->message,'$category_name'=>$model->cat->title->message));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_edit',array(
@@ -235,7 +235,7 @@ class MenuController extends Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 500;
 		
-		$this->pageTitle = Yii::t('phrase', 'View Menu: $menu_name from category $category_name', array('$menu_name'=>Phrase::trans($model->name),'$category_name'=>Phrase::trans($model->cat->name)));
+		$this->pageTitle = Yii::t('phrase', 'View Menu: $menu_name category $category_name', array('$menu_name'=>$model->title->message,'$category_name'=>$model->cat->title->message));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_view',array(
@@ -306,7 +306,7 @@ class MenuController extends Controller
 			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 			$this->dialogWidth = 350;
 
-			$this->pageTitle = Yii::t('phrase', 'Delete Menu: $menu_name from category $category_name', array('$menu_name'=>Phrase::trans($model->name),'$category_name'=>Phrase::trans($model->cat->name)));
+			$this->pageTitle = Yii::t('phrase', 'Delete Menu: $menu_name category $category_name', array('$menu_name'=>$model->title->message,'$category_name'=>$model->cat->title->message));
 			$this->pageDescription = '';
 			$this->pageMeta = '';
 			$this->render('admin_delete');
@@ -344,7 +344,7 @@ class MenuController extends Controller
 			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 			$this->dialogWidth = 350;
 
-			$this->pageTitle = $ii::t('phrase', '$title Menu: $menu_name from category $category_name', array('$title'=>$title,'$menu_name'=>Phrase::trans($model->name),'$category_name'=>Phrase::trans($model->cat->name)));
+			$this->pageTitle = Yii::t('phrase', '$title Menu: $menu_name category $category_name', array('$title'=>$title,'$menu_name'=>$model->title->message,'$category_name'=>$model->cat->title->message));
 			$this->pageDescription = '';
 			$this->pageMeta = '';
 			$this->render('admin_publish',array(

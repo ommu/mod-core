@@ -53,6 +53,21 @@ class OmmuMenu extends CActiveRecord
 	public $modified_search;
 
 	/**
+	 * Behaviors for this model
+	 */
+	public function behaviors() 
+	{
+		return array(
+			'sluggable' => array(
+				'class'=>'ext.yii-behavior-sluggable.SluggableBehavior',
+				'columns' => array('title.message'),
+				'unique' => true,
+				'update' => true,
+			),
+		);
+	}
+
+	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
@@ -435,6 +450,8 @@ class OmmuMenu extends CActiveRecord
 				$name->location = $location.'_title';
 				if($name->save())
 					$this->name = $name->id;
+				
+				$this->slug = Utility::getUrlTitle($this->name_i);
 				
 			} else {
 				$name = SourceMessage::model()->findByPk($this->name);
