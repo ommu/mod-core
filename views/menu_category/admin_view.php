@@ -15,7 +15,7 @@
 
 	$this->breadcrumbs=array(
 		'Ommu Menu Categories'=>array('manage'),
-		$model->name,
+		$model->title->message,
 	);
 ?>
 

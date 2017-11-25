@@ -14,7 +14,7 @@
 
 	$this->breadcrumbs=array(
 		'Ommu Pages'=>array('manage'),
-		$model->name,
+		$model->title->message,
 	);
 ?>
 

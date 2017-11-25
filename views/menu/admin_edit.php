@@ -16,7 +16,7 @@
 
 	$this->breadcrumbs=array(
 		'Ommu Menus'=>array('manage'),
-		$model->name=>array('view','id'=>$model->id),
+		$model->title->message=>array('view','id'=>$model->id),
 		'Update',
 	);
 ?>

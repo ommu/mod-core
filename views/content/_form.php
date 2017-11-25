@@ -108,7 +108,7 @@ EOP;
 					<?php echo $form->labelEx($model,'desc_i'); ?>
 					<div class="desc">
 						<?php
-						$model->desc_i = Phrase::trans($model->desc);
+						$model->desc_i = $model->description->message;
 						//echo $form->textArea($model,'desc_i',array('rows'=>6, 'cols'=>50));
 						$options = array(
 							'lang' => 'en',

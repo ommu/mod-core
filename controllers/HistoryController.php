@@ -94,9 +94,9 @@ class HistoryController extends Controller
 		$pageTitle = Yii::t('phrase', 'Page Views Data');
 		if($view != null) {
 			$data = OmmuPageViews::model()->findByPk($view);
-			$pageTitle = Yii::t('phrase', 'Page Views Data: $page_title - user Guest', array ('$page_title'=>Phrase::trans($data->page->name)));	
+			$pageTitle = Yii::t('phrase', 'Page Views Data: $page_title - user Guest', array ('$page_title'=>$data->page->title->message));	
 			if($data->user_id)
-				$pageTitle = Yii::t('phrase', 'Page Views Data: $page_title - user $user_displayname', array ('$page_title'=>Phrase::trans($data->page->name), '$user_displayname'=>$data->user->displayname));
+				$pageTitle = Yii::t('phrase', 'Page Views Data: $page_title - user $user_displayname', array ('$page_title'=>$data->page->title->message, '$user_displayname'=>$data->user->displayname));
 		}
 		
 		$model=new OmmuPageViewHistory('search');

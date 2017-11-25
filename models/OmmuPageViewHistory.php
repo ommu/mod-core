@@ -201,7 +201,7 @@ class OmmuPageViewHistory extends CActiveRecord
 			if(!isset($_GET['view'])) {
 				$this->defaultColumns[] = array(
 					'name' => 'page_search',
-					'value' => 'Phrase::trans($data->view->page->name)',
+					'value' => '$data->view->page->title->message',
 				);
 				$this->defaultColumns[] = array(
 					'name' => 'user_search',

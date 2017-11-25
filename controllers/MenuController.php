@@ -100,7 +100,7 @@ class MenuController extends Controller
 		$pageTitle = Yii::t('phrase', 'Menus');
 		if($category != null) {
 			$data = OmmuMenuCategory::model()->findByPk($category);
-			$pageTitle = Yii::t('phrase', 'Menus: category $category_name', array ('$category_name'=>Phrase::trans($data->name)));
+			$pageTitle = Yii::t('phrase', 'Menus: category $category_name', array ('$category_name'=>$data->title->message));
 		}
 		
 		$model=new OmmuMenu('search');

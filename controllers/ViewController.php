@@ -97,7 +97,7 @@ class ViewController extends Controller
 		$pageTitle = Yii::t('phrase', 'Page Views');
 		if($page != null) {
 			$data = OmmuPages::model()->findByPk($page);
-			$pageTitle = Yii::t('phrase', 'Page Views: $page_title', array ('$page_title'=>Phrase::trans($data->name)));
+			$pageTitle = Yii::t('phrase', 'Page Views: $page_title', array ('$page_title'=>$data->title->message));
 		}
 		
 		$model=new OmmuPageViews('search');
@@ -188,7 +188,7 @@ class ViewController extends Controller
 			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 			$this->dialogWidth = 350;
 
-			$this->pageTitle = Yii::t('phrase', 'Delete Views: $page_title', array('$page_title'=>Phrase::trans($model->page->name)));
+			$this->pageTitle = Yii::t('phrase', 'Delete Views: $page_title', array('$page_title'=>$model->page->title->message));
 			$this->pageDescription = '';
 			$this->pageMeta = '';
 			$this->render('admin_delete');
@@ -226,7 +226,7 @@ class ViewController extends Controller
 			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 			$this->dialogWidth = 350;
 
-			$this->pageTitle = Yii::t('phrase', '$title Views: $page_title', array('$title'=>$title, '$page_title'=>Phrase::trans($model->page->name)));
+			$this->pageTitle = Yii::t('phrase', '$title Views: $page_title', array('$title'=>$title, '$page_title'=>$model->page->title->message));
 			$this->pageDescription = '';
 			$this->pageMeta = '';
 			$this->render('admin_publish',array(

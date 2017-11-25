@@ -447,7 +447,7 @@ class OmmuPages extends CActiveRecord
 				
 				$this->media = CUploadedFile::getInstance($this, 'media');
 				if($this->media instanceOf CUploadedFile) {
-					$fileName = time().'_'.Utility::getUrlTitle(Phrase::trans($this->name)).'.'.strtolower($this->media->extensionName);
+					$fileName = time().'_'.Utility::getUrlTitle($this->title->message).'.'.strtolower($this->media->extensionName);
 					if($this->media->saveAs($page_path.'/'.$fileName)) {
 						//create thumb image
 						Yii::import('ext.phpthumb.PhpThumbFactory');

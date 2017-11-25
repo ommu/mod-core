@@ -117,9 +117,9 @@ class PageController extends ControllerApi
 					
 					$data[] = array(
 						'id' => $item->page_id,
-						'title' => Phrase::trans($item->name),
-						'description' => $item->desc != 0 ? Utility::shortText(Utility::hardDecode(Phrase::trans($item->desc)),200) : '-',
-						'quote' => $item->quote != 0 ? Phrase::trans($item->quote) : '-',
+						'title' => $item->title->message,
+						'description' => $item->desc ? Utility::shortText(Utility::hardDecode($item->description->message),200) : '-',
+						'quote' => $item->quote ? $item->quote_r->message : '-',
 						'media_image' => $image_url_path ? $image_url_path : '-',
 						'media_show' => $item->media_show == 0 ? 'hide' : 'show',
 						'media_type' => $item->media_show != 0 ? (($item->media_type == 0 || $item->media_type == 1) ? 'large' : 'medium') : '-',
@@ -167,9 +167,9 @@ class PageController extends ControllerApi
 				$return = array(
 					'success' => '1',
 					'id' => $model->page_id,
-					'title' => Phrase::trans($model->name),
-					'description' => $model->desc != 0 ? Utility::softDecode(Phrase::trans($model->desc)) : '-',
-					'quote' => $model->quote != 0 ? Phrase::trans($model->quote) : '-',
+					'title' => $model->title->message,
+					'description' => $model->desc != 0 ? Utility::softDecode($model->description->message) : '-',
+					'quote' => $model->quote != 0 ? $model->quote_r->message : '-',
 					'media_image' => $image_url_path ? $image_url_path : '-',
 					'media_show' => $model->media_show == 0 ? 'hide' : 'show',
 					'media_type' => $model->media_show != 0 ? (($model->media_type == 0 || $model->media_type == 1) ? 'large' : 'medium') : '-',
