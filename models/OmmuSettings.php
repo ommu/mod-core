@@ -451,7 +451,7 @@ class OmmuSettings extends CActiveRecord
 		if(parent::beforeValidate()) {		
 			$action = strtolower(Yii::app()->controller->action->id);
 			$currentAction = strtolower(Yii::app()->controller->id.'/'.Yii::app()->controller->action->id);
-			if($this->online == 0) {
+			if($this->online != 1) {
 				if($this->construction_date == '')
 					$this->addError('construction_date', Yii::t('phrase', 'Maintenance date cannot be blank.'));
 				if($this->construction_text == '')

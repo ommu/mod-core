@@ -21,10 +21,10 @@
 $js=<<<EOP
 	$('#OmmuSettings_online input[name="OmmuSettings[online]"]').on('change', function() {
 		var id = $(this).val();
-		if(id == '0') {
-			$('div#construction').slideDown();
-		} else {
+		if(id == '1') {
 			$('div#construction').slideUp();
+		} else {
+			$('div#construction').slideDown();
 		}
 	});
 	$('#OmmuSettings_event_i input[name="OmmuSettings[event_i]"]').on('change', function() {
@@ -88,13 +88,14 @@ EOP;
 				<span class="small-px"><?php echo Yii::t('phrase', 'Maintenance Mode will prevent site visitors from accessing your website. You can customize the maintenance mode page by manually editing the file "/application/maintenance.html".');?></span>
 				<?php echo $form->radioButtonList($model, 'online', array(
 					1 => Yii::t('phrase', 'Online'),
+					2 => Yii::t('phrase', 'Offline (Coming Soon)'),
 					0 => Yii::t('phrase', 'Offline (Maintenance Mode)'),
 				)); ?>
 				<?php echo $form->error($model,'online'); ?>
 			</div>
 		</div>
 
-		<div id="construction" <?php echo $model->online != '0' ? 'class="hide"' : ''; ?>>
+		<div id="construction" <?php echo $model->online == '1' ? 'class="hide"' : ''; ?>>
 			<div class="clearfix">
 				<label><?php echo $model->getAttributeLabel('construction_date');?> <span class="required">*</span></label>
 				<div class="desc">
