@@ -60,13 +60,8 @@ class Ommu extends CApplicationComponent
 		$controllerMap = array();
 
 		// controllerMap for themes
-		$themePath = Yii::getPathOfAlias('webroot.themes.'.$theme).DS.$theme.'.yaml';
-		$themeYML = Spyc::YAMLLoad($themePath);
-		$controllerTheme = $themeYML['controller'];
-		if(!empty($controllerTheme)) {
-			foreach($controllerTheme as $key => $val)
-				$controllerMap[$key] = 'webroot.themes.'.$theme.'.controllers.'.$val;
-		}
+		$themeControllerPath = Yii::getPathOfAlias('webroot.themes.'.$theme.'.controllers');
+		$controllerMap = $this->getThemeController($themeControllerPath, $theme);
 
 		// controllerMap for core module
 		$coreControllerPath = Yii::getPathOfAlias('application.libraries.core.controllers');
@@ -343,5 +338,38 @@ $moduleRules[$val->folder.'/<controller:[a-zA-Z\/]+>/<action:\w+>/<category:\d+>
 		}
 
 		return array('after' => $after, 'before' => $before);
+	}
+
+	public function getThemeController($path, $theme, $sub=null)
+	{
+		$controllerMap = array();
+
+		foreach (new DirectoryIterator($path) as $fileInfo) {
+			if($fileInfo->isDot())
+				continue;
+			
+			if($fileInfo->isFile() && !in_array($fileInfo->getFilename(), array('index.php','.DS_Store'))) {
+				$getFilename = $fileInfo->getFilename();
+				$controller = strtolower(preg_replace('(Controller.php)', '', $getFilename));
+				if($sub == null) {
+					$controllerClass = preg_replace('(.php)', '', $getFilename);
+					$controllerMap[$controller] = array(
+						'class'=>'webroot.themes.'.$theme.'.controllers.'.$controllerClass,
+					);
+				} else {
+					$controllerClass = join('.', array($sub, preg_replace('(.php)', '', $getFilename)));
+					$controllerMap[$sub.'/'.$controller] = array(
+						'class'=>'webroot.themes.'.$theme.'.controllers.'.$controllerClass,
+					);
+				}
+
+			} else if($fileInfo->isDir()) {
+				$sub = $fileInfo->getFilename();
+				$subPath = $path.'/'.$sub;
+				$controllerMap = array_merge($controllerMap, $this->getThemeController($subPath, $theme, $sub));
+			}
+		}
+
+		return $controllerMap;
 	}
 }

@@ -8,8 +8,8 @@
  *	applyCurrentTheme
  *	applyViewPath
  *	getProtocol
- *	getActiveDefaultColumns
  *	getKeyIndex
+ *	getActiveDefaultColumns
  *	getUrlTitle
  *	deleteFolder
  *	flashSuccess
@@ -18,6 +18,7 @@
  *	getModuleInfo
  *	getContentMenu
  *	getModuleMenu
+ *	getThemeInfo
 
  
  *	getConnected
@@ -120,23 +121,6 @@ class Utility
 	 * Generates key index defaultColumns in models
 	 * @return array
 	 */
-	public static function getActiveDefaultColumns($columns)
-	{
-		$column = array();
-
-		foreach($columns as $val) {
-			$keyIndex = self::getKeyIndex($val);
-			if($keyIndex)
-				$column[] = $keyIndex;
-		}
-
-		return $column;
-	}
-
-	/**
-	 * Generates key index defaultColumns in models
-	 * @return array
-	 */
 	public static function getKeyIndex($data)
 	{
 		if(!is_array($data))
@@ -148,6 +132,23 @@ class Utility
 		}
 
 		return false;
+	}
+
+	/**
+	 * Generates key index defaultColumns in models
+	 * @return array
+	 */
+	public static function getActiveDefaultColumns($columns)
+	{
+		$column = array();
+
+		foreach($columns as $val) {
+			$keyIndex = self::getKeyIndex($val);
+			if($keyIndex)
+				$column[] = $keyIndex;
+		}
+
+		return $column;
 	}
 	
 	/**
@@ -340,6 +341,25 @@ class Utility
 			});
 			return array_values($moduleMenuData);
 			
+		} else
+			return false;
+	}
+	
+	/**
+	* Return setting template with typePage: public, admin_sweeto or back_office
+	*/
+	public static function getThemeInfo($theme, $type=null)
+	{
+		define('DS', DIRECTORY_SEPARATOR);
+
+		if($theme != null) {
+			$themePath = Yii::getPathOfAlias('webroot.themes.'.$theme).DS.$theme.'.yaml';
+			$themeYML = self::getArrayFromYML($themePath);
+
+			if($type == null)
+				return $themeYML;
+			else
+				return $themeYML[$type];
 		} else
 			return false;
 	}
