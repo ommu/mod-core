@@ -74,10 +74,10 @@
 	</div>
 
 	<div class="clearfix">
-		<?php echo $form->labelEx($model,'office_country'); ?>
+		<?php echo $form->labelEx($model,'office_country_id'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'office_country'); ?>
-			<?php echo $form->error($model,'office_country'); ?>
+			<?php echo $form->textField($model,'office_country_id'); ?>
+			<?php echo $form->error($model,'office_country_id'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
 	</div>

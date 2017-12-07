@@ -530,15 +530,15 @@ DELIMITER $$
 	
 	SET column_update_count = 0;	
 	
-	IF (NEW.office_city <> OLD.office_city) THEN
-		CALL getOmmuZoneProvinceId(NEW.office_city, province_id_tr);
+	IF (NEW.office_city_id <> OLD.office_city_id) THEN
+		CALL getOmmuZoneProvinceId(NEW.office_city_id, province_id_tr);
 		IF (province_id_tr IS NOT NULL) THEN
-			SET NEW.office_province = province_id_tr;
+			SET NEW.office_province_id = province_id_tr;
 		END IF;	
 		
-		CALL getOmmuZoneCountryId(NEW.office_province, country_id_tr);
+		CALL getOmmuZoneCountryId(NEW.office_province_id, country_id_tr);
 		IF (country_id_tr IS NOT NULL) THEN
-			SET NEW.office_country = country_id_tr;
+			SET NEW.office_country_id = country_id_tr;
 		END IF;
 	END IF;
 	
@@ -560,13 +560,13 @@ DELIMITER $$
 	IF (NEW.office_place <> OLD.office_place) THEN
 		SET column_update_count = column_update_count + 1;
 	END IF;
-	IF (NEW.office_country <> OLD.office_country) THEN
+	IF (NEW.office_country_id <> OLD.office_country_id) THEN
 		SET column_update_count = column_update_count + 1;
 	END IF;
-	IF (NEW.office_province <> OLD.office_province) THEN
+	IF (NEW.office_province_id <> OLD.office_province_id) THEN
 		SET column_update_count = column_update_count + 1;
 	END IF;
-	IF (NEW.office_city <> OLD.office_city) THEN
+	IF (NEW.office_city_id <> OLD.office_city_id) THEN
 		SET column_update_count = column_update_count + 1;
 	END IF;
 	IF (NEW.office_district <> OLD.office_district) THEN
@@ -1660,7 +1660,7 @@ DROP TABLE IF EXISTS `_view_core_zone_village`;
 /*!50001 DROP TABLE IF EXISTS `_view_core_meta` */;
 /*!50001 DROP VIEW IF EXISTS `_view_core_meta` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `_view_core_meta` AS select `a`.`id` AS `id`,`b`.`city_name` AS `city_name`,`c`.`province_name` AS `province_name`,`d`.`country_name` AS `country_name` from (((`ommu_core_meta` `a` left join `ommu_core_zone_city` `b` on((`a`.`office_city` = `b`.`city_id`))) left join `ommu_core_zone_province` `c` on((`a`.`office_province` = `c`.`province_id`))) left join `ommu_core_zone_country` `d` on((`a`.`office_country` = `d`.`country_id`))) group by `a`.`id` */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `_view_core_meta` AS select `a`.`id` AS `id`,`b`.`city_name` AS `city_name`,`c`.`province_name` AS `province_name`,`d`.`country_name` AS `country_name` from (((`ommu_core_meta` `a` left join `ommu_core_zone_city` `b` on((`a`.`office_city_id` = `b`.`city_id`))) left join `ommu_core_zone_province` `c` on((`a`.`office_province_id` = `c`.`province_id`))) left join `ommu_core_zone_country` `d` on((`a`.`office_country_id` = `d`.`country_id`))) group by `a`.`id` */;
 
 /*View structure for view _view_core_pages */
 

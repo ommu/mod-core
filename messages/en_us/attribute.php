@@ -109,7 +109,7 @@ return array(
 	'office_on' => 'Google Owner Meta',
 	'office_phone' => 'Office Phone',
 	'office_place' => 'Office Address',
-	'office_province' => 'Office Province',
+	'office_province_id' => 'Office Province',
 	'office_village' => 'Office Village',
 	'office_website' => 'Office Website',
 	'office_zipcode' => 'Office Zipcode',

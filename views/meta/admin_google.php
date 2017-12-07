@@ -88,7 +88,7 @@
 		<div class="clearfix">
 			<label><?php echo $model->getAttributeLabel('office_province_id');?> <span class="required">*</span></label>
 			<div class="desc">
-				<?php echo $form->dropDownList($model,'office_province_id', OmmuZoneProvince::getProvince($model->office_country)); ?>
+				<?php echo $form->dropDownList($model,'office_province_id', OmmuZoneProvince::getProvince($model->office_country_id)); ?>
 				<?php echo $form->error($model,'office_province_id'); ?>
 			</div>
 		</div>
