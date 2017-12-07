@@ -37,13 +37,10 @@ class Ommu extends CApplicationComponent
 	{
 		//register vendor namespace
 		$vendor_path = Yii::getPathOfAlias('application.vendor');
-		foreach (new DirectoryIterator($vendor_path) as $fileInfo) {
-			if($fileInfo->isDot())
-				continue;
-			
-			if($fileInfo->isDir() && !in_array($fileInfo->getFilename(), array('bin','composer')))
-				Yii::setPathOfAlias($fileInfo->getFilename(), $vendor_path.'/'.$fileInfo->getFilename());
-		}
+		$this->setAlias($vendor_path);
+		//register theme namespace
+		$theme_path = Yii::getPathOfAlias('webroot.themes');
+		$this->setAlias($theme_path);
 		
 		/**
 		 * set default themes
@@ -58,25 +55,12 @@ class Ommu extends CApplicationComponent
 		 * controllerMap
 		 */
 		$controllerMap = array();
-
 		// controllerMap for themes
-		$themeControllerPath = Yii::getPathOfAlias('webroot.themes.'.$theme.'.controllers');
-		$controllerMap = $this->getThemeController($themeControllerPath, $theme);
-
+		$themeControllerPath = 'webroot.themes.'.$theme.'.controllers';
+		$controllerMap = $this->getController($themeControllerPath);
 		// controllerMap for core module
-		$coreControllerPath = Yii::getPathOfAlias('application.libraries.core.controllers');
-		foreach (new DirectoryIterator($coreControllerPath) as $fileInfo) {
-			if($fileInfo->isDot())
-				continue;
-			
-			if($fileInfo->isFile() && !in_array($fileInfo->getFilename(), array('index.php','.DS_Store'))) {
-				$getFilename = $fileInfo->getFilename();
-				$controller = strtolower(preg_replace('(Controller.php)', '', $getFilename));
-				$controllerMap[$controller] = array(
-					'class'=>'application.libraries.core.controllers.'.preg_replace('(.php)', '', $getFilename),
-				);
-			}
-		}
+		$coreControllerPath = 'application.libraries.core.controllers';
+		$controllerMap = array_merge($controllerMap, $this->getController($coreControllerPath));
 		Yii::app()->controllerMap = $controllerMap;
 
 		/**
@@ -340,36 +324,46 @@ $moduleRules[$val->folder.'/<controller:[a-zA-Z\/]+>/<action:\w+>/<category:\d+>
 		return array('after' => $after, 'before' => $before);
 	}
 
-	public function getThemeController($path, $theme, $sub=null)
+	public function getController($path, $sub=null)
 	{
 		$controllerMap = array();
+		$controllerPath = Yii::getPathOfAlias($path);
+		$pathArray = explode('.', $path);
+		$lastPath = end($pathArray);
 
-		foreach (new DirectoryIterator($path) as $fileInfo) {
-			if($fileInfo->isDot())
+		foreach (new DirectoryIterator($controllerPath) as $fileInfo) {
+			if($fileInfo->isDot() && $fileInfo->isDir())
 				continue;
 			
 			if($fileInfo->isFile() && !in_array($fileInfo->getFilename(), array('index.php','.DS_Store'))) {
 				$getFilename = $fileInfo->getFilename();
 				$controller = strtolower(preg_replace('(Controller.php)', '', $getFilename));
-				if($sub == null) {
-					$controllerClass = preg_replace('(.php)', '', $getFilename);
-					$controllerMap[$controller] = array(
-						'class'=>'webroot.themes.'.$theme.'.controllers.'.$controllerClass,
-					);
-				} else {
-					$controllerClass = join('.', array($sub, preg_replace('(.php)', '', $getFilename)));
-					$controllerMap[$sub.'/'.$controller] = array(
-						'class'=>'webroot.themes.'.$theme.'.controllers.'.$controllerClass,
-					);
-				}
+				if($lastPath != 'controllers')
+					$controller = $lastPath.'/'.strtolower(preg_replace('(Controller.php)', '', $getFilename));
+				$controllerClass = preg_replace('(.php)', '', $getFilename);
+
+				$controllerMap[$controller] = array(
+					'class'=>$path.'.'.$controllerClass,
+				);
 
 			} else if($fileInfo->isDir()) {
 				$sub = $fileInfo->getFilename();
-				$subPath = $path.'/'.$sub;
-				$controllerMap = array_merge($controllerMap, $this->getThemeController($subPath, $theme, $sub));
+				$subPath = $path.'.'.$sub;
+				$controllerMap = array_merge($controllerMap, $this->getController($subPath, $sub));
 			}
 		}
 
 		return $controllerMap;
+	}
+
+	public function setAlias($path)
+	{
+		foreach (new DirectoryIterator($path) as $fileInfo) {
+			if($fileInfo->isDot())
+				continue;
+			
+			if($fileInfo->isDir() && !in_array($fileInfo->getFilename(), array('bin','composer')))
+				Yii::setPathOfAlias($fileInfo->getFilename(), $path.'/'.$fileInfo->getFilename());
+		}
 	}
 }
