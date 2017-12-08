@@ -37,10 +37,17 @@ class Ommu extends CApplicationComponent
 	{
 		//register vendor namespace
 		$vendor_path = Yii::getPathOfAlias('application.vendor');
-		$this->setAlias($vendor_path);
+		foreach (new DirectoryIterator($vendor_path) as $fileInfo) {
+			if($fileInfo->isDot())
+				continue;
+			
+			if($fileInfo->isDir() && !in_array($fileInfo->getFilename(), array('bin','composer')))
+				Yii::setPathOfAlias($fileInfo->getFilename(), $vendor_path.'/'.$fileInfo->getFilename());
+		}
+		//$this->setAlias($vendor_path);
 		//register theme namespace
 		$theme_path = Yii::getPathOfAlias('webroot.themes');
-		$this->setAlias($theme_path);
+		$this->setAlias($theme_path, true);
 		
 		/**
 		 * set default themes
@@ -356,14 +363,16 @@ $moduleRules[$val->folder.'/<controller:[a-zA-Z\/]+>/<action:\w+>/<category:\d+>
 		return $controllerMap;
 	}
 
-	public function setAlias($path)
+	public function setAlias($path, $theme=false)
 	{
 		foreach (new DirectoryIterator($path) as $fileInfo) {
 			if($fileInfo->isDot())
 				continue;
 			
-			if($fileInfo->isDir() && !in_array($fileInfo->getFilename(), array('bin','composer')))
-				Yii::setPathOfAlias($fileInfo->getFilename(), $path.'/'.$fileInfo->getFilename());
+			$getFilename = $fileInfo->getFilename();
+			if($fileInfo->isDir() && !in_array($getFilename, array('bin','composer'))) {
+				Yii::setPathOfAlias(($theme == true && $getFilename != 'ommu') ? $getFilename : $getFilename.'theme', $path.'/'.$getFilename);
+			}
 		}
 	}
 }
