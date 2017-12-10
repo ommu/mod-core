@@ -55,7 +55,7 @@ EOP;
 					<div class="desc">
 						<?php 
 						//echo $form->textArea($model,'quote_i',array('rows'=>6, 'cols'=>50));
-						$this->widget('application.vendor.yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
+						$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 							'model'=>$model,
 							'attribute'=>'quote_i',
 							// Redactor options
@@ -81,7 +81,7 @@ EOP;
 					<div class="desc">
 						<?php
 						//echo $form->textArea($model,'desc_i',array('rows'=>6, 'cols'=>50));
-						$this->widget('application.vendor.yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
+						$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 							'model'=>$model,
 							'attribute'=>'desc_i',
 							// Redactor options
