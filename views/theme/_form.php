@@ -27,47 +27,46 @@
 			<?php echo $form->errorSummary($model); ?>
 		</div>
 
-		<div class="clearfix">
-			<?php echo $form->labelEx($model,'group_page'); ?>
-			<div class="desc">
+		<div class="form-group row">
+			<?php echo $form->labelEx($model,'group_page', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
+			<div class="col-md-9 col-sm-12">
 				<?php echo $form->dropDownList($model, 'group_page', array(
 					'public' => Yii::t('phrase', 'Public'),
 					'admin' => Yii::t('phrase', 'Administrator'),
 					'underconstruction' => Yii::t('phrase', 'Undercontruction'),
-				)); ?>
+				), array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'group_page'); ?>
 			</div>
 		</div>
 
-		<div class="clearfix">
-			<?php echo $form->labelEx($model,'name'); ?>
-			<div class="desc">
-				<?php echo $form->textField($model,'name',array('maxlength'=>32)); ?>
+		<div class="form-group row">
+			<?php echo $form->labelEx($model,'name', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
+			<div class="col-md-9 col-sm-12">
+				<?php echo $form->textField($model,'name',array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'name'); ?>
 			</div>
 		</div>
 
-		<div class="clearfix">
-			<?php echo $form->labelEx($model,'folder'); ?>
-			<div class="desc">
-				<?php echo $form->textField($model,'folder',array('maxlength'=>32)); ?>
+		<div class="form-group row">
+			<?php echo $form->labelEx($model,'folder', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
+			<div class="col-md-9 col-sm-12">
+				<?php echo $form->textField($model,'folder',array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'folder'); ?>
 			</div>
 		</div>
 
-		<div class="clearfix">
-			<?php echo $form->labelEx($model,'layout'); ?>
-			<div class="desc">
-				<?php echo $form->textField($model,'layout',array('maxlength'=>32)); ?>
+		<div class="form-group row">
+			<?php echo $form->labelEx($model,'layout', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
+			<div class="col-md-9 col-sm-12">
+				<?php echo $form->textField($model,'layout',array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'layout'); ?>
 			</div>
 		</div>
 
-		<div class="clearfix publish">
-			<?php echo $form->labelEx($model,'default_theme'); ?>
-			<div class="desc">
-				<?php echo $form->checkBox($model,'default_theme'); ?>
-				<?php echo $form->labelEx($model,'default_theme'); ?>
+		<div class="form-group row">
+			<?php echo $form->labelEx($model,'default_theme', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
+			<div class="col-md-9 col-sm-12">
+				<?php echo $form->checkBox($model,'default_theme', array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'default_theme'); ?>
 			</div>
 		</div>

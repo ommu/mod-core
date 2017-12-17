@@ -39,7 +39,7 @@
 			<div class="col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'analytic', array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'analytic'); ?>
-				<?php /*<div class="small-px silent"></div>*/?>
+				<?php /*<div class="small-px"></div>*/?>
 			</div>
 		</div>
 
@@ -48,7 +48,7 @@
 			<div class="col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'analytic_id',array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'analytic_id'); ?>
-				<div class="small-px silent"><?php echo Yii::t('phrase', 'Enter the Website Profile ID to use Google Analytics.');?></div>
+				<div class="small-px"><?php echo Yii::t('phrase', 'Enter the Website Profile ID to use Google Analytics.');?></div>
 			</div>
 		</div>
 
@@ -59,7 +59,7 @@
 			<div class="col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'analytic_profile_id',array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'analytic_profile_id'); ?>
-				<?php /*<div class="small-px silent"></div>*/?>
+				<?php /*<div class="small-px"></div>*/?>
 			</div>
 		</div>
 

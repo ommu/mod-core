@@ -273,7 +273,7 @@ EOP;
 					0 => Yii::t('phrase', 'No, the public cannot view the portal page.'),
 				), array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'general_portal'); ?>
-				<?php /*<div class="small-px silent"></div>*/?>
+				<?php /*<div class="small-px"></div>*/?>
 			</div>
 		</div>
 
@@ -286,7 +286,7 @@ EOP;
 					0 => Yii::t('phrase', 'No, usernames will not be used in this network.'),
 				), array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'signup_username'); ?>
-				<?php /*<div class="small-px silent"></div>*/?>
+				<?php /*<div class="small-px"></div>*/?>
 			</div>
 		</div>
 		<?php }?>
@@ -299,7 +299,7 @@ EOP;
 			<div class="col-md-9 col-sm-12">
 				<?php echo $form->textArea($model,'general_include',array('rows'=>6, 'cols'=>50, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'general_include'); ?>
-				<?php /*<div class="small-px silent"></div>*/?>
+				<?php /*<div class="small-px"></div>*/?>
 			</div>
 		</div>
 

@@ -27,50 +27,48 @@
 		</div>
 		<?php //begin.Messages ?>
 
-		<div class="clearfix">
-			<?php echo $form->labelEx($model,'city_id'); ?>
-			<div class="desc">
-				<?php echo $form->textField($model,'city_id',array('maxlength'=>11)); ?>
+		<div class="form-group row">
+			<?php echo $form->labelEx($model,'city_id', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
+			<div class="col-md-9 col-sm-12">
+				<?php echo $form->textField($model,'city_id',array('maxlength'=>11, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'city_id'); ?>
-				<?php /*<div class="small-px silent"></div>*/?>
+				<?php /*<div class="small-px"></div>*/?>
 			</div>
 		</div>
 
-		<div class="clearfix">
-			<?php echo $form->labelEx($model,'district_name'); ?>
-			<div class="desc">
-				<?php echo $form->textField($model,'district_name',array('maxlength'=>64)); ?>
+		<div class="form-group row">
+			<?php echo $form->labelEx($model,'district_name', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
+			<div class="col-md-9 col-sm-12">
+				<?php echo $form->textField($model,'district_name',array('maxlength'=>64, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'district_name'); ?>
-				<?php /*<div class="small-px silent"></div>*/?>
+				<?php /*<div class="small-px"></div>*/?>
 			</div>
 		</div>
 
-		<div class="clearfix">
-			<?php echo $form->labelEx($model,'mfdonline'); ?>
-			<div class="desc">
-				<?php echo $form->textField($model,'mfdonline',array('maxlength'=>7)); ?>
+		<div class="form-group row">
+			<?php echo $form->labelEx($model,'mfdonline', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
+			<div class="col-md-9 col-sm-12">
+				<?php echo $form->textField($model,'mfdonline',array('maxlength'=>7, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'mfdonline'); ?>
-				<?php /*<div class="small-px silent"></div>*/?>
+				<?php /*<div class="small-px"></div>*/?>
 			</div>
 		</div>
 
-		<div class="clearfix publish">
-			<?php echo $form->labelEx($model,'checked'); ?>
-			<div class="desc">
-				<?php echo $form->checkBox($model,'checked'); ?>
-				<?php echo $form->labelEx($model,'checked'); ?>
+		<div class="form-group row">
+			<?php echo $form->labelEx($model,'checked', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
+			<div class="col-md-9 col-sm-12">
+				<?php echo $form->checkBox($model,'checked', array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'checked'); ?>
-				<?php /*<div class="small-px silent"></div>*/?>
+				<?php /*<div class="small-px"></div>*/?>
 			</div>
 		</div>
 
-		<div class="clearfix publish">
-			<?php echo $form->labelEx($model,'publish'); ?>
-			<div class="desc">
-				<?php echo $form->checkBox($model,'publish'); ?>
-				<?php echo $form->labelEx($model,'publish'); ?>
+		<div class="form-group row">
+			<?php echo $form->labelEx($model,'publish', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
+			<div class="col-md-9 col-sm-12">
+				<?php echo $form->checkBox($model,'publish', array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'publish'); ?>
-				<?php /*<div class="small-px silent"></div>*/?>
+				<?php /*<div class="small-px"></div>*/?>
 			</div>
 		</div>
 

@@ -30,9 +30,9 @@
 	<fieldset>
 
 		<?php foreach($language as $key => $val) {?>
-		<div class="clearfix">
-			<?php echo CHtml::label($val->name, 'OmmuSystemPhrase_'.$val->code); ?>
-			<div class="desc">
+		<div class="form-group row">
+			<?php echo CHtml::label($val->name, 'OmmuSystemPhrase_'.$val->code, array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
+			<div class="col-md-9 col-sm-12">
 				<?php 
 				//echo $form->textArea($model,$val->code,array('rows'=>6, 'cols'=>50, 'class'=>'span-8 medium'));
 				$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
@@ -53,16 +53,19 @@
 						'table' => array('js' => array('table.js')),
 						'fullscreen' => array('js' => array('fullscreen.js')),
 					),
+					'htmlOptions'=>array(
+						'class'=>'form-control'
+					 ),
 				)); ?>
 				<?php echo $form->error($model, $val->code); ?>
 			</div>
 		</div>
 		<?php }?>
 
-		<div class="clearfix">
-			<?php echo $form->labelEx($model,'location'); ?>
-			<div class="desc">
-				<?php echo $form->textArea($model,'location',array('class'=>'span-11 smaller')); ?>
+		<div class="form-group row">
+			<?php echo $form->labelEx($model,'location', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
+			<div class="col-md-9 col-sm-12">
+				<?php echo $form->textArea($model,'location',array('class'=>'form-control smaller')); ?>
 				<?php echo $form->error($model,'location'); ?>
 				<span class="small-px"><?php echo Yii::t('phrase', 'We recommend you to use location field. It helps you to know where this phrase is used. Example: you can use "event.create" location for "Create" button\'s label on create a new event page');?></span>
 			</div>

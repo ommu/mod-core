@@ -48,87 +48,87 @@ EOP;
 
 	<fieldset>
 
-		<div class="clearfix">
+		<div class="form-group row">
 			<label><?php echo $model->getAttributeLabel('facebook_on');?> <span class="required">*</span></label>
-			<div class="desc">
+			<div class="col-md-9 col-sm-12">
 				<?php echo $form->radioButtonList($model,'facebook_on', array(
 					1 => Yii::t('phrase', 'Enabled'),
 					0 => Yii::t('phrase', 'Disabled'),
-				)); ?>
+				), array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'facebook_on'); ?>
 			</div>
 		</div>
 
-		<div class="clearfix">
+		<div class="form-group row">
 			<label><?php echo $model->getAttributeLabel('facebook_type');?> <span class="required">*</span></label>
-			<div class="desc">
+			<div class="col-md-9 col-sm-12">
 				<?php echo $form->dropDownList($model,'facebook_type', array(
 					1 => Yii::t('phrase', 'Profile'),
 					2 => Yii::t('phrase', 'Website'),
-				)); ?>
+				), array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'facebook_type'); ?>
 			</div>
 		</div>
 		
 		<div id="profile" class="filter <?php echo $model->facebook_type != 1 ? 'hide' : '';?>">
-			<div class="clearfix">
+			<div class="form-group row">
 				<label><?php echo $model->getAttributeLabel('facebook_profile_firstname');?> <span class="required">*</span></label>
-				<div class="desc">
-					<?php echo $form->textField($model,'facebook_profile_firstname',array('maxlength'=>32,'class'=>'span-4')); ?>
+				<div class="col-md-9 col-sm-12">
+					<?php echo $form->textField($model,'facebook_profile_firstname',array('maxlength'=>32,'class'=>'form-control')); ?>
 					<?php echo $form->error($model,'facebook_profile_firstname'); ?>
-					<span class="small-px silent"><?php echo Yii::t('phrase', 'The first name of the person that this profile represents');?></span>
+					<span class="small-px"><?php echo Yii::t('phrase', 'The first name of the person that this profile represents');?></span>
 				</div>
 			</div>
 
-			<div class="clearfix">
+			<div class="form-group row">
 				<label><?php echo $model->getAttributeLabel('facebook_profile_lastname');?> <span class="required">*</span></label>
-				<div class="desc">
-					<?php echo $form->textField($model,'facebook_profile_lastname',array('maxlength'=>32,'class'=>'span-4')); ?>
+				<div class="col-md-9 col-sm-12">
+					<?php echo $form->textField($model,'facebook_profile_lastname',array('maxlength'=>32,'class'=>'form-control')); ?>
 					<?php echo $form->error($model,'facebook_profile_lastname'); ?>
-					<span class="small-px silent"><?php echo Yii::t('phrase', 'The last name of the person that this profile represents');?></span>
+					<span class="small-px"><?php echo Yii::t('phrase', 'The last name of the person that this profile represents');?></span>
 				</div>
 			</div>
 
-			<div class="clearfix">
+			<div class="form-group row">
 				<label><?php echo $model->getAttributeLabel('facebook_profile_username');?> <span class="required">*</span></label>
-				<div class="desc">
-					<?php echo $form->textField($model,'facebook_profile_username',array('maxlength'=>32,'class'=>'span-4')); ?>
+				<div class="col-md-9 col-sm-12">
+					<?php echo $form->textField($model,'facebook_profile_username',array('maxlength'=>32,'class'=>'form-control')); ?>
 					<?php echo $form->error($model,'facebook_profile_username'); ?>
-					<span class="small-px silent"><?php echo Yii::t('phrase', 'A username for the person that this profile represents (.i.e. "PutraSudaryanto")');?></span>
+					<span class="small-px"><?php echo Yii::t('phrase', 'A username for the person that this profile represents (.i.e. "PutraSudaryanto")');?></span>
 				</div>
 			</div>
 		</div>
 
-		<div class="clearfix">
+		<div class="form-group row">
 			<?php echo $form->labelEx($model,'facebook_sitename'); ?>
-			<div class="desc">
-				<?php echo $form->textField($model,'facebook_sitename',array('maxlength'=>64,'class'=>'span-5')); ?>
+			<div class="col-md-9 col-sm-12">
+				<?php echo $form->textField($model,'facebook_sitename',array('maxlength'=>64,'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'facebook_sitename'); ?>
-				<span class="small-px silent"><?php echo Yii::t('phrase', 'The name of the web site upon which the object resides (.i.e. "Ommu Platform & Bootstrap")');?></span>
+				<span class="small-px"><?php echo Yii::t('phrase', 'The name of the web site upon which the object resides (.i.e. "Ommu Platform & Bootstrap")');?></span>
 			</div>
 		</div>
 
-		<div class="clearfix">
+		<div class="form-group row">
 			<?php echo $form->labelEx($model,'facebook_see_also'); ?>
-			<div class="desc">
-				<?php echo $form->textField($model,'facebook_see_also',array('maxlength'=>256,'class'=>'span-5')); ?>
+			<div class="col-md-9 col-sm-12">
+				<?php echo $form->textField($model,'facebook_see_also',array('maxlength'=>256,'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'facebook_see_also'); ?>
-				<span class="small-px silent"><?php echo Yii::t('phrase', 'URLs of related resources (.i.e. "http://www.ommu.co")');?></span>
+				<span class="small-px"><?php echo Yii::t('phrase', 'URLs of related resources (.i.e. "http://www.ommu.co")');?></span>
 			</div>
 		</div>
 
-		<div class="clearfix">
+		<div class="form-group row">
 			<?php echo $form->labelEx($model,'facebook_admins'); ?>
-			<div class="desc">
-				<?php echo $form->textField($model,'facebook_admins',array('maxlength'=>32,'class'=>'span-4')); ?>
+			<div class="col-md-9 col-sm-12">
+				<?php echo $form->textField($model,'facebook_admins',array('maxlength'=>32,'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'facebook_admins'); ?>
-				<span class="small-px silent"><?php echo Yii::t('phrase', 'Facebook IDs of the app\'s administrators (.i.e. "PutraSudaryanto")');?></span>
+				<span class="small-px"><?php echo Yii::t('phrase', 'Facebook IDs of the app\'s administrators (.i.e. "PutraSudaryanto")');?></span>
 			</div>
 		</div>
 
-		<div class="submit clearfix">
-			<label>&nbsp;</label>
-			<div class="desc">
+		<div class="form-group row submit">
+			<label class="col-form-label col-md-3 col-sm-12">&nbsp;</label>
+			<div class="col-md-9 col-sm-12">
 				<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save'), array('onclick' => 'setEnableSave()')); ?>
 			</div>
 		</div>
