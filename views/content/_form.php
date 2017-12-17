@@ -43,16 +43,16 @@ EOP;
 			<div class="col-lg-9 col-md-12">
 
 				<div class="form-group row">
-					<?php echo $form->labelEx($model,'name_i', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-					<div class="col-md-9 col-sm-12">
+					<?php echo $form->labelEx($model,'name_i', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+					<div class="col-lg-8 col-md-9 col-sm-12">
 						<?php echo $form->textField($model,'name_i',array('maxlength'=>256,'class'=>'form-control')); ?>
 						<?php echo $form->error($model,'name_i'); ?>
 					</div>
 				</div>
 				
 				<div class="form-group row">
-					<?php echo $form->labelEx($model,'quote_i', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-					<div class="col-md-9 col-sm-12">
+					<?php echo $form->labelEx($model,'quote_i', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+					<div class="col-lg-8 col-md-9 col-sm-12">
 						<?php 
 						//echo $form->textArea($model,'quote_i',array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
 						$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
@@ -80,8 +80,8 @@ EOP;
 				</div>
 
 				<div class="form-group row">
-					<?php echo $form->labelEx($model,'desc_i', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-					<div class="col-md-9 col-sm-12">
+					<?php echo $form->labelEx($model,'desc_i', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+					<div class="col-lg-8 col-md-9 col-sm-12">
 						<?php
 						//echo $form->textArea($model,'desc_i',array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
 						$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
@@ -111,8 +111,8 @@ EOP;
 				</div>
 
 				<?php /*<div class="form-group row">
-					<?php echo $form->labelEx($model,'desc_i', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-					<div class="col-md-9 col-sm-12">
+					<?php echo $form->labelEx($model,'desc_i', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+					<div class="col-lg-8 col-md-9 col-sm-12">
 						<?php
 						$model->desc_i = $model->description->message;
 						//echo $form->textArea($model,'desc_i',array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
@@ -190,8 +190,8 @@ EOP;
 		</div>
 		
 		<div class="form-group row submit">
-			<label class="col-form-label col-md-3 col-sm-12">&nbsp;</label>
-			<div class="col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12">&nbsp;</label>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save'), array('onclick' => 'setEnableSave()')); ?>
 			</div>
 		</div>

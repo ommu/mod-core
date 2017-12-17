@@ -26,32 +26,32 @@
 		<?php echo $form->errorSummary($model); ?>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'name', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'name', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'name',array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'name'); ?>
 			</div>
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'code', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'code', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'code',array('maxlength'=>8, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'code'); ?>
 			</div>
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'actived', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'actived', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'actived', array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'actived'); ?>
 			</div>
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'default', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'default', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'default', array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'default'); ?>
 			</div>

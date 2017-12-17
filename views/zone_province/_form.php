@@ -29,8 +29,8 @@
 		<?php //begin.Messages ?>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'country_id', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'country_id', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->dropDownList($model,'country_id',OmmuZoneCountry::getCountry()); ?>
 				<?php echo $form->error($model,'country_id'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -38,8 +38,8 @@
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'province_name', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'province_name', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'province_name',array('maxlength'=>64, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'province_name'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -47,8 +47,8 @@
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'mfdonline', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'mfdonline', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'mfdonline',array('maxlength'=>2, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'mfdonline'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -56,8 +56,8 @@
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'checked', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'checked', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'checked', array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'checked'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -65,8 +65,8 @@
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'publish', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'publish', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'publish', array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'publish'); ?>
 				<?php /*<div class="small-px"></div>*/?>

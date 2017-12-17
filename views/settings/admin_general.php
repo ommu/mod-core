@@ -57,8 +57,8 @@ EOP;
 
 	<fieldset>
 		<div class="form-group row">
-			<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('site_type');?> <span class="required">*</span></label>
-			<div class="col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('site_type');?> <span class="required">*</span></label>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php 
 				if($model->isNewRecord && !$model->getErrors())
 					$model->site_type = 0;
@@ -71,8 +71,8 @@ EOP;
 		</div>
 
 		<div class="form-group row">
-			<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('site_oauth');?> <span class="required">*</span></label>
-			<div class="col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('site_oauth');?> <span class="required">*</span></label>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php 
 				if($model->isNewRecord && !$model->getErrors())
 					$model->site_oauth = 0;
@@ -85,8 +85,8 @@ EOP;
 		</div>
 		
 		<div class="form-group row">
-			<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('online');?> <span class="required">*</span></label>
-			<div class="col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('online');?> <span class="required">*</span></label>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<span class="small-px"><?php echo Yii::t('phrase', 'Maintenance Mode will prevent site visitors from accessing your website. You can customize the maintenance mode page by manually editing the file "/application/maintenance.html".');?></span>
 				<?php echo $form->radioButtonList($model, 'online', array(
 					1 => Yii::t('phrase', 'Online'),
@@ -99,8 +99,8 @@ EOP;
 
 		<div id="construction" <?php echo $model->online == '1' ? 'class="hide"' : ''; ?>>
 			<div class="form-group row">
-				<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('construction_date');?> <span class="required">*</span></label>
-				<div class="col-md-9 col-sm-12">
+				<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('construction_date');?> <span class="required">*</span></label>
+				<div class="col-lg-8 col-md-9 col-sm-12">
 					<?php 
 					$model->construction_date = date('d-m-Y', strtotime($model->construction_date));
 					//echo $form->textField($model,'construction_date',array('maxlength'=>10, 'class'=>'span-3'));
@@ -119,8 +119,8 @@ EOP;
 			</div>
 
 			<div class="form-group row">
-				<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('construction_text')?> <span class="required">*</span></label>
-				<div class="col-md-9 col-sm-12">
+				<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('construction_text')?> <span class="required">*</span></label>
+				<div class="col-lg-8 col-md-9 col-sm-12">
 					<?php echo $form->textArea($model,'construction_text',array('rows'=>6, 'cols'=>50, 'class'=>'form-control small')); ?>
 					<?php echo $form->error($model,'construction_text'); ?>
 				</div>
@@ -128,8 +128,8 @@ EOP;
 		</div>
 
 		<div class="form-group row">
-			<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('event_i')?> <span class="required">*</span></label>
-			<div class="col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('event_i')?> <span class="required">*</span></label>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php 
 				if(!$model->getErrors()) {
 					$model->event_i = 0;
@@ -146,8 +146,8 @@ EOP;
 		
 		<div id="events" <?php echo $model->event_i == '0' ? 'class="hide"' : ''; ?>>
 			<div class="form-group row">
-				<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('event_startdate');?> <span class="required">*</span></label>
-				<div class="col-md-9 col-sm-12">
+				<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('event_startdate');?> <span class="required">*</span></label>
+				<div class="col-lg-8 col-md-9 col-sm-12">
 					<?php 
 					if(!$model->getErrors())
 						$model->event_startdate = !$model->isNewRecord ? (!in_array(date('Y-m-d', strtotime($model->event_startdate)), array('0000-00-00','1970-01-01')) ? date('d-m-Y', strtotime($model->event_startdate)) : '00-00-0000') : '';
@@ -168,8 +168,8 @@ EOP;
 			</div>
 			
 			<div class="form-group row">
-				<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('event_finishdate');?> <span class="required">*</span></label>
-				<div class="col-md-9 col-sm-12">
+				<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('event_finishdate');?> <span class="required">*</span></label>
+				<div class="col-lg-8 col-md-9 col-sm-12">
 					<?php 
 					if(!$model->getErrors())
 						$model->event_finishdate = !$model->isNewRecord ? (!in_array(date('Y-m-d', strtotime($model->event_finishdate)), array('0000-00-00','1970-01-01')) ? date('d-m-Y', strtotime($model->event_finishdate)) : '00-00-0000') : '';
@@ -190,8 +190,8 @@ EOP;
 			</div>
 
 			<div class="form-group row">
-				<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('event_tag')?> <span class="required">*</span></label>
-				<div class="col-md-9 col-sm-12">
+				<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('event_tag')?> <span class="required">*</span></label>
+				<div class="col-lg-8 col-md-9 col-sm-12">
 					<?php echo $form->textArea($model,'event_tag',array('rows'=>6, 'cols'=>50, 'class'=>'form-control smaller')); ?>
 					<?php echo $form->error($model,'event_tag'); ?>
 					<span class="small-px"><?php echo Yii::t('phrase', 'tambahkan tanda koma (,) jika ingin menambahkan event tag lebih dari satu');?></span>
@@ -200,8 +200,8 @@ EOP;
 		</div>
 
 		<div class="form-group row">
-			<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('site_title');?> <span class="required">*</span></label>
-			<div class="col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('site_title');?> <span class="required">*</span></label>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'site_title',array('maxlength'=>256, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'site_title'); ?>
 				<span class="small-px"><?php echo Yii::t('phrase', 'Give your community a unique name. This will appear in the &lt;title&gt; tag throughout most of your site.');?></span>
@@ -209,30 +209,30 @@ EOP;
 		</div>
 
 		<div class="form-group row">
-			<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('site_url')?> <span class="required">*</span></label>
-			<div class="col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('site_url')?> <span class="required">*</span></label>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'site_url',array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'site_url'); ?>
 			</div>
 		</div>
 
 		<div class="form-group row">
-			<label class="col-form-label col-md-3 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12">
 				<?php echo $model->getAttributeLabel('site_description');?> <span class="required">*</span><br/>
 				<span><?php echo Yii::t('phrase', 'Enter a brief, concise description of your community. Include any key words or phrases that you want to appear in search engine listings.');?></span>
 			</label>
-			<div class="col-md-9 col-sm-12">
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textArea($model,'site_description',array('rows'=>6, 'cols'=>50, 'class'=>'form-control', 'maxlength'=>256)); ?>
 				<?php echo $form->error($model,'site_description'); ?>
 			</div>
 		</div>
 
 		<div class="form-group row">
-			<label class="col-form-label col-md-3 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12">
 				<?php echo $model->getAttributeLabel('site_keywords');?> <span class="required">*</span><br/>
 				<span><?php echo Yii::t('phrase', 'Provide some keywords (separated by commas) that describe your community. These will be the default keywords that appear in the <meta> tag in your page header. Enter the most relevant keywords you can think of to help your community\'s search engine rankings.');?></span>
 			</label>
-			<div class="col-md-9 col-sm-12">
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textArea($model,'site_keywords',array('rows'=>6, 'cols'=>50, 'class'=>'form-control', 'maxlength'=>256)); ?>
 				<?php echo $form->error($model,'site_keywords'); ?>
 				<span class="small-px"><?php echo Yii::t('phrase', 'tambahkan tanda koma (,) jika ingin menambahkan keyword lebih dari satu');?></span>
@@ -241,11 +241,11 @@ EOP;
 
 		<?php if(OmmuSettings::getInfo('site_type') == 1) {?>
 		<div class="form-group row">
-			<label class="col-form-label col-md-3 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12">
 				<?php echo Yii::t('phrase', 'Public Permission Defaults');?>
 				<span><?php echo Yii::t('phrase', 'Select whether or not you want to let the public (visitors that are not logged-in) to view the following sections of your social network. In some cases (such as Profiles), if you have given them the option, your users will be able to make their pages private even though you have made them publically viewable here.');?></span>
 			</label>
-			<div class="col-md-9 col-sm-12">
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<p><?php echo $model->getAttributeLabel('general_profile');?></p>
 				<?php echo $form->radioButtonList($model, 'general_profile', array(
 					1 => Yii::t('phrase', 'Yes, the public can view profiles unless they are made private.'),
@@ -278,8 +278,8 @@ EOP;
 		</div>
 
 		<div class="form-group row">
-			<label class="col-form-label col-md-3 col-sm-12"><?php echo Yii::t('phrase', 'Enable Username?');?></label>
-			<div class="col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo Yii::t('phrase', 'Enable Username?');?></label>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<span class="small-px"><?php echo Yii::t('phrase', 'By default, usernames are used to uniquely identify your users. If you choose to disable this feature, your users will not be given the option to enter a username. Instead, their user ID will be used. Note that if you do decide to enable this feature, you should make sure to create special REQUIRED display name profile fields - otherwise the users\' IDs will be displayed. Also note that if you disable usernames after users have already signed up, their usernames will be deleted and any previous links to their content will not work, as the links will no longer use their username! Finally, all recent activity and all notifications will be deleted if you choose to disable usernames after previously having them enabled.');?></span>
 				<?php echo $form->radioButtonList($model, 'signup_username', array(
 					1 => Yii::t('phrase', 'Yes, users are uniquely identified by their username.'),
@@ -292,11 +292,11 @@ EOP;
 		<?php }?>
 
 		<div class="form-group row">
-			<label class="col-form-label col-md-3 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12">
 				<?php echo $model->getAttributeLabel('general_include');?>
 				<span><?php echo Yii::t('phrase', 'Anything entered into the box below will be included at the bottom of the &lt;head&gt; tag. If you want to include a script or stylesheet, be sure to use the &lt;script&gt; or &lt;link&gt; tag.');?></span>
 			</label>
-			<div class="col-md-9 col-sm-12">
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textArea($model,'general_include',array('rows'=>6, 'cols'=>50, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'general_include'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -304,8 +304,8 @@ EOP;
 		</div>
 
 		<div class="form-group row submit">
-			<label class="col-form-label col-md-3 col-sm-12">&nbsp;</label>
-			<div class="col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12">&nbsp;</label>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save'), array('onclick' => 'setEnableSave()')); ?>
 			</div>
 		</div>

@@ -30,8 +30,8 @@
 		<?php //begin.Messages ?>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'cat_id', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'cat_id', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php 
 				$category = OmmuMenuCategory::getCategory();
 				if($category != null)
@@ -48,8 +48,8 @@
 		$menu = OmmuMenu::getParentMenu(null, $parent);
 		if($menu != null) {?>
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'parent', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'parent', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->dropDownList($model,'parent', $menu, array('prompt'=>Yii::t('phrase', 'No Parent'), 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'parent'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -58,16 +58,16 @@
 		<?php }?>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'name_i', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'name_i', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'name_i',array('maxlength'=>32,'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'name_i'); ?>
 			</div>
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'url', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'url', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textArea($model,'url',array('class'=>'form-control smaller')); ?>
 				<?php echo $form->error($model,'url'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -75,8 +75,8 @@
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'attr', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'attr', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textArea($model,'attr',array('class'=>'form-control smaller')); ?>
 				<?php echo $form->error($model,'attr'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -84,8 +84,8 @@
 		</div>
 		
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'sitetype_access', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'sitetype_access', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php 
 				$siteType = array(
 					'0' => Yii::t('phrase', 'Company Profile'),
@@ -99,8 +99,8 @@
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'userlevel_access', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'userlevel_access', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php 
 				if(!$model->getErrors())
 					$model->userlevel_access = unserialize($model->userlevel_access);
@@ -111,8 +111,8 @@
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'publish', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'publish', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'publish', array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'publish'); ?>
 				<?php /*<div class="small-px"></div>*/?>

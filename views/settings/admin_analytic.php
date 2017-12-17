@@ -35,8 +35,8 @@
 
 	<fieldset>
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'analytic', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'analytic', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'analytic', array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'analytic'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -44,8 +44,8 @@
 		</div>
 
 		<div class="form-group row">
-			<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('analytic_id');?> <span class="required">*</span></label>
-			<div class="col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('analytic_id');?> <span class="required">*</span></label>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'analytic_id',array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'analytic_id'); ?>
 				<div class="small-px"><?php echo Yii::t('phrase', 'Enter the Website Profile ID to use Google Analytics.');?></div>
@@ -53,10 +53,10 @@
 		</div>
 
 		<div class="form-group row">
-			<label class="col-form-label col-md-3 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12">
 				<?php echo $model->getAttributeLabel('analytic_profile_id');?> <span class="required">*</span>
 			</label>
-			<div class="col-md-9 col-sm-12">
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'analytic_profile_id',array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'analytic_profile_id'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -64,8 +64,8 @@
 		</div>
 
 		<div class="form-group row submit">
-			<label class="col-form-label col-md-3 col-sm-12">&nbsp;</label>
-			<div class="col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12">&nbsp;</label>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save'), array('onclick' => 'setEnableSave()')); ?>
 			</div>
 		</div>

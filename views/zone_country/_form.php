@@ -28,8 +28,8 @@
 		<?php //begin.Messages ?>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'country_name', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'country_name', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'country_name',array('maxlength'=>64, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'country_name'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -37,8 +37,8 @@
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'code', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'code', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'code',array('maxlength'=>2, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'code'); ?>
 				<?php /*<div class="small-px"></div>*/?>

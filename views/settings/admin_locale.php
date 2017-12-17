@@ -34,8 +34,8 @@
 
 	<fieldset>
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'site_dateformat', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'site_dateformat', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php 
 				$dateformat = "1986-08-11 16:25:50";
 				echo $form->dropDownList($model,'site_dateformat', array(
@@ -69,8 +69,8 @@
 		</div>
 		
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'site_timeformat', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
-			<div class="col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'site_timeformat', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php 
 				echo $form->dropDownList($model,'site_timeformat', array(
 					'g:i A' => date('g:i A', strtotime($dateformat)),
@@ -85,8 +85,8 @@
 		</div>
 
 		<div class="form-group row submit">
-			<label class="col-form-label col-md-3 col-sm-12">&nbsp;</label>
-			<div class="col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12">&nbsp;</label>
+			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo CHtml::submitButton(Yii::t('phrase', 'Save'), array('onclick' => 'setEnableSave()')); ?>
 			</div>
 		</div>
