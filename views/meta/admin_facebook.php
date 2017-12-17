@@ -49,7 +49,7 @@ EOP;
 	<fieldset>
 
 		<div class="form-group row">
-			<label><?php echo $model->getAttributeLabel('facebook_on');?> <span class="required">*</span></label>
+			<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('facebook_on');?> <span class="required">*</span></label>
 			<div class="col-md-9 col-sm-12">
 				<?php echo $form->radioButtonList($model,'facebook_on', array(
 					1 => Yii::t('phrase', 'Enabled'),
@@ -60,7 +60,7 @@ EOP;
 		</div>
 
 		<div class="form-group row">
-			<label><?php echo $model->getAttributeLabel('facebook_type');?> <span class="required">*</span></label>
+			<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('facebook_type');?> <span class="required">*</span></label>
 			<div class="col-md-9 col-sm-12">
 				<?php echo $form->dropDownList($model,'facebook_type', array(
 					1 => Yii::t('phrase', 'Profile'),
@@ -72,7 +72,7 @@ EOP;
 		
 		<div id="profile" class="filter <?php echo $model->facebook_type != 1 ? 'hide' : '';?>">
 			<div class="form-group row">
-				<label><?php echo $model->getAttributeLabel('facebook_profile_firstname');?> <span class="required">*</span></label>
+				<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('facebook_profile_firstname');?> <span class="required">*</span></label>
 				<div class="col-md-9 col-sm-12">
 					<?php echo $form->textField($model,'facebook_profile_firstname',array('maxlength'=>32,'class'=>'form-control')); ?>
 					<?php echo $form->error($model,'facebook_profile_firstname'); ?>
@@ -81,7 +81,7 @@ EOP;
 			</div>
 
 			<div class="form-group row">
-				<label><?php echo $model->getAttributeLabel('facebook_profile_lastname');?> <span class="required">*</span></label>
+				<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('facebook_profile_lastname');?> <span class="required">*</span></label>
 				<div class="col-md-9 col-sm-12">
 					<?php echo $form->textField($model,'facebook_profile_lastname',array('maxlength'=>32,'class'=>'form-control')); ?>
 					<?php echo $form->error($model,'facebook_profile_lastname'); ?>
@@ -90,7 +90,7 @@ EOP;
 			</div>
 
 			<div class="form-group row">
-				<label><?php echo $model->getAttributeLabel('facebook_profile_username');?> <span class="required">*</span></label>
+				<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('facebook_profile_username');?> <span class="required">*</span></label>
 				<div class="col-md-9 col-sm-12">
 					<?php echo $form->textField($model,'facebook_profile_username',array('maxlength'=>32,'class'=>'form-control')); ?>
 					<?php echo $form->error($model,'facebook_profile_username'); ?>
@@ -100,7 +100,7 @@ EOP;
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'facebook_sitename'); ?>
+			<?php echo $form->labelEx($model,'facebook_sitename', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
 			<div class="col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'facebook_sitename',array('maxlength'=>64,'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'facebook_sitename'); ?>
@@ -109,7 +109,7 @@ EOP;
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'facebook_see_also'); ?>
+			<?php echo $form->labelEx($model,'facebook_see_also', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
 			<div class="col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'facebook_see_also',array('maxlength'=>256,'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'facebook_see_also'); ?>
@@ -118,7 +118,7 @@ EOP;
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'facebook_admins'); ?>
+			<?php echo $form->labelEx($model,'facebook_admins', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
 			<div class="col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'facebook_admins',array('maxlength'=>32,'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'facebook_admins'); ?>

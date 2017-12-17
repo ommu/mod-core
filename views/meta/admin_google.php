@@ -67,7 +67,7 @@
 		<div class="form-group row">
 			<label class="col-form-label col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('office_place');?> <span class="required">*</span></label>
 			<div class="col-md-9 col-sm-12">
-				<?php echo $form->textArea($model,'office_place',array('rows'=>6, 'cols'=>50, 'class'=>'span-8 smaller')); ?>
+				<?php echo $form->textArea($model,'office_place',array('rows'=>6, 'cols'=>50, 'class'=>'form-control smaller')); ?>
 				<div class="pt-10"></div>
 				<?php echo $form->textField($model,'office_village', array('maxlength'=>32, 'class'=>'form-control', 'placeholder'=>$model->getAttributeLabel('office_village'))); ?>
 				<?php echo $form->textField($model,'office_district', array('maxlength'=>32, 'class'=>'form-control', 'placeholder'=>$model->getAttributeLabel('office_district'))); ?>
@@ -103,7 +103,7 @@
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'office_phone'); ?>
+			<?php echo $form->labelEx($model,'office_phone', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
 			<div class="col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'office_phone',array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_phone'); ?>
@@ -112,7 +112,7 @@
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'office_fax'); ?>
+			<?php echo $form->labelEx($model,'office_fax', array('class'=>'col-form-label col-md-3 col-sm-12')); ?>
 			<div class="col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'office_fax',array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_fax'); ?>

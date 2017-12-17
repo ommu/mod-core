@@ -65,7 +65,7 @@
 	</div>
 
 	<div class="form-group row submit">
-		<label>&nbsp;</label>
+		<label class="col-form-label col-md-3 col-sm-12">&nbsp;</label>
 		<div class="col-md-9 col-sm-12">
 			<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save'), array('onclick' => 'setEnableSave()')); ?>
 		</div>
