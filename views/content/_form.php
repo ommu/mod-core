@@ -143,10 +143,11 @@ EOP;
 						</div>
 					</div>
 				<?php } else {?>
-					<div class="form-group row">
+					<div class="form-group row publish">
 						<?php echo $form->labelEx($model,'media_show', array('class'=>'col-form-label col-lg-12 col-md-3 col-sm-12')); ?>
 						<div class="col-lg-12 col-md-9 col-sm-12">
 							<?php echo $form->checkBox($model,'media_show', array('class'=>'form-control')); ?>
+							<?php echo $form->labelEx($model, 'media_show'); ?>
 							<?php echo $form->error($model,'media_show'); ?>
 						</div>
 					</div>
@@ -179,10 +180,11 @@ EOP;
 					</div>
 				<?php }?>
 
-				<div class="form-group row">
+				<div class="form-group row publish">
 					<?php echo $form->labelEx($model,'publish', array('class'=>'col-form-label col-lg-12 col-md-3 col-sm-12')); ?>
 					<div class="col-lg-12 col-md-9 col-sm-12">
 						<?php echo $form->checkBox($model,'publish', array('class'=>'form-control')); ?>
+						<?php echo $form->labelEx($model, 'publish'); ?>
 						<?php echo $form->error($model,'publish'); ?>
 					</div>
 				</div>

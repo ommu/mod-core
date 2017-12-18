@@ -63,10 +63,11 @@
 			</div>
 		</div>
 
-		<div class="form-group row">
+		<div class="form-group row publish">
 			<?php echo $form->labelEx($model,'default_theme', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'default_theme', array('class'=>'form-control')); ?>
+				<?php echo $form->labelEx($model, 'default_theme'); ?>
 				<?php echo $form->error($model,'default_theme'); ?>
 			</div>
 		</div>

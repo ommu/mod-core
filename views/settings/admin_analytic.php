@@ -34,10 +34,11 @@
 	<?php //begin.Messages ?>
 
 	<fieldset>
-		<div class="form-group row">
+		<div class="form-group row publish">
 			<?php echo $form->labelEx($model,'analytic', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'analytic', array('class'=>'form-control')); ?>
+				<?php echo $form->labelEx($model, 'analytic'); ?>
 				<?php echo $form->error($model,'analytic'); ?>
 				<?php /*<div class="small-px"></div>*/?>
 			</div>

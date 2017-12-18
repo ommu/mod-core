@@ -51,36 +51,40 @@
 			</div>
 		</div>
 
-		<div class="form-group row">
+		<div class="form-group row publish">
 			<?php echo $form->labelEx($model,'install', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'install', array('class'=>'form-control')); ?>
+				<?php echo $form->labelEx($model, 'install'); ?>
 				<?php echo $form->error($model,'install'); ?>
 			</div>
 		</div>
 
 		<?php if($model->actived != '2') {?>
-		<div class="form-group row">
+			<div class="form-group row publish">
 			<?php echo $form->labelEx($model,'actived', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'actived', array('class'=>'form-control')); ?>
+				<?php echo $form->labelEx($model, 'actived'); ?>
 				<?php echo $form->error($model,'actived'); ?>
 			</div>
 		</div>
 		<?php }?>
 
-		<div class="form-group row">
+		<div class="form-group row publish">
 			<?php echo $form->labelEx($model,'search', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'search', array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'search'); ?>
+				<?php echo $form->error($model,'search'); ?>
 			</div>
 		</div>
 
-		<div class="form-group row">
+		<div class="form-group row publish">
 			<?php echo $form->labelEx($model,'default', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'default', array('class'=>'form-control')); ?>
+				<?php echo $form->error($model,'default'); ?>
 				<?php echo $form->error($model,'default'); ?>
 			</div>
 		</div>
