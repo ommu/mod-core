@@ -60,6 +60,7 @@
 			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->fileField($model,'meta_image',array('maxlength'=>64, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'meta_image'); ?>
+				<?php echo $form->error($model,'meta_image'); ?>
 			</div>
 		</div>
 		
