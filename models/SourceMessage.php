@@ -1,13 +1,12 @@
 <?php
 /**
  * SourceMessage
- * version: 0.0.1
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 5 November 2017, 18:22 WIB
  * @link https://github.com/ommu/ommu-core
- * @contact (+62)856-299-4114
  *
  * This is the model class for table "source_message".
  *

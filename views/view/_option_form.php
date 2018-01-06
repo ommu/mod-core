@@ -4,13 +4,12 @@
  * @var $this ViewController
  * @var $model OmmuPageViews
  * @var $form CActiveForm
- * version: 1.3.0
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 4 August 2017, 06:11 WIB
  * @link https://github.com/ommu/ommu-core
- * @contact (+62)856-299-4114
  *
  */
 ?>

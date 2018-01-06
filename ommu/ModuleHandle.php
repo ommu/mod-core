@@ -2,10 +2,8 @@
 /**
  * ModuleHandle class file
  * Contains many function that most used
- * version: 1.3.0
  *
  * Reference start
- *
  * TOC :
  *	getModulesFromDb
  *	getModuleConfig
@@ -21,11 +19,11 @@
  *	installModule
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @contact (+62)856-299-4114
  * @create date November 27, 2013 15:02 WIB
  * @version 1.0
  * @copyright Copyright (c) 2013 Ommu Platform (opensource.ommu.co)
  * @link https://github.com/ommu/ommu-core
- * @contact (+62)856-299-4114
  *
  *----------------------------------------------------------------------------------------------------------
  */

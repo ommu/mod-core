@@ -1,28 +1,27 @@
 <?php
 /**
-* MetaController
-* Handle MetaController
-* Copyright (c) 2012, Ommu Platform (opensource.ommu.co). All rights reserved.
-* version: 1.3.0
-* Reference start
-*
-* TOC :
-*	Index
-*	Edit
-*	Google
-*	Facebook
-*	Twitter
-*
-*	LoadModel
-*	performAjaxValidation
-*
-* @author Putra Sudaryanto <putra@sudaryanto.id>
-* @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
-* @link https://github.com/ommu/core
-* @contact (+62)856-299-4114
-*
-*----------------------------------------------------------------------------------------------------------
-*/
+ * MetaController
+ * Handle MetaController
+ * Copyright (c) 2012, Ommu Platform (opensource.ommu.co). All rights reserved.
+ * 
+ * Reference start
+ * TOC :
+ *	Index
+ *	Edit
+ *	Google
+ *	Facebook
+ *	Twitter
+ *
+ *	LoadModel
+ *	performAjaxValidation
+ *
+ * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @contact (+62)856-299-4114
+ * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @link https://github.com/ommu/core
+ *
+ *----------------------------------------------------------------------------------------------------------
+ */
 
 class MetaController extends Controller
 {

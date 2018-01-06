@@ -3,21 +3,19 @@
  * Ommu class file
  * Bootstrap application
  * in this class you set default controller to be executed first time
- * version: 1.3.0
  *
  * Reference start
- *
  * TOC :
  *	init
  *	getDefaultTheme
  *	getRulePos
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @contact (+62)856-299-4114
  * @create date August 6, 2012 15:02 WIB
  * @updated date February 20, 2014 15:50 WIB
  * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
  * @link https://github.com/ommu/ommu-core
- * @contact (+62)856-299-4114
  *
  *----------------------------------------------------------------------------------------------------------
  */
@@ -63,8 +61,14 @@ class Ommu extends CApplicationComponent
 		 */
 		$controllerMap = array();
 		// controllerMap for themes
-		$themeControllerPath = 'webroot.themes.'.$theme.'.controllers';
-		$controllerMap = $this->getController($themeControllerPath);
+		$publicTheme = $this->getDefaultTheme();
+		if($publicTheme)
+			$controllerMap = $this->getThemeController($publicTheme);
+
+		$maintenanceTheme = $this->getDefaultTheme('maintenance');
+		if($maintenanceTheme && $publicTheme != $maintenanceTheme)
+			$controllerMap = array_merge($controllerMap, $this->getThemeController($maintenanceTheme));
+
 		// controllerMap for core module
 		$coreControllerPath = 'application.libraries.core.controllers';
 		$controllerMap = array_merge($controllerMap, $this->getController($coreControllerPath));
@@ -288,12 +292,15 @@ $moduleRules[$val->folder.'/<controller:[a-zA-Z\/]+>/<action:\w+>/<category:\d+>
 	 *
 	 * @return string theme name
 	 */
-	public function getDefaultTheme() 
+	public function getDefaultTheme($type='public') 
 	{
 		$theme = OmmuThemes::model()->find(array(
 			'select'    => 'folder',
-			'condition' => 'group_page= :group AND default_theme= "1"',
-			'params'    => array(':group' => 'public'),
+			'condition' => 'group_page = :group AND default_theme = :default',
+			'params'    => array(
+				':group' => $type,
+				':default' => '1',
+			),
 		));
 
 		if($theme !== null)
@@ -361,6 +368,16 @@ $moduleRules[$val->folder.'/<controller:[a-zA-Z\/]+>/<action:\w+>/<category:\d+>
 		}
 
 		return $controllerMap;
+	}
+
+	public function getThemeController($theme)
+	{
+		if($theme) {
+			$themeControllerPath = 'webroot.themes.'.$theme.'.controllers';
+			if(file_exists(Yii::getPathOfAlias($themeControllerPath)))
+				return $this->getController($themeControllerPath);
+		} else
+			return null;
 	}
 
 	public function setAlias($path, $theme=false)
