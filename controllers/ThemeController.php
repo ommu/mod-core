@@ -141,6 +141,8 @@ class ThemeController extends Controller
 	{
 		$model=$this->loadModel($id);
 
+		$theme = $this->themeHandle->getThemeConfig($model->folder);
+
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
@@ -177,6 +179,7 @@ class ThemeController extends Controller
 		$this->pageMeta = '';
 		$this->render('admin_edit',array(
 			'model'=>$model,
+			'theme'=>$theme,
 		));
 	}
 	

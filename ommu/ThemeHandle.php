@@ -121,7 +121,24 @@ class ThemeHandle extends CApplicationComponent
 	}
 	
 	/**
-	 * Delete Folder
+	 * Delete DB folder
+	 */
+	public function deleteThemeDb($theme)
+	{
+		if($theme != null) {
+			$model = OmmuThemes::model()->findByAttributes(array('folder'=>$theme));
+			
+			if($model != null)
+				$model->delete();
+			else 
+				return false;
+
+		} else 
+			return false;
+	}
+	
+	/**
+	 * Delete theme folder
 	 */
 	public function deleteThemeFolder($themePath)
 	{
@@ -129,6 +146,8 @@ class ThemeHandle extends CApplicationComponent
 		if (file_exists($themePath)) {
 			Utility::deleteFolder($themePath);
 			//Utility::recursiveDelete($themePath);
+			//echo $themePath;
+			//exit();
 
 		} else 
 			return false;
@@ -137,16 +156,16 @@ class ThemeHandle extends CApplicationComponent
 	/**
 	 * Delete themes
 	 */
-	public function deleteTheme($theme=null)
+	public function deleteTheme($theme=null, $db=false)
 	{
 		if($theme != null) {
-			$model = OmmuThemes::model()->findByAttributes(array('folder'=>$theme));
+			//Delete theme database
+			if($db == true)
+				$this->deleteThemeDb($theme);
 
-			if($model != null && $model->delete()) {
-				$themePath = Yii::getPathOfAlias('webroot.themes.'.$theme);
-				//Delete theme source
-				$this->deleteThemeFolder($themePath);
-			}
+			//Delete theme source
+			$themePath = Yii::getPathOfAlias('webroot.themes.'.$theme);
+			$this->deleteThemeFolder($themePath);
 
 		} else 
 			return false;
@@ -166,12 +185,12 @@ class ThemeHandle extends CApplicationComponent
 			$caches[] = $val;
 		}
 
-		if($installedTheme)
+		if(!$installedTheme)
 			$installedTheme = array();
 			
 		foreach($caches as $cache) {
 			if(!in_array(trim($cache), array_map("trim", $installedTheme))) {
-				$this->deleteTheme($cache);
+				$this->deleteTheme($cache, true);
 			}
 		}
 

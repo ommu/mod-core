@@ -31,6 +31,14 @@
 			<div class="col-lg-8 col-md-9 col-sm-12">
 				<ul>
 					<li><strong><?php echo $model->name;?></strong></li>
+					<?php if($model->group_page == 'admin' && $model->folder == 'ommu') {
+						$group_page = array(
+							'public' => Yii::t('phrase', 'Public'),
+							'admin' => Yii::t('phrase', 'Administrator'),
+							'maintenance' => Yii::t('phrase', 'Offline (Coming Soon & Maintenance)'),
+						);?>
+					<li><?php echo $model->getAttributeLabel('group_page');?>: <?php echo $group_page[$model->group_page];?></li>
+					<?php }?>
 					<li><?php echo $model->getAttributeLabel('folder');?>: <?php echo $model->folder;?></li>
 					<li><?php echo $model->getAttributeLabel('layout');?>: <?php echo $model->layout;?></li>
 				</ul>
@@ -38,17 +46,36 @@
 			</div>
 		</div>
 
-		<div class="form-group row">
-			<?php echo $form->labelEx($model,'group_page', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->dropDownList($model, 'group_page', array(
-					'public' => Yii::t('phrase', 'Public'),
-					'admin' => Yii::t('phrase', 'Administrator'),
-					'maintenance' => Yii::t('phrase', 'Offline (Coming Soon & Maintenance)'),
-				), array('class'=>'form-control')); ?>
-				<?php echo $form->error($model,'group_page'); ?>
+		<?php if($model->group_page != 'admin' && $model->folder != 'ommu') {?>
+			<div class="form-group row">
+				<?php echo $form->labelEx($model,'group_page', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+				<div class="col-lg-8 col-md-9 col-sm-12">
+					<?php echo $form->dropDownList($model, 'group_page', array(
+						'public' => Yii::t('phrase', 'Public'),
+						'admin' => Yii::t('phrase', 'Administrator'),
+						'maintenance' => Yii::t('phrase', 'Offline (Coming Soon & Maintenance)'),
+					), array('class'=>'form-control')); ?>
+					<?php echo $form->error($model,'group_page'); ?>
+				</div>
 			</div>
-		</div>
+		<?php }?>
+
+		<?php 
+		$config = $theme['config'];
+		if(!empty($config)) {
+			if(!$model->getErrors())
+				$model->config = unserialize($model->config);
+			foreach($config as $key => $val) {
+				$inputField = "config[{$key}]";?>
+				<div class="form-group row">
+					<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo Yii::t('phrase', $config[$key]['label']);?></label>
+					<div class="col-lg-8 col-md-9 col-sm-12">
+						<?php echo $form->dropDownList($model, $inputField, $config[$key]['option'], array('class'=>'form-control')); ?>
+						<?php echo $form->error($model, $inputField); ?>
+					</div>
+				</div>
+		<?php }
+		}?>
 
 		<div class="form-group row publish">
 			<?php echo $form->labelEx($model,'default_theme', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>

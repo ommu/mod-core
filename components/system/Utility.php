@@ -199,11 +199,21 @@ class Utility
 	{
 		if(file_exists($path)) {
 			$fh = dir($path);
+			//print_r($fh);
 			while (false !== ($files = $fh->read())) {
+				/*
+				echo $fh->path.'/'.$files."\n";
+				chmod($fh->path.'/'.$files, 0755);
+				if(@unlink($fh->path.'/'.$files))
+					echo '1'."\n";
+				else
+					echo '0'."\n";
+				*/
 				@unlink($fh->path.'/'.$files);
 			}
 			$fh->close();
 			@rmdir($path);
+
 			return true;
 
 		} else 
