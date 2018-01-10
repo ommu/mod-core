@@ -24,6 +24,13 @@ $js=<<<EOP
 			$('div#construction').slideUp();
 		} else {
 			$('div#construction').slideDown();
+			if(id == '0') {
+				$('div#comingsoon').slideUp();
+				$('div#maintenance').slideDown();
+			} else {
+				$('div#maintenance').slideUp();
+				$('div#comingsoon').slideDown();
+			}
 		}
 	});
 	$('#OmmuSettings_event_i input[name="OmmuSettings[event_i]"]').on('change', function() {
@@ -117,11 +124,22 @@ EOP;
 				</div>
 			</div>
 
-			<div class="form-group row">
-				<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('construction_text')?> <span class="required">*</span></label>
+			<div id="comingsoon" class="form-group row <?php echo $model->online != '2' ? 'hide' : ''; ?>">
+				<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('construction_text[comingsoon]')?> <span class="required">*</span></label>
 				<div class="col-lg-8 col-md-9 col-sm-12">
-					<?php echo $form->textArea($model,'construction_text',array('rows'=>6, 'cols'=>50, 'class'=>'form-control small')); ?>
-					<?php echo $form->error($model,'construction_text'); ?>
+					<?php 
+					if(!$model->getErrors())
+						$model->construction_text = unserialize($model->construction_text);
+					echo $form->textArea($model,'construction_text[comingsoon]',array('rows'=>6, 'cols'=>50, 'class'=>'form-control small')); ?>
+					<?php echo $form->error($model,'construction_text[comingsoon]'); ?>
+				</div>
+			</div>
+
+			<div id="maintenance" class="form-group row <?php echo $model->online != '0' ? 'hide' : ''; ?>">
+				<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('construction_text[maintenance]')?> <span class="required">*</span></label>
+				<div class="col-lg-8 col-md-9 col-sm-12">
+					<?php echo $form->textArea($model,'construction_text[maintenance]',array('rows'=>6, 'cols'=>50, 'class'=>'form-control small')); ?>
+					<?php echo $form->error($model,'construction_text[maintenance]'); ?>
 				</div>
 			</div>
 		</div>

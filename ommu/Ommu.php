@@ -66,12 +66,19 @@ class Ommu extends CApplicationComponent
 			$controllerMap = $this->getThemeController($publicTheme);
 
 		$maintenanceTheme = $this->getDefaultTheme('maintenance');
-		if($maintenanceTheme && $publicTheme != $maintenanceTheme)
-			$controllerMap = array_merge($controllerMap, $this->getThemeController($maintenanceTheme));
+		if($maintenanceTheme && $publicTheme != $maintenanceTheme) {
+			if(!empty($controllerMap))
+				$controllerMap = array_merge($controllerMap, $this->getThemeController($maintenanceTheme));
+			else
+				$controllerMap = $this->getThemeController($maintenanceTheme);
+		}
 
 		// controllerMap for core module
 		$coreControllerPath = 'application.libraries.core.controllers';
-		$controllerMap = array_merge($controllerMap, $this->getController($coreControllerPath));
+		if(!empty($controllerMap))
+			$controllerMap = array_merge($controllerMap, $this->getController($coreControllerPath));
+		else
+			$controllerMap = $this->getController($coreControllerPath);
 		Yii::app()->controllerMap = $controllerMap;
 
 		/**

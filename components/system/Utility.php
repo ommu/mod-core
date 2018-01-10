@@ -18,6 +18,8 @@
  *	getContentMenu
  *	getModuleMenu
  *	getThemeInfo
+ *	chmodr
+ *	recursiveDelete
 
  
  *	getConnected
@@ -34,8 +36,6 @@
  *	softDecode
  *	hardDecode
  *	cleanImageContent
- *	chmodr
- *	recursiveDelete
  *	formatSizeUnits
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
@@ -205,9 +205,8 @@ class Utility
 			@rmdir($path);
 			return true;
 
-		} else {
+		} else 
 			return false;
-		}
 	}
 	
 	/**
@@ -361,6 +360,66 @@ class Utility
 				return $themeYML[$type];
 		} else
 			return false;
+	}
+
+	/**
+	 * Recursively chmod file/folder
+	 *
+	 * @param string $path
+	 * @param octal $fileMode
+	 */
+	public static function chmodr($path, $fileMode) {
+		if (!is_dir($path))
+			return chmod($path, $fileMode);
+
+		$dh = opendir($path);
+		while (($file = readdir($dh)) !== false) {
+			if($file != '.' && $file != '..') {
+				$fullpath = $path.'/'.$file;
+				if(is_link($fullpath))
+					return false;
+				elseif(!is_dir($fullpath) && !@chmod($fullpath, $fileMode))
+						return false;
+				elseif(!self::chmodr($fullpath, $fileMode))
+					return false;
+			}
+		}
+		closedir($dh);
+
+		if(@chmod($path, $fileMode))
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * Delete files and folder recursively
+	 *
+	 * @param string $path path of file/folder
+	 */
+	public static function recursiveDelete($path) {
+		if(is_file($path)) {
+			@unlink($path);
+
+		} else {
+			$it = new RecursiveIteratorIterator(
+				new RecursiveDirectoryIterator($path),
+				RecursiveIteratorIterator::CHILD_FIRST
+			);
+
+			foreach ($it as $file) {
+				if (in_array($file->getBasename(), array('.', '..'))) {
+					continue;
+				}elseif ($file->isDir()) {
+					rmdir($file->getPathname());
+				}elseif ($file->isFile() || $file->isLink()) {
+					unlink($file->getPathname());
+				}
+			}
+			rmdir($path);
+		}
+
+		return false;
 	}
 
 
@@ -690,63 +749,6 @@ class Utility
 			$result = str_replace($img, '', $content);
 		}
 		return $result;	
-	}
-
-	/**
-	 * Recursively chmod file/folder
-	 *
-	 * @param string $path
-	 * @param octal $fileMode
-	 */
-	public static function chmodr($path, $fileMode) {
-		if (!is_dir($path))
-			return chmod($path, $fileMode);
-
-		$dh = opendir($path);
-		while (($file = readdir($dh)) !== false) {
-			if($file != '.' && $file != '..') {
-				$fullpath = $path.'/'.$file;
-				if(is_link($fullpath))
-					return false;
-				elseif(!is_dir($fullpath) && !@chmod($fullpath, $fileMode))
-						return false;
-				elseif(!self::chmodr($fullpath, $fileMode))
-					return false;
-			}
-		}
-		closedir($dh);
-
-		if(@chmod($path, $fileMode))
-			return true;
-		else
-			return false;
-	}
-
-	/**
-	 * Delete files and folder recursively
-	 *
-	 * @param string $path path of file/folder
-	 */
-	public static function recursiveDelete($path) {
-		if(is_file($path)) {
-			@unlink($path);
-		}else {
-			$it = new RecursiveIteratorIterator(
-				new RecursiveDirectoryIterator($path),
-				RecursiveIteratorIterator::CHILD_FIRST
-			);
-
-			foreach ($it as $file) {
-				if (in_array($file->getBasename(), array('.', '..'))) {
-					continue;
-				}elseif ($file->isDir()) {
-					rmdir($file->getPathname());
-				}elseif ($file->isFile() || $file->isLink()) {
-					unlink($file->getPathname());
-				}
-			}
-			rmdir($path);
-		}
 	}
 
 	/**

@@ -159,8 +159,10 @@ class OmmuSettings extends CActiveRecord
 			'site_creation' => Yii::t('attribute', 'Site Creation'),
 			'site_dateformat' => Yii::t('attribute', 'Site Dateformat'),
 			'site_timeformat' => Yii::t('attribute', 'Site Timeformat'),
-			'construction_date' => Yii::t('attribute', 'Maintenance Date'),
+			'construction_date' => Yii::t('attribute', 'Offline Date'),
 			'construction_text' => Yii::t('attribute', 'Maintenance Text'),
+			'construction_text[comingsoon]' => Yii::t('attribute', 'Coming Soon Text'),
+			'construction_text[maintenance]' => Yii::t('attribute', 'Maintenance Text'),
 			'event_startdate' => Yii::t('attribute', 'Event Startdate'),
 			'event_finishdate' => Yii::t('attribute', 'Event Finishdate'),
 			'event_tag' => Yii::t('attribute', 'Event Tag'),
@@ -453,8 +455,10 @@ class OmmuSettings extends CActiveRecord
 			if($this->online != 1) {
 				if($this->construction_date == '')
 					$this->addError('construction_date', Yii::t('phrase', 'Maintenance date cannot be blank.'));
-				if($this->construction_text == '')
-					$this->addError('construction_text', Yii::t('phrase', 'Maintenance text cannot be blank.'));
+				if($this->online == 0 && $this->construction_text['maintenance'] == '')
+					$this->addError('construction_text[maintenance]', Yii::t('phrase', 'Maintenance text cannot be blank.'));
+				if($this->online == 2 && $this->construction_text['comingsoon'] == '')
+					$this->addError('construction_text[comingsoon]', Yii::t('phrase', 'Coming Soon text cannot be blank.'));
 			}
 			
 			if($currentAction == 'settings/general') {
@@ -490,6 +494,7 @@ class OmmuSettings extends CActiveRecord
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
 			$this->construction_date = date('Y-m-d', strtotime($this->construction_date));
+			$this->construction_text = serialize($this->construction_text);
 			$this->event_startdate = date('Y-m-d', strtotime($this->event_startdate));
 			$this->event_finishdate = date('Y-m-d', strtotime($this->event_finishdate));
 		}

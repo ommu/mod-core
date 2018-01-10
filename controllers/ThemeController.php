@@ -9,7 +9,6 @@
  * TOC :
  *	Index
  *	Manage
- *	Add
  *	Edit
  *	Delete
  *	Default
@@ -33,6 +32,7 @@ class ThemeController extends Controller
 	 */
 	//public $layout='//layouts/column2';
 	public $defaultAction = 'index';
+	public $themeHandle;
 
 	/**
 	 * Initialize admin page theme
@@ -44,6 +44,7 @@ class ThemeController extends Controller
 				$arrThemes = Utility::getCurrentTemplate('admin');
 				Yii::app()->theme = $arrThemes['folder'];
 				$this->layout = $arrThemes['layout'];
+				$this->themeHandle = Yii::app()->themeHandle;
 				Utility::applyViewPath(__dir__, false);
 			}
 		} else
@@ -70,7 +71,7 @@ class ThemeController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','manage','add','edit','delete','default'),
+				'actions'=>array('index','manage','edit','delete','default','upload'),
 				'users'=>array('@'),
 				'expression'=>'$user->level == 1',
 			),
@@ -78,6 +79,15 @@ class ThemeController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+
+	/**
+	 * Cache theme, update and install to file
+	 */
+	public function updateThemes()
+	{
+		$this->themeHandle->cacheThemeConfig();
+		$this->themeHandle->setThemes();
 	}
 	
 	/**
@@ -93,6 +103,9 @@ class ThemeController extends Controller
 	 */
 	public function actionManage() 
 	{
+		//Update themes
+		$this->updateThemes();
+
 		$model=new OmmuThemes('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['OmmuThemes'])) {
@@ -117,54 +130,6 @@ class ThemeController extends Controller
 			'columns' => $columns,
 		));
 
-	}	
-	
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionAdd() 
-	{
-		$model=new OmmuThemes;
-
-		// Uncomment the following line if AJAX validation is needed
-		$this->performAjaxValidation($model);
-
-		if(isset($_POST['OmmuThemes'])) {
-			$model->attributes=$_POST['OmmuThemes'];
-
-			$jsonError = CActiveForm::validate($model);
-			if(strlen($jsonError) > 2) {
-				echo $jsonError;
-				
-			} else {
-				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
-					if($model->save()) {
-						echo CJSON::encode(array(
-							'type' => 5,
-							'get' => Yii::app()->controller->createUrl('manage'),
-							'id' => 'partial-ommu-themes',
-							'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Theme success created.').'</strong></div>',
-						));
-					} else {
-						print_r($model->getErrors());
-					}
-				}
-			}
-			Yii::app()->end();
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 500;
-			
-			$this->pageTitle = Yii::t('phrase', 'Add Theme');
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_add',array(
-				'model'=>$model,
-			));
-		}
 	}
 
 	/**
@@ -228,8 +193,9 @@ class ThemeController extends Controller
 		if(Yii::app()->request->isPostRequest) {
 			// we only allow deletion via POST request
 			$model->publish = 2;
-			
-			if($model->save()) {
+			$model->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
+
+			if($model->update()) {
 				echo CJSON::encode(array(
 					'type' => 5,
 					'get' => Yii::app()->controller->createUrl('manage'),
@@ -263,8 +229,9 @@ class ThemeController extends Controller
 			// we only allow deletion via POST request
 			//change value active or publish
 			$model->default_theme = 1;
+			$model->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
 
-			if($model->save()) {
+			if($model->update()) {
 				echo CJSON::encode(array(
 					'type' => 5,
 					'get' => Yii::app()->controller->createUrl('manage'),
@@ -285,6 +252,51 @@ class ThemeController extends Controller
 				'model'=>$model,
 			));
 		}
+	}
+	
+	/**
+	 * Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
+	public function actionUpload() 
+	{
+		$runtimePath = Yii::app()->runtimePath;
+
+		// Upload and extract yii theme
+		if(isset($_FILES['theme_file'])) {
+			$fileName = CUploadedFile::getInstanceByName('theme_file');
+
+			if(strpos($fileName->type, 'zip') !== false) {
+				if($fileName->saveAs($runtimePath.'/'.$fileName->name)) {
+					$zip        = new ZipArchive;
+					$open    = $zip->open($runtimePath.'/'.$fileName->name);
+					$extractTo  = explode('.', $fileName->name);
+					@chmod($runtimePath.'/'.$fileName->name, 0777);
+
+					if($open == true) {
+						if($zip->extractTo(Yii::getPathOfAlias('webroot.themes'))) {
+							Utility::chmodr(Yii::getPathOfAlias('webroot.themes').'/'.$extractTo[0], 0755);
+							Utility::recursiveDelete($runtimePath.'/'.$fileName->name);
+							$zip->close();
+							Yii::app()->user->setFlash('success', Yii::t('phrase', 'Theme sukses diextract.'));
+							$this->redirect(array('manage'));
+						}
+					}
+
+				} else
+					Yii::app()->user->setFlash('error', Yii::t('phrase', 'Gagal mengupload file.'));	
+			} else
+				Yii::app()->user->setFlash('error', Yii::t('phrase', 'Hanya file .zip yang dibolehkan.'));
+		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 400;
+		
+		$this->pageTitle = Yii::t('phrase', 'Upload Theme');
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_upload');
 	}
 
 	/**

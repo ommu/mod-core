@@ -70,8 +70,8 @@ class OmmuThemes extends CActiveRecord
 		return array(
 			array('group_page, folder, layout, name', 'required'),
 			array('default_theme', 'numerical', 'integerOnly'=>true),
-			array('group_page', 'length', 'max'=>6),
 			array('folder, layout, name, thumbnail', 'length', 'max'=>32),
+			array('thumbnail', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('theme_id, group_page, default_theme, folder, layout, name, thumbnail, creation_date, creation_id, modified_date, modified_id,
@@ -214,8 +214,6 @@ class OmmuThemes extends CActiveRecord
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			$this->defaultColumns[] = 'name';
-			$this->defaultColumns[] = 'folder';
 			$this->defaultColumns[] = array(
 				'name' => 'group_page',
 				'value' => '$data->group_page',
@@ -225,10 +223,12 @@ class OmmuThemes extends CActiveRecord
 				'filter'=>array(
 					'public' => Yii::t('phrase', 'Public'),
 					'admin' => Yii::t('phrase', 'Administrator'),
-					'underconstruction' => Yii::t('phrase', 'Undercontruction'),
+					'maintenance' => Yii::t('phrase', 'Offline (Coming Soon & Maintenance)'),
 				),
 				'type' => 'raw',
 			);
+			$this->defaultColumns[] = 'name';
+			$this->defaultColumns[] = 'folder';
 			$this->defaultColumns[] = array(
 				'name' => 'creation_search',
 				'value' => '$data->creation->displayname',
@@ -297,12 +297,14 @@ class OmmuThemes extends CActiveRecord
 				// set to default modules
 				if($this->default_theme == 1) {
 					self::model()->updateAll(array(
-						'default_theme' => 0,	
+						'default_theme' => 0,
 					), array(
-						'condition'=> 'group_page = :group',
-						'params'=>array(':group'=>$this->group_page),
+						'condition'=> 'theme_id <> :theme AND group_page = :group',
+						'params'=>array(
+							':theme'=>$this->theme_id,
+							':group'=>$this->group_page,
+						),
 					));
-					$this->default_theme = 1;
 				}
 			}
 		}

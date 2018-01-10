@@ -35,32 +35,32 @@ class ModuleHandle extends CApplicationComponent
 	
 	private $_moduleTableName = 'ommu_core_plugins';
 	
-	
 	/*
 	 Dapatkan total modul yang ada pada tabel modul.
 	 @return integer rows.
 	*/
-	public function getModulesFromDb($actived=null) {
+	public function getModulesFromDb($actived=null)
+	{
 		$criteria = new CDbCriteria;
 		if($actived == null) {
-			$criteria->condition = 'folder != :folder';
+			$criteria->condition = 'folder <> :folder';
 			$criteria->params = array(
 				':folder'=>'-',
 			);		
 		} else if($actived == 'enabled') {
-			$criteria->condition = 'actived != :actived AND folder != :folder';
+			$criteria->condition = 'actived <> :actived AND folder <> :folder';
 			$criteria->params = array(
 				':actived'=>0,
 				':folder'=>'-',
 			);
 		} else {
-			$criteria->condition = 'actived == :actived AND folder != :folder';
+			$criteria->condition = 'actived = :actived AND folder <> :folder';
 			$criteria->params = array(
 				':actived'=>$actived,
 				':folder'=>'-',
 			);
 		}
-		$criteria->compare('parent_id',0);
+		$criteria->compare('parent_id', 0);
 		$criteria->order = 'folder ASC';
 		$modules = OmmuPlugins::model()->findAll($criteria);
 		
@@ -73,7 +73,8 @@ class ModuleHandle extends CApplicationComponent
 	 * @param string $moduleName
 	 * @return array
 	 */
-	public function getModuleConfig($moduleName) {
+	public function getModuleConfig($moduleName)
+	{
 		Yii::import('application.libraries.core.components.plugin.Spyc');
 		define('DS', DIRECTORY_SEPARATOR);
 		
@@ -88,7 +89,8 @@ class ModuleHandle extends CApplicationComponent
 	 * Cache modul dari database ke bentuk file.
 	 * Untuk mengurangi query pada saat install ke database.
 	 */
-	public function cacheModuleConfig() {
+	public function cacheModuleConfig()
+	{
 		$modules = $this->getModulesFromDb();
 		$arrayModule = '';
 
@@ -104,7 +106,8 @@ class ModuleHandle extends CApplicationComponent
 	/**
 	 * Delete Folder
 	 */
-	public function deleteModuleFolder($dirname) {
+	public function deleteModuleFolder($dirname)
+	{
 	    // Sanity check
 	    if (file_exists($dirname)) {
 			// Simple delete for a file
@@ -128,15 +131,15 @@ class ModuleHandle extends CApplicationComponent
 			$dir->close();
 			return rmdir($dirname);
 		
-	    } else {
-	        return false;		
-		}	
+		} else
+			return false;
 	}	
 
 	/**
 	 * Delete modules
 	 */
-	public function deleteModule($module=null) {
+	public function deleteModule($module=null)
+	{
 		if($module != null) {
 			$config    = $this->getModuleConfig($module);
 			$tableName = $config['db_table_name'];
@@ -159,15 +162,15 @@ class ModuleHandle extends CApplicationComponent
 			//Delete public source
 			$this->deleteModuleFolder($publicPath);
 		
-		} else {
+		} else
 			return false;
-		}
 	}
 	
 	/**
 	 * return ignore module from scanner.
 	 */
-	public function getIgnoreModule() {
+	public function getIgnoreModule()
+	{
 		return array();
 	}
 
@@ -176,7 +179,8 @@ class ModuleHandle extends CApplicationComponent
 	 *
 	 * @return array daftar modul yang ada atau false jika tidak terdapat modul.
 	 */
-	public function getModulesFromDir() {
+	public function getModulesFromDir()
+	{
 		$moduleList = array();
 		$modulePath = Yii::getPathOfAlias('application.modules');
 		$modules    = scandir(Yii::getPathOfAlias('application.modules'));
@@ -190,17 +194,17 @@ class ModuleHandle extends CApplicationComponent
 			}
 		}
 
-		if(count($moduleList) > 0) {
+		if(count($moduleList) > 0)
 			return $moduleList;
-		}else {
+		else
 			return false;
-		}
 	}
 	
 	/**
 	 * Install modul ke file protected/config/modules.php
 	 */
-	public function updateModuleAddonFromDir($module = array()) {
+	public function updateModuleAddonFromDir($module = array())
+	{
 		$config = '';
 		$moduleCaches = $this->getModulesFromDir();
 		if(count($module) > 0 && is_array($module)) {
@@ -226,7 +230,8 @@ class ModuleHandle extends CApplicationComponent
 	}
 
 	/**/
-	public function getIdMax($fieldName, $tableName) {
+	public function getIdMax($fieldName, $tableName)
+	{
 		$conn = Yii::app()->db;
 		$sql  = 'SELECT IFNULL(MAX(' . $fieldName . ')+1, 1) as id FROM ' . $tableName;
 		return $conn->createCommand($sql)->queryScalar();
@@ -235,7 +240,8 @@ class ModuleHandle extends CApplicationComponent
 	/**
 	 * Install modul ke database
 	 */
-	public function setModuleToDb() {
+	public function setModuleToDb()
+	{
 		$countModulesFile = count($this->getModulesFromDir());
 		$countModulesDb = count($this->getModulesFromDb());
 		$toBeInstalled    = array();
@@ -310,7 +316,8 @@ class ModuleHandle extends CApplicationComponent
 	/**
 	 * Update module from db to file
 	 */
-	public function updateModuleAddon() {
+	public function updateModuleAddon()
+	{
 		$modules = $this->getModulesFromDb('enabled');
 
 		if(count($modules) > 0) {
@@ -353,7 +360,8 @@ class ModuleHandle extends CApplicationComponent
 	 * @param string $moduleName
 	 * @return void.
 	 */
-	public function installModule($id, $moduleName) {
+	public function installModule($id, $moduleName)
+	{
 		$module		= OmmuPlugins::model()->findByPk($id);
 		$config		= $this->getModuleConfig($moduleName);
 		if($config != null) {
@@ -388,7 +396,7 @@ class ModuleHandle extends CApplicationComponent
 						$sql = file_get_contents($sqlPath);
 						Yii::app()->db->createCommand($sql)->execute();
 					}
-				}				
+				}
 			}
 		}
 	}
