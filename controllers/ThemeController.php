@@ -166,19 +166,18 @@ class ThemeController extends Controller
 				}
 			}
 			Yii::app()->end();
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 500;
-			
-			$this->pageTitle = Yii::t('phrase', 'Update Theme: $theme_name', array('$theme_name'=>$model->name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_edit',array(
-				'model'=>$model,
-			));
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 500;
+		
+		$this->pageTitle = Yii::t('phrase', 'Update Theme: $theme_name', array('$theme_name'=>$model->name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_edit',array(
+			'model'=>$model,
+		));
 	}
 	
 	/**
@@ -192,10 +191,9 @@ class ThemeController extends Controller
 		
 		if(Yii::app()->request->isPostRequest) {
 			// we only allow deletion via POST request
-			$model->publish = 2;
-			$model->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
-
-			if($model->update()) {
+			if($model->delete()) {
+				$this->themeHandle->deleteTheme($model->folder);
+				
 				echo CJSON::encode(array(
 					'type' => 5,
 					'get' => Yii::app()->controller->createUrl('manage'),
@@ -203,17 +201,17 @@ class ThemeController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Theme success deleted.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', 'Delete Theme: $theme_name', array('$theme_name'=>$model->name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_delete');
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', 'Delete Theme: $theme_name', array('$theme_name'=>$model->name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_delete');
 	}
 
 	/**
@@ -239,19 +237,19 @@ class ThemeController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Theme success updated.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', 'Default Theme: $theme_name', array('$theme_name'=>$model->name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_default',array(
-				'model'=>$model,
-			));
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', 'Default Theme: $theme_name', array('$theme_name'=>$model->name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_default',array(
+			'model'=>$model,
+		));
 	}
 	
 	/**

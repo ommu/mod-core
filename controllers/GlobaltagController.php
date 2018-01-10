@@ -329,17 +329,17 @@ class GlobaltagController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Tag success deleted.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', 'Delete Tag: $tag_name', array('$tag_name'=>$model->body));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/global_tag/admin_delete');
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', 'Delete Tag: $tag_name', array('$tag_name'=>$model->body));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/global_tag/admin_delete');
 	}
 
 	/**
@@ -368,20 +368,20 @@ class GlobaltagController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Tag success updated.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', '$title Tag: $tag_name', array('$title'=>$title, '$tag_name'=>$model->body));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/global_tag/admin_publish',array(
-				'title'=>$title,
-				'model'=>$model,
-			));
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', '$title Tag: $tag_name', array('$title'=>$title, '$tag_name'=>$model->body));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/global_tag/admin_publish',array(
+			'title'=>$title,
+			'model'=>$model,
+		));
 	}
 
 	/**

@@ -252,17 +252,17 @@ class WallController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>OmmuWalls success deleted.</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = 'OmmuWalls Delete.';
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_delete');
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = 'OmmuWalls Delete.';
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_delete');
 	} 
 
 	/** 
@@ -290,20 +290,20 @@ class WallController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>OmmuWalls success published.</strong></div>', 
 				)); 
 			} 
+			Yii::app()->end();
+		}
 
-		} else { 
-			$this->dialogDetail = true; 
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage'); 
-			$this->dialogWidth = 350; 
+		$this->dialogDetail = true; 
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage'); 
+		$this->dialogWidth = 350; 
 
-			$this->pageTitle = $title; 
-			$this->pageDescription = ''; 
-			$this->pageMeta = ''; 
-			$this->render('admin_publish',array( 
-				'title'=>$title, 
-				'model'=>$model, 
-			)); 
-		} 
+		$this->pageTitle = $title; 
+		$this->pageDescription = ''; 
+		$this->pageMeta = ''; 
+		$this->render('admin_publish',array( 
+			'title'=>$title, 
+			'model'=>$model, 
+		));
 	}
 	
 	/**

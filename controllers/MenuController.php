@@ -300,17 +300,17 @@ class MenuController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Menu success deleted.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', 'Delete Menu: $menu_name category $category_name', array('$menu_name'=>$model->title->message,'$category_name'=>$model->cat->title->message));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_delete');
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', 'Delete Menu: $menu_name category $category_name', array('$menu_name'=>$model->title->message,'$category_name'=>$model->cat->title->message));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_delete');
 	}
 
 	/**
@@ -339,20 +339,20 @@ class MenuController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Menu success updated.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', '$title Menu: $menu_name category $category_name', array('$title'=>$title,'$menu_name'=>$model->title->message,'$category_name'=>$model->cat->title->message));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_publish',array(
-				'title'=>$title,
-				'model'=>$model,
-			));
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', '$title Menu: $menu_name category $category_name', array('$title'=>$title,'$menu_name'=>$model->title->message,'$category_name'=>$model->cat->title->message));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_publish',array(
+			'title'=>$title,
+			'model'=>$model,
+		));
 	}
 
 	/**

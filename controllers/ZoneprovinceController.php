@@ -282,17 +282,17 @@ class ZoneprovinceController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Province success deleted.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', 'Delete Provincy: $province_name', array('$province_name'=>$model->province_name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_province/admin_delete');
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', 'Delete Provincy: $province_name', array('$province_name'=>$model->province_name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_province/admin_delete');
 	}
 
 	/**
@@ -321,20 +321,20 @@ class ZoneprovinceController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Province success updated.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', '$title Provincy: $province_name', array('$title'=>$title, '$province_name'=>$model->province_name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_province/admin_publish',array(
-				'title'=>$title,
-				'model'=>$model,
-			));
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', '$title Provincy: $province_name', array('$title'=>$title, '$province_name'=>$model->province_name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_province/admin_publish',array(
+			'title'=>$title,
+			'model'=>$model,
+		));
 	}
 
 	/**

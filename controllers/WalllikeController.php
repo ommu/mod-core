@@ -234,17 +234,17 @@ class WalllikeController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>OmmuWallLikes success deleted.</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = 'OmmuWallLikes Delete.';
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/wall_like/admin_delete');
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = 'OmmuWallLikes Delete.';
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/wall_like/admin_delete');
 	}
 
 	/**

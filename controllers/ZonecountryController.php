@@ -242,17 +242,17 @@ class ZonecountryController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Country success deleted.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', 'Delete Country: $country_name', array('$country_name'=>$model->country_name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_country/admin_delete');
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', 'Delete Country: $country_name', array('$country_name'=>$model->country_name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_country/admin_delete');
 	}
 
 	/**

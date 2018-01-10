@@ -282,17 +282,17 @@ class ZonedistrictController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Districts success deleted.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', 'Delete District: $district_name', array('$district_name'=>$model->district_name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_district/admin_delete');
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', 'Delete District: $district_name', array('$district_name'=>$model->district_name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_district/admin_delete');
 	}
 
 	/**
@@ -321,20 +321,20 @@ class ZonedistrictController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Districts success updated.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', '$title District: $district_name', array('$title'=>$title, '$district_name'=>$model->district_name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_district/admin_publish',array(
-				'title'=>$title,
-				'model'=>$model,
-			));
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', '$title District: $district_name', array('$title'=>$title, '$district_name'=>$model->district_name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_district/admin_publish',array(
+			'title'=>$title,
+			'model'=>$model,
+		));
 	}
 
 	/**

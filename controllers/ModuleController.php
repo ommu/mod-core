@@ -271,6 +271,7 @@ class ModuleController extends Controller
 			
 			if($model->delete()) {
 				$this->moduleHandle->deleteModule($model->folder);
+				
 				echo CJSON::encode(array(
 					'type' => 5,
 					'get' => Yii::app()->controller->createUrl('manage'),
@@ -278,17 +279,17 @@ class ModuleController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Module success deleted.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', 'Delete Module: $module_name', array('$module_name'=>$model->name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_delete');
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', 'Delete Module: $module_name', array('$module_name'=>$model->name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_delete');
 	}
 
 	/**
@@ -317,20 +318,20 @@ class ModuleController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Module success updated.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', '$title Module: $module_name', array('$title'=>$title, '$module_name'=>$model->name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_active',array(
-				'title'=>$title,
-				'model'=>$model,
-			));
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', '$title Module: $module_name', array('$title'=>$title, '$module_name'=>$model->name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_active',array(
+			'title'=>$title,
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -356,19 +357,19 @@ class ModuleController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Module success updated.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', 'Default Module: $module_name', array('$module_name'=>$model->name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_default',array(
-				'model'=>$model,
-			));
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', 'Default Module: $module_name', array('$module_name'=>$model->name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_default',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -396,20 +397,20 @@ class ModuleController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Module success installed.').'</strong></div>',
 				));
 			}
-		
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', '$title Module: $module_name', array('$title'=>$title, '$module_name'=>$model->name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_install',array(
-				'title'=>$title,
-				'model'=>$model,
-			));
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', '$title Module: $module_name', array('$title'=>$title, '$module_name'=>$model->name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_install',array(
+			'title'=>$title,
+			'model'=>$model,
+		));
 	}
 	
 	/**

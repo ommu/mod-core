@@ -282,17 +282,17 @@ class ZonecityController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'City success deleted.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', 'Delete City: $city_name', array('$city_name'=>$model->city_name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_city/admin_delete');
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', 'Delete City: $city_name', array('$city_name'=>$model->city_name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_city/admin_delete');
 	}
 
 	/**
@@ -321,20 +321,20 @@ class ZonecityController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'City success updated.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', '$title City: $city_name', array('$title'=>$title, '$city_name'=>$model->city_name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_city/admin_publish',array(
-				'title'=>$title,
-				'model'=>$model,
-			));
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', '$title City: $city_name', array('$title'=>$title, '$city_name'=>$model->city_name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_city/admin_publish',array(
+			'title'=>$title,
+			'model'=>$model,
+		));
 	}
 
 	/**

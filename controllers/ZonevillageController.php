@@ -282,17 +282,17 @@ class ZonevillageController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Village success deleted.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', 'Delete Village: $village_name', array('$village_name'=>$model->village_name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_village/admin_delete');
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', 'Delete Village: $village_name', array('$village_name'=>$model->village_name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_village/admin_delete');
 	}
 
 	/**
@@ -321,20 +321,20 @@ class ZonevillageController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Village success updated.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', '$title Village: $village_name', array('$title'=>$title, '$village_name'=>$model->village_name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_village/admin_publish',array(
-				'title'=>$title,
-				'model'=>$model,
-			));
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', '$title Village: $village_name', array('$title'=>$title, '$village_name'=>$model->village_name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_village/admin_publish',array(
+			'title'=>$title,
+			'model'=>$model,
+		));
 	}
 
 	/**

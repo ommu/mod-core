@@ -300,17 +300,17 @@ class WallcommentController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>OmmuWallComment success deleted.</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = 'OmmuWallComment Delete.';
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/wall_comment/admin_delete');
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = 'OmmuWallComment Delete.';
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/wall_comment/admin_delete');
 	}
 
 	/**
@@ -338,20 +338,20 @@ class WallcommentController extends Controller
 					'msg' => '<div class="errorSummary success"><strong>OmmuWallComment success published.</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = $title;
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/wall_comment/admin_publish',array(
-				'title'=>$title,
-				'model'=>$model,
-			));
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = $title;
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/wall_comment/admin_publish',array(
+			'title'=>$title,
+			'model'=>$model,
+		));
 	}
 	
 	/**

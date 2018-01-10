@@ -256,17 +256,17 @@ class LanguageController extends /*SBaseController*/ Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Language success deleted.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', 'Delete Language: $language_name', array('$language_name'=>$model->name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_delete');
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', 'Delete Language: $language_name', array('$language_name'=>$model->name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_delete');
 	}
 
 	/**
@@ -295,20 +295,20 @@ class LanguageController extends /*SBaseController*/ Controller
 					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Language success updated.').'</strong></div>',
 				));
 			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', '$title Language: $language_name', array('$language_name'=>$model->name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_active',array(
-				'title'=>$title,
-				'model'=>$model,
-			));
+			Yii::app()->end();
 		}
+
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 350;
+
+		$this->pageTitle = Yii::t('phrase', '$title Language: $language_name', array('$language_name'=>$model->name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_active',array(
+			'title'=>$title,
+			'model'=>$model,
+		));
 	}
 
 	/**
