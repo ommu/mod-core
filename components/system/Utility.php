@@ -195,7 +195,8 @@ class Utility
 	/**
 	 * remove folder and file
 	 */
-	public static function deleteFolder($path) {
+	public static function deleteFolder($path) 
+	{
 		if(file_exists($path)) {
 			$fh = dir($path);
 			while (false !== ($files = $fh->read())) {

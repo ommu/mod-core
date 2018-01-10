@@ -128,6 +128,7 @@ class ThemeHandle extends CApplicationComponent
 		// Sanity check
 		if (file_exists($themePath)) {
 			Utility::deleteFolder($themePath);
+			//Utility::recursiveDelete($themePath);
 
 		} else 
 			return false;
@@ -142,8 +143,7 @@ class ThemeHandle extends CApplicationComponent
 			$model = OmmuThemes::model()->findByAttributes(array('folder'=>$theme));
 
 			if($model != null && $model->delete()) {
-				$themePath = Yii::getPathOfAlias('webroot.themes.'.trim($theme));
-
+				$themePath = Yii::getPathOfAlias('webroot.themes.'.$theme);
 				//Delete theme source
 				$this->deleteThemeFolder($themePath);
 			}
@@ -166,6 +166,9 @@ class ThemeHandle extends CApplicationComponent
 			$caches[] = $val;
 		}
 
+		if($installedTheme)
+			$installedTheme = array();
+			
 		foreach($caches as $cache) {
 			if(!in_array(trim($cache), array_map("trim", $installedTheme))) {
 				$this->deleteTheme($cache);

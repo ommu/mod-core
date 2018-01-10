@@ -247,7 +247,6 @@ class LanguageController extends /*SBaseController*/ Controller
 		
 		if(Yii::app()->request->isPostRequest) {
 			// we only allow deletion via POST request
-
 			if($model->delete()) {
 				echo CJSON::encode(array(
 					'type' => 5,
