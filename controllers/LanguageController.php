@@ -278,13 +278,14 @@ class LanguageController extends /*SBaseController*/ Controller
 	{
 		$model=$this->loadModel($id);
 		
-		$title = $model->publish == 1 ? Yii::t('phrase', 'Deactived') : Yii::t('phrase', 'Actived');
-		$replace = $model->publish == 1 ? 0 : 1;
+		$title = $model->actived == 1 ? Yii::t('phrase', 'Deactived') : Yii::t('phrase', 'Actived');
+		$replace = $model->actived == 1 ? 0 : 1;
 
 		if(Yii::app()->request->isPostRequest) {
 			// we only allow deletion via POST request
 			//change value active or publish
 			$model->actived = $replace;
+			$model->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
 
 			if($model->update()) {
 				echo CJSON::encode(array(

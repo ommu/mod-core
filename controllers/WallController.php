@@ -242,15 +242,15 @@ class WallController extends Controller
 		
 		if(Yii::app()->request->isPostRequest) {
 			// we only allow deletion via POST request
-			if(isset($id)) {
-				if($model->delete()) {
-					echo CJSON::encode(array(
-						'type' => 5,
-						'get' => Yii::app()->controller->createUrl('manage'),
-						'id' => 'partial-ommu-walls',
-						'msg' => '<div class="errorSummary success"><strong>OmmuWalls success deleted.</strong></div>',
-					));
-				}
+			$model->publish = 2;
+			
+			if($model->update()) {
+				echo CJSON::encode(array(
+					'type' => 5,
+					'get' => Yii::app()->controller->createUrl('manage'),
+					'id' => 'partial-ommu-walls',
+					'msg' => '<div class="errorSummary success"><strong>OmmuWalls success deleted.</strong></div>',
+				));
 			}
 
 		} else {
@@ -272,30 +272,23 @@ class WallController extends Controller
 	 */ 
 	public function actionPublish($id)  
 	{ 
-		$model=$this->loadModel($id); 
-		 
-		if($model->publish == 1) { 
-			$title = Yii::t('phrase', 'Unpublish'); 
-			$replace = 0; 
-		} else { 
-			$title = Yii::t('phrase', 'Publish');  
-			$replace = 1; 
-		} 
+		$model=$this->loadModel($id);
+		
+		$title = $model->publish == 1 ? Yii::t('phrase', 'Deactived') : Yii::t('phrase', 'Actived');
+		$replace = $model->publish == 1 ? 0 : 1;
 
 		if(Yii::app()->request->isPostRequest) { 
 			// we only allow deletion via POST request 
-			if(isset($id)) { 
-				//change value active or publish 
-				$model->publish = $replace; 
+			//change value active or publish 
+			$model->publish = $replace;
 
-				if($model->update()) { 
-					echo CJSON::encode(array( 
-						'type' => 5, 
-						'get' => Yii::app()->controller->createUrl('manage'), 
-						'id' => 'partial-ommu-walls', 
-						'msg' => '<div class="errorSummary success"><strong>OmmuWalls success published.</strong></div>', 
-					)); 
-				} 
+			if($model->update()) {
+				echo CJSON::encode(array( 
+					'type' => 5, 
+					'get' => Yii::app()->controller->createUrl('manage'), 
+					'id' => 'partial-ommu-walls', 
+					'msg' => '<div class="errorSummary success"><strong>OmmuWalls success published.</strong></div>', 
+				)); 
 			} 
 
 		} else { 

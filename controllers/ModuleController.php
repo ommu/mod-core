@@ -300,15 +300,16 @@ class ModuleController extends Controller
 	{
 		$model=$this->loadModel($id);
 		
-		$title = $model->publish == 1 ? Yii::t('phrase', 'Deactived') : Yii::t('phrase', 'Actived');
-		$replace = $model->publish == 1 ? 0 : 1;
+		$title = $model->actived == 1 ? Yii::t('phrase', 'Deactived') : Yii::t('phrase', 'Actived');
+		$replace = $model->actived == 1 ? 0 : 1;
 
 		if(Yii::app()->request->isPostRequest) {
 			// we only allow deletion via POST request
 			//change value active or publish
 			$model->actived = $replace;
+			$model->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
 
-			if($model->save()) {
+			if($model->update()) {
 				echo CJSON::encode(array(
 					'type' => 5,
 					'get' => Yii::app()->controller->createUrl('manage'),
@@ -345,6 +346,7 @@ class ModuleController extends Controller
 			// we only allow deletion via POST request
 			//change value active or publish
 			$model->default = 1;
+			$model->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
 
 			if($model->update()) {
 				echo CJSON::encode(array(
@@ -376,13 +378,14 @@ class ModuleController extends Controller
 	{
 		$model=$this->loadModel($id);
 		
-		$title = $model->publish == 1 ? Yii::t('phrase', 'Uninstall') : Yii::t('phrase', 'Install');
-		$replace = $model->publish == 1 ? 0 : 1;
+		$title = $model->install == 1 ? Yii::t('phrase', 'Uninstall') : Yii::t('phrase', 'Install');
+		$replace = $model->install == 1 ? 0 : 1;
 		
 		if(Yii::app()->request->isPostRequest) {
 			// we only allow deletion via POST request
 			//change value install
 			$model->install = $replace;
+			$model->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
 
 			if($model->update()) {
 				$this->moduleHandle->installModule($model->plugin_id, $model->folder);

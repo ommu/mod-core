@@ -225,15 +225,14 @@ class WalllikeController extends Controller
 		
 		if(Yii::app()->request->isPostRequest) {
 			// we only allow deletion via POST request
-			if(isset($id)) {
-				if($model->delete()) {
-					echo CJSON::encode(array(
-						'type' => 5,
-						'get' => Yii::app()->controller->createUrl('manage'),
-						'id' => 'partial-ommu-wall-likes',
-						'msg' => '<div class="errorSummary success"><strong>OmmuWallLikes success deleted.</strong></div>',
-					));
-				}
+			
+			if($model->delete()) {
+				echo CJSON::encode(array(
+					'type' => 5,
+					'get' => Yii::app()->controller->createUrl('manage'),
+					'id' => 'partial-ommu-wall-likes',
+					'msg' => '<div class="errorSummary success"><strong>OmmuWallLikes success deleted.</strong></div>',
+				));
 			}
 
 		} else {
