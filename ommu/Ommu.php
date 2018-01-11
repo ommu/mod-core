@@ -20,7 +20,7 @@
  *----------------------------------------------------------------------------------------------------------
  */
 
-Yii::import('application.libraries.core.components.plugin.Spyc');
+Yii::import('application.vendor.mustangostang.spyc.Spyc');
 define('DS', DIRECTORY_SEPARATOR);
 
 class Ommu extends CApplicationComponent

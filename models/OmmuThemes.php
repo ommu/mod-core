@@ -312,7 +312,8 @@ class OmmuThemes extends CActiveRecord
 				}
 			}
 			
-			$this->config = serialize($this->config);
+			if($this->isNewRecord)
+				$this->config = serialize($this->config);
 		}
 		return true;
 	}

@@ -463,17 +463,17 @@ class OmmuSettings extends CActiveRecord
 			
 			if($currentAction == 'settings/general') {
 				if($this->event_i == 0) {
-					$this->event_startdate = '00-00-0000';	
-					$this->event_finishdate = '00-00-0000';	
+					$this->event_startdate = '00-00-0000';
+					$this->event_finishdate = '00-00-0000';
 					
 				} else {
 					$condition = 0;
-					if($this->event_startdate != '' && in_array(date('Y-m-d', strtotime($this->event_startdate)), array('0000-00-00','1970-01-01'))) {
+					if($this->event_startdate != '' && in_array(date('Y-m-d', strtotime($this->event_startdate)), array('0000-00-00','1970-01-01','-0001-11-30'))) {
 						$condition = 0;
 						$this->addError('event_startdate', Yii::t('phrase', 'Event Startdate cannot be blank or default date.'));
 					} else
 						$condition = 1;
-					if($this->event_finishdate != '' && in_array(date('Y-m-d', strtotime($this->event_finishdate)), array('0000-00-00','1970-01-01'))) {
+					if($this->event_finishdate != '' && in_array(date('Y-m-d', strtotime($this->event_finishdate)), array('0000-00-00','1970-01-01','-0001-11-30'))) {
 						$condition = 0;
 						$this->addError('event_finishdate', Yii::t('phrase', 'Event Finishdate cannot be blank or default date.'));
 					} else

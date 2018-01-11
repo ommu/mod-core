@@ -141,10 +141,10 @@ class SourceMessage extends CActiveRecord
 		$criteria->compare('t.category', strtolower($this->category),true);
 		$criteria->compare('t.message', strtolower($this->message),true);
 		$criteria->compare('t.location', strtolower($this->location),true);
-		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
+		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00')))
 			$criteria->compare('date(t.creation_date)', date('Y-m-d', strtotime($this->creation_date)));
 		$criteria->compare('t.creation_id', isset($_GET['creation']) ? $_GET['creation'] : $this->creation_id);
-		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
+		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00')))
 			$criteria->compare('date(t.modified_date)', date('Y-m-d', strtotime($this->modified_date)));
 		$criteria->compare('t.modified_id', isset($_GET['modified']) ? $_GET['modified'] : $this->modified_id);
 
