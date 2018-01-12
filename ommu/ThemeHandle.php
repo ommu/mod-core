@@ -108,7 +108,7 @@ class ThemeHandle extends CApplicationComponent
 	 */
 	public function getThemeConfig($theme)
 	{
-		Yii::import('application.vendor.mustangostang.spyc.Spyc');
+		Yii::import('mustangostang.spyc.Spyc');
 		define('DS', DIRECTORY_SEPARATOR);
 
 		$themeName = Utility::getUrlTitle($theme);

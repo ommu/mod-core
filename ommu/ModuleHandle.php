@@ -75,7 +75,7 @@ class ModuleHandle extends CApplicationComponent
 	 */
 	public function getModuleConfig($moduleName)
 	{
-		Yii::import('application.vendor.mustangostang.spyc.Spyc');
+		Yii::import('mustangostang.spyc.Spyc');
 		define('DS', DIRECTORY_SEPARATOR);
 		
 		$configPath = Yii::getPathOfAlias('application.modules.'.$moduleName).DS.$moduleName.'.yaml';
