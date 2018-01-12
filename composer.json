@@ -34,10 +34,11 @@
 		"php": ">=5.3.2",
 		"oomphinc/composer-installers-extender": "^1.0",
 		"yiisoft/yii": ">=1.1.14",
-		"mustangostang/spyc": "0.6.2",
-		"mobiledetect/mobiledetectlib": "^2.8",
 		"yiiext/imperavi-redactor-widget": "^1.3.10",
 		"ommu/gapi-google-analytics-php-interface": "^1.0",
-		"ommu/phpthumb": "^1.0.1"
+		"ommu/phpthumb": "^1.0.1",
+		"mustangostang/spyc": "0.6.2",
+		"mobiledetect/mobiledetectlib": "^2.8",
+		"ommu/phpmailer": "^0.1.0"
 	}
 }
