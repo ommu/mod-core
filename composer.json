@@ -39,6 +39,7 @@
 		"ommu/phpthumb": "^1.0.1",
 		"mustangostang/spyc": "0.6.2",
 		"mobiledetect/mobiledetectlib": "^2.8",
-		"ommu/phpmailer": "^0.1.0"
+		"ommu/phpmailer": "^0.1.0",
+		"2amigos/efeed": "^0.1.1"
 	}
 }

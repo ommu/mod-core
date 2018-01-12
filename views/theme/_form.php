@@ -70,7 +70,7 @@
 				<div class="form-group row">
 					<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo Yii::t('phrase', $config[$key]['label']);?></label>
 					<div class="col-lg-8 col-md-9 col-sm-12">
-						<?php echo $form->dropDownList($model, $inputField, $config[$key]['option'], array('class'=>'form-control')); ?>
+						<?php echo $form->dropDownList($model, $inputField, $config[$key]['option'], array('prompt'=>'', 'class'=>'form-control')); ?>
 						<?php echo $form->error($model, $inputField); ?>
 					</div>
 				</div>
