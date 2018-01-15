@@ -135,7 +135,7 @@ class OmmuMeta extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'view' => array(self::BELONGS_TO, 'ViewMeta', 'id'),
-			'country' => array(self::BELONGS_TO, 'OmmuZoneCountry', 'office_country_id'),			
+			'country' => array(self::BELONGS_TO, 'OmmuZoneCountry', 'office_country_id'),
 			'province' => array(self::BELONGS_TO, 'OmmuZoneProvince', 'office_province_id'),
 			'city' => array(self::BELONGS_TO, 'OmmuZoneCity', 'office_city_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
@@ -482,6 +482,15 @@ class OmmuMeta extends CActiveRecord
 			}
 		}
 		return true;
+	}
+	
+	/**
+	 * After save attributes
+	 */
+	protected function afterSave() 
+	{
+		parent::afterSave();
+		Utility::generateEmailTemplate();
 	}
 
 }

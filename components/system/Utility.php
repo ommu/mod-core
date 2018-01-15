@@ -20,6 +20,8 @@
  *	getThemeInfo
  *	chmodr
  *	recursiveDelete
+ *	generateEmailTemplate
+ *	getEmailTemplate
 
  
  *	getConnected
@@ -431,6 +433,60 @@ class Utility
 		}
 
 		return false;
+	}
+
+	/**
+	 * Generate mail template footer
+	 */
+	public static function generateEmailTemplate() 
+	{
+		$setting = SupportMailSetting::model()->findByPk(1,array(
+			'select' => 'mail_name',
+		));
+		$address = OmmuMeta::model()->findByPk(1, array(
+			'select' => 'id, office_place, office_village, office_district, office_city_id, office_province_id, office_country_id, office_zipcode, office_phone, office_fax, office_hotline, office_email'
+		));
+		$social = SupportContacts::model()->findAll(array(
+			//'select' => 'publish, name',
+			'condition' => 'publish = :publish',
+			'params' => array(
+				':publish' => 1,
+			),
+		));
+		$place = $address->office_place;
+		$village = $address->office_village ? ', '.$address->office_village : '';
+		$district = $address->office_district ? ', '.$address->office_district : '';
+		$city = $address->city->city_name ? ', '.$address->city->city_name : '';
+		$province = $address->province->province_name ? ', '.$address->province->province_name : '';
+		$zipcode = $address->office_zipcode ? ' '.$address->office_zipcode : '';
+		$country = $address->country->country_name ? $address->country->country_name : '';
+		
+		$message = '{content}'."\n\n";
+		$message .= 'Salam,<br/>'."\n";
+		$message .= $setting->mail_name.'<br/>'."\n";
+		if($address)
+			$message .= $place.$village.$district.$city.$province.$zipcode.' '.$country.'<br/>'."\n";
+		if($social) {
+			foreach($social as $key => $val) {
+				$message .= '<a href="'.$val->contact_name.'" title="">'.$val->cat->title->message.'</a> | ';
+			}
+		}
+		$message .= '<a href="callto:'.$address->office_hotline.'">Mobile</a> | ';
+		$message .= '<a href="mailto:'.$address->office_email.'">Email </a>';
+
+		file_put_contents('email_template.php', $message);
+	}
+
+	/**
+	 * Generate mail template footer
+	 */
+	public static function getEmailTemplate($content) 
+	{
+		$email_template = 'email_template';
+		$template_file = YiiBase::getPathOfAlias('webroot').'/'.$email_template.'.php';
+		$email_ireplace = str_ireplace('{content}', $content, file_get_contents($template_file));
+
+		return $email_ireplace;
 	}
 
 

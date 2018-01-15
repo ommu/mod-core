@@ -65,13 +65,38 @@
 		if(!empty($config)) {
 			if(!$model->getErrors())
 				$model->config = unserialize($model->config);
-			foreach($config as $key => $val) {
-				$inputField = "config[{$key}]";?>
+			//echo '<pre>';
+			//print_r($model->config);
+			foreach($config as $key => $val) {?>
 				<div class="form-group row">
 					<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo Yii::t('phrase', $config[$key]['label']);?></label>
 					<div class="col-lg-8 col-md-9 col-sm-12">
-						<?php echo $form->dropDownList($model, $inputField, $config[$key]['option'], array('prompt'=>'', 'class'=>'form-control')); ?>
-						<?php echo $form->error($model, $inputField); ?>
+						<?php 
+						foreach($val as $a => $data) {
+							$inputField = "config[{$key}][{$a}]";
+							
+							if($a == 'label')
+								continue;
+							
+							if(is_array($config[$key][$a]))
+								echo $form->dropDownList($model, $inputField, $config[$key][$a], array('prompt'=>'', 'class'=>'form-control'));
+							else {
+								if($a == 'publish') {
+									$publish = array(
+										'1'=>Yii::t('phrase', 'Publish'),
+										'0'=>Yii::t('phrase', 'Unpublish'),
+									);
+									echo $form->dropDownList($model, $inputField, $publish, array('prompt'=>'', 'class'=>'form-control'));
+								} else {
+									if($a == 'desc')
+										echo $form->textArea($model, $inputField, array('rows'=>6, 'cols'=>50, 'class'=>'form-control smaller', 'placeholder'=>$config[$key][$a]));
+									else
+										echo $form->textField($model, $inputField, array('class'=>'form-control', 'placeholder'=>$config[$key][$a]));
+
+								}
+							}
+							echo $form->error($model, $inputField);
+						} ?>
 					</div>
 				</div>
 		<?php }
