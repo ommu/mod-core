@@ -462,17 +462,22 @@ class Utility
 		$country = $address->country->country_name ? $address->country->country_name : '';
 		
 		$message = '{content}'."\n\n";
-		$message .= 'Salam,<br/>'."\n";
+		$message .= '<p>'.Yii::t('phrase', 'If you have any questions please answer to this email or contact us at {office_email} and {office_hotline}', array('{office_email}'=>'<a href="mailto:'.$address->office_email.'">'.$address->office_email.'</a>','{office_hotline}'=>'<a href="callto:'.$address->office_hotline.'">'.$address->office_hotline.'</a>')).'</p>'."\n";
+		$message .= Yii::t('phrase', 'Salam,').'<br/>'."\n";
 		$message .= $setting->mail_name.'<br/>'."\n";
 		if($address)
 			$message .= $place.$village.$district.$city.$province.$zipcode.' '.$country.'<br/>'."\n";
 		if($social) {
+			$count = count($social);
+			$i = 0;
 			foreach($social as $key => $val) {
-				$message .= '<a href="'.$val->contact_name.'" title="">'.$val->cat->title->message.'</a> | ';
+				$i++;
+				if($i == $count)
+					$message .= '<a href="'.$val->contact_name.'" title="">'.$val->cat->title->message.'</a>';
+				else
+					$message .= '<a href="'.$val->contact_name.'" title="">'.$val->cat->title->message.'</a> | ';
 			}
 		}
-		$message .= '<a href="callto:'.$address->office_hotline.'">Mobile</a> | ';
-		$message .= '<a href="mailto:'.$address->office_email.'">Email </a>';
 
 		file_put_contents('email_template.php', $message);
 	}
