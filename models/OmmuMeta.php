@@ -98,10 +98,9 @@ class OmmuMeta extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('office_location, office_place, office_city_id, office_district, office_village, office_zipcode, office_email', 'required', 'on'=>'contact, google'),
+			array('office_place, office_city_id, office_email, office_website', 'required', 'on'=>'contact, google'),
 			array('office_on', 'required', 'on'=>'setting, google'),
-			array('office_province_id, office_village, office_hour, office_hotline', 'required', 'on'=>'contact'),
-			array('office_website', 'required', 'on'=>'google'),
+			array('office_province_id, office_hour, office_hotline', 'required', 'on'=>'contact'),
 			array('google_on', 'required', 'on'=>'setting'),
 			array('facebook_on', 'required', 'on'=>'setting, facebook, facebook_profile'),
 			array('facebook_type', 'required', 'on'=>'facebook, facebook_profile'),
@@ -117,7 +116,7 @@ class OmmuMeta extends CActiveRecord
 			array('office_zipcode', 'length', 'max'=>6),
 			//array('meta_image', 'file', 'allowEmpty' => true, 'types' => 'jpg, jpeg, png, gif'),
 			array('office_email', 'email'),
-			array('meta_image, meta_image_alt, office_name, office_province_id, office_district, office_village, office_phone, office_fax, map_icons, twitter_photo_size, twitter_country, twitter_iphone, twitter_ipad, twitter_googleplay, facebook_sitename, facebook_see_also, facebook_admins,
+			array('meta_image, meta_image_alt, office_name, office_location, office_province_id, office_district, office_village, office_zipcode, office_phone, office_fax, map_icons, twitter_photo_size, twitter_country, twitter_iphone, twitter_ipad, twitter_googleplay, facebook_sitename, facebook_see_also, facebook_admins,
 				old_meta_image', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -419,10 +418,11 @@ class OmmuMeta extends CActiveRecord
 		$currentAction = strtolower(Yii::app()->controller->id.'/'.Yii::app()->controller->action->id);
 		
 		if(parent::beforeValidate()) {
-			if($this->office_place == '' || $this->office_district == '' || $this->office_village == '') {
+			//if($this->office_place == '' || $this->office_district == '' || $this->office_village == '') {
+			if($this->office_place == '') {
 				$this->addError('office_place', Yii::t('phrase', 'Office Address cannot be blank.'));
-				$this->addError('office_village', Yii::t('phrase', 'Office Village cannot be blank.'));
-				$this->addError('office_district', Yii::t('phrase', 'Office District cannot be blank.'));
+				//$this->addError('office_village', Yii::t('phrase', 'Office Village cannot be blank.'));
+				//$this->addError('office_district', Yii::t('phrase', 'Office District cannot be blank.'));
 			}
 			
 			$meta_image = CUploadedFile::getInstance($this, 'meta_image');	

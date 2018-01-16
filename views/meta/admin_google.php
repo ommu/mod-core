@@ -47,7 +47,7 @@
 		</div>
 
 		<div class="form-group row">
-			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('office_location');?> <span class="required">*</span></label>
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('office_location');?></label>
 			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'office_location',array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_location'); ?>
@@ -93,7 +93,7 @@
 		</div>
 
 		<div class="form-group row">
-			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('office_zipcode');?> <span class="required">*</span></label>
+			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('office_zipcode');?></label>
 			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'office_zipcode',array('maxlength'=>6, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_zipcode'); ?>

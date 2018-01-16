@@ -444,7 +444,7 @@ class Utility
 			'select' => 'mail_name',
 		));
 		$address = OmmuMeta::model()->findByPk(1, array(
-			'select' => 'id, office_place, office_village, office_district, office_city_id, office_province_id, office_country_id, office_zipcode, office_phone, office_fax, office_hotline, office_email'
+			'select' => 'id, office_place, office_village, office_district, office_city_id, office_province_id, office_country_id, office_zipcode, office_phone, office_fax, office_hotline, office_email, office_website',
 		));
 		$social = SupportContacts::model()->findAll(array(
 			//'select' => 'publish, name',
@@ -465,17 +465,20 @@ class Utility
 		$message .= '<p>'.Yii::t('phrase', 'If you have any questions please answer to this email or contact us at {office_email} and {office_hotline}', array('{office_email}'=>'<a href="mailto:'.$address->office_email.'">'.$address->office_email.'</a>','{office_hotline}'=>'<a href="callto:'.$address->office_hotline.'">'.$address->office_hotline.'</a>')).'</p>'."\n";
 		$message .= Yii::t('phrase', 'Salam,').'<br/>'."\n";
 		$message .= $setting->mail_name.'<br/>'."\n";
-		if($address)
+		if($address) {
 			$message .= $place.$village.$district.$city.$province.$zipcode.' '.$country.'<br/>'."\n";
+			if($address->office_website)
+				$message .= '<a href="http://'.$address->office_website.'" title="">Website</a>';
+		}
 		if($social) {
 			$count = count($social);
 			$i = 0;
 			foreach($social as $key => $val) {
 				$i++;
 				if($i == $count)
-					$message .= '<a href="'.$val->contact_name.'" title="">'.$val->cat->title->message.'</a>';
+					$message .= ' | <a href="'.$val->contact_name.'" title="">'.$val->cat->title->message.'</a>';
 				else
-					$message .= '<a href="'.$val->contact_name.'" title="">'.$val->cat->title->message.'</a> | ';
+					$message .= ' | <a href="'.$val->contact_name.'" title="">'.$val->cat->title->message.'</a>';
 			}
 		}
 
