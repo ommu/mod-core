@@ -39,7 +39,7 @@ EOP;
 
 	<fieldset>
 		<div class="row">
-			<div class="col-lg-9 col-md-12">
+			<div class="col-lg-8 col-md-12">
 
 				<div class="form-group row">
 					<?php echo $form->labelEx($model,'name_i', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
@@ -132,7 +132,7 @@ EOP;
 				</div> */?>
 
 			</div>
-			<div class="col-lg-3 col-md-12">
+			<div class="col-lg-4 col-md-12">
 				<?php if($model->isNewRecord) {?>
 					<div class="form-group row">
 						<?php echo $form->labelEx($model,'media', array('class'=>'col-form-label col-lg-12 col-md-3 col-sm-12')); ?>
