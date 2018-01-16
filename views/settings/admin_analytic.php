@@ -54,7 +54,7 @@
 
 		<div class="form-group row">
 			<label class="col-form-label col-lg-4 col-md-3 col-sm-12">
-				<?php echo $model->getAttributeLabel('analytic_profile_id');?> <span class="required">*</span>
+				<?php echo $model->getAttributeLabel('analytic_profile_id');?>
 			</label>
 			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'analytic_profile_id',array('maxlength'=>32, 'class'=>'form-control')); ?>

@@ -113,7 +113,7 @@ class OmmuSettings extends CActiveRecord
 			array('site_dateformat, site_timeformat', 'required', 'on'=>'locale'),
 			array('general_commenthtml, spam_failedcount', 'required', 'on'=>'banned'),
 			array('signup_numgiven', 'required', 'on'=>'signup'),
-			array('analytic_id, analytic_profile_id', 'required', 'on'=>'analytic'),
+			array('analytic_id', 'required', 'on'=>'analytic'),
 			array('id, online, site_oauth, site_type, signup_username, signup_approve, signup_verifyemail, signup_photo, signup_welcome, signup_random, signup_terms, signup_invitepage, signup_inviteonly, signup_checkemail, signup_numgiven, signup_adminemail, general_profile, general_invite, general_search, general_portal, lang_allow, lang_autodetect, lang_anonymous, spam_comment, spam_contact, spam_invite, spam_login, spam_failedcount, spam_signup, analytic', 'numerical', 'integerOnly'=>true),
 			array('signup_numgiven', 'length', 'max'=>3),
 			array('ommu_version', 'length', 'max'=>8),
@@ -448,20 +448,22 @@ class OmmuSettings extends CActiveRecord
 	/**
 	 * before validate attributes
 	 */
-	protected function beforeValidate() {
-		if(parent::beforeValidate()) {		
-			$action = strtolower(Yii::app()->controller->action->id);
-			$currentAction = strtolower(Yii::app()->controller->id.'/'.Yii::app()->controller->action->id);
-			if($this->online != 1) {
-				if($this->construction_date == '')
-					$this->addError('construction_date', Yii::t('phrase', 'Maintenance date cannot be blank.'));
-				if($this->online == 0 && $this->construction_text['maintenance'] == '')
-					$this->addError('construction_text[maintenance]', Yii::t('phrase', 'Maintenance text cannot be blank.'));
-				if($this->online == 2 && $this->construction_text['comingsoon'] == '')
-					$this->addError('construction_text[comingsoon]', Yii::t('phrase', 'Coming Soon text cannot be blank.'));
-			}
-			
+	protected function beforeValidate() 
+	{
+		$action = strtolower(Yii::app()->controller->action->id);
+		$currentAction = strtolower(Yii::app()->controller->id.'/'.Yii::app()->controller->action->id);
+
+		if(parent::beforeValidate()) {
 			if($currentAction == 'settings/general') {
+				if($this->online != 1) {
+					if($this->construction_date == '')
+						$this->addError('construction_date', Yii::t('phrase', 'Maintenance date cannot be blank.'));
+					if($this->online == 0 && $this->construction_text['maintenance'] == '')
+						$this->addError('construction_text[maintenance]', Yii::t('phrase', 'Maintenance text cannot be blank.'));
+					if($this->online == 2 && $this->construction_text['comingsoon'] == '')
+						$this->addError('construction_text[comingsoon]', Yii::t('phrase', 'Coming Soon text cannot be blank.'));
+				}
+
 				if($this->event_i == 0) {
 					$this->event_startdate = '00-00-0000';
 					$this->event_finishdate = '00-00-0000';
@@ -494,7 +496,8 @@ class OmmuSettings extends CActiveRecord
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
 			$this->construction_date = date('Y-m-d', strtotime($this->construction_date));
-			$this->construction_text = serialize($this->construction_text);
+			if($currentAction == 'settings/general')
+				$this->construction_text = serialize($this->construction_text);
 			$this->event_startdate = date('Y-m-d', strtotime($this->event_startdate));
 			$this->event_finishdate = date('Y-m-d', strtotime($this->event_finishdate));
 		}
