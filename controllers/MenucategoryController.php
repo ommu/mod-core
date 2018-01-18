@@ -119,7 +119,7 @@ class MenucategoryController extends Controller
 			'model'=>$model,
 			'columns' => $columns,
 		));
-	}	
+	}
 	
 	/**
 	 * Creates a new model.
@@ -233,7 +233,7 @@ class MenucategoryController extends Controller
 		$this->render('/menu_category/admin_view',array(
 			'model'=>$model,
 		));
-	}	
+	}
 
 	/**
 	 * Displays a particular model.

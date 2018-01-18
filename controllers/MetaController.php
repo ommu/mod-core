@@ -164,15 +164,14 @@ class MetaController extends Controller
 				}
 			}
 			Yii::app()->end();
-
-		} else {
-			$this->pageTitle = Yii::t('phrase', 'Meta Settings: $meta_name', array('$meta_name'=>'Google Owner'));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_google',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->pageTitle = Yii::t('phrase', 'Meta Settings: $meta_name', array('$meta_name'=>'Google Owner'));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_google',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -224,15 +223,14 @@ class MetaController extends Controller
 				}
 			}
 			Yii::app()->end();
-
-		} else {
-			$this->pageTitle = Yii::t('phrase', 'Meta Settings: $meta_name', array('$meta_name'=>'Facebook OpenGraph'));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_facebook',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->pageTitle = Yii::t('phrase', 'Meta Settings: $meta_name', array('$meta_name'=>'Facebook OpenGraph'));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_facebook',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -281,15 +279,14 @@ class MetaController extends Controller
 				}
 			}
 			Yii::app()->end();
-
-		} else {
-			$this->pageTitle = Yii::t('phrase', 'Meta Settings: $meta_name', array('$meta_name'=>'Twitter'));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_twitter',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->pageTitle = Yii::t('phrase', 'Meta Settings: $meta_name', array('$meta_name'=>'Twitter'));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_twitter',array(
+			'model'=>$model,
+		));
 	}
 
 	/**

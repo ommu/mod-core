@@ -46,7 +46,7 @@
 			</div>
 		</div>
 
-		<?php if($model->group_page != 'admin' && $model->folder != 'ommu') {?>
+		<?php if(!($model->group_page == 'admin' && $model->folder == 'ommu')) {?>
 			<div class="form-group row">
 				<?php echo $form->labelEx($model,'group_page', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
 				<div class="col-lg-8 col-md-9 col-sm-12">

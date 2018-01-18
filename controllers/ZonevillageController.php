@@ -125,7 +125,7 @@ class ZonevillageController extends Controller
 			'model'=>$model,
 			'columns' => $columns,
 		));
-	}	
+	}
 	
 	/**
 	 * Creates a new model.
@@ -160,19 +160,18 @@ class ZonevillageController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-
-			$this->pageTitle = Yii::t('phrase', 'Create Village');
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_village/admin_add',array(
-				'model'=>$model,
-			));			
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+
+		$this->pageTitle = Yii::t('phrase', 'Create Village');
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_village/admin_add',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -209,19 +208,18 @@ class ZonevillageController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-
-			$this->pageTitle = Yii::t('phrase', 'Update Village: $village_name', array('$village_name'=>$model->village_name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_village/admin_edit',array(
-				'model'=>$model,
-			));			
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+
+		$this->pageTitle = Yii::t('phrase', 'Update Village: $village_name', array('$village_name'=>$model->village_name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_village/admin_edit',array(
+			'model'=>$model,
+		));
 	}
 
 	/**

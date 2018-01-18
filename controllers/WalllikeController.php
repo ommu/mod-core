@@ -115,7 +115,7 @@ class WalllikeController extends Controller
 			'model'=>$model,
 			'columns' => $columns,
 		));
-	}	
+	}
 	
 	/**
 	 * Creates a new model.
@@ -150,19 +150,18 @@ class WalllikeController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-
-			$this->pageTitle = 'Create Ommu Wall Likes';
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/wall_like/admin_add',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+
+		$this->pageTitle = 'Create Ommu Wall Likes';
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/wall_like/admin_add',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -199,19 +198,18 @@ class WalllikeController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-
-			$this->pageTitle = 'Update Ommu Wall Likes';
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/wall_like/admin_edit',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+
+		$this->pageTitle = 'Update Ommu Wall Likes';
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/wall_like/admin_edit',array(
+			'model'=>$model,
+		));
 	}
 	
 	/**

@@ -155,7 +155,7 @@ class OmmuWalls extends CActiveRecord
 		else {
 			$criteria->addInCondition('t.publish',array(0,1));
 			$criteria->compare('t.publish',$this->publish);
-		}		
+		}
 		if(isset($_GET['user']))
 			$criteria->compare('t.user_id',$_GET['user']);
 		else

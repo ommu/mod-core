@@ -23,20 +23,20 @@ content_menu	:
 	- urlTitle: Add Menu
 		urlRules: {menu, manage, siteType: "0,1", userLevel: 1}
 		urlPath: {url: add, attr: -, icon: -}
-        
+
 # controller meta
 	- urlTitle: Global Meta
 		urlRules: {meta, "edit,google,facebook,twitter", siteType: "0,1", userLevel: 1}
-		urlPath: {url: edit, attr: -, icon: -}		
+		urlPath: {url: edit, attr: -, icon: -}
 	- urlTitle: Google Owner Meta
 		urlRules: {meta, "edit,google,facebook,twitter", siteType: "0,1", userLevel: 1}
-		urlPath: {url: google, attr: -, icon: -}		
+		urlPath: {url: google, attr: -, icon: -}
 	- urlTitle: Twitter Meta
 		urlRules: {meta, "edit,google,facebook,twitter", siteType: "0,1", userLevel: 1}
 		urlPath: {url: twitter, attr: -, icon: -}
 	- urlTitle: Facebook Meta
 		urlRules: {meta, "edit,google,facebook,twitter", siteType: "0,1", userLevel: 1}
-		urlPath: {url: facebook, attr: -, icon: -}		
+		urlPath: {url: facebook, attr: -, icon: -}
 	
 # controller module
 	- urlTitle: Upload Module
@@ -85,3 +85,120 @@ content_menu	:
 	- urlTitle: Back to Manage
 		urlRules: {translate, "add,edit", siteType: "0,1", userLevel: "1,2"}
 		urlPath: {url: manage, attr: -, icon: -}
+		
+# controller settings/locale
+	- urlTitle: Countries
+		urlRules: {settings, locale, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonecountry/manage, attr: -, icon: -}
+	- urlTitle: Provinces
+		urlRules: {settings, locale, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zoneprovince/manage, attr: -, icon: -}
+	- urlTitle: Cities
+		urlRules: {settings, locale, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonecity/manage, attr: -, icon: -}
+	- urlTitle: Districts
+		urlRules: {settings, locale, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonedistrict/manage, attr: -, icon: -}
+	- urlTitle: Village
+		urlRules: {settings, locale, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonevillage/manage, attr: -, icon: -}
+
+# controller zonecountry
+	- urlTitle: Back to Locale Setting
+		urlRules: {zonecountry, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: settings/locale, attr: -, icon: -}
+	- urlTitle: Countries
+		urlRules: {zonecountry, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonecountry/manage, attr: -, icon: -}
+	- urlTitle: Provinces
+		urlRules: {zonecountry, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zoneprovince/manage, attr: -, icon: -}
+	- urlTitle: Cities
+		urlRules: {zonecountry, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonecity/manage, attr: -, icon: -}
+	- urlTitle: Districts
+		urlRules: {zonecountry, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonedistrict/manage, attr: -, icon: -}
+	- urlTitle: Village
+		urlRules: {zonecountry, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonevillage/manage, attr: -, icon: -}
+
+# controller zoneprovince
+	- urlTitle: Back to Locale Setting
+		urlRules: {zoneprovince, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: settings/locale, attr: -, icon: -}
+	- urlTitle: Countries
+		urlRules: {zoneprovince, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonecountry/manage, attr: -, icon: -}
+	- urlTitle: Provinces
+		urlRules: {zoneprovince, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zoneprovince/manage, attr: -, icon: -}
+	- urlTitle: Cities
+		urlRules: {zoneprovince, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonecity/manage, attr: -, icon: -}
+	- urlTitle: Districts
+		urlRules: {zoneprovince, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonedistrict/manage, attr: -, icon: -}
+	- urlTitle: Village
+		urlRules: {zoneprovince, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonevillage/manage, attr: -, icon: -}
+
+# controller zonecity
+	- urlTitle: Back to Locale Setting
+		urlRules: {zonecity, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: settings/locale, attr: -, icon: -}
+	- urlTitle: Countries
+		urlRules: {zonecity, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonecountry/manage, attr: -, icon: -}
+	- urlTitle: Provinces
+		urlRules: {zonecity, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zoneprovince/manage, attr: -, icon: -}
+	- urlTitle: Cities
+		urlRules: {zonecity, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonecity/manage, attr: -, icon: -}
+	- urlTitle: Districts
+		urlRules: {zonecity, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonedistrict/manage, attr: -, icon: -}
+	- urlTitle: Village
+		urlRules: {zonecity, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonevillage/manage, attr: -, icon: -}
+
+# controller zonedistrict
+	- urlTitle: Back to Locale Setting
+		urlRules: {zonedistrict, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: settings/locale, attr: -, icon: -}
+	- urlTitle: Countries
+		urlRules: {zonedistrict, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonecountry/manage, attr: -, icon: -}
+	- urlTitle: Provinces
+		urlRules: {zonedistrict, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zoneprovince/manage, attr: -, icon: -}
+	- urlTitle: Cities
+		urlRules: {zonedistrict, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonecity/manage, attr: -, icon: -}
+	- urlTitle: Districts
+		urlRules: {zonedistrict, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonedistrict/manage, attr: -, icon: -}
+	- urlTitle: Village
+		urlRules: {zonedistrict, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonevillage/manage, attr: -, icon: -}
+
+# controller zonevillage
+	- urlTitle: Back to Locale Setting
+		urlRules: {zonevillage, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: settings/locale, attr: -, icon: -}
+	- urlTitle: Countries
+		urlRules: {zonevillage, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonecountry/manage, attr: -, icon: -}
+	- urlTitle: Provinces
+		urlRules: {zonevillage, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zoneprovince/manage, attr: -, icon: -}
+	- urlTitle: Cities
+		urlRules: {zonevillage, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonecity/manage, attr: -, icon: -}
+	- urlTitle: Districts
+		urlRules: {zonevillage, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonedistrict/manage, attr: -, icon: -}
+	- urlTitle: Village
+		urlRules: {zonevillage, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: zonevillage/manage, attr: -, icon: -}

@@ -160,19 +160,18 @@ class WallController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-		
-			$this->pageTitle = 'Update Ommu Walls';
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_edit',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+	
+		$this->pageTitle = 'Update Ommu Walls';
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_edit',array(
+			'model'=>$model,
+		));
 	}
 	
 	/**
@@ -340,9 +339,8 @@ class WallController extends Controller
 			}
 			Yii::app()->end();
 			
-		} else {
+		} else
 			throw new CHttpException(404, Yii::t('phrase', 'The requested page does not exist.'));
-		}
 	}
 	
 	/**
@@ -388,9 +386,8 @@ class WallController extends Controller
 			);
 			echo CJSON::encode($return);
 			
-		} else {
+		} else
 			throw new CHttpException(404, Yii::t('phrase', 'The requested page does not exist.'));
-		}
 	}
 
 	/**

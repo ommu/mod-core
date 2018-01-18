@@ -125,7 +125,7 @@ class ZoneprovinceController extends Controller
 			'model'=>$model,
 			'columns' => $columns,
 		));
-	}	
+	}
 	
 	/**
 	 * Creates a new model.
@@ -160,19 +160,18 @@ class ZoneprovinceController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-			
-			$this->pageTitle = Yii::t('phrase', 'Create Provincy');
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_province/admin_add',array(
-				'model'=>$model,
-			));			
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+		
+		$this->pageTitle = Yii::t('phrase', 'Create Provincy');
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_province/admin_add',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -209,19 +208,18 @@ class ZoneprovinceController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-			
-			$this->pageTitle = Yii::t('phrase', 'Update Provincy: $province_name', array('$province_name'=>$model->province_name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_province/admin_edit',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+		
+		$this->pageTitle = Yii::t('phrase', 'Update Provincy: $province_name', array('$province_name'=>$model->province_name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_province/admin_edit',array(
+			'model'=>$model,
+		));
 	}
 
 	/**

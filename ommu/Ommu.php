@@ -360,7 +360,7 @@ $moduleRules[$val->folder.'/<controller:[a-zA-Z\/]+>/<action:\w+>/<category:\d+>
 				$getFilename = $fileInfo->getFilename();
 				$controller = strtolower(preg_replace('(Controller.php)', '', $getFilename));
 				if($lastPath != 'controllers')
-					$controller = $lastPath.'/'.strtolower(preg_replace('(Controller.php)', '', $getFilename));
+					$controller = $lastPath.strtolower(preg_replace('(Controller.php)', '', $getFilename));
 				$controllerClass = preg_replace('(.php)', '', $getFilename);
 
 				$controllerMap[$controller] = array(
@@ -373,7 +373,7 @@ $moduleRules[$val->folder.'/<controller:[a-zA-Z\/]+>/<action:\w+>/<category:\d+>
 				$controllerMap = array_merge($controllerMap, $this->getController($subPath, $sub));
 			}
 		}
-
+		
 		return $controllerMap;
 	}
 

@@ -152,7 +152,7 @@ class GlobaltagController extends Controller
 			'model'=>$model,
 			'columns' => $columns,
 		));
-	}	
+	}
 	
 	/**
 	 * Creates a new model.
@@ -187,19 +187,18 @@ class GlobaltagController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 500;
-			
-			$this->pageTitle = Yii::t('phrase', 'Create Tag');
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/global_tag/admin_add',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 500;
+		
+		$this->pageTitle = Yii::t('phrase', 'Create Tag');
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/global_tag/admin_add',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -236,19 +235,18 @@ class GlobaltagController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 500;
-			
-			$this->pageTitle = Yii::t('phrase', 'Update Tag: $tag_name', array('$tag_name'=>$model->body));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/global_tag/admin_edit',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 500;
+		
+		$this->pageTitle = Yii::t('phrase', 'Update Tag: $tag_name', array('$tag_name'=>$model->body));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/global_tag/admin_edit',array(
+			'model'=>$model,
+		));
 	}
 	
 	/**
@@ -269,7 +267,7 @@ class GlobaltagController extends Controller
 		$this->render('/global_tag/admin_view',array(
 			'model'=>$model,
 		));
-	}	
+	}
 
 	/**
 	 * Displays a particular model.

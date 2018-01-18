@@ -71,7 +71,8 @@ class OmmuThemes extends CActiveRecord
 		return array(
 			array('group_page, folder, layout, name', 'required'),
 			array('default_theme', 'numerical', 'integerOnly'=>true),
-			array('folder, layout, name, thumbnail', 'length', 'max'=>32),
+			array('folder, layout, thumbnail', 'length', 'max'=>32),
+			array('name', 'length', 'max'=>64),
 			array('thumbnail, config', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

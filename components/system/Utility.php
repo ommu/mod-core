@@ -305,7 +305,7 @@ class Utility
 						$siteType = explode(',', $a['urlRules']['siteType']);
 						$userLevel = explode(',', $a['urlRules']['userLevel']);
 						
-						return in_array(OmmuSettings::getInfo('site_type'), $siteType) && in_array(Yii::app()->user->level, $userLevel);
+						return in_array(OmmuSettings::getInfo('site_type'), $siteType) && in_array(!Yii::app()->user->isGuest ? Yii::app()->user->level : 0, $userLevel);
 					});
 					$contentMenu[$key]['submenu'] = array_values($contentSubmenuData);	
 				}
@@ -315,7 +315,7 @@ class Utility
 				$siteType = explode(',', $a['urlRules']['siteType']);
 				$userLevel = explode(',', $a['urlRules']['userLevel']);
 				
-				return in_array(OmmuSettings::getInfo('site_type'), $siteType) && in_array(Yii::app()->user->level, $userLevel);
+				return in_array(OmmuSettings::getInfo('site_type'), $siteType) && in_array(!Yii::app()->user->isGuest ? Yii::app()->user->level : 0, $userLevel);
 			});
 			return $contentMenuData;
 			
@@ -339,7 +339,7 @@ class Utility
 						$siteType = explode(',', $a['urlRules']['siteType']);
 						$userLevel = explode(',', $a['urlRules']['userLevel']);
 						
-						return in_array(OmmuSettings::getInfo('site_type'), $siteType) && in_array(Yii::app()->user->level, $userLevel);
+						return in_array(OmmuSettings::getInfo('site_type'), $siteType) && in_array(!Yii::app()->user->isGuest ? Yii::app()->user->level : 0, $userLevel);
 					});
 					$moduleMenu[$key]['submenu'] = array_values($moduleSubmenuData);	
 				}
@@ -348,7 +348,7 @@ class Utility
 			$moduleMenuData = array_filter($moduleMenu, function($a) {
 				$siteType = explode(',', $a['urlRules']['siteType']);
 				$userLevel = explode(',', $a['urlRules']['userLevel']);
-				return in_array(OmmuSettings::getInfo('site_type'), $siteType) && in_array(Yii::app()->user->level, $userLevel);
+				return in_array(OmmuSettings::getInfo('site_type'), $siteType) && in_array(!Yii::app()->user->isGuest ? Yii::app()->user->level : 0, $userLevel);
 			});
 			return array_values($moduleMenuData);
 			

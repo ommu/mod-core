@@ -123,7 +123,7 @@ class ZonecountryController extends Controller
 			'model'=>$model,
 			'columns' => $columns,
 		));
-	}	
+	}
 	
 	/**
 	 * Creates a new model.
@@ -158,19 +158,18 @@ class ZonecountryController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-			
-			$this->pageTitle = Yii::t('phrase', 'Create Country');
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_country/admin_add',array(
-				'model'=>$model,
-			));			
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+		
+		$this->pageTitle = Yii::t('phrase', 'Create Country');
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_country/admin_add',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -207,19 +206,18 @@ class ZonecountryController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-			
-			$this->pageTitle = Yii::t('phrase', 'Update Country: $country_name', array('$country_name'=>$model->country_name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_country/admin_edit',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+		
+		$this->pageTitle = Yii::t('phrase', 'Update Country: $country_name', array('$country_name'=>$model->country_name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_country/admin_edit',array(
+			'model'=>$model,
+		));
 	}
 
 	/**

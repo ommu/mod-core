@@ -133,7 +133,7 @@ class ModuleHandle extends CApplicationComponent
 		
 		} else
 			return false;
-	}	
+	}
 
 	/**
 	 * Delete modules

@@ -119,7 +119,7 @@ class LanguageController extends /*SBaseController*/ Controller
 			'columns' => $columns,
 			'setting' => $setting,
 		));
-	}	
+	}
 	
 	/**
 	 * Creates a new model.
@@ -153,19 +153,18 @@ class LanguageController extends /*SBaseController*/ Controller
 				}
 			}
 			Yii::app()->end();
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 500;
-			
-			$this->pageTitle = Yii::t('phrase', 'Create New Language Pack');
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_add',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 500;
+		
+		$this->pageTitle = Yii::t('phrase', 'Create New Language Pack');
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_add',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -201,19 +200,18 @@ class LanguageController extends /*SBaseController*/ Controller
 				}
 			}
 			Yii::app()->end();
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 500;
-			
-			$this->pageTitle = Yii::t('phrase', 'Update Language: $language_name', array('$language_name'=>$model->name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_edit',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 500;
+		
+		$this->pageTitle = Yii::t('phrase', 'Update Language: $language_name', array('$language_name'=>$model->name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_edit',array(
+			'model'=>$model,
+		));
 	}
 	
 	/**
@@ -234,7 +232,7 @@ class LanguageController extends /*SBaseController*/ Controller
 		$this->render('admin_view',array(
 			'model'=>$model,
 		));
-	}	
+	}
 	
 	/**
 	 * Deletes a particular model.

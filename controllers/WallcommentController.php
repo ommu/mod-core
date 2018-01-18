@@ -124,7 +124,7 @@ class WallcommentController extends Controller
 			'model'=>$model,
 			'columns' => $columns,
 		));
-	}	
+	}
 	
 	/**
 	 * Creates a new model.
@@ -159,19 +159,18 @@ class WallcommentController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-
-			$this->pageTitle = 'Create Ommu Wall Comments';
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/wall_comment/admin_add',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+
+		$this->pageTitle = 'Create Ommu Wall Comments';
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/wall_comment/admin_add',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -208,19 +207,18 @@ class WallcommentController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-
-			$this->pageTitle = 'Update Ommu Wall Comments';
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/wall_comment/admin_edit',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+
+		$this->pageTitle = 'Update Ommu Wall Comments';
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/wall_comment/admin_edit',array(
+			'model'=>$model,
+		));
 	}
 	
 	/**

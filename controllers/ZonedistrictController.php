@@ -125,7 +125,7 @@ class ZonedistrictController extends Controller
 			'model'=>$model,
 			'columns' => $columns,
 		));
-	}	
+	}
 	
 	/**
 	 * Creates a new model.
@@ -160,19 +160,18 @@ class ZonedistrictController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-
-			$this->pageTitle = Yii::t('phrase', 'Create District');
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_district/admin_add',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+
+		$this->pageTitle = Yii::t('phrase', 'Create District');
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_district/admin_add',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -209,19 +208,18 @@ class ZonedistrictController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-
-			$this->pageTitle = Yii::t('phrase', 'Update District: $district_name', array('$district_name'=>$model->district_name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_district/admin_edit',array(
-				'model'=>$model,
-			));
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+
+		$this->pageTitle = Yii::t('phrase', 'Update District: $district_name', array('$district_name'=>$model->district_name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_district/admin_edit',array(
+			'model'=>$model,
+		));
 	}
 
 	/**

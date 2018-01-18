@@ -125,7 +125,7 @@ class ZonecityController extends Controller
 			'model'=>$model,
 			'columns' => $columns,
 		));
-	}	
+	}
 	
 	/**
 	 * Creates a new model.
@@ -160,19 +160,18 @@ class ZonecityController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-			
-			$this->pageTitle = Yii::t('phrase', 'Create City');
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_city/admin_add',array(
-				'model'=>$model,
-			));			
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+		
+		$this->pageTitle = Yii::t('phrase', 'Create City');
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_city/admin_add',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -209,19 +208,18 @@ class ZonecityController extends Controller
 				}
 			}
 			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-			
-			$this->pageTitle = Yii::t('phrase', 'Update City: $city_name', array('$city_name'=>$model->city_name));
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('/zone_city/admin_edit',array(
-				'model'=>$model,
-			));			
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+		
+		$this->pageTitle = Yii::t('phrase', 'Update City: $city_name', array('$city_name'=>$model->city_name));
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('/zone_city/admin_edit',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
