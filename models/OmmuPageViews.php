@@ -6,18 +6,8 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 4 August 2017, 06:16 WIB
+ * @modified date 20 January 2018, 06:29 WIB
  * @link https://github.com/ommu/ommu-core
- *
- * This is the template for generating the model class of a specified table.
- * - $this: the ModelCode object
- * - $tableName: the table name for this class (prefix is already removed if necessary)
- * - $modelClass: the model class name
- * - $columns: list of table columns (name=>CDbColumnSchema)
- * - $labels: list of attribute labels (name=>label)
- * - $rules: list of validation rules
- * - $relations: list of relations (name=>relation declaration)
- *
- * --------------------------------------------------------------------------------------
  *
  * This is the model class for table "ommu_core_page_views".
  *
@@ -32,16 +22,16 @@
  * @property string $deleted_date
  *
  * The followings are the available model relations:
- * @property CorePageViewHistory[] $core_page_view_histories
- * @property Users[] $user;
- * @property CorePages $page
- * @property Users[] $user;
+ * @property OmmuPageViewHistory[] $histories
+ * @property OmmuPages $page
+ * @property Users $user;
  */
-class OmmuPageViews extends CActiveRecord
-{
-	public $defaultColumns = array();
 
-	// Variable Search	
+class OmmuPageViews extends OActiveRecord
+{
+	public $gridForbiddenColumn = array('deleted_date');
+
+	// Variable Search
 	public $page_search;
 	public $user_search;
 
@@ -93,9 +83,9 @@ class OmmuPageViews extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'histories' => array(self::HAS_MANY, 'OmmuPageViewHistory', 'view_id'),
 			'page' => array(self::BELONGS_TO, 'OmmuPages', 'page_id'),
 			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
-			'histories' => array(self::HAS_MANY, 'OmmuPageViewHistory', 'view_id'),
 		);
 	}
 
@@ -137,12 +127,6 @@ class OmmuPageViews extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		// Custom Search
-		$defaultLang = OmmuLanguages::getDefault('code');
-		if(isset(Yii::app()->session['language']))
-			$language = Yii::app()->session['language'];
-		else 
-			$language = $defaultLang;
-		
 		$criteria->with = array(
 			'page' => array(
 				'alias'=>'page',
@@ -150,115 +134,79 @@ class OmmuPageViews extends CActiveRecord
 			),
 			'page.title' => array(
 				'alias'=>'page_title',
-				'select'=>$language,
+				'select'=>'message',
 			),
 			'user' => array(
 				'alias'=>'user',
-				'select'=>'displayname'
+				'select'=>'displayname',
 			),
 		);
-		
-		$criteria->compare('t.view_id',strtolower($this->view_id),true);
-		if(isset($_GET['type']) && $_GET['type'] == 'publish')
-			$criteria->compare('t.publish',1);
-		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
-			$criteria->compare('t.publish',0);
-		elseif(isset($_GET['type']) && $_GET['type'] == 'trash')
-			$criteria->compare('t.publish',2);
+
+		$criteria->compare('t.view_id', $this->view_id);
+		if(Yii::app()->getRequest()->getParam('type') == 'publish')
+			$criteria->compare('t.publish', 1);
+		elseif(Yii::app()->getRequest()->getParam('type') == 'unpublish')
+			$criteria->compare('t.publish', 0);
+		elseif(Yii::app()->getRequest()->getParam('type') == 'trash')
+			$criteria->compare('t.publish', 2);
 		else {
-			$criteria->addInCondition('t.publish',array(0,1));
-			$criteria->compare('t.publish',$this->publish);
+			$criteria->addInCondition('t.publish', array(0,1));
+			$criteria->compare('t.publish', $this->publish);
 		}
-		if(isset($_GET['page']))
-			$criteria->compare('t.page_id',$_GET['page']);
-		else
-			$criteria->compare('t.page_id',$this->page_id);
-		if(isset($_GET['user']))
-			$criteria->compare('t.user_id',$_GET['user']);
-		else
-			$criteria->compare('t.user_id',$this->user_id);
-		$criteria->compare('t.views',$this->views);
-		if($this->view_date != null && !in_array($this->view_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.view_date)',date('Y-m-d', strtotime($this->view_date)));
-		$criteria->compare('t.view_ip',strtolower($this->view_ip),true);
-		if($this->deleted_date != null && !in_array($this->deleted_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.deleted_date)',date('Y-m-d', strtotime($this->deleted_date)));
+		$criteria->compare('t.page_id', Yii::app()->getRequest()->getParam('page') ? Yii::app()->getRequest()->getParam('page') : $this->page_id);
+		$criteria->compare('t.user_id', Yii::app()->getRequest()->getParam('user') ? Yii::app()->getRequest()->getParam('user') : $this->user_id);
+		$criteria->compare('t.views', $this->views);
+		if($this->view_date != null && !in_array($this->view_date, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
+			$criteria->compare('date(t.view_date)', date('Y-m-d', strtotime($this->view_date)));
+		$criteria->compare('t.view_ip', strtolower($this->view_ip), true);
+		if($this->deleted_date != null && !in_array($this->deleted_date, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
+			$criteria->compare('date(t.deleted_date)', date('Y-m-d', strtotime($this->deleted_date)));
 
-		$criteria->compare('page_title.'.$language,strtolower($this->page_search),true);
-		$criteria->compare('user.displayname',strtolower($this->user_search),true);
+		$criteria->compare('page_title.message', strtolower($this->page_search), true);
+		$criteria->compare('user.displayname', strtolower($this->user_search), true);
 
-		if(!isset($_GET['OmmuPageViews_sort']))
+		if(!Yii::app()->getRequest()->getParam('OmmuPageViews_sort'))
 			$criteria->order = 't.view_id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>30,
+				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 20,
 			),
 		));
-	}
-
-
-	/**
-	 * Get column for CGrid View
-	 */
-	public function getGridColumn($columns=null) {
-		if($columns !== null) {
-			foreach($columns as $val) {
-				/*
-				if(trim($val) == 'enabled') {
-					$this->defaultColumns[] = array(
-						'name'  => 'enabled',
-						'value' => '$data->enabled == 1? "Ya": "Tidak"',
-					);
-				}
-				*/
-				$this->defaultColumns[] = $val;
-			}
-		} else {
-			//$this->defaultColumns[] = 'view_id';
-			$this->defaultColumns[] = 'publish';
-			$this->defaultColumns[] = 'page_id';
-			$this->defaultColumns[] = 'user_id';
-			$this->defaultColumns[] = 'views';
-			$this->defaultColumns[] = 'view_date';
-			$this->defaultColumns[] = 'view_ip';
-			$this->defaultColumns[] = 'deleted_date';
-		}
-
-		return $this->defaultColumns;
 	}
 
 	/**
 	 * Set default columns to display
 	 */
 	protected function afterConstruct() {
-		if(count($this->defaultColumns) == 0) {
-			/*
-			$this->defaultColumns[] = array(
+		if(count($this->templateColumns) == 0) {
+			$this->templateColumns['_option'] = array(
 				'class' => 'CCheckBoxColumn',
 				'name' => 'id',
 				'selectableRows' => 2,
 				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
 			);
-			*/
-			$this->defaultColumns[] = array(
-				'header' => 'No',
-				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
+			$this->templateColumns['_no'] = array(
+				'header' => Yii::t('app', 'No'),
+				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
 			);
-			if(!isset($_GET['page'])) {
-				$this->defaultColumns[] = array(
+			if(!Yii::app()->getRequest()->getParam('page')) {
+				$this->templateColumns['page_search'] = array(
 					'name' => 'page_search',
-					'value' => '$data->page->title->message',
+					'value' => '$data->page->title->message ? $data->page->title->message : \'-\'',
 				);
 			}
-			if(!isset($_GET['user'])) {
-				$this->defaultColumns[] = array(
+			if(!Yii::app()->getRequest()->getParam('user')) {
+				$this->templateColumns['user_search'] = array(
 					'name' => 'user_search',
 					'value' => '$data->user->displayname ? $data->user->displayname : \'-\'',
 				);
 			}
-			$this->defaultColumns[] = array(
+			$this->templateColumns['views'] = array(
 				'name' => 'views',
 				'value' => 'CHtml::link($data->views ? $data->views : 0, Yii::app()->createUrl("history/manage",array(\'view\'=>$data->view_id)))',
 				'htmlOptions' => array(
@@ -266,9 +214,9 @@ class OmmuPageViews extends CActiveRecord
 				),
 				'type' => 'raw',
 			);
-			$this->defaultColumns[] = array(
+			$this->templateColumns['view_date'] = array(
 				'name' => 'view_date',
-				'value' => 'Utility::dateFormat($data->view_date)',
+				'value' => '!in_array($data->view_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\')) ? Utility::dateFormat($data->view_date, true) : \'-\'',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -292,17 +240,16 @@ class OmmuPageViews extends CActiveRecord
 					),
 				), true),
 			);
-			$this->defaultColumns[] = array(
+			$this->templateColumns['view_ip'] = array(
 				'name' => 'view_ip',
 				'value' => '$data->view_ip',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
 			);
-			/*
-			$this->defaultColumns[] = array(
+			$this->templateColumns['deleted_date'] = array(
 				'name' => 'deleted_date',
-				'value' => 'Utility::dateFormat($data->deleted_date)',
+				'value' => '!in_array($data->deleted_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\')) ? Utility::dateFormat($data->deleted_date) : \'-\'',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -326,9 +273,8 @@ class OmmuPageViews extends CActiveRecord
 					),
 				), true),
 			);
-			*/
-			if(!isset($_GET['type'])) {
-				$this->defaultColumns[] = array(
+			if(!Yii::app()->getRequest()->getParam('type')) {
+				$this->templateColumns['publish'] = array(
 					'name' => 'publish',
 					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'publish\',array(\'id\'=>$data->view_id)), $data->publish)',
 					'htmlOptions' => array(
@@ -358,12 +304,12 @@ class OmmuPageViews extends CActiveRecord
 			
 		} else {
 			$model = self::model()->findByPk($id);
-			return $model;			
+			return $model;
 		}
 	}
 
 	/**
-	 * User get information
+	 * insertView
 	 */
 	public static function insertView($page_id)
 	{
@@ -387,7 +333,8 @@ class OmmuPageViews extends CActiveRecord
 	/**
 	 * before validate attributes
 	 */
-	protected function beforeValidate() {
+	protected function beforeValidate() 
+	{
 		if(parent::beforeValidate()) {
 			if($this->isNewRecord)
 				$this->user_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
