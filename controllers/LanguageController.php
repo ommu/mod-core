@@ -206,7 +206,7 @@ class LanguageController extends /*SBaseController*/ Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 500;
 		
-		$this->pageTitle = Yii::t('phrase', 'Update Language: $language_name', array('$language_name'=>$model->name));
+		$this->pageTitle = Yii::t('phrase', 'Update Language: {language_name}', array('{language_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_edit',array(
@@ -226,7 +226,7 @@ class LanguageController extends /*SBaseController*/ Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 500;
 
-		$this->pageTitle = Yii::t('phrase', 'View Language: $language_name', array('$language_name'=>$model->name));
+		$this->pageTitle = Yii::t('phrase', 'View Language: {language_name}', array('{language_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_view',array(
@@ -260,7 +260,7 @@ class LanguageController extends /*SBaseController*/ Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 350;
 
-		$this->pageTitle = Yii::t('phrase', 'Delete Language: $language_name', array('$language_name'=>$model->name));
+		$this->pageTitle = Yii::t('phrase', 'Delete Language: {language_name}', array('{language_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_delete');
@@ -299,7 +299,7 @@ class LanguageController extends /*SBaseController*/ Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 350;
 
-		$this->pageTitle = Yii::t('phrase', '$title Language: $language_name', array('$language_name'=>$model->name));
+		$this->pageTitle = Yii::t('phrase', '{title} Language: {language_name}', array('{title}'=>$title, '{language_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_active',array(
