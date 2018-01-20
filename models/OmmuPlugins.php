@@ -5,18 +5,8 @@
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @modified date 20 January 2018, 06:30 WIB
  * @link https://github.com/ommu/ommu-core
- *
- * This is the template for generating the model class of a specified table.
- * - $this: the ModelCode object
- * - $tableName: the table name for this class (prefix is already removed if necessary)
- * - $modelClass: the model class name
- * - $columns: list of table columns (name=>CDbColumnSchema)
- * - $labels: list of attribute labels (name=>label)
- * - $rules: list of validation rules
- * - $relations: list of relations (name=>relation declaration)
- *
- * --------------------------------------------------------------------------------------
  *
  * This is the model class for table "ommu_core_plugins".
  *
@@ -38,19 +28,22 @@
  * @property string $modified_id
  *
  * The followings are the available model relations:
- * @property CoreComment[] $CoreComments
- * @property CorePluginPhrase[] $CorePluginPhrases
+ * @property OmmuPluginPhrase[] $phrases
+ * @property Users $creation;
+ * @property Users $modified;
  */
-class OmmuPlugins extends CActiveRecord
+
+class OmmuPlugins extends OActiveRecord
 {
-	public $defaultColumns = array();
-	
+	public $gridForbiddenColumn = array('desc','model','creation_date','creation_search','modified_date','modified_search');
+
 	// Variable Search
 	public $creation_search;
 	public $modified_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
+	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
 	 * @return OmmuPlugins the static model class
 	 */
@@ -82,9 +75,10 @@ class OmmuPlugins extends CActiveRecord
 			array('folder', 'length', 'max'=>32),
 			array('name, model', 'length', 'max'=>128),
 			array('desc', 'length', 'max'=>255),
+			array('creation_id, modified_id', 'length', 'max'=>11),
 			array('model', 'safe'),
 			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
+			// @todo Please remove those attributes that should not be searched.
 			array('plugin_id, default, install, actived, search, orders, parent_id, folder, name, desc, model, creation_date, creation_id, modified_date, modified_id,
 				creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
@@ -129,146 +123,126 @@ class OmmuPlugins extends CActiveRecord
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
 	}
-	
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+	 *
+	 * Typical usecase:
+	 * - Initialize the model fields with values from filter form.
+	 * - Execute this method to get CActiveDataProvider instance which will filter
+	 * models according to data in model fields.
+	 * - Pass data provider to CGridView, CListView or any similar widget.
+	 *
+	 * @return CActiveDataProvider the data provider that can return the models
+	 * based on the search/filter conditions.
 	 */
 	public function search()
 	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-		
+
 		// Custom Search
 		$criteria->with = array(
 			'creation' => array(
 				'alias'=>'creation',
-				'select'=>'displayname'
+				'select'=>'displayname',
 			),
 			'modified' => array(
 				'alias'=>'modified',
-				'select'=>'displayname'
+				'select'=>'displayname',
 			),
 		);
 
-		$criteria->compare('t.plugin_id',$this->plugin_id);
-		$criteria->compare('t.default',$this->default);
-		if(isset($_GET['type']) && $_GET['type'] == 'all')
-			$criteria->compare('t.install',$this->install);
-		else
-			$criteria->compare('t.install',1);
-		$criteria->compare('t.actived',$this->actived);
-		$criteria->compare('t.search',$this->search);
-		$criteria->compare('t.orders',$this->orders);
-		$criteria->compare('t.parent_id',$this->parent_id);
-		$criteria->compare('t.folder',strtolower($this->folder),true);
-		$criteria->compare('t.name',strtolower($this->name),true);
-		$criteria->compare('t.desc',strtolower($this->desc),true);
-		$criteria->compare('t.model',strtolower($this->model),true);
-		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
-		if(isset($_GET['creation']))
-			$criteria->compare('t.creation_id',$_GET['creation']);
-		else
-			$criteria->compare('t.creation_id',$this->creation_id);
-		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.modified_date)',date('Y-m-d', strtotime($this->modified_date)));
-		if(isset($_GET['modified']))
-			$criteria->compare('t.modified_id',$_GET['modified']);
-		else
-			$criteria->compare('t.modified_id',$this->modified_id);
-		
-		$criteria->compare('creation.displayname',strtolower($this->creation_search),true);
-		$criteria->compare('modified.displayname',strtolower($this->modified_search),true);
-		
-		if(!isset($_GET['OmmuPlugins_sort']))
+		$criteria->compare('t.plugin_id', $this->plugin_id);
+		$criteria->compare('t.default', $this->default);
+		$criteria->compare('t.install', Yii::app()->getRequest()->getParam('type') && Yii::app()->getRequest()->getParam('type') == 'all' ? $this->install : 1);
+		$criteria->compare('t.actived', $this->actived);
+		$criteria->compare('t.search', $this->search);
+		$criteria->compare('t.orders', $this->orders);
+		$criteria->compare('t.parent_id', $this->parent_id);
+		$criteria->compare('t.folder', strtolower($this->folder), true);
+		$criteria->compare('t.name', strtolower($this->name), true);
+		$criteria->compare('t.desc', strtolower($this->desc), true);
+		$criteria->compare('t.model', strtolower($this->model), true);
+		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
+			$criteria->compare('date(t.creation_date)', date('Y-m-d', strtotime($this->creation_date)));
+		$criteria->compare('t.creation_id', Yii::app()->getRequest()->getParam('creation') ? Yii::app()->getRequest()->getParam('creation') : $this->creation_id);
+		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
+			$criteria->compare('date(t.modified_date)', date('Y-m-d', strtotime($this->modified_date)));
+		$criteria->compare('t.modified_id', Yii::app()->getRequest()->getParam('modified') ? Yii::app()->getRequest()->getParam('modified') : $this->modified_id);
+
+		$criteria->compare('creation.displayname', strtolower($this->creation_search), true);
+		$criteria->compare('modified.displayname', strtolower($this->modified_search), true);
+
+		if(!Yii::app()->getRequest()->getParam('OmmuPlugins_sort'))
 			$criteria->order = 't.plugin_id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>30,
+				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 20,
 			),
 		));
-	}
-
-
-	/**
-	 * Get column for CGrid View
-	 */
-	public function getGridColumn($columns=null) {
-		if($columns !== null) {
-			foreach($columns as $val) {
-				/*
-				if(trim($val) == 'enabled') {
-					$this->defaultColumns[] = array(
-						'name'  => 'enabled',
-						'value' => '$data->enabled == 1? "Ya": "Tidak"',
-					);
-				}
-				*/
-				$this->defaultColumns[] = $val;
-			}
-		}else {
-			//$this->defaultColumns[] = 'plugin_id';
-			$this->defaultColumns[] = 'default';
-			$this->defaultColumns[] = 'install';
-			$this->defaultColumns[] = 'actived';
-			$this->defaultColumns[] = 'search';
-			$this->defaultColumns[] = 'orders';
-			$this->defaultColumns[] = 'parent_id';
-			$this->defaultColumns[] = 'folder';
-			$this->defaultColumns[] = 'name';
-			$this->defaultColumns[] = 'desc';
-			$this->defaultColumns[] = 'model';
-			$this->defaultColumns[] = 'creation_date';
-			$this->defaultColumns[] = 'creation_id';
-			$this->defaultColumns[] = 'modified_date';
-			$this->defaultColumns[] = 'modified_id';
-		}
-
-		return $this->defaultColumns;
 	}
 
 	/**
 	 * Set default columns to display
 	 */
 	protected function afterConstruct() {
-		if(count($this->defaultColumns) == 0) {
-			$this->defaultColumns[] = array(
-				'header' => 'No',
-				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
+		if(count($this->templateColumns) == 0) {
+			$this->templateColumns['_option'] = array(
+				'class' => 'CCheckBoxColumn',
+				'name' => 'id',
+				'selectableRows' => 2,
+				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
 			);
-			$this->defaultColumns[] = 'folder';
-			$this->defaultColumns[] = array(
-				'name' => 'parent_id',
-				'value' => '$data->parent_id ? $data->parent->folder : \'-\'',
+			$this->templateColumns['_no'] = array(
+				'header' => Yii::t('app', 'No'),
+				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
 			);
-			$this->defaultColumns[] = array(
+			$this->templateColumns['name'] = array(
 				'name' => 'name',
 				'value' => '$data->name ? $data->name : \'-\'',
 			);
-			/*
-			$this->defaultColumns[] = array(
+			$this->templateColumns['desc'] = array(
 				'name' => 'desc',
 				'value' => '$data->desc ? $data->desc : \'-\'',
 			);
-			*/
-			$this->defaultColumns[] = array(
-				'name' => 'creation_search',
-				'value' => '$data->creation->displayname',
+			$this->templateColumns['parent_id'] = array(
+				'name' => 'parent_id',
+				'value' => '$data->parent_id ? $data->parent->folder : \'-\'',
 			);
-			$this->defaultColumns[] = array(
+			$this->templateColumns['folder'] = array(
+				'name' => 'folder',
+				'value' => '$data->folder',
+			);
+			$this->templateColumns['orders'] = array(
+				'name' => 'orders',
+				'value' => '$data->orders',
+			);
+			$this->templateColumns['model'] = array(
+				'name' => 'model',
+				'value' => '$data->model',
+			);
+			if(!Yii::app()->getRequest()->getParam('creation')) {
+				$this->templateColumns['creation_search'] = array(
+					'name' => 'creation_search',
+					'value' => '$data->creation->displayname ? $data->creation->displayname : \'-\'',
+				);
+			}
+			$this->templateColumns['creation_date'] = array(
 				'name' => 'creation_date',
-				'value' => 'Utility::dateFormat($data->creation_date)',
+				'value' => '!in_array($data->creation_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\')) ? Utility::dateFormat($data->creation_date) : \'-\'',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
 				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
-					'model'=>$this, 
-					'attribute'=>'creation_date', 
+					'model'=>$this,
+					'attribute'=>'creation_date',
 					'language' => 'en',
 					'i18nScriptFile' => 'jquery-ui-i18n.min.js',
 					//'mode'=>'datetime',
@@ -286,9 +260,41 @@ class OmmuPlugins extends CActiveRecord
 					),
 				), true),
 			);
-			$this->defaultColumns[] = array(
+			$this->templateColumns['modified_date'] = array(
+				'name' => 'modified_date',
+				'value' => '!in_array($data->modified_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\')) ? Utility::dateFormat($data->modified_date) : \'-\'',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
+					'model'=>$this,
+					'attribute'=>'modified_date',
+					'language' => 'en',
+					'i18nScriptFile' => 'jquery-ui-i18n.min.js',
+					//'mode'=>'datetime',
+					'htmlOptions' => array(
+						'id' => 'modified_date_filter',
+					),
+					'options'=>array(
+						'showOn' => 'focus',
+						'dateFormat' => 'dd-mm-yy',
+						'showOtherMonths' => true,
+						'selectOtherMonths' => true,
+						'changeMonth' => true,
+						'changeYear' => true,
+						'showButtonPanel' => true,
+					),
+				), true),
+			);
+			if(!Yii::app()->getRequest()->getParam('modified')) {
+				$this->templateColumns['modified_search'] = array(
+					'name' => 'modified_search',
+					'value' => '$data->modified->displayname ? $data->modified->displayname : \'-\'',
+				);
+			}
+			$this->templateColumns['install'] = array(
 				'name' => 'install',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("install",array("id"=>$data->plugin_id)), $data->install, \'Install,Uninstall\')',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'install\',array(\'id\'=>$data->plugin_id)), $data->install, \'Install,Uninstall\')',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -298,9 +304,9 @@ class OmmuPlugins extends CActiveRecord
 				),
 				'type' => 'raw',
 			);
-			$this->defaultColumns[] = array(
+			$this->templateColumns['actived'] = array(
 				'name' => 'actived',
-				'value' => '$data->install == 1 ? ($data->actived == 2 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Utility::getPublish(Yii::app()->controller->createUrl("active",array("id"=>$data->plugin_id)), $data->actived, \'Actived,Deactived\')) : "-"',
+				'value' => '$data->install == 1 ? ($data->actived == 2 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Utility::getPublish(Yii::app()->controller->createUrl(\'active\',array("id"=>$data->plugin_id)), $data->actived, \'Actived,Deactived\')) : "-"',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -310,7 +316,7 @@ class OmmuPlugins extends CActiveRecord
 				),
 				'type' => 'raw',
 			);
-			$this->defaultColumns[] = array(
+			$this->templateColumns['search'] = array(
 				'name' => 'search',
 				'value' => '$data->search == 1 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/unpublish.png\')',
 				'htmlOptions' => array(
@@ -322,9 +328,9 @@ class OmmuPlugins extends CActiveRecord
 				),
 				'type' => 'raw',
 			);
-			$this->defaultColumns[] = array(
+			$this->templateColumns['default'] = array(
 				'name' => 'default',
-				'value' => '$data->install == 1 ? ($data->default == 1 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Utility::getPublish(Yii::app()->controller->createUrl("default",array("id"=>$data->plugin_id)), $data->default, 6)) : "-"',
+				'value' => '$data->install == 1 ? ($data->default == 1 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Utility::getPublish(Yii::app()->controller->createUrl(\'default\',array("id"=>$data->plugin_id)), $data->default)) : "-"',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -351,11 +357,15 @@ class OmmuPlugins extends CActiveRecord
 			
 		} else {
 			$model = self::model()->findByPk($id);
-			return $model;			
+			return $model;
 		}
 	}
 
-	// Get plugin list
+	/**
+	 * getPlugin
+	 * 0 = unpublish
+	 * 1 = publish
+	 */
 	public static function getPlugin($actived=null, $keypath=null, $type=null)
 	{
 		$criteria=new CDbCriteria;
@@ -368,7 +378,7 @@ class OmmuPlugins extends CActiveRecord
 			$criteria->order = 'orders ASC';
 		
 		$model = self::model()->findAll($criteria);
-		
+
 		if($type == null) {
 			$items = array();
 			if($model != null) {
@@ -379,28 +389,27 @@ class OmmuPlugins extends CActiveRecord
 						$items[$val->plugin_id] = $val->name;
 				}
 				return $items;
-				
 			} else
 				return false;
-			
 		} else
-			return $model;		
+			return $model;
 	}
 
 	/**
 	 * before validate attributes
 	 */
-	protected function beforeValidate() {
-		if(parent::beforeValidate()) {		
+	protected function beforeValidate() 
+	{
+		if(parent::beforeValidate()) {
 			if($this->isNewRecord) {
 				if($this->actived == 1)
 					$this->orders = count(self::getPlugin(1, null, 'data')) + 1;
 				else
 					$this->orders = 0;
 				
-				$this->creation_id = Yii::app()->user->id;	
+				$this->creation_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
 			} else
-				$this->modified_id = Yii::app()->user->id;	
+				$this->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
 		}
 		return true;
 	}
@@ -408,7 +417,8 @@ class OmmuPlugins extends CActiveRecord
 	/**
 	 * before save attributes
 	 */
-	protected function beforeSave() {
+	protected function beforeSave() 
+	{
 		if(parent::beforeSave()) {
 			if(!$this->isNewRecord) {
 				if($this->actived == 0) {
