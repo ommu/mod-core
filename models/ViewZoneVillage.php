@@ -5,18 +5,8 @@
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2015 Ommu Platform (opensource.ommu.co)
+ * @modified date 20 January 2018, 06:37 WIB
  * @link https://github.com/ommu/ommu-core
- *
- * This is the template for generating the model class of a specified table.
- * - $this: the ModelCode object
- * - $tableName: the table name for this class (prefix is already removed if necessary)
- * - $modelClass: the model class name
- * - $columns: list of table columns (name=>CDbColumnSchema)
- * - $labels: list of attribute labels (name=>label)
- * - $rules: list of validation rules
- * - $relations: list of relations (name=>relation declaration)
- *
- * --------------------------------------------------------------------------------------
  *
  * This is the model class for table "_view_core_zone_village".
  *
@@ -27,14 +17,16 @@
  * @property string $district_name
  * @property string $city_id
  * @property string $city_name
- * @property string $province_id
+ * @property integer $province_id
  * @property string $province_name
- * @property string $country_id
+ * @property integer $country_id
  * @property string $country_name
+ * @property string $zipcode
  */
-class ViewZoneVillage extends CActiveRecord
+
+class ViewZoneVillage extends OActiveRecord
 {
-	public $defaultColumns = array();
+	public $gridForbiddenColumn = array();
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -72,13 +64,14 @@ class ViewZoneVillage extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('village_name', 'required'),
-			array('province_id, country_id', 'length', 'max'=>5),
+			array('village_name, zipcode', 'required'),
+			array('province_id, country_id', 'numerical', 'integerOnly'=>true),
 			array('village_id, district_id, city_id', 'length', 'max'=>11),
 			array('village_name, district_name, city_name, province_name, country_name', 'length', 'max'=>64),
+			array('zipcode', 'length', 'max'=>5),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('village_id, village_name, district_id, district_name, city_id, city_name, province_id, province_name, country_id, country_name', 'safe', 'on'=>'search'),
+			array('village_id, village_name, district_id, district_name, city_id, city_name, province_id, province_name, country_id, country_name, zipcode', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -109,6 +102,7 @@ class ViewZoneVillage extends CActiveRecord
 			'province_name' => Yii::t('attribute', 'Province'),
 			'country_id' => Yii::t('attribute', 'Country'),
 			'country_name' => Yii::t('attribute', 'Country'),
+			'zipcode' => Yii::t('attribute', 'Zipcode'),
 		);
 	}
 
@@ -130,80 +124,91 @@ class ViewZoneVillage extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.village_id',$this->village_id);
-		$criteria->compare('t.village_name',strtolower($this->village_name),true);
-		$criteria->compare('t.district_id',$this->district_id);
-		$criteria->compare('t.district_name',strtolower($this->district_name),true);
-		$criteria->compare('t.city_id',$this->city_id);
-		$criteria->compare('t.city_name',strtolower($this->city_name),true);
-		$criteria->compare('t.province_id',$this->province_id);
-		$criteria->compare('t.province_name',strtolower($this->province_name),true);
-		$criteria->compare('t.country_id',$this->country_id);
-		$criteria->compare('t.country_name',strtolower($this->country_name),true);
+		$criteria->compare('t.village_id', $this->village_id);
+		$criteria->compare('t.village_name', strtolower($this->village_name), true);
+		$criteria->compare('t.district_id', $this->district_id);
+		$criteria->compare('t.district_name', strtolower($this->district_name), true);
+		$criteria->compare('t.city_id', $this->city_id);
+		$criteria->compare('t.city_name', strtolower($this->city_name), true);
+		$criteria->compare('t.province_id', $this->province_id);
+		$criteria->compare('t.province_name', strtolower($this->province_name), true);
+		$criteria->compare('t.country_id', $this->country_id);
+		$criteria->compare('t.country_name', strtolower($this->country_name), true);
+		$criteria->compare('t.zipcode', strtolower($this->zipcode), true);
 
-		if(!isset($_GET['ViewZoneVillage_sort']))
+		if(!Yii::app()->getRequest()->getParam('ViewZoneVillage_sort'))
 			$criteria->order = 't.village_id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>30,
+				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 20,
 			),
 		));
-	}
-
-
-	/**
-	 * Get column for CGrid View
-	 */
-	public function getGridColumn($columns=null) {
-		if($columns !== null) {
-			foreach($columns as $val) {
-				/*
-				if(trim($val) == 'enabled') {
-					$this->defaultColumns[] = array(
-						'name'  => 'enabled',
-						'value' => '$data->enabled == 1? "Ya": "Tidak"',
-					);
-				}
-				*/
-				$this->defaultColumns[] = $val;
-			}
-		} else {
-			$this->defaultColumns[] = 'village_id';
-			$this->defaultColumns[] = 'village_name';
-			$this->defaultColumns[] = 'district_id';
-			$this->defaultColumns[] = 'district_name';
-			$this->defaultColumns[] = 'city_id';
-			$this->defaultColumns[] = 'city_name';
-			$this->defaultColumns[] = 'province_id';
-			$this->defaultColumns[] = 'province_name';
-			$this->defaultColumns[] = 'country_id';
-			$this->defaultColumns[] = 'country_name';
-		}
-
-		return $this->defaultColumns;
 	}
 
 	/**
 	 * Set default columns to display
 	 */
 	protected function afterConstruct() {
-		if(count($this->defaultColumns) == 0) {
-			$this->defaultColumns[] = array(
-				'header' => 'No',
-				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
+		if(count($this->templateColumns) == 0) {
+			$this->templateColumns['_option'] = array(
+				'class' => 'CCheckBoxColumn',
+				'name' => 'id',
+				'selectableRows' => 2,
+				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
 			);
-			$this->defaultColumns[] = 'village_id';
-			$this->defaultColumns[] = 'village_name';
-			$this->defaultColumns[] = 'district_id';
-			$this->defaultColumns[] = 'district_name';
-			$this->defaultColumns[] = 'city_id';
-			$this->defaultColumns[] = 'city_name';
-			$this->defaultColumns[] = 'province_id';
-			$this->defaultColumns[] = 'province_name';
-			$this->defaultColumns[] = 'country_id';
-			$this->defaultColumns[] = 'country_name';
+			$this->templateColumns['_no'] = array(
+				'header' => Yii::t('app', 'No'),
+				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+			);
+			$this->templateColumns['village_id'] = array(
+				'name' => 'village_id',
+				'value' => '$data->village_id',
+			);
+			$this->templateColumns['village_name'] = array(
+				'name' => 'village_name',
+				'value' => '$data->village_name',
+			);
+			$this->templateColumns['district_id'] = array(
+				'name' => 'district_id',
+				'value' => '$data->district_id',
+			);
+			$this->templateColumns['district_name'] = array(
+				'name' => 'district_name',
+				'value' => '$data->district_name',
+			);
+			$this->templateColumns['city_id'] = array(
+				'name' => 'city_id',
+				'value' => '$data->city_id',
+			);
+			$this->templateColumns['city_name'] = array(
+				'name' => 'city_name',
+				'value' => '$data->city_name',
+			);
+			$this->templateColumns['province_id'] = array(
+				'name' => 'province_id',
+				'value' => '$data->province_id',
+			);
+			$this->templateColumns['province_name'] = array(
+				'name' => 'province_name',
+				'value' => '$data->province_name',
+			);
+			$this->templateColumns['country_id'] = array(
+				'name' => 'country_id',
+				'value' => '$data->country_id',
+			);
+			$this->templateColumns['country_name'] = array(
+				'name' => 'country_name',
+				'value' => '$data->country_name',
+			);
+			$this->templateColumns['zipcode'] = array(
+				'name' => 'zipcode',
+				'value' => '$data->zipcode',
+			);
 		}
 		parent::afterConstruct();
 	}
@@ -221,7 +226,7 @@ class ViewZoneVillage extends CActiveRecord
 			
 		} else {
 			$model = self::model()->findByPk($id);
-			return $model;			
+			return $model;
 		}
 	}
 

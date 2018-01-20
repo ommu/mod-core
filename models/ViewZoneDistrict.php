@@ -1,6 +1,6 @@
 <?php
 /**
- * ViewZoneCity
+ * ViewZoneDistrict
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
@@ -8,9 +8,11 @@
  * @modified date 20 January 2018, 06:36 WIB
  * @link https://github.com/ommu/ommu-core
  *
- * This is the model class for table "_view_core_zone_city".
+ * This is the model class for table "_view_core_zone_district".
  *
- * The followings are the available columns in table '_view_core_zone_city':
+ * The followings are the available columns in table '_view_core_zone_district':
+ * @property string $district_id
+ * @property string $district_name
  * @property string $city_id
  * @property string $city_name
  * @property integer $province_id
@@ -19,7 +21,7 @@
  * @property string $country_name
  */
 
-class ViewZoneCity extends OActiveRecord
+class ViewZoneDistrict extends OActiveRecord
 {
 	public $gridForbiddenColumn = array();
 
@@ -27,7 +29,7 @@ class ViewZoneCity extends OActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ViewZoneCity the static model class
+	 * @return ViewZoneDistrict the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -40,7 +42,7 @@ class ViewZoneCity extends OActiveRecord
 	public function tableName()
 	{
 		preg_match("/dbname=([^;]+)/i", $this->dbConnection->connectionString, $matches);
-		return $matches[1].'._view_core_zone_city';
+		return $matches[1].'._view_core_zone_district';
 	}
 
 	/**
@@ -48,7 +50,7 @@ class ViewZoneCity extends OActiveRecord
 	 */
 	public function primaryKey()
 	{
-		return 'city_id';
+		return 'district_id';
 	}
 
 	/**
@@ -59,13 +61,13 @@ class ViewZoneCity extends OActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('city_name', 'required'),
+			array('district_name', 'required'),
 			array('province_id, country_id', 'numerical', 'integerOnly'=>true),
-			array('city_id', 'length', 'max'=>11),
-			array('city_name, province_name, country_name', 'length', 'max'=>64),
+			array('district_id, city_id', 'length', 'max'=>11),
+			array('district_name, city_name, province_name, country_name', 'length', 'max'=>64),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('city_id, city_name, province_id, province_name, country_id, country_name', 'safe', 'on'=>'search'),
+			array('district_id, district_name, city_id, city_name, province_id, province_name, country_id, country_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -86,6 +88,8 @@ class ViewZoneCity extends OActiveRecord
 	public function attributeLabels()
 	{
 		return array(
+			'district_id' => Yii::t('attribute', 'District'),
+			'district_name' => Yii::t('attribute', 'District'),
 			'city_id' => Yii::t('attribute', 'City'),
 			'city_name' => Yii::t('attribute', 'City'),
 			'province_id' => Yii::t('attribute', 'Province'),
@@ -113,6 +117,8 @@ class ViewZoneCity extends OActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		$criteria->compare('t.district_id', $this->district_id);
+		$criteria->compare('t.district_name', strtolower($this->district_name), true);
 		$criteria->compare('t.city_id', $this->city_id);
 		$criteria->compare('t.city_name', strtolower($this->city_name), true);
 		$criteria->compare('t.province_id', $this->province_id);
@@ -120,8 +126,8 @@ class ViewZoneCity extends OActiveRecord
 		$criteria->compare('t.country_id', $this->country_id);
 		$criteria->compare('t.country_name', strtolower($this->country_name), true);
 
-		if(!Yii::app()->getRequest()->getParam('ViewZoneCity_sort'))
-			$criteria->order = 't.city_id DESC';
+		if(!Yii::app()->getRequest()->getParam('ViewZoneDistrict_sort'))
+			$criteria->order = 't.district_id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -148,6 +154,14 @@ class ViewZoneCity extends OActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
+			);
+			$this->templateColumns['district_id'] = array(
+				'name' => 'district_id',
+				'value' => '$data->district_id',
+			);
+			$this->templateColumns['district_name'] = array(
+				'name' => 'district_name',
+				'value' => '$data->district_name',
 			);
 			$this->templateColumns['city_id'] = array(
 				'name' => 'city_id',

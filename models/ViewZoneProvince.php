@@ -5,19 +5,8 @@
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
- * @created date 2 July 2017, 09:29 WIB
+ * @modified date 20 January 2018, 06:37 WIB
  * @link https://github.com/ommu/ommu-core
- *
- * This is the template for generating the model class of a specified table.
- * - $this: the ModelCode object
- * - $tableName: the table name for this class (prefix is already removed if necessary)
- * - $modelClass: the model class name
- * - $columns: list of table columns (name=>CDbColumnSchema)
- * - $labels: list of attribute labels (name=>label)
- * - $rules: list of validation rules
- * - $relations: list of relations (name=>relation declaration)
- *
- * --------------------------------------------------------------------------------------
  *
  * This is the model class for table "_view_core_zone_province".
  *
@@ -27,9 +16,10 @@
  * @property integer $country_id
  * @property string $country_name
  */
-class ViewZoneProvince extends CActiveRecord
+
+class ViewZoneProvince extends OActiveRecord
 {
-	public $defaultColumns = array();
+	public $gridForbiddenColumn = array();
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -118,62 +108,56 @@ class ViewZoneProvince extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.province_id',$this->province_id);
-		$criteria->compare('t.province_name',strtolower($this->province_name),true);
-		$criteria->compare('t.country_id',$this->country_id);
-		$criteria->compare('t.country_name',strtolower($this->country_name),true);
+		$criteria->compare('t.province_id', $this->province_id);
+		$criteria->compare('t.province_name', strtolower($this->province_name), true);
+		$criteria->compare('t.country_id', $this->country_id);
+		$criteria->compare('t.country_name', strtolower($this->country_name), true);
 
-		if(!isset($_GET['ViewZoneProvince_sort']))
+		if(!Yii::app()->getRequest()->getParam('ViewZoneProvince_sort'))
 			$criteria->order = 't.province_id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>30,
+				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 20,
 			),
 		));
-	}
-
-
-	/**
-	 * Get column for CGrid View
-	 */
-	public function getGridColumn($columns=null) {
-		if($columns !== null) {
-			foreach($columns as $val) {
-				/*
-				if(trim($val) == 'enabled') {
-					$this->defaultColumns[] = array(
-						'name'  => 'enabled',
-						'value' => '$data->enabled == 1? "Ya": "Tidak"',
-					);
-				}
-				*/
-				$this->defaultColumns[] = $val;
-			}
-		} else {
-			$this->defaultColumns[] = 'province_id';
-			$this->defaultColumns[] = 'province_name';
-			$this->defaultColumns[] = 'country_id';
-			$this->defaultColumns[] = 'country_name';
-		}
-
-		return $this->defaultColumns;
 	}
 
 	/**
 	 * Set default columns to display
 	 */
 	protected function afterConstruct() {
-		if(count($this->defaultColumns) == 0) {
-			$this->defaultColumns[] = array(
-				'header' => 'No',
-				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
+		if(count($this->templateColumns) == 0) {
+			$this->templateColumns['_option'] = array(
+				'class' => 'CCheckBoxColumn',
+				'name' => 'id',
+				'selectableRows' => 2,
+				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
 			);
-			//$this->defaultColumns[] = 'province_id';
-			$this->defaultColumns[] = 'province_name';
-			$this->defaultColumns[] = 'country_id';
-			$this->defaultColumns[] = 'country_name';
+			$this->templateColumns['_no'] = array(
+				'header' => Yii::t('app', 'No'),
+				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+			);
+			$this->templateColumns['province_id'] = array(
+				'name' => 'province_id',
+				'value' => '$data->province_id',
+			);
+			$this->templateColumns['province_name'] = array(
+				'name' => 'province_name',
+				'value' => '$data->province_name',
+			);
+			$this->templateColumns['country_id'] = array(
+				'name' => 'country_id',
+				'value' => '$data->country_id',
+			);
+			$this->templateColumns['country_name'] = array(
+				'name' => 'country_name',
+				'value' => '$data->country_name',
+			);
 		}
 		parent::afterConstruct();
 	}
@@ -191,7 +175,7 @@ class ViewZoneProvince extends CActiveRecord
 			
 		} else {
 			$model = self::model()->findByPk($id);
-			return $model;			
+			return $model;
 		}
 	}
 
