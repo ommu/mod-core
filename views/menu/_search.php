@@ -2,7 +2,7 @@
 /**
  * Ommu Menus (ommu-menu)
  * @var $this MenuController
- * @var $model OmmuMenu
+ * @var $model OmmuMenus
  * @var $form CActiveForm
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>

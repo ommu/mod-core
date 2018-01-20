@@ -2,7 +2,7 @@
 /**
  * Ommu Menus (ommu-menu)
  * @var $this MenuController
- * @var $model OmmuMenu
+ * @var $model OmmuMenus
  * @var $form CActiveForm
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
@@ -44,7 +44,7 @@
 
 		<?php
 		$parent = null;
-		$menu = OmmuMenu::getParentMenu(null, $parent);
+		$menu = OmmuMenus::getParentMenu(null, $parent);
 		if($menu != null) {?>
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'parent', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>

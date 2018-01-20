@@ -2,7 +2,7 @@
 /**
  * MenuController
  * @var $this MenuController
- * @var $model OmmuMenu
+ * @var $model OmmuMenus
  * @var $form CActiveForm
  *
  * Reference start
@@ -102,10 +102,10 @@ class MenuController extends Controller
 			$pageTitle = Yii::t('phrase', 'Menus: category $category_name', array ('$category_name'=>$data->title->message));
 		}
 		
-		$model=new OmmuMenu('search');
+		$model=new OmmuMenus('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['OmmuMenu'])) {
-			$model->attributes=$_GET['OmmuMenu'];
+		if(isset($_GET['OmmuMenus'])) {
+			$model->attributes=$_GET['OmmuMenus'];
 		}
 
 		$columnTemp = array();
@@ -133,13 +133,13 @@ class MenuController extends Controller
 	 */
 	public function actionAdd() 
 	{
-		$model=new OmmuMenu;
+		$model=new OmmuMenus;
 
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
-		if(isset($_POST['OmmuMenu'])) {
-			$model->attributes=$_POST['OmmuMenu'];
+		if(isset($_POST['OmmuMenus'])) {
+			$model->attributes=$_POST['OmmuMenus'];
 			
 			$jsonError = CActiveForm::validate($model);
 			if(strlen($jsonError) > 2) {
@@ -186,8 +186,8 @@ class MenuController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
-		if(isset($_POST['OmmuMenu'])) {
-			$model->attributes=$_POST['OmmuMenu'];
+		if(isset($_POST['OmmuMenus'])) {
+			$model->attributes=$_POST['OmmuMenus'];
 			
 			$jsonError = CActiveForm::validate($model);
 			if(strlen($jsonError) > 2) {
@@ -214,7 +214,7 @@ class MenuController extends Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 600;
 
-		$this->pageTitle = Yii::t('phrase', 'Update Menu: $menu_name category $category_name', array('$menu_name'=>$model->title->message,'$category_name'=>$model->cat->title->message));
+		$this->pageTitle = Yii::t('phrase', 'Update Menu: $menu_name category $category_name', array('$menu_name'=>$model->title->message,'$category_name'=>$model->category->title->message));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_edit',array(
@@ -234,7 +234,7 @@ class MenuController extends Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 500;
 		
-		$this->pageTitle = Yii::t('phrase', 'View Menu: $menu_name category $category_name', array('$menu_name'=>$model->title->message,'$category_name'=>$model->cat->title->message));
+		$this->pageTitle = Yii::t('phrase', 'View Menu: $menu_name category $category_name', array('$menu_name'=>$model->title->message,'$category_name'=>$model->category->title->message));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_view',array(
@@ -256,19 +256,19 @@ class MenuController extends Controller
 			$criteria->addInCondition('id', $id);
 
 			if($actions == 'publish') {
-				OmmuMenu::model()->updateAll(array(
+				OmmuMenus::model()->updateAll(array(
 					'publish' => 1,
 				),$criteria);
 			} elseif($actions == 'unpublish') {
-				OmmuMenu::model()->updateAll(array(
+				OmmuMenus::model()->updateAll(array(
 					'publish' => 0,
 				),$criteria);
 			} elseif($actions == 'trash') {
-				OmmuMenu::model()->updateAll(array(
+				OmmuMenus::model()->updateAll(array(
 					'publish' => 2,
 				),$criteria);
 			} elseif($actions == 'delete') {
-				OmmuMenu::model()->deleteAll($criteria);
+				OmmuMenus::model()->deleteAll($criteria);
 			}
 		}
 
@@ -307,7 +307,7 @@ class MenuController extends Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 350;
 
-		$this->pageTitle = Yii::t('phrase', 'Delete Menu: $menu_name category $category_name', array('$menu_name'=>$model->title->message,'$category_name'=>$model->cat->title->message));
+		$this->pageTitle = Yii::t('phrase', 'Delete Menu: $menu_name category $category_name', array('$menu_name'=>$model->title->message,'$category_name'=>$model->category->title->message));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_delete');
@@ -346,7 +346,7 @@ class MenuController extends Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 350;
 
-		$this->pageTitle = Yii::t('phrase', '$title Menu: $menu_name category $category_name', array('$title'=>$title,'$menu_name'=>$model->title->message,'$category_name'=>$model->cat->title->message));
+		$this->pageTitle = Yii::t('phrase', '$title Menu: $menu_name category $category_name', array('$title'=>$title,'$menu_name'=>$model->title->message,'$category_name'=>$model->category->title->message));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_publish',array(
@@ -362,7 +362,7 @@ class MenuController extends Controller
 	 */
 	public function loadModel($id) 
 	{
-		$model = OmmuMenu::model()->findByPk($id);
+		$model = OmmuMenus::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404, Yii::t('phrase', 'The requested page does not exist.'));
 		return $model;

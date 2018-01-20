@@ -106,7 +106,7 @@ class OmmuMenuCategory extends OActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'view' => array(self::BELONGS_TO, 'ViewMenuCategory', 'cat_id'),
-			'menus' => array(self::HAS_MANY, 'OmmuMenu', 'cat_id'),
+			'menus' => array(self::HAS_MANY, 'OmmuMenus', 'cat_id'),
 			'title' => array(self::BELONGS_TO, 'SourceMessage', 'name'),
 			'description' => array(self::BELONGS_TO, 'SourceMessage', 'desc'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
