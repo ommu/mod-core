@@ -6,6 +6,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 5 November 2017, 18:28 WIB
+ * @modified date 20 January 2018, 06:27 WIB
  * @link https://github.com/ommu/ommu-core
  *
  * This is the model class for table "message".
@@ -18,10 +19,8 @@
  * The followings are the available model relations:
  * @property SourceMessage $id0
  */
-class Message extends CActiveRecord
+class Message extends OActiveRecord
 {
-	public $defaultColumns = array();
-	public $templateColumns = array();
 	public $gridForbiddenColumn = array();
 
 	// Variable Search
@@ -61,7 +60,8 @@ class Message extends CActiveRecord
 			array('translation', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, language, translation, phrase_search', 'safe', 'on'=>'search'),
+			array('id, language, translation, 
+				phrase_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -112,86 +112,25 @@ class Message extends CActiveRecord
 		$criteria->with = array(
 			'phrase' => array(
 				'alias'=>'phrase',
-				'select'=>'message'
+				'select'=>'message',
 			),
 		);
 		
-		$criteria->compare('t.id', isset($_GET['id']) ? $_GET['id'] : $this->id);
+		$criteria->compare('t.id', Yii::app()->getRequest()->getParam('id') ? Yii::app()->getRequest()->getParam('id') : $this->id);
 		$criteria->compare('t.language', $this->language);
-		$criteria->compare('t.translation', strtolower($this->translation),true);
+		$criteria->compare('t.translation', strtolower($this->translation), true);
 
 		$criteria->compare('phrase.message',strtolower($this->phrase_search),true);
 
-		if(!isset($_GET['Message_sort']))
+		if(!Yii::app()->getRequest()->getParam('Message_sort'))
 			$criteria->order = 't.id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>30,
+				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 20,
 			),
 		));
-	}
-
-	/**
-	 * Get kolom untuk Grid View
-	 *
-	 * @param array $columns kolom dari view
-	 * @return array dari grid yang aktif
-	 */
-	public function getGridColumn($columns=null) 
-	{
-		// Jika $columns kosong maka isi defaultColumns dg templateColumns
-		if(empty($columns) || $columns == null) {
-			array_splice($this->defaultColumns, 0);
-			foreach($this->templateColumns as $key => $val) {
-				if(!in_array($key, $this->gridForbiddenColumn) && !in_array($key, $this->defaultColumns))
-					$this->defaultColumns[] = $val;
-			}
-			return $this->defaultColumns;
-		}
-
-		foreach($columns as $val) {
-			if(!in_array($val, $this->gridForbiddenColumn) && !in_array($val, $this->defaultColumns)) {
-				$col = $this->getTemplateColumn($val);
-				if($col != null)
-					$this->defaultColumns[] = $col;
-			}
-		}
-
-		array_unshift($this->defaultColumns, array(
-			'header' => Yii::t('app', 'No'),
-			'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
-		));
-
-		array_unshift($this->defaultColumns, array(
-			'class' => 'CCheckBoxColumn',
-			'name' => 'id',
-			'selectableRows' => 2,
-			'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
-		));
-
-		return $this->defaultColumns;
-	}
-
-	/**
-	 * Get kolom template berdasarkan id pengenal
-	 *
-	 * @param string $name nama pengenal
-	 * @return mixed
-	 */
-	public function getTemplateColumn($name) 
-	{
-		$data = null;
-		if(trim($name) == '') return $data;
-
-		foreach($this->templateColumns as $key => $item) {
-			if($name == $key) {
-				$data = $item;
-				break;
-			}
-		}
-		return $data;
 	}
 
 	/**
@@ -207,9 +146,12 @@ class Message extends CActiveRecord
 			);
 			$this->templateColumns['_no'] = array(
 				'header' => Yii::t('app', 'No'),
-				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
+				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
 			);
-			if(!isset($_GET['phrase'])) {
+			if(!Yii::app()->getRequest()->getParam('phrase')) {
 				$this->templateColumns['phrase_search'] = array(
 					'name' => 'phrase_search',
 					'value' => '$data->phrase->message',

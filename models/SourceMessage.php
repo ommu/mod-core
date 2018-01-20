@@ -6,6 +6,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 5 November 2017, 18:22 WIB
+ * @modified date 20 January 2018, 06:34 WIB
  * @link https://github.com/ommu/ommu-core
  *
  * This is the model class for table "source_message".
@@ -25,10 +26,9 @@
  * @property Users $creation;
  * @property Users $modified;
  */
-class SourceMessage extends CActiveRecord
+
+class SourceMessage extends OActiveRecord
 {
-	public $defaultColumns = array();
-	public $templateColumns = array();
 	public $gridForbiddenColumn = array();
 
 	// Variable Search
@@ -129,98 +129,37 @@ class SourceMessage extends CActiveRecord
 		$criteria->with = array(
 			'creation' => array(
 				'alias'=>'creation',
-				'select'=>'displayname'
+				'select'=>'displayname',
 			),
 			'modified' => array(
 				'alias'=>'modified',
-				'select'=>'displayname'
+				'select'=>'displayname',
 			),
 		);
 		
 		$criteria->compare('t.id', $this->id);
-		$criteria->compare('t.category', strtolower($this->category),true);
-		$criteria->compare('t.message', strtolower($this->message),true);
-		$criteria->compare('t.location', strtolower($this->location),true);
-		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00')))
+		$criteria->compare('t.category', strtolower($this->category), true);
+		$criteria->compare('t.message', strtolower($this->message), true);
+		$criteria->compare('t.location', strtolower($this->location), true);
+		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
 			$criteria->compare('date(t.creation_date)', date('Y-m-d', strtotime($this->creation_date)));
-		$criteria->compare('t.creation_id', isset($_GET['creation']) ? $_GET['creation'] : $this->creation_id);
-		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00')))
+		$criteria->compare('t.creation_id', Yii::app()->getRequest()->getParam('creation') ? Yii::app()->getRequest()->getParam('creation') : $this->creation_id);
+		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
 			$criteria->compare('date(t.modified_date)', date('Y-m-d', strtotime($this->modified_date)));
-		$criteria->compare('t.modified_id', isset($_GET['modified']) ? $_GET['modified'] : $this->modified_id);
+		$criteria->compare('t.modified_id', Yii::app()->getRequest()->getParam('modified') ? Yii::app()->getRequest()->getParam('modified') : $this->modified_id);
 
-		$criteria->compare('creation.displayname',strtolower($this->creation_search),true);
-		$criteria->compare('modified.displayname',strtolower($this->modified_search),true);
+		$criteria->compare('creation.displayname', strtolower($this->creation_search), true);
+		$criteria->compare('modified.displayname', strtolower($this->modified_search), true);
 
-		if(!isset($_GET['SourceMessage_sort']))
+		if(!Yii::app()->getRequest()->getParam('SourceMessage_sort'))
 			$criteria->order = 't.id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>30,
+				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 20,
 			),
 		));
-	}
-
-	/**
-	 * Get kolom untuk Grid View
-	 *
-	 * @param array $columns kolom dari view
-	 * @return array dari grid yang aktif
-	 */
-	public function getGridColumn($columns=null) 
-	{
-		// Jika $columns kosong maka isi defaultColumns dg templateColumns
-		if(empty($columns) || $columns == null) {
-			array_splice($this->defaultColumns, 0);
-			foreach($this->templateColumns as $key => $val) {
-				if(!in_array($key, $this->gridForbiddenColumn) && !in_array($key, $this->defaultColumns))
-					$this->defaultColumns[] = $val;
-			}
-			return $this->defaultColumns;
-		}
-
-		foreach($columns as $val) {
-			if(!in_array($val, $this->gridForbiddenColumn) && !in_array($val, $this->defaultColumns)) {
-				$col = $this->getTemplateColumn($val);
-				if($col != null)
-					$this->defaultColumns[] = $col;
-			}
-		}
-
-		array_unshift($this->defaultColumns, array(
-			'header' => Yii::t('app', 'No'),
-			'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
-		));
-
-		array_unshift($this->defaultColumns, array(
-			'class' => 'CCheckBoxColumn',
-			'name' => 'id',
-			'selectableRows' => 2,
-			'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
-		));
-
-		return $this->defaultColumns;
-	}
-
-	/**
-	 * Get kolom template berdasarkan id pengenal
-	 *
-	 * @param string $name nama pengenal
-	 * @return mixed
-	 */
-	public function getTemplateColumn($name) 
-	{
-		$data = null;
-		if(trim($name) == '') return $data;
-
-		foreach($this->templateColumns as $key => $item) {
-			if($name == $key) {
-				$data = $item;
-				break;
-			}
-		}
-		return $data;
 	}
 
 	/**
@@ -236,7 +175,10 @@ class SourceMessage extends CActiveRecord
 			);
 			$this->templateColumns['_no'] = array(
 				'header' => Yii::t('app', 'No'),
-				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
+				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
 			);
 			$this->templateColumns['category'] = array(
 				'name' => 'category',
@@ -277,10 +219,10 @@ class SourceMessage extends CActiveRecord
 					),
 				), true),
 			);
-			if(!isset($_GET['creation'])) {
+			if(!Yii::app()->getRequest()->getParam('creation')) {
 				$this->templateColumns['creation_search'] = array(
 					'name' => 'creation_search',
-					'value' => '$data->creation->displayname',
+					'value' => '$data->creation->displayname ? $data->creation->displayname : \'-\'',
 				);
 			}
 			$this->templateColumns['modified_date'] = array(
@@ -309,10 +251,10 @@ class SourceMessage extends CActiveRecord
 					),
 				), true),
 			);
-			if(!isset($_GET['modified'])) {
+			if(!Yii::app()->getRequest()->getParam('modified')) {
 				$this->templateColumns['modified_search'] = array(
 					'name' => 'modified_search',
-					'value' => '$data->modified->displayname',
+					'value' => '$data->modified->displayname ? $data->modified->displayname : \'-\'',
 				);
 			}
 		}
