@@ -1,22 +1,12 @@
 <?php
 /**
- * ViewCorePages
+ * ViewPages
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2015 Ommu Platform (opensource.ommu.co)
+ * @modified date 20 January 2018, 06:36 WIB
  * @link https://github.com/ommu/ommu-core
- *
- * This is the template for generating the model class of a specified table.
- * - $this: the ModelCode object
- * - $tableName: the table name for this class (prefix is already removed if necessary)
- * - $modelClass: the model class name
- * - $columns: list of table columns (name=>CDbColumnSchema)
- * - $labels: list of attribute labels (name=>label)
- * - $rules: list of validation rules
- * - $relations: list of relations (name=>relation declaration)
- *
- * --------------------------------------------------------------------------------------
  *
  * This is the model class for table "_view_core_pages".
  *
@@ -26,15 +16,16 @@
  * @property string $views
  * @property string $view_all
  */
-class ViewPages extends CActiveRecord
+
+class ViewPages extends OActiveRecord
 {
-	public $defaultColumns = array();
+	public $gridForbiddenColumn = array();
 
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ViewCorePages the static model class
+	 * @return ViewPages the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -67,6 +58,7 @@ class ViewPages extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('page_id, media', 'numerical', 'integerOnly'=>true),
+			array('views, view_all', 'length', 'max'=>32),
 			array('', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -116,62 +108,56 @@ class ViewPages extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.page_id',$this->page_id);
-		$criteria->compare('t.media',$this->media);
-		$criteria->compare('t.views',$this->views);
-		$criteria->compare('t.view_all',$this->view_all);
+		$criteria->compare('t.page_id', $this->page_id);
+		$criteria->compare('t.media', $this->media);
+		$criteria->compare('t.views', $this->views);
+		$criteria->compare('t.view_all', $this->view_all);
 
-		if(!isset($_GET['ViewCorePages_sort']))
+		if(!Yii::app()->getRequest()->getParam('ViewPages_sort'))
 			$criteria->order = 't.page_id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>30,
+				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 20,
 			),
 		));
-	}
-
-
-	/**
-	 * Get column for CGrid View
-	 */
-	public function getGridColumn($columns=null) {
-		if($columns !== null) {
-			foreach($columns as $val) {
-				/*
-				if(trim($val) == 'enabled') {
-					$this->defaultColumns[] = array(
-						'name'  => 'enabled',
-						'value' => '$data->enabled == 1? "Ya": "Tidak"',
-					);
-				}
-				*/
-				$this->defaultColumns[] = $val;
-			}
-		} else {
-			$this->defaultColumns[] = 'page_id';
-			$this->defaultColumns[] = 'media';
-			$this->defaultColumns[] = 'views';
-			$this->defaultColumns[] = 'view_all';
-		}
-
-		return $this->defaultColumns;
 	}
 
 	/**
 	 * Set default columns to display
 	 */
 	protected function afterConstruct() {
-		if(count($this->defaultColumns) == 0) {
-			$this->defaultColumns[] = array(
-				'header' => 'No',
-				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
+		if(count($this->templateColumns) == 0) {
+			$this->templateColumns['_option'] = array(
+				'class' => 'CCheckBoxColumn',
+				'name' => 'id',
+				'selectableRows' => 2,
+				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
 			);
-			//$this->defaultColumns[] = 'page_id';
-			$this->defaultColumns[] = 'media';
-			$this->defaultColumns[] = 'views';
-			$this->defaultColumns[] = 'view_all';
+			$this->templateColumns['_no'] = array(
+				'header' => Yii::t('app', 'No'),
+				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+			);
+			$this->templateColumns['page_id'] = array(
+				'name' => 'page_id',
+				'value' => '$data->page_id',
+			);
+			$this->templateColumns['media'] = array(
+				'name' => 'media',
+				'value' => '$data->media',
+			);
+			$this->templateColumns['views'] = array(
+				'name' => 'views',
+				'value' => '$data->views',
+			);
+			$this->templateColumns['view_all'] = array(
+				'name' => 'view_all',
+				'value' => '$data->view_all',
+			);
 		}
 		parent::afterConstruct();
 	}
@@ -189,7 +175,7 @@ class ViewPages extends CActiveRecord
 			
 		} else {
 			$model = self::model()->findByPk($id);
-			return $model;			
+			return $model;
 		}
 	}
 }
