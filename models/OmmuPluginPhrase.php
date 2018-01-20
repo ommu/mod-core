@@ -5,18 +5,8 @@
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @modified date 20 January 2018, 06:30 WIB
  * @link https://github.com/ommu/ommu-core
- *
- * This is the template for generating the model class of a specified table.
- * - $this: the ModelCode object
- * - $tableName: the table name for this class (prefix is already removed if necessary)
- * - $modelClass: the model class name
- * - $columns: list of table columns (name=>CDbColumnSchema)
- * - $labels: list of attribute labels (name=>label)
- * - $rules: list of validation rules
- * - $relations: list of relations (name=>relation declaration)
- *
- * --------------------------------------------------------------------------------------
  *
  * This is the model class for table "ommu_core_plugin_phrase".
  *
@@ -25,16 +15,19 @@
  * @property integer $plugin_id
  * @property string $location
  * @property string $en_us
+ * @property string $id
  *
  * The followings are the available model relations:
- * @property CorePlugins $plugin
+ * @property OmmuPlugins $plugin
  */
-class OmmuPluginPhrase extends CActiveRecord
+
+class OmmuPluginPhrase extends OActiveRecord
 {
-	public $defaultColumns = array();
+	public $gridForbiddenColumn = array();
 
 	/**
 	 * Returns the static model of the specified AR class.
+	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
 	 * @return OmmuPluginPhrase the static model class
 	 */
@@ -68,7 +61,7 @@ class OmmuPluginPhrase extends CActiveRecord
 				id', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('phrase_id, plugin_id, location, en_us', 'safe', 'on'=>'search'),
+			array('phrase_id, plugin_id, location, en_us, id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -90,77 +83,68 @@ class OmmuPluginPhrase extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'phrase_id' => Yii::t('phrase', 'Phrase'),
-			'plugin_id' => Yii::t('phrase', 'Plugins'),
-			'location' => Yii::t('phrase', 'Location'),
-			'en_us' => 'En',
+			'phrase_id' => Yii::t('attribute', 'Phrase'),
+			'plugin_id' => Yii::t('attribute', 'Plugin'),
+			'location' => Yii::t('attribute', 'Location'),
+			'en_us' => Yii::t('attribute', 'En'),
+			'id' => Yii::t('attribute', 'ID'),
 		);
 	}
-	
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+	 *
+	 * Typical usecase:
+	 * - Initialize the model fields with values from filter form.
+	 * - Execute this method to get CActiveDataProvider instance which will filter
+	 * models according to data in model fields.
+	 * - Pass data provider to CGridView, CListView or any similar widget.
+	 *
+	 * @return CActiveDataProvider the data provider that can return the models
+	 * based on the search/filter conditions.
 	 */
 	public function search()
 	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.phrase_id',$this->phrase_id);
-		if(isset($_GET['module'])) {
-			$criteria->compare('t.plugin_id',$_GET['module']);
-		} else {
-			$criteria->compare('t.plugin_id',$this->plugin_id);
-		}
-		$criteria->compare('t.location',strtolower($this->location),true);
-		$criteria->compare('t.en_us',strtolower($this->en_us),true);
+		$criteria->compare('t.phrase_id', $this->phrase_id);
+		$criteria->compare('t.plugin_id', Yii::app()->getRequest()->getParam('module') ? Yii::app()->getRequest()->getParam('module') : $this->plugin_id);
+		$criteria->compare('t.location', strtolower($this->location), true);
+		$criteria->compare('t.en_us', strtolower($this->en_us), true);
+		$criteria->compare('t.id', strtolower($this->id), true);
 
-		if(!isset($_GET['OmmuPluginPhrase_sort']))
+		if(!Yii::app()->getRequest()->getParam('OmmuPluginPhrase_sort'))
 			$criteria->order = 't.phrase_id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>30,
+				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 20,
 			),
 		));
-	}
-
-
-	/**
-	 * Get column for CGrid View
-	 */
-	public function getGridColumn($columns=null) {
-		if($columns !== null) {
-			foreach($columns as $val) {
-				/*
-				if(trim($val) == 'enabled') {
-					$this->defaultColumns[] = array(
-						'name'  => 'enabled',
-						'value' => '$data->enabled == 1? "Ya": "Tidak"',
-					);
-				}
-				*/
-				$this->defaultColumns[] = $val;
-			}
-		}else {
-			//$this->defaultColumns[] = 'phrase_id';
-			$this->defaultColumns[] = 'plugin_id';
-			$this->defaultColumns[] = 'location';
-			$this->defaultColumns[] = 'en_us';
-		}
-
-		return $this->defaultColumns;
 	}
 
 	/**
 	 * Set default columns to display
 	 */
 	protected function afterConstruct() {
-		if(count($this->defaultColumns) == 0) {
-			$this->defaultColumns[] = array(
+		if(count($this->templateColumns) == 0) {
+			$this->templateColumns['_option'] = array(
+				'class' => 'CCheckBoxColumn',
+				'name' => 'id',
+				'selectableRows' => 2,
+				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
+			);
+			$this->templateColumns['_no'] = array(
+				'header' => Yii::t('app', 'No'),
+				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+			);
+			$this->templateColumns['phrase_id'] = array(
 				'header' => 'ID',
 				'name' => 'phrase_id',
 				'value' => '$data->phrase_id',
@@ -168,7 +152,7 @@ class OmmuPluginPhrase extends CActiveRecord
 					'class' => 'center',
 				),
 			);
-			$this->defaultColumns[] = array(
+			$this->templateColumns['plugin_id'] = array(
 				'name' => 'plugin_id',
 				'value' => '$data->plugin->name',
 				'htmlOptions' => array(
@@ -177,20 +161,50 @@ class OmmuPluginPhrase extends CActiveRecord
 				'filter'=>OmmuPlugins::getPlugin(0, 'id'),
 				'type' => 'raw',
 			);
-			$this->defaultColumns[] = 'en_us';
-			$this->defaultColumns[] = 'id';
-			$this->defaultColumns[] = 'location';
+			$this->templateColumns['location'] = array(
+				'name' => 'location',
+				'value' => '$data->location',
+			);
+			$this->templateColumns['en_us'] = array(
+				'name' => 'en_us',
+				'value' => '$data->en_us',
+			);
+			$this->templateColumns['id'] = array(
+				'name' => 'id',
+				'value' => '$data->id',
+			);
 		}
 		parent::afterConstruct();
 	}
 
-	// Get new order
-	public static function getOrder($id){
+	/**
+	 * User get information
+	 */
+	public static function getInfo($id, $column=null)
+	{
+		if($column != null) {
+			$model = self::model()->findByPk($id,array(
+				'select' => $column
+			));
+			return $model->$column;
+			
+		} else {
+			$model = self::model()->findByPk($id);
+			return $model;
+		}
+	}
+
+	/**
+	 * getOrder
+	 */
+	public static function getOrder($id)
+	{
 		$model = self::model()->count(array(
 			'condition' => 'plugin_id = :plugin',
 			'params' => array(':plugin'=>$id)
 		));
 		$order = $model;
+
 		return $order;
 	}
 

@@ -5,18 +5,8 @@
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @modified date 20 January 2018, 06:31 WIB
  * @link https://github.com/ommu/ommu-core
- *
- * This is the template for generating the model class of a specified table.
- * - $this: the ModelCode object
- * - $tableName: the table name for this class (prefix is already removed if necessary)
- * - $modelClass: the model class name
- * - $columns: list of table columns (name=>CDbColumnSchema)
- * - $labels: list of attribute labels (name=>label)
- * - $rules: list of validation rules
- * - $relations: list of relations (name=>relation declaration)
- *
- * --------------------------------------------------------------------------------------
  *
  * This is the model class for table "ommu_core_system_phrase".
  *
@@ -24,21 +14,24 @@
  * @property string $phrase_id
  * @property string $location
  * @property string $en_us
+ * @property string $id
  * @property string $creation_date
  * @property string $creation_id
  * @property string $modified_date
  * @property string $modified_id
  */
-class OmmuSystemPhrase extends CActiveRecord
+
+class OmmuSystemPhrase extends OActiveRecord
 {
-	public $defaultColumns = array();
-	
+	public $gridForbiddenColumn = array('creation_date','creation_search','modified_date','modified_search');
+
 	// Variable Search
 	public $creation_search;
 	public $modified_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
+	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
 	 * @return OmmuSystemPhrase the static model class
 	 */
@@ -66,10 +59,11 @@ class OmmuSystemPhrase extends CActiveRecord
 		return array(
 			array('en_us', 'required'),
 			array('location', 'length', 'max'=>32),
-			array('location, id', 'safe'),
+			array('creation_id, modified_id', 'length', 'max'=>11),
+			array('modified_date', 'safe'),
 			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('phrase_id, location, en_us, creation_date, creation_id, modified_date, modified_id,
+			// @todo Please remove those attributes that should not be searched.
+			array('phrase_id, location, en_us, id, creation_date, creation_id, modified_date, modified_id,
 				creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
@@ -93,9 +87,10 @@ class OmmuSystemPhrase extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'phrase_id' => Yii::t('phrase', 'Phrase'),
-			'location' => Yii::t('phrase', 'Location'),
+			'phrase_id' => Yii::t('attribute', 'Phrase'),
+			'location' => Yii::t('attribute', 'Location'),
 			'en_us' => Yii::t('attribute', 'English'),
+			'id' => Yii::t('attribute', 'ID'),
 			'creation_date' => Yii::t('attribute', 'Creation Date'),
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
@@ -104,28 +99,34 @@ class OmmuSystemPhrase extends CActiveRecord
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
 	}
-	
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+	 *
+	 * Typical usecase:
+	 * - Initialize the model fields with values from filter form.
+	 * - Execute this method to get CActiveDataProvider instance which will filter
+	 * models according to data in model fields.
+	 * - Pass data provider to CGridView, CListView or any similar widget.
+	 *
+	 * @return CActiveDataProvider the data provider that can return the models
+	 * based on the search/filter conditions.
 	 */
 	public function search()
 	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
-		$controller = strtolower(Yii::app()->controller->id);
+		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-		
+
 		// Custom Search
 		$criteria->with = array(
 			'creation' => array(
 				'alias'=>'creation',
-				'select'=>'displayname'
+				'select'=>'displayname',
 			),
 			'modified' => array(
 				'alias'=>'modified',
-				'select'=>'displayname'
+				'select'=>'displayname',
 			),
 		);
 
@@ -134,93 +135,77 @@ class OmmuSystemPhrase extends CActiveRecord
 			$criteria->params = array(
 				':id'=>1000, 
 			);
-		} else {
-			$criteria->compare('t.phrase_id',$this->phrase_id);
-		}
-		$criteria->compare('t.location',strtolower($this->location),true);
-		$criteria->compare('t.en_us',strtolower($this->en_us),true);
-		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
-		if(isset($_GET['creation']))
-			$criteria->compare('t.creation_id',$_GET['creation']);
-		else
-			$criteria->compare('t.creation_id',$this->creation_id);
-		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.modified_date)',date('Y-m-d', strtotime($this->modified_date)));
-		if(isset($_GET['modified']))
-			$criteria->compare('t.modified_id',$_GET['modified']);
-		else
-			$criteria->compare('t.modified_id',$this->modified_id);
-		
-		$criteria->compare('creation.displayname',strtolower($this->creation_search),true);
-		$criteria->compare('modified.displayname',strtolower($this->modified_search),true);
-		
-		if(!isset($_GET['OmmuSystemPhrase_sort']))
+		} else
+			$criteria->compare('t.phrase_id', $this->phrase_id);
+		$criteria->compare('t.location', strtolower($this->location), true);
+		$criteria->compare('t.en_us', strtolower($this->en_us), true);
+		$criteria->compare('t.id', strtolower($this->id), true);
+		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
+			$criteria->compare('date(t.creation_date)', date('Y-m-d', strtotime($this->creation_date)));
+		$criteria->compare('t.creation_id', Yii::app()->getRequest()->getParam('creation') ? Yii::app()->getRequest()->getParam('creation') : $this->creation_id);
+		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
+			$criteria->compare('date(t.modified_date)', date('Y-m-d', strtotime($this->modified_date)));
+		$criteria->compare('t.modified_id', Yii::app()->getRequest()->getParam('modified') ? Yii::app()->getRequest()->getParam('modified') : $this->modified_id);
+
+		$criteria->compare('creation.displayname', strtolower($this->creation_search), true);
+		$criteria->compare('modified.displayname', strtolower($this->modified_search), true);
+
+		if(!Yii::app()->getRequest()->getParam('OmmuSystemPhrase_sort'))
 			$criteria->order = 't.phrase_id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>40,
+				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 20,
 			),
 		));
-	}
-
-
-	/**
-	 * Get column for CGrid View
-	 */
-	public function getGridColumn($columns=null) {
-		if($columns !== null) {
-			foreach($columns as $val) {
-				/*
-				if(trim($val) == 'enabled') {
-					$this->defaultColumns[] = array(
-						'name'  => 'enabled',
-						'value' => '$data->enabled == 1? "Ya": "Tidak"',
-					);
-				}
-				*/
-				$this->defaultColumns[] = $val;
-			}
-		}else {
-			//$this->defaultColumns[] = 'phrase_id';
-			$this->defaultColumns[] = 'location';
-			$this->defaultColumns[] = 'en_us';
-			$this->defaultColumns[] = 'creation_date';
-			$this->defaultColumns[] = 'creation_id';
-			$this->defaultColumns[] = 'modified_date';
-			$this->defaultColumns[] = 'modified_id';
-		}
-
-		return $this->defaultColumns;
 	}
 
 	/**
 	 * Set default columns to display
 	 */
 	protected function afterConstruct() {
-		if(count($this->defaultColumns) == 0) {
-			$this->defaultColumns[] = 'phrase_id';
-			$this->defaultColumns[] = array(
+		if(count($this->templateColumns) == 0) {
+			$this->templateColumns['_option'] = array(
+				'class' => 'CCheckBoxColumn',
+				'name' => 'id',
+				'selectableRows' => 2,
+				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
+			);
+			$this->templateColumns['_no'] = array(
+				'header' => Yii::t('app', 'No'),
+				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+			);
+			$this->templateColumns['phrase_id'] = array(
+				'name' => 'phrase_id',
+				'value' => '$data->phrase_id',
+			);
+			$this->templateColumns['en_us'] = array(
 				'name' => 'en_us',
 				'value' => '$data->en_us',
 				'type' => 'raw',
 			);
-			$this->defaultColumns[] = array(
+			$this->templateColumns['id'] = array(
 				'name' => 'id',
 				'value' => '$data->id',
 				'type' => 'raw',
 			);
-			$this->defaultColumns[] = 'location';
-			/*
-			$this->defaultColumns[] = array(
-				'name' => 'creation_search',
-				'value' => '$data->creation->displayname',
+			$this->templateColumns['location'] = array(
+				'name' => 'location',
+				'value' => '$data->location',
 			);
-			$this->defaultColumns[] = array(
+			if(!Yii::app()->getRequest()->getParam('creation')) {
+				$this->templateColumns['creation_search'] = array(
+					'name' => 'creation_search',
+					'value' => '$data->creation->displayname ? $data->creation->displayname : \'-\'',
+				);
+			}
+			$this->templateColumns['creation_date'] = array(
 				'name' => 'creation_date',
-				'value' => 'Utility::dateFormat($data->creation_date)',
+				'value' => '!in_array($data->creation_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\')) ? Utility::dateFormat($data->creation_date) : \'-\'',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -244,9 +229,57 @@ class OmmuSystemPhrase extends CActiveRecord
 					),
 				), true),
 			);
-			*/
+			$this->templateColumns['modified_date'] = array(
+				'name' => 'modified_date',
+				'value' => '!in_array($data->modified_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\')) ? Utility::dateFormat($data->modified_date) : \'-\'',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
+					'model'=>$this,
+					'attribute'=>'modified_date',
+					'language' => 'en',
+					'i18nScriptFile' => 'jquery-ui-i18n.min.js',
+					//'mode'=>'datetime',
+					'htmlOptions' => array(
+						'id' => 'modified_date_filter',
+					),
+					'options'=>array(
+						'showOn' => 'focus',
+						'dateFormat' => 'dd-mm-yy',
+						'showOtherMonths' => true,
+						'selectOtherMonths' => true,
+						'changeMonth' => true,
+						'changeYear' => true,
+						'showButtonPanel' => true,
+					),
+				), true),
+			);
+			if(!Yii::app()->getRequest()->getParam('modified')) {
+				$this->templateColumns['modified_search'] = array(
+					'name' => 'modified_search',
+					'value' => '$data->modified->displayname ? $data->modified->displayname : \'-\'',
+				);
+			}
 		}
 		parent::afterConstruct();
+	}
+
+	/**
+	 * User get information
+	 */
+	public static function getInfo($id, $column=null)
+	{
+		if($column != null) {
+			$model = self::model()->findByPk($id,array(
+				'select' => $column
+			));
+			return $model->$column;
+			
+		} else {
+			$model = self::model()->findByPk($id);
+			return $model;
+		}
 	}
 
 	/**
@@ -304,12 +337,13 @@ class OmmuSystemPhrase extends CActiveRecord
 	/**
 	 * before validate attributes
 	 */
-	protected function beforeValidate() {
+	protected function beforeValidate() 
+	{
 		if(parent::beforeValidate()) {
 			if($this->isNewRecord)
-				$this->creation_id = Yii::app()->user->id;	
+				$this->creation_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
 			else
-				$this->modified_id = Yii::app()->user->id;				
+				$this->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
 		}
 		return true;
 	}

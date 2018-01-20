@@ -6,7 +6,8 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 28 November 2017, 18:46 WIB
- * @link http://opensource.ommu.co
+ * @modified date 20 January 2018, 06:36 WIB
+ * @link https://github.com/ommu/ommu-core
  *
  * This is the model class for table "_view_core_settings".
  *
@@ -14,13 +15,10 @@
  * @property integer $id
  * @property integer $online
  */
-class ViewSettings extends CActiveRecord
-{
-	public $defaultColumns = array();
-	public $templateColumns = array();
-	public $gridForbiddenColumn = array();
 
-	// Variable Search
+class ViewSettings extends OActiveRecord
+{
+	public $gridForbiddenColumn = array();
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -108,79 +106,15 @@ class ViewSettings extends CActiveRecord
 		$criteria->compare('t.id', $this->id);
 		$criteria->compare('t.online', $this->online);
 
-		if(!isset($_GET['ViewCoreSettings_sort']))
+		if(!Yii::app()->getRequest()->getParam('ViewSettings_sort'))
 			$criteria->order = 't.id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>30,
+				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 20,
 			),
 		));
-	}
-
-	/**
-	 * Get kolom untuk Grid View
-	 *
-	 * @param array $columns kolom dari view
-	 * @return array dari grid yang aktif
-	 */
-	public function getGridColumn($columns=null) 
-	{
-		// Jika $columns kosong maka isi defaultColumns dg templateColumns
-		if(empty($columns) || $columns == null) {
-			array_splice($this->defaultColumns, 0);
-			foreach($this->templateColumns as $key => $val) {
-				if(!in_array($key, $this->gridForbiddenColumn) && !in_array($key, $this->defaultColumns))
-					$this->defaultColumns[] = $val;
-			}
-			return $this->defaultColumns;
-		}
-
-		foreach($columns as $val) {
-			if(!in_array($val, $this->gridForbiddenColumn) && !in_array($val, $this->defaultColumns)) {
-				$col = $this->getTemplateColumn($val);
-				if($col != null)
-					$this->defaultColumns[] = $col;
-			}
-		}
-
-		array_unshift($this->defaultColumns, array(
-			'header' => Yii::t('app', 'No'),
-			'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',
-			'htmlOptions' => array(
-				'class' => 'center',
-			),
-		));
-
-		array_unshift($this->defaultColumns, array(
-			'class' => 'CCheckBoxColumn',
-			'name' => 'id',
-			'selectableRows' => 2,
-			'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
-		));
-
-		return $this->defaultColumns;
-	}
-
-	/**
-	 * Get kolom template berdasarkan id pengenal
-	 *
-	 * @param string $name nama pengenal
-	 * @return mixed
-	 */
-	public function getTemplateColumn($name) 
-	{
-		$data = null;
-		if(trim($name) == '') return $data;
-
-		foreach($this->templateColumns as $key => $item) {
-			if($name == $key) {
-				$data = $item;
-				break;
-			}
-		}
-		return $data;
 	}
 
 	/**

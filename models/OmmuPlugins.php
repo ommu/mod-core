@@ -212,17 +212,20 @@ class OmmuPlugins extends OActiveRecord
 				'name' => 'desc',
 				'value' => '$data->desc ? $data->desc : \'-\'',
 			);
-			$this->templateColumns['parent_id'] = array(
-				'name' => 'parent_id',
-				'value' => '$data->parent_id ? $data->parent->folder : \'-\'',
-			);
 			$this->templateColumns['folder'] = array(
 				'name' => 'folder',
 				'value' => '$data->folder',
 			);
+			$this->templateColumns['parent_id'] = array(
+				'name' => 'parent_id',
+				'value' => '$data->parent_id ? $data->parent->folder : \'-\'',
+			);
 			$this->templateColumns['orders'] = array(
 				'name' => 'orders',
 				'value' => '$data->orders',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
 			);
 			$this->templateColumns['model'] = array(
 				'name' => 'model',

@@ -5,18 +5,8 @@
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @modified date 20 January 2018, 06:30 WIB
  * @link https://github.com/ommu/ommu-core
- *
- * This is the template for generating the model class of a specified table.
- * - $this: the ModelCode object
- * - $tableName: the table name for this class (prefix is already removed if necessary)
- * - $modelClass: the model class name
- * - $columns: list of table columns (name=>CDbColumnSchema)
- * - $labels: list of attribute labels (name=>label)
- * - $rules: list of validation rules
- * - $relations: list of relations (name=>relation declaration)
- *
- * --------------------------------------------------------------------------------------
  *
  * This is the model class for table "ommu_core_settings".
  *
@@ -47,6 +37,7 @@
  * @property integer $signup_invitepage
  * @property integer $signup_inviteonly
  * @property integer $signup_checkemail
+ * @property integer $signup_numgiven
  * @property integer $signup_adminemail
  * @property integer $general_profile
  * @property integer $general_invite
@@ -54,6 +45,9 @@
  * @property integer $general_portal
  * @property string $general_include
  * @property string $general_commenthtml
+ * @property integer $lang_allow
+ * @property integer $lang_autodetect
+ * @property integer $lang_anonymous
  * @property string $banned_ips
  * @property string $banned_emails
  * @property string $banned_usernames
@@ -73,16 +67,18 @@
  * @property string $modified_date
  * @property string $modified_id
  */
-class OmmuSettings extends CActiveRecord
+
+class OmmuSettings extends OActiveRecord
 {
-	public $defaultColumns = array();
+	public $gridForbiddenColumn = array();
 	public $event_i;
-	
+
 	// Variable Search
 	public $modified_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
+	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
 	 * @return OmmuSettings the static model class
 	 */
@@ -114,17 +110,18 @@ class OmmuSettings extends CActiveRecord
 			array('general_commenthtml, spam_failedcount', 'required', 'on'=>'banned'),
 			array('signup_numgiven', 'required', 'on'=>'signup'),
 			array('analytic_id', 'required', 'on'=>'analytic'),
-			array('id, online, site_oauth, site_type, signup_username, signup_approve, signup_verifyemail, signup_photo, signup_welcome, signup_random, signup_terms, signup_invitepage, signup_inviteonly, signup_checkemail, signup_numgiven, signup_adminemail, general_profile, general_invite, general_search, general_portal, lang_allow, lang_autodetect, lang_anonymous, spam_comment, spam_contact, spam_invite, spam_login, spam_failedcount, spam_signup, analytic', 'numerical', 'integerOnly'=>true),
+			array('online, site_oauth, site_type, signup_username, signup_approve, signup_verifyemail, signup_photo, signup_welcome, signup_random, signup_terms, signup_invitepage, signup_inviteonly, signup_checkemail, signup_numgiven, signup_adminemail, general_profile, general_invite, general_search, general_portal, lang_allow, lang_autodetect, lang_anonymous, spam_comment, spam_contact, spam_invite, spam_login, spam_failedcount, spam_signup, analytic', 'numerical', 'integerOnly'=>true),
 			array('signup_numgiven', 'length', 'max'=>3),
-			array('ommu_version', 'length', 'max'=>8),
 			array('site_url, analytic_id, analytic_profile_id, license_email, license_key', 'length', 'max'=>32),
 			array('site_title, site_keywords, site_description, general_commenthtml', 'length', 'max'=>256),
+			array('site_dateformat, site_timeformat, ommu_version', 'length', 'max'=>8),
+			array('modified_id', 'length', 'max'=>11),
 			array('license_email', 'email'),
 			array('site_creation, site_dateformat, site_timeformat, construction_date, construction_text, event_startdate, event_finishdate, event_tag, general_include, banned_ips, banned_emails, banned_usernames, banned_words, analytic_id, analytic_profile_id,
 				event_i', 'safe'),
 			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('id, online, site_oauth, site_type, site_url, site_title, site_keywords, site_description, construction_date, construction_text, construction_twitter, site_creation, site_dateformat, site_timeformat, signup_username, signup_approve, signup_verifyemail, signup_photo, signup_welcome, signup_random, signup_terms, signup_invitepage, signup_inviteonly, signup_checkemail, signup_adminemail, general_profile, general_invite, general_search, general_portal, general_include, general_commenthtml, banned_ips, banned_emails, banned_usernames, banned_words, spam_comment, spam_contact, spam_invite, spam_login, spam_failedcount, spam_signup, analytic, analytic_id, analytic_profile_id, license_email, license_key, ommu_version, modified_date, modified_id, 
+			// @todo Please remove those attributes that should not be searched.
+			array('id, online, site_oauth, site_type, site_url, site_title, site_keywords, site_description, site_creation, site_dateformat, site_timeformat, construction_date, construction_text, event_startdate, event_finishdate, event_tag, signup_username, signup_approve, signup_verifyemail, signup_photo, signup_welcome, signup_random, signup_terms, signup_invitepage, signup_inviteonly, signup_checkemail, signup_numgiven, signup_adminemail, general_profile, general_invite, general_search, general_portal, general_include, general_commenthtml, lang_allow, lang_autodetect, lang_anonymous, banned_ips, banned_emails, banned_usernames, banned_words, spam_comment, spam_contact, spam_invite, spam_login, spam_failedcount, spam_signup, analytic, analytic_id, analytic_profile_id, license_email, license_key, ommu_version, modified_date, modified_id, 
 				modified_search', 'safe', 'on'=>'search'),
 		);
 	}
@@ -209,226 +206,668 @@ class OmmuSettings extends CActiveRecord
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
 	}
-	
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+	 *
+	 * Typical usecase:
+	 * - Initialize the model fields with values from filter form.
+	 * - Execute this method to get CActiveDataProvider instance which will filter
+	 * models according to data in model fields.
+	 * - Pass data provider to CGridView, CListView or any similar widget.
+	 *
+	 * @return CActiveDataProvider the data provider that can return the models
+	 * based on the search/filter conditions.
 	 */
 	public function search()
 	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.id',$this->id);
-		$criteria->compare('t.online',$this->online);
-		$criteria->compare('t.site_oauth',$this->site_oauth);
-		$criteria->compare('t.site_type',$this->site_type);
-		$criteria->compare('t.site_url',$this->site_url,true);
-		$criteria->compare('t.site_title',$this->site_title,true);
-		$criteria->compare('t.site_keywords',$this->site_keywords,true);
-		$criteria->compare('t.site_description',$this->site_description,true);
-		$criteria->compare('t.site_creation',$this->site_creation,true);
-		$criteria->compare('t.site_dateformat',$this->site_dateformat,true);
-		$criteria->compare('t.site_timeformat',$this->site_timeformat,true);
-		if($this->construction_date != null && !in_array($this->construction_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.construction_date)',date('Y-m-d', strtotime($this->construction_date)));
-		$criteria->compare('t.construction_text',$this->construction_text,true);
-		if($this->event_startdate != null && !in_array($this->event_startdate, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.event_startdate)',date('Y-m-d', strtotime($this->event_startdate)));
-		if($this->event_finishdate != null && !in_array($this->event_finishdate, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.event_finishdate)',date('Y-m-d', strtotime($this->event_finishdate)));
-		$criteria->compare('t.event_tag',strtolower($this->event_tag),true);
-		$criteria->compare('t.signup_username',$this->signup_username);
-		$criteria->compare('t.signup_approve',$this->signup_approve);
-		$criteria->compare('t.signup_verifyemail',$this->signup_verifyemail);
-		$criteria->compare('t.signup_photo',$this->signup_photo);
-		$criteria->compare('t.signup_welcome',$this->signup_welcome);
-		$criteria->compare('t.signup_random',$this->signup_random);
-		$criteria->compare('t.signup_terms',$this->signup_terms);
-		$criteria->compare('t.signup_invitepage',$this->signup_invitepage);
-		$criteria->compare('t.signup_inviteonly',$this->signup_inviteonly);
-		$criteria->compare('t.signup_checkemail',$this->signup_checkemail);
-		$criteria->compare('t.signup_adminemail',$this->signup_adminemail);
-		$criteria->compare('t.general_profile',$this->general_profile);
-		$criteria->compare('t.general_invite',$this->general_invite);
-		$criteria->compare('t.general_search',$this->general_search);
-		$criteria->compare('t.general_portal',$this->general_portal);
-		$criteria->compare('t.general_include',$this->general_include,true);
-		$criteria->compare('t.general_commenthtml',$this->general_commenthtml,true);
-		$criteria->compare('t.banned_ips',$this->banned_ips,true);
-		$criteria->compare('t.banned_emails',$this->banned_emails,true);
-		$criteria->compare('t.banned_usernames',$this->banned_usernames,true);
-		$criteria->compare('t.banned_words',$this->banned_words,true);
-		$criteria->compare('t.spam_comment',$this->spam_comment);
-		$criteria->compare('t.spam_contact',$this->spam_contact);
-		$criteria->compare('t.spam_invite',$this->spam_invite);
-		$criteria->compare('t.spam_login',$this->spam_login);
-		$criteria->compare('t.spam_failedcount',$this->spam_failedcount);
-		$criteria->compare('t.spam_signup',$this->spam_signup);
-		$criteria->compare('t.analytic',$this->analytic);
-		$criteria->compare('t.analytic_id',$this->analytic_id,true);
-		$criteria->compare('t.analytic_profile_id',$this->analytic_profile_id,true);
-		$criteria->compare('t.license_email',$this->license_email,true);
-		$criteria->compare('t.license_key',$this->license_key,true);
-		$criteria->compare('t.ommu_version',$this->ommu_version,true);
-		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.modified_date)',date('Y-m-d', strtotime($this->modified_date)));
-		if(isset($_GET['modified']))
-			$criteria->compare('t.modified_id',$_GET['modified']);
-		else
-			$criteria->compare('t.modified_id',$this->modified_id);
-		
-		if(!isset($_GET['OmmuSettings_sort']))
-			$criteria->order = 't.id DESC';
-		
 		// Custom Search
 		$criteria->with = array(
 			'modified' => array(
 				'alias'=>'modified',
-				'select'=>'displayname'
+				'select'=>'displayname',
 			),
 		);
-		$criteria->compare('modified.displayname',strtolower($this->modified_search),true);
+
+		$criteria->compare('t.id', $this->id);
+		$criteria->compare('t.online', $this->online);
+		$criteria->compare('t.site_oauth', $this->site_oauth);
+		$criteria->compare('t.site_type', $this->site_type);
+		$criteria->compare('t.site_url', $this->site_url, true);
+		$criteria->compare('t.site_title', $this->site_title, true);
+		$criteria->compare('t.site_keywords', $this->site_keywords, true);
+		$criteria->compare('t.site_description', $this->site_description, true);
+		if($this->site_creation != null && !in_array($this->site_creation, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
+			$criteria->compare('date(t.site_creation)', date('Y-m-d', strtotime($this->site_creation)));
+		$criteria->compare('t.site_dateformat', $this->site_dateformat, true);
+		$criteria->compare('t.site_timeformat', $this->site_timeformat, true);
+		if($this->construction_date != null && !in_array($this->construction_date, array('0000-00-00', '1970-01-01')))
+			$criteria->compare('date(t.construction_date)', date('Y-m-d', strtotime($this->construction_date)));
+		$criteria->compare('t.construction_text', $this->construction_text, true);
+		if($this->event_startdate != null && !in_array($this->event_startdate, array('0000-00-00', '1970-01-01')))
+			$criteria->compare('date(t.event_startdate)', date('Y-m-d', strtotime($this->event_startdate)));
+		if($this->event_finishdate != null && !in_array($this->event_finishdate, array('0000-00-00', '1970-01-01')))
+			$criteria->compare('date(t.event_finishdate)', date('Y-m-d', strtotime($this->event_finishdate)));
+		$criteria->compare('t.event_tag', strtolower($this->event_tag), true);
+		$criteria->compare('t.signup_username', $this->signup_username);
+		$criteria->compare('t.signup_approve', $this->signup_approve);
+		$criteria->compare('t.signup_verifyemail', $this->signup_verifyemail);
+		$criteria->compare('t.signup_photo', $this->signup_photo);
+		$criteria->compare('t.signup_welcome', $this->signup_welcome);
+		$criteria->compare('t.signup_random', $this->signup_random);
+		$criteria->compare('t.signup_terms', $this->signup_terms);
+		$criteria->compare('t.signup_invitepage', $this->signup_invitepage);
+		$criteria->compare('t.signup_inviteonly', $this->signup_inviteonly);
+		$criteria->compare('t.signup_checkemail', $this->signup_checkemail);
+		$criteria->compare('t.signup_numgiven', $this->signup_numgiven);
+		$criteria->compare('t.signup_adminemail', $this->signup_adminemail);
+		$criteria->compare('t.general_profile', $this->general_profile);
+		$criteria->compare('t.general_invite', $this->general_invite);
+		$criteria->compare('t.general_search', $this->general_search);
+		$criteria->compare('t.general_portal', $this->general_portal);
+		$criteria->compare('t.general_include', $this->general_include, true);
+		$criteria->compare('t.general_commenthtml', $this->general_commenthtml, true);
+		$criteria->compare('t.lang_allow', $this->lang_allow);
+		$criteria->compare('t.lang_autodetect', $this->lang_autodetect);
+		$criteria->compare('t.lang_anonymous', $this->lang_anonymous);
+		$criteria->compare('t.banned_ips', $this->banned_ips, true);
+		$criteria->compare('t.banned_emails', $this->banned_emails, true);
+		$criteria->compare('t.banned_usernames', $this->banned_usernames, true);
+		$criteria->compare('t.banned_words', $this->banned_words, true);
+		$criteria->compare('t.spam_comment', $this->spam_comment);
+		$criteria->compare('t.spam_contact', $this->spam_contact);
+		$criteria->compare('t.spam_invite', $this->spam_invite);
+		$criteria->compare('t.spam_login', $this->spam_login);
+		$criteria->compare('t.spam_failedcount', $this->spam_failedcount);
+		$criteria->compare('t.spam_signup', $this->spam_signup);
+		$criteria->compare('t.analytic', $this->analytic);
+		$criteria->compare('t.analytic_id', $this->analytic_id, true);
+		$criteria->compare('t.analytic_profile_id', $this->analytic_profile_id, true);
+		$criteria->compare('t.license_email', $this->license_email, true);
+		$criteria->compare('t.license_key', $this->license_key, true);
+		$criteria->compare('t.ommu_version', $this->ommu_version, true);
+		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
+			$criteria->compare('date(t.modified_date)', date('Y-m-d', strtotime($this->modified_date)));
+		$criteria->compare('t.modified_id', Yii::app()->getRequest()->getParam('modified') ? Yii::app()->getRequest()->getParam('modified') : $this->modified_id);
+
+		$criteria->compare('modified.displayname', strtolower($this->modified_search), true);
+
+		if(!Yii::app()->getRequest()->getParam('OmmuSettings_sort'))
+			$criteria->order = 't.id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'pagination'=>array(
+				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 20,
+			),
 		));
-	}
-
-
-	/**
-	 * Get column for CGrid View
-	 */
-	public function getGridColumn($columns=null) {
-		if($columns !== null) {
-			foreach($columns as $val) {
-				/*
-				if(trim($val) == 'enabled') {
-					$this->defaultColumns[] = array(
-						'name'  => 'enabled',
-						'value' => '$data->enabled == 1? "Ya": "Tidak"',
-					);
-				}
-				*/
-				$this->defaultColumns[] = $val;
-			}
-		}else {
-			//$this->defaultColumns[] = 'id';
-			$this->defaultColumns[] = 'online';
-			$this->defaultColumns[] = 'site_oauth';
-			$this->defaultColumns[] = 'site_type';
-			$this->defaultColumns[] = 'site_url';
-			$this->defaultColumns[] = 'site_title';
-			$this->defaultColumns[] = 'site_keywords';
-			$this->defaultColumns[] = 'site_description';
-			$this->defaultColumns[] = 'site_creation';
-			$this->defaultColumns[] = 'site_dateformat';
-			$this->defaultColumns[] = 'site_timeformat';
-			$this->defaultColumns[] = 'construction_date';
-			$this->defaultColumns[] = 'construction_text';
-			$this->defaultColumns[] = 'event_startdate';
-			$this->defaultColumns[] = 'event_finishdate';
-			$this->defaultColumns[] = 'event_tag';
-			$this->defaultColumns[] = 'signup_username';
-			$this->defaultColumns[] = 'signup_approve';
-			$this->defaultColumns[] = 'signup_verifyemail';
-			$this->defaultColumns[] = 'signup_photo';
-			$this->defaultColumns[] = 'signup_welcome';
-			$this->defaultColumns[] = 'signup_random';
-			$this->defaultColumns[] = 'signup_terms';
-			$this->defaultColumns[] = 'signup_invitepage';
-			$this->defaultColumns[] = 'signup_inviteonly';
-			$this->defaultColumns[] = 'signup_checkemail';
-			$this->defaultColumns[] = 'signup_adminemail';
-			$this->defaultColumns[] = 'general_profile';
-			$this->defaultColumns[] = 'general_invite';
-			$this->defaultColumns[] = 'general_search';
-			$this->defaultColumns[] = 'general_portal';
-			$this->defaultColumns[] = 'general_include';
-			$this->defaultColumns[] = 'general_commenthtml';
-			$this->defaultColumns[] = 'banned_ips';
-			$this->defaultColumns[] = 'banned_emails';
-			$this->defaultColumns[] = 'banned_usernames';
-			$this->defaultColumns[] = 'banned_words';
-			$this->defaultColumns[] = 'spam_comment';
-			$this->defaultColumns[] = 'spam_contact';
-			$this->defaultColumns[] = 'spam_invite';
-			$this->defaultColumns[] = 'spam_login';
-			$this->defaultColumns[] = 'spam_failedcount';
-			$this->defaultColumns[] = 'spam_signup';
-			$this->defaultColumns[] = 'analytic';
-			$this->defaultColumns[] = 'analytic_id';
-			$this->defaultColumns[] = 'analytic_profile_id';
-			$this->defaultColumns[] = 'license_email';
-			$this->defaultColumns[] = 'license_key';
-			$this->defaultColumns[] = 'ommu_version';
-			$this->defaultColumns[] = 'modified_date';
-			$this->defaultColumns[] = 'modified_id';
-		}
-
-		return $this->defaultColumns;
 	}
 
 	/**
 	 * Set default columns to display
 	 */
 	protected function afterConstruct() {
-		if(count($this->defaultColumns) == 0) {
-			$this->defaultColumns[] = 'id';
-			$this->defaultColumns[] = 'online';
-			$this->defaultColumns[] = 'site_oauth';
-			$this->defaultColumns[] = 'site_type';
-			$this->defaultColumns[] = 'site_url';
-			$this->defaultColumns[] = 'site_title';
-			$this->defaultColumns[] = 'site_keywords';
-			$this->defaultColumns[] = 'site_description';
-			$this->defaultColumns[] = 'site_creation';
-			$this->defaultColumns[] = 'site_dateformat';
-			$this->defaultColumns[] = 'site_timeformat';
-			$this->defaultColumns[] = 'construction_date';
-			$this->defaultColumns[] = 'construction_text';
-			$this->defaultColumns[] = 'event_startdate';
-			$this->defaultColumns[] = 'event_finishdate';
-			$this->defaultColumns[] = 'event_tag';
-			$this->defaultColumns[] = 'signup_username';
-			$this->defaultColumns[] = 'signup_approve';
-			$this->defaultColumns[] = 'signup_verifyemail';
-			$this->defaultColumns[] = 'signup_photo';
-			$this->defaultColumns[] = 'signup_welcome';
-			$this->defaultColumns[] = 'signup_random';
-			$this->defaultColumns[] = 'signup_terms';
-			$this->defaultColumns[] = 'signup_invitepage';
-			$this->defaultColumns[] = 'signup_inviteonly';
-			$this->defaultColumns[] = 'signup_checkemail';
-			$this->defaultColumns[] = 'signup_adminemail';
-			$this->defaultColumns[] = 'general_profile';
-			$this->defaultColumns[] = 'general_invite';
-			$this->defaultColumns[] = 'general_search';
-			$this->defaultColumns[] = 'general_portal';
-			$this->defaultColumns[] = 'general_include';
-			$this->defaultColumns[] = 'general_commenthtml';
-			$this->defaultColumns[] = 'banned_ips';
-			$this->defaultColumns[] = 'banned_emails';
-			$this->defaultColumns[] = 'banned_usernames';
-			$this->defaultColumns[] = 'banned_words';
-			$this->defaultColumns[] = 'spam_comment';
-			$this->defaultColumns[] = 'spam_contact';
-			$this->defaultColumns[] = 'spam_invite';
-			$this->defaultColumns[] = 'spam_login';
-			$this->defaultColumns[] = 'spam_failedcount';
-			$this->defaultColumns[] = 'spam_signup';
-			$this->defaultColumns[] = 'analytic';
-			$this->defaultColumns[] = 'analytic_id';
-			$this->defaultColumns[] = 'analytic_profile_id';
-			$this->defaultColumns[] = 'license_email';
-			$this->defaultColumns[] = 'license_key';
-			$this->defaultColumns[] = 'ommu_version';
-			$this->defaultColumns[] = 'modified_date';
-			$this->defaultColumns[] = array(
-				'name' => 'modified_search',
-				'value' => '$data->modified->displayname',
+		if(count($this->templateColumns) == 0) {
+			$this->templateColumns['_option'] = array(
+				'class' => 'CCheckBoxColumn',
+				'name' => 'id',
+				'selectableRows' => 2,
+				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
+			);
+			$this->templateColumns['_no'] = array(
+				'header' => Yii::t('app', 'No'),
+				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+			);
+			$this->templateColumns['site_url'] = array(
+				'name' => 'site_url',
+				'value' => '$data->site_url',
+			);
+			$this->templateColumns['site_title'] = array(
+				'name' => 'site_title',
+				'value' => '$data->site_title',
+			);
+			$this->templateColumns['site_keywords'] = array(
+				'name' => 'site_keywords',
+				'value' => '$data->site_keywords',
+			);
+			$this->templateColumns['site_description'] = array(
+				'name' => 'site_description',
+				'value' => '$data->site_description',
+			);
+			$this->templateColumns['site_creation'] = array(
+				'name' => 'site_creation',
+				'value' => '!in_array($data->site_creation, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\')) ? Utility::dateFormat($data->site_creation) : \'-\'',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
+					'model'=>$this,
+					'attribute'=>'site_creation',
+					'language' => 'en',
+					'i18nScriptFile' => 'jquery-ui-i18n.min.js',
+					//'mode'=>'datetime',
+					'htmlOptions' => array(
+						'id' => 'site_creation_filter',
+					),
+					'options'=>array(
+						'showOn' => 'focus',
+						'dateFormat' => 'dd-mm-yy',
+						'showOtherMonths' => true,
+						'selectOtherMonths' => true,
+						'changeMonth' => true,
+						'changeYear' => true,
+						'showButtonPanel' => true,
+					),
+				), true),
+			);
+			$this->templateColumns['site_dateformat'] = array(
+				'name' => 'site_dateformat',
+				'value' => '$data->site_dateformat',
+			);
+			$this->templateColumns['site_timeformat'] = array(
+				'name' => 'site_timeformat',
+				'value' => '$data->site_timeformat',
+			);
+			$this->templateColumns['construction_date'] = array(
+				'name' => 'construction_date',
+				'value' => '!in_array($data->construction_date, array(\'0000-00-00\', \'1970-01-01\')) ? Utility::dateFormat($data->construction_date) : \'-\'',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
+					'model'=>$this,
+					'attribute'=>'construction_date',
+					'language' => 'en',
+					'i18nScriptFile' => 'jquery-ui-i18n.min.js',
+					//'mode'=>'datetime',
+					'htmlOptions' => array(
+						'id' => 'construction_date_filter',
+					),
+					'options'=>array(
+						'showOn' => 'focus',
+						'dateFormat' => 'dd-mm-yy',
+						'showOtherMonths' => true,
+						'selectOtherMonths' => true,
+						'changeMonth' => true,
+						'changeYear' => true,
+						'showButtonPanel' => true,
+					),
+				), true),
+			);
+			$this->templateColumns['construction_text'] = array(
+				'name' => 'construction_text',
+				'value' => '$data->construction_text',
+			);
+			$this->templateColumns['event_startdate'] = array(
+				'name' => 'event_startdate',
+				'value' => '!in_array($data->event_startdate, array(\'0000-00-00\', \'1970-01-01\')) ? Utility::dateFormat($data->event_startdate) : \'-\'',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
+					'model'=>$this,
+					'attribute'=>'event_startdate',
+					'language' => 'en',
+					'i18nScriptFile' => 'jquery-ui-i18n.min.js',
+					//'mode'=>'datetime',
+					'htmlOptions' => array(
+						'id' => 'event_startdate_filter',
+					),
+					'options'=>array(
+						'showOn' => 'focus',
+						'dateFormat' => 'dd-mm-yy',
+						'showOtherMonths' => true,
+						'selectOtherMonths' => true,
+						'changeMonth' => true,
+						'changeYear' => true,
+						'showButtonPanel' => true,
+					),
+				), true),
+			);
+			$this->templateColumns['event_finishdate'] = array(
+				'name' => 'event_finishdate',
+				'value' => '!in_array($data->event_finishdate, array(\'0000-00-00\', \'1970-01-01\')) ? Utility::dateFormat($data->event_finishdate) : \'-\'',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
+					'model'=>$this,
+					'attribute'=>'event_finishdate',
+					'language' => 'en',
+					'i18nScriptFile' => 'jquery-ui-i18n.min.js',
+					//'mode'=>'datetime',
+					'htmlOptions' => array(
+						'id' => 'event_finishdate_filter',
+					),
+					'options'=>array(
+						'showOn' => 'focus',
+						'dateFormat' => 'dd-mm-yy',
+						'showOtherMonths' => true,
+						'selectOtherMonths' => true,
+						'changeMonth' => true,
+						'changeYear' => true,
+						'showButtonPanel' => true,
+					),
+				), true),
+			);
+			$this->templateColumns['event_tag'] = array(
+				'name' => 'event_tag',
+				'value' => '$data->event_tag',
+			);
+			$this->templateColumns['signup_numgiven'] = array(
+				'name' => 'signup_numgiven',
+				'value' => '$data->signup_numgiven',
+			);
+			$this->templateColumns['general_include'] = array(
+				'name' => 'general_include',
+				'value' => '$data->general_include',
+			);
+			$this->templateColumns['general_commenthtml'] = array(
+				'name' => 'general_commenthtml',
+				'value' => '$data->general_commenthtml',
+			);
+			$this->templateColumns['banned_ips'] = array(
+				'name' => 'banned_ips',
+				'value' => '$data->banned_ips',
+			);
+			$this->templateColumns['banned_emails'] = array(
+				'name' => 'banned_emails',
+				'value' => '$data->banned_emails',
+			);
+			$this->templateColumns['banned_usernames'] = array(
+				'name' => 'banned_usernames',
+				'value' => '$data->banned_usernames',
+			);
+			$this->templateColumns['banned_words'] = array(
+				'name' => 'banned_words',
+				'value' => '$data->banned_words',
+			);
+			$this->templateColumns['spam_failedcount'] = array(
+				'name' => 'spam_failedcount',
+				'value' => '$data->spam_failedcount',
+			);
+			$this->templateColumns['analytic_id'] = array(
+				'name' => 'analytic_id',
+				'value' => '$data->analytic_id',
+			);
+			$this->templateColumns['analytic_profile_id'] = array(
+				'name' => 'analytic_profile_id',
+				'value' => '$data->analytic_profile_id',
+			);
+			$this->templateColumns['license_email'] = array(
+				'name' => 'license_email',
+				'value' => '$data->license_email',
+			);
+			$this->templateColumns['license_key'] = array(
+				'name' => 'license_key',
+				'value' => '$data->license_key',
+			);
+			$this->templateColumns['ommu_version'] = array(
+				'name' => 'ommu_version',
+				'value' => '$data->ommu_version',
+			);
+			$this->templateColumns['modified_date'] = array(
+				'name' => 'modified_date',
+				'value' => '!in_array($data->modified_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\')) ? Utility::dateFormat($data->modified_date) : \'-\'',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
+					'model'=>$this,
+					'attribute'=>'modified_date',
+					'language' => 'en',
+					'i18nScriptFile' => 'jquery-ui-i18n.min.js',
+					//'mode'=>'datetime',
+					'htmlOptions' => array(
+						'id' => 'modified_date_filter',
+					),
+					'options'=>array(
+						'showOn' => 'focus',
+						'dateFormat' => 'dd-mm-yy',
+						'showOtherMonths' => true,
+						'selectOtherMonths' => true,
+						'changeMonth' => true,
+						'changeYear' => true,
+						'showButtonPanel' => true,
+					),
+				), true),
+			);
+			if(!Yii::app()->getRequest()->getParam('modified')) {
+				$this->templateColumns['modified_search'] = array(
+					'name' => 'modified_search',
+					'value' => '$data->modified->displayname ? $data->modified->displayname : \'-\'',
+				);
+			}
+			$this->templateColumns['online'] = array(
+				'name' => 'online',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'online\',array(\'id\'=>$data->id)), $data->online)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['site_oauth'] = array(
+				'name' => 'site_oauth',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'site_oauth\',array(\'id\'=>$data->id)), $data->site_oauth)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['site_type'] = array(
+				'name' => 'site_type',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'site_type\',array(\'id\'=>$data->id)), $data->site_type)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['signup_username'] = array(
+				'name' => 'signup_username',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_username\',array(\'id\'=>$data->id)), $data->signup_username)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['signup_approve'] = array(
+				'name' => 'signup_approve',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_approve\',array(\'id\'=>$data->id)), $data->signup_approve)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['signup_verifyemail'] = array(
+				'name' => 'signup_verifyemail',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_verifyemail\',array(\'id\'=>$data->id)), $data->signup_verifyemail)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['signup_photo'] = array(
+				'name' => 'signup_photo',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_photo\',array(\'id\'=>$data->id)), $data->signup_photo)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['signup_welcome'] = array(
+				'name' => 'signup_welcome',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_welcome\',array(\'id\'=>$data->id)), $data->signup_welcome)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['signup_random'] = array(
+				'name' => 'signup_random',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_random\',array(\'id\'=>$data->id)), $data->signup_random)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['signup_terms'] = array(
+				'name' => 'signup_terms',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_terms\',array(\'id\'=>$data->id)), $data->signup_terms)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['signup_invitepage'] = array(
+				'name' => 'signup_invitepage',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_invitepage\',array(\'id\'=>$data->id)), $data->signup_invitepage)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['signup_inviteonly'] = array(
+				'name' => 'signup_inviteonly',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_inviteonly\',array(\'id\'=>$data->id)), $data->signup_inviteonly)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['signup_checkemail'] = array(
+				'name' => 'signup_checkemail',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_checkemail\',array(\'id\'=>$data->id)), $data->signup_checkemail)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['signup_adminemail'] = array(
+				'name' => 'signup_adminemail',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_adminemail\',array(\'id\'=>$data->id)), $data->signup_adminemail)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['general_profile'] = array(
+				'name' => 'general_profile',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'general_profile\',array(\'id\'=>$data->id)), $data->general_profile)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['general_invite'] = array(
+				'name' => 'general_invite',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'general_invite\',array(\'id\'=>$data->id)), $data->general_invite)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['general_search'] = array(
+				'name' => 'general_search',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'general_search\',array(\'id\'=>$data->id)), $data->general_search)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['general_portal'] = array(
+				'name' => 'general_portal',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'general_portal\',array(\'id\'=>$data->id)), $data->general_portal)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['lang_allow'] = array(
+				'name' => 'lang_allow',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'lang_allow\',array(\'id\'=>$data->id)), $data->lang_allow)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['lang_autodetect'] = array(
+				'name' => 'lang_autodetect',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'lang_autodetect\',array(\'id\'=>$data->id)), $data->lang_autodetect)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['lang_anonymous'] = array(
+				'name' => 'lang_anonymous',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'lang_anonymous\',array(\'id\'=>$data->id)), $data->lang_anonymous)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['spam_comment'] = array(
+				'name' => 'spam_comment',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'spam_comment\',array(\'id\'=>$data->id)), $data->spam_comment)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['spam_contact'] = array(
+				'name' => 'spam_contact',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'spam_contact\',array(\'id\'=>$data->id)), $data->spam_contact)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['spam_invite'] = array(
+				'name' => 'spam_invite',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'spam_invite\',array(\'id\'=>$data->id)), $data->spam_invite)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['spam_login'] = array(
+				'name' => 'spam_login',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'spam_login\',array(\'id\'=>$data->id)), $data->spam_login)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['spam_signup'] = array(
+				'name' => 'spam_signup',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'spam_signup\',array(\'id\'=>$data->id)), $data->spam_signup)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
+			);
+			$this->templateColumns['analytic'] = array(
+				'name' => 'analytic',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'analytic\',array(\'id\'=>$data->id)), $data->analytic)',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>Yii::t('phrase', 'Yes'),
+					0=>Yii::t('phrase', 'No'),
+				),
+				'type' => 'raw',
 			);
 		}
 		parent::afterConstruct();
@@ -437,12 +876,18 @@ class OmmuSettings extends CActiveRecord
 	/**
 	 * User get information
 	 */
-	public static function getInfo($column)
+	public static function getInfo($column=null)
 	{
-		$model = self::model()->findByPk(1,array(
-			'select' => $column
-		));
-		return $model->$column;
+		if($column != null) {
+			$model = self::model()->findByPk(1,array(
+				'select' => $column
+			));
+			return $model->$column;
+			
+		} else {
+			$model = self::model()->findByPk(1);
+			return $model;
+		}
 	}
 
 	/**
@@ -485,7 +930,7 @@ class OmmuSettings extends CActiveRecord
 				}
 			}
 			
-			$this->modified_id = Yii::app()->user->id;
+			$this->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
 		}
 		return true;
 	}
@@ -493,7 +938,8 @@ class OmmuSettings extends CActiveRecord
 	/**
 	 * before save attributes
 	 */
-	protected function beforeSave() {
+	protected function beforeSave() 
+	{
 		if(parent::beforeSave()) {
 			$this->construction_date = date('Y-m-d', strtotime($this->construction_date));
 			if($currentAction == 'settings/general')
