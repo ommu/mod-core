@@ -32,6 +32,7 @@ class SourceMessage extends OActiveRecord
 	public $gridForbiddenColumn = array('modified_date','modified_search');
 
 	// Variable Search
+	public $translate_search;
 	public $creation_search;
 	public $modified_search;
 
@@ -70,7 +71,8 @@ class SourceMessage extends OActiveRecord
 			array('category, location', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, category, message, location, creation_date, creation_id, modified_date, modified_id, creation_search, modified_search', 'safe', 'on'=>'search'),
+			array('id, category, message, location, creation_date, creation_id, modified_date, modified_id, 
+				translate_search, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -82,6 +84,7 @@ class SourceMessage extends OActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'view' => array(self::BELONGS_TO, 'ViewSourceMessage', 'id'),
 			'messages' => array(self::HAS_MANY, 'Message', 'id'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
@@ -102,6 +105,7 @@ class SourceMessage extends OActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
+			'translate_search' => Yii::t('attribute', 'Translates'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -127,6 +131,9 @@ class SourceMessage extends OActiveRecord
 
 		// Custom Search
 		$criteria->with = array(
+			'view' => array(
+				'alias'=>'view',
+			),
 			'creation' => array(
 				'alias'=>'creation',
 				'select'=>'displayname',
@@ -148,6 +155,7 @@ class SourceMessage extends OActiveRecord
 			$criteria->compare('date(t.modified_date)', date('Y-m-d', strtotime($this->modified_date)));
 		$criteria->compare('t.modified_id', Yii::app()->getRequest()->getParam('modified') ? Yii::app()->getRequest()->getParam('modified') : $this->modified_id);
 
+		$criteria->compare('view.translates', $this->translate_search);
 		$criteria->compare('creation.displayname', strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname', strtolower($this->modified_search), true);
 
@@ -192,6 +200,14 @@ class SourceMessage extends OActiveRecord
 			$this->templateColumns['location'] = array(
 				'name' => 'location',
 				'value' => '$data->location',
+			);
+			$this->templateColumns['translate_search'] = array(
+				'name' => 'translate_search',
+				'value' => 'CHtml::link($data->view->translates ? $data->view->translates : 0, Yii::app()->controller->createUrl(\'translate/manage\',array(\'phrase\'=>$data->id)))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'type' => 'raw',
 			);
 			if(!Yii::app()->getRequest()->getParam('creation')) {
 				$this->templateColumns['creation_search'] = array(

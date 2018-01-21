@@ -82,14 +82,14 @@ content_menu	:
 	- urlTitle: Add Phrase
 		urlRules: {phrase, manage, siteType: "0,1", userLevel: "1,2"}
 		urlPath: {url: add, attr: -, icon: -}
+	- urlTitle: View Translates Data
+		urlRules: {phrase, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: translate/manage, attr: -, icon: -}
 		
 # controller translate
-	- urlTitle: Add Front Phrase
+	- urlTitle: Back to Phrases
 		urlRules: {translate, manage, siteType: "0,1", userLevel: "1,2"}
-		urlPath: {url: add, attr: -, icon: -}
-	- urlTitle: Back to Manage
-		urlRules: {translate, "add,edit", siteType: "0,1", userLevel: "1,2"}
-		urlPath: {url: manage, attr: -, icon: -}
+		urlPath: {url: phrase/manage, attr: -, icon: -}
 		
 # controller settings/locale
 	- urlTitle: Countries

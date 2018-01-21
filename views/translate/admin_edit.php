@@ -1,27 +1,24 @@
 <?php
 /**
- * Ommu System Phrase (ommu-system-phrase)
+ * Messages (message)
  * @var $this TranslateController
- * @var $model OmmuSystemPhrase
+ * @var $model Message
  * @var $form CActiveForm
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
- * @link https://github.com/ommu/ommu-core
+ * @copyright Copyright (c) 2018 Ommu Platform (opensource.ommu.co)
+ * @created date 21 January 2018, 09:03 WIB
+ * @modified date 21 January 2018, 09:03 WIB
+ * @link http://opensource.ommu.co
  *
  */
 
 	$this->breadcrumbs=array(
-		'Ommu System Phrases'=>array('manage'),
-		$model->phrase_id=>array('view','id'=>$model->phrase_id),
+		'Messages'=>array('manage'),
+		$model->id=>array('view','id'=>$model->id),
 		'Update',
 	);
 ?>
 
-<div class="form">
-	<?php echo $this->renderPartial('_form', array(
-		'model'=>$model,
-		'language'=>$language,
-	)); ?>
-</div>
+<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

@@ -2,7 +2,7 @@
 /**
  * TranslateController
  * @var $this TranslateController
- * @var $model OmmuSystemPhrase
+ * @var $model Message
  * @var $form CActiveForm
  *
  * Reference start
@@ -11,6 +11,7 @@
  *	Manage
  *	Add
  *	Edit
+ *	View
  *	Delete
  *
  *	LoadModel
@@ -18,8 +19,10 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
- * @link https://github.com/ommu/ommu-core
+ * @copyright Copyright (c) 2018 Ommu Platform (opensource.ommu.co)
+ * @created date 21 January 2018, 09:03 WIB
+ * @modified date 21 January 2018, 09:03 WIB
+ * @link http://opensource.ommu.co
  *
  *----------------------------------------------------------------------------------------------------------
  */
@@ -69,13 +72,13 @@ class TranslateController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('suggest'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','manage','add','edit','delete'),
+				'actions'=>array('index','manage','add','edit','view','delete'),
 				'users'=>array('@'),
 				'expression'=>'in_array($user->level, array(1,2))',
+			),
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions'=>array(),
+				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -90,55 +93,29 @@ class TranslateController extends Controller
 	{
 		$this->redirect(array('manage'));
 	}
-	
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionSuggest($limit=10) {
-		if(isset($_GET['term'])) {
-			if($language == null || $language != null && $language == '')
-				$body = 'en_us';
-			$criteria = new CDbCriteria;
-			$criteria->condition = $body.' LIKE :body';
-			$criteria->params = array(':body' => '%' . strtolower($_GET['term']) . '%');
-			$criteria->limit = $limit;
-			$criteria->order = "phrase_id ASC";
-			$model = OmmuSystemPhrase::model()->findAll($criteria);
-
-			if($model) {
-				foreach($model as $items) {
-					$result[] = array('id' => $items->phrase_id, 'value' => $items->$body);
-				}
-			}
-		}
-		echo CJSON::encode($result);
-		Yii::app()->end();
-	}
 
 	/**
 	 * Manages all models.
 	 */
 	public function actionManage() 
 	{
-		$model=new OmmuSystemPhrase('search');
+		$model=new Message('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['OmmuSystemPhrase'])) {
-			$model->attributes=$_GET['OmmuSystemPhrase'];
+		if(isset($_GET['Message'])) {
+			$model->attributes=$_GET['Message'];
 		}
 
+		$gridColumn = $_GET['GridColumn'];
 		$columnTemp = array();
-		if(isset($_GET['GridColumn'])) {
-			foreach($_GET['GridColumn'] as $key => $val) {
-				if($_GET['GridColumn'][$key] == 1) {
+		if(isset($gridColumn)) {
+			foreach($gridColumn as $key => $val) {
+				if($gridColumn[$key] == 1)
 					$columnTemp[] = $key;
-				}
 			}
 		}
 		$columns = $model->getGridColumn($columnTemp);
 
-		$this->pageTitle = Yii::t('phrase', 'Front Phrases');
+		$this->pageTitle = Yii::t('phrase', 'Translates');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_manage',array(
@@ -153,68 +130,14 @@ class TranslateController extends Controller
 	 */
 	public function actionAdd() 
 	{
-		$model=new OmmuSystemPhrase;
-		$language = OmmuLanguages::model()->findAll();
+		$model=new Message;
 
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
-		if(isset($_POST['OmmuSystemPhrase'])) {
-			$model->attributes=$_POST['OmmuSystemPhrase'];
-			
-			$jsonError = CActiveForm::validate($model);
-			if(strlen($jsonError) > 2) {
-				echo $jsonError;
+		if(isset($_POST['Message'])) {
+			$model->attributes=$_POST['Message'];
 
-			} else {
-				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
-					if($model->validate()) {
-						if($model->save()) {
-							echo CJSON::encode(array(
-								'type' => 5,
-								'get' => Yii::app()->controller->createUrl('manage'),
-								'id' => 'partial-ommu-system-phrase',
-								'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', '$phrase Front Phrase success created.', array('$phrase'=>$model->phrase_id)).'</strong></div>',
-								
-							));
-						}
-					} else {
-						print_r($model->getErrors());
-					}
-				}
-			}
-			Yii::app()->end();
-		}
-		
-		$this->dialogDetail = true;
-		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-		$this->dialogWidth = 600;
-		
-		$this->pageTitle = Yii::t('phrase', 'Add Phrase');
-		$this->pageDescription = '';
-		$this->pageMeta = '';
-		$this->render('admin_add',array(
-			'model'=>$model,
-			'language'=>$language,
-		));
-	}
-
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionEdit($id) 
-	{
-		$model=$this->loadModel($id);
-		$language = OmmuLanguages::model()->findAll();
-
-		// Uncomment the following line if AJAX validation is needed
-		$this->performAjaxValidation($model);
-
-		if(isset($_POST['OmmuSystemPhrase'])) {
-			$model->attributes=$_POST['OmmuSystemPhrase'];
-			
 			$jsonError = CActiveForm::validate($model);
 			if(strlen($jsonError) > 2) {
 				echo $jsonError;
@@ -225,12 +148,15 @@ class TranslateController extends Controller
 						echo CJSON::encode(array(
 							'type' => 5,
 							'get' => Yii::app()->controller->createUrl('manage'),
-							'id' => 'partial-ommu-system-phrase',
-							'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', '$phrase Front Phrase success updated.', array('$phrase'=>$model->phrase_id)).'</strong></div>',
+							'id' => 'partial-message',
+							'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Translate success created.').'</strong></div>',
 						));
-					} else {
+						/*
+						Yii::app()->user->setFlash('success', Yii::t('phrase', 'Translate success created.'));
+						$this->redirect(array('manage'));
+						*/
+					} else
 						print_r($model->getErrors());
-					}
 				}
 			}
 			Yii::app()->end();
@@ -239,13 +165,63 @@ class TranslateController extends Controller
 		$this->dialogDetail = true;
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 600;
+
+		$this->pageTitle = Yii::t('phrase', 'Create Translate');
+		$this->pageDescription = '';
+		$this->pageMeta = '';
+		$this->render('admin_add',array(
+			'model'=>$model,
+		));
+	}
+
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionEdit($id, $language) 
+	{
+		$model=$this->loadModel($id, $language);
+
+		// Uncomment the following line if AJAX validation is needed
+		$this->performAjaxValidation($model);
+
+		if(isset($_POST['Message'])) {
+			$model->attributes=$_POST['Message'];
+
+			$jsonError = CActiveForm::validate($model);
+			if(strlen($jsonError) > 2) {
+				echo $jsonError;
+
+			} else {
+				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
+					if($model->save()) {
+						echo CJSON::encode(array(
+							'type' => 5,
+							'get' => Yii::app()->controller->createUrl('manage'),
+							'id' => 'partial-message',
+							'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Translate success updated.').'</strong></div>',
+						));
+						/*
+						Yii::app()->user->setFlash('success', Yii::t('phrase', 'Translate success updated.'));
+						$this->redirect(array('manage'));
+						*/
+					} else
+						print_r($model->getErrors());
+				}
+			}
+			Yii::app()->end();
+		}
 		
-		$this->pageTitle = Yii::t('phrase', 'Update Phrase');
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
+
+		$this->pageTitle = Yii::t('phrase', 'Update Translate: {id}', array('{id}'=>$model->id));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_edit',array(
 			'model'=>$model,
-			'language'=>$language,
 		));
 	}
 
@@ -254,20 +230,23 @@ class TranslateController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id) 
+	public function actionDelete($id, $language) 
 	{
-		$model=$this->loadModel($id);
+		$model=$this->loadModel($id, $language);
 		
 		if(Yii::app()->request->isPostRequest) {
 			// we only allow deletion via POST request
-			
 			if($model->delete()) {
 				echo CJSON::encode(array(
 					'type' => 5,
 					'get' => Yii::app()->controller->createUrl('manage'),
-					'id' => 'partial-ommu-system-phrase',
-					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Front Phrase success deleted.').'</strong></div>',
+					'id' => 'partial-message',
+					'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'Translate success deleted.').'</strong></div>',
 				));
+				/*
+				Yii::app()->user->setFlash('success', Yii::t('phrase', 'Translate success deleted.'));
+				$this->redirect(array('manage'));
+				*/
 			}
 			Yii::app()->end();
 		}
@@ -276,7 +255,7 @@ class TranslateController extends Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 350;
 
-		$this->pageTitle = Yii::t('phrase', 'Delete Phrase');
+		$this->pageTitle = Yii::t('phrase', 'Delete Translate: {id}', array('{id}'=>$model->id));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_delete');
@@ -287,9 +266,9 @@ class TranslateController extends Controller
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer the ID of the model to be loaded
 	 */
-	public function loadModel($id) 
+	public function loadModel($id, $language) 
 	{
-		$model = OmmuSystemPhrase::model()->findByPk($id);
+		$model = Message::model()->findByAttributes(array('id'=>$id, 'language'=>$language));
 		if($model===null)
 			throw new CHttpException(404, Yii::t('phrase', 'The requested page does not exist.'));
 		return $model;
@@ -301,7 +280,7 @@ class TranslateController extends Controller
 	 */
 	protected function performAjaxValidation($model) 
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='ommu-system-phrase-form') {
+		if(isset($_POST['ajax']) && $_POST['ajax']==='message-form') {
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}

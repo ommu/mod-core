@@ -74,7 +74,6 @@ class PhraseController extends Controller
 				'actions'=>array('index','manage','add','edit','view','delete'),
 				'users'=>array('@'),
 				'expression'=>'in_array($user->level, array(1,2))',
-				//'expression'=>'$user->level == 1',
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),

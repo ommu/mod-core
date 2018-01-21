@@ -336,7 +336,7 @@ class OmmuLanguages extends OActiveRecord
 	/**
 	 * getLanguages
 	 */
-	public static function getLanguage($actived=null, $type=null, $view=null) 
+	public static function getLanguage($actived=null, $type=null, $view='id') 
 	{
 		$criteria=new CDbCriteria;
 		if($actived != null)
@@ -348,9 +348,9 @@ class OmmuLanguages extends OActiveRecord
 			$items = array();
 			if($model != null) {
 				foreach($model as $key => $val) {
-					if($view == null)
+					if($view == 'id')
 						$items[$val->language_id] = $val->name;
-					else
+					else if($view == 'code')
 						$items[$val->code] = $val->name;
 				}
 				return $items;

@@ -1,33 +1,37 @@
 <?php
 /**
- * Ommu System Phrase (ommu-system-phrase)
+ * Messages (message)
  * @var $this TranslateController
- * @var $model OmmuSystemPhrase
+ * @var $model Message
  * @var $form CActiveForm
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
- * @link https://github.com/ommu/ommu-core
+ * @copyright Copyright (c) 2018 Ommu Platform (opensource.ommu.co)
+ * @created date 21 January 2018, 09:03 WIB
+ * @modified date 21 January 2018, 09:03 WIB
+ * @link http://opensource.ommu.co
  *
  */
 
 	$this->breadcrumbs=array(
-		'Ommu System Phrases'=>array('manage'),
+		'Messages'=>array('manage'),
 		'Delete',
 	);
 ?>
 
 <?php $form=$this->beginWidget('application.libraries.core.components.system.OActiveForm', array(
-	'id'=>'ommu-pages-form',
+	'id'=>'message-form',
 	'enableAjaxValidation'=>true,
 	//'htmlOptions' => array('enctype' => 'multipart/form-data')
 )); ?>
+
 	<div class="dialog-content">
 		<?php echo Yii::t('phrase', 'Are you sure you want to delete this item?');?>
 	</div>
-<div class="dialog-submit">
+	<div class="dialog-submit">
 		<?php echo CHtml::submitButton(Yii::t('phrase', 'Delete'), array('onclick' => 'setEnableSave()')); ?>
 		<?php echo CHtml::button(Yii::t('phrase', 'Cancel'), array('id'=>'closed')); ?>
 	</div>
+	
 <?php $this->endWidget(); ?>

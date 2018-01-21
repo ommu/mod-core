@@ -1,36 +1,31 @@
 <?php
 /**
- * Message
+ * ViewSourceMessage
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
- * @created date 5 November 2017, 18:28 WIB
- * @modified date 20 January 2018, 06:27 WIB
+ * @copyright Copyright (c) 2018 Ommu Platform (opensource.ommu.co)
+ * @created date 21 January 2018, 11:25 WIB
  * @link https://github.com/ommu/ommu-core
  *
- * This is the model class for table "message".
+ * This is the model class for table "_source_message".
  *
- * The followings are the available columns in table 'message':
+ * The followings are the available columns in table '_source_message':
  * @property integer $id
- * @property string $language
- * @property string $translation
- *
- * The followings are the available model relations:
- * @property SourceMessage $id0
+ * @property string $translates
  */
-class Message extends OActiveRecord
+
+class ViewSourceMessage extends OActiveRecord
 {
 	public $gridForbiddenColumn = array();
 
 	// Variable Search
-	public $phrase_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Message the static model class
+	 * @return ViewSourceMessage the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -43,7 +38,15 @@ class Message extends OActiveRecord
 	public function tableName()
 	{
 		preg_match("/dbname=([^;]+)/i", $this->dbConnection->connectionString, $matches);
-		return $matches[1].'.message';
+		return $matches[1].'._source_message';
+	}
+
+	/**
+	 * @return string the primarykey column
+	 */
+	public function primaryKey()
+	{
+		return 'id';
 	}
 
 	/**
@@ -54,14 +57,11 @@ class Message extends OActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, language, translation', 'required'),
 			array('id', 'numerical', 'integerOnly'=>true),
-			array('language', 'length', 'max'=>16),
-			array('', 'safe'),
+			array('translates', 'length', 'max'=>21),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, language, translation, 
-				phrase_search', 'safe', 'on'=>'search'),
+			array('id, translates', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -73,8 +73,6 @@ class Message extends OActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'phrase' => array(self::BELONGS_TO, 'SourceMessage', 'id'),
-			'language_r' => array(self::BELONGS_TO, 'OmmuLanguages', 'language'),
 		);
 	}
 
@@ -84,10 +82,8 @@ class Message extends OActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => Yii::t('attribute', 'Phrase'),
-			'language' => Yii::t('attribute', 'Language'),
-			'translation' => Yii::t('attribute', 'Translation'),
-			'phrase_search' => Yii::t('attribute', 'Phrase'),
+			'id' => Yii::t('attribute', 'ID'),
+			'translates' => Yii::t('attribute', 'Translates'),
 		);
 	}
 
@@ -109,21 +105,10 @@ class Message extends OActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		// Custom Search
-		$criteria->with = array(
-			'phrase' => array(
-				'alias'=>'phrase',
-				'select'=>'message',
-			),
-		);
-		
-		$criteria->compare('t.id', Yii::app()->getRequest()->getParam('phrase') ? Yii::app()->getRequest()->getParam('phrase') : $this->id);
-		$criteria->compare('t.language', Yii::app()->getRequest()->getParam('language') ? Yii::app()->getRequest()->getParam('language') : $this->language);
-		$criteria->compare('t.translation', strtolower($this->translation), true);
+		$criteria->compare('t.id', $this->id);
+		$criteria->compare('t.translates', strtolower($this->translates), true);
 
-		$criteria->compare('phrase.message',strtolower($this->phrase_search),true);
-
-		if(!Yii::app()->getRequest()->getParam('Message_sort'))
+		if(!Yii::app()->getRequest()->getParam('ViewSourceMessage_sort'))
 			$criteria->order = 't.id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -152,23 +137,13 @@ class Message extends OActiveRecord
 					'class' => 'center',
 				),
 			);
-			if(!Yii::app()->getRequest()->getParam('phrase')) {
-				$this->templateColumns['phrase_search'] = array(
-					'name' => 'phrase_search',
-					'value' => '$data->phrase->message',
-				);
-			}
-			if(!Yii::app()->getRequest()->getParam('language')) {
-				$this->templateColumns['language'] = array(
-					'name' => 'language',
-					'value' => '$data->language_r->name',
-					'filter'=> OmmuLanguages::getLanguage(null, null, 'code'),
-					'type' => 'raw',
-				);
-			}
-			$this->templateColumns['translation'] = array(
-				'name' => 'translation',
-				'value' => '$data->translation',
+			$this->templateColumns['id'] = array(
+				'name' => 'id',
+				'value' => '$data->id',
+			);
+			$this->templateColumns['translates'] = array(
+				'name' => 'translates',
+				'value' => '$data->translates',
 			);
 		}
 		parent::afterConstruct();
