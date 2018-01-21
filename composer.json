@@ -43,8 +43,5 @@
 		"2amigos/efeed": "^0.1.1"
 	},
 	"require-dev": {
-		"ommu/gapi-google-analytics-php-interface": "dev-master",
-		"ommu/phpthumb": "dev-master",
-		"ommu/phpmailer": "dev-master"
 	}
 }
