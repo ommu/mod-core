@@ -97,7 +97,7 @@ class TranslateController extends Controller
 	/**
 	 * Manages all models.
 	 */
-	public function actionManage() 
+	public function actionManage($phrase=null) 
 	{
 		$model=new Message('search');
 		$model->unsetAttributes();  // clear any default values
@@ -115,7 +115,13 @@ class TranslateController extends Controller
 		}
 		$columns = $model->getGridColumn($columnTemp);
 
-		$this->pageTitle = Yii::t('phrase', 'Translates');
+		$pageTitle = Yii::t('phrase', 'Translates');
+		if($phrase != null) {
+			$data = SourceMessage::model()->findByPk($phrase);
+			$pageTitle = Yii::t('phrase', 'Translates: {phrase}', array ('{phrase}'=>$data->message));
+		}
+		
+		$this->pageTitle = $pageTitle;
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_manage',array(
