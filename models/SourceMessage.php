@@ -29,7 +29,7 @@
 
 class SourceMessage extends OActiveRecord
 {
-	public $gridForbiddenColumn = array();
+	public $gridForbiddenColumn = array('modified_date','modified_search');
 
 	// Variable Search
 	public $creation_search;
@@ -67,7 +67,7 @@ class SourceMessage extends OActiveRecord
 			array('modified_id', 'numerical', 'integerOnly'=>true),
 			array('category', 'length', 'max'=>255),
 			array('creation_id', 'length', 'max'=>11),
-			array('location', 'safe'),
+			array('category, location', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, category, message, location, creation_date, creation_id, modified_date, modified_id, creation_search, modified_search', 'safe', 'on'=>'search'),
@@ -182,7 +182,7 @@ class SourceMessage extends OActiveRecord
 			);
 			$this->templateColumns['category'] = array(
 				'name' => 'category',
-				'value' => '$data->category',
+				'value' => '$data->category ? $data->category : \'-\'',
 			);
 			$this->templateColumns['message'] = array(
 				'name' => 'message',
@@ -193,6 +193,12 @@ class SourceMessage extends OActiveRecord
 				'name' => 'location',
 				'value' => '$data->location',
 			);
+			if(!Yii::app()->getRequest()->getParam('creation')) {
+				$this->templateColumns['creation_search'] = array(
+					'name' => 'creation_search',
+					'value' => '$data->creation->displayname ? $data->creation->displayname : \'-\'',
+				);
+			}
 			$this->templateColumns['creation_date'] = array(
 				'name' => 'creation_date',
 				'value' => '!in_array($data->creation_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\')) ? Utility::dateFormat($data->creation_date) : \'-\'',
@@ -219,12 +225,6 @@ class SourceMessage extends OActiveRecord
 					),
 				), true),
 			);
-			if(!Yii::app()->getRequest()->getParam('creation')) {
-				$this->templateColumns['creation_search'] = array(
-					'name' => 'creation_search',
-					'value' => '$data->creation->displayname ? $data->creation->displayname : \'-\'',
-				);
-			}
 			$this->templateColumns['modified_date'] = array(
 				'name' => 'modified_date',
 				'value' => '!in_array($data->modified_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\')) ? Utility::dateFormat($data->modified_date) : \'-\'',

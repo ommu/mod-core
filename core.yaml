@@ -78,6 +78,11 @@ content_menu	:
 		urlRules: {theme, manage, siteType: "0,1", userLevel: 1}
 		urlPath: {url: upload, attr: -, icon: -}
 		
+# controller phrase
+	- urlTitle: Add Phrase
+		urlRules: {phrase, manage, siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: add, attr: -, icon: -}
+		
 # controller translate
 	- urlTitle: Add Front Phrase
 		urlRules: {translate, manage, siteType: "0,1", userLevel: "1,2"}
