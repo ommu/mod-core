@@ -76,7 +76,7 @@ class OmmuPlugins extends OActiveRecord
 			array('name, model', 'length', 'max'=>128),
 			array('desc', 'length', 'max'=>255),
 			array('creation_id, modified_id', 'length', 'max'=>11),
-			array('model', 'safe'),
+			array('name, desc, model', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('plugin_id, default, install, actived, search, orders, parent_id, folder, name, desc, model, creation_date, creation_id, modified_date, modified_id,

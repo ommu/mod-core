@@ -88,13 +88,10 @@ class ModuleController extends Controller
 	/**
 	 * Cache module, update and install to file
 	 */
-	public function updateModule($deleted=false)
+	public function updateModule()
 	{
 		$this->moduleHandle->cacheModuleConfig();
-		if(!$deleted) {
-			$this->moduleHandle->updateModuleAddonFromDir();
-			$this->moduleHandle->setModuleToDb();
-		}
+		$this->moduleHandle->setModules();
 		$this->moduleHandle->updateModuleAddon();
 	}
 	
@@ -228,7 +225,7 @@ class ModuleController extends Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 500;
 		
-		$this->pageTitle = Yii::t('phrase', 'Update Module: $module_name', array('$module_name'=>$model->name));
+		$this->pageTitle = Yii::t('phrase', 'Update Module: {module_name}', array('{module_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_edit',array(
@@ -248,7 +245,7 @@ class ModuleController extends Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 500;
 
-		$this->pageTitle = Yii::t('phrase', 'View Module: $module_name', array('$module_name'=>$model->name));
+		$this->pageTitle = Yii::t('phrase', 'View Module: {module_name}', array('{module_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_view',array(
@@ -285,7 +282,7 @@ class ModuleController extends Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 350;
 
-		$this->pageTitle = Yii::t('phrase', 'Delete Module: $module_name', array('$module_name'=>$model->name));
+		$this->pageTitle = Yii::t('phrase', 'Delete Module: {module_name}', array('{module_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_delete');
@@ -324,7 +321,7 @@ class ModuleController extends Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 350;
 
-		$this->pageTitle = Yii::t('phrase', '$title Module: $module_name', array('$title'=>$title, '$module_name'=>$model->name));
+		$this->pageTitle = Yii::t('phrase', '{title} Module: {module_name}', array('{title}'=>$title, '{module_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_active',array(
@@ -363,7 +360,7 @@ class ModuleController extends Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 350;
 
-		$this->pageTitle = Yii::t('phrase', 'Default Module: $module_name', array('$module_name'=>$model->name));
+		$this->pageTitle = Yii::t('phrase', 'Default Module: {module_name}', array('{module_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_default',array(
@@ -388,7 +385,7 @@ class ModuleController extends Controller
 			$model->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
 
 			if($model->update()) {
-				$this->moduleHandle->installModule($model->plugin_id, $model->folder);
+				$this->moduleHandle->installModule($model->plugin_id);
 				echo CJSON::encode(array(
 					'type' => 5,
 					'get' => Yii::app()->controller->createUrl('manage'),
@@ -403,7 +400,7 @@ class ModuleController extends Controller
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 350;
 
-		$this->pageTitle = Yii::t('phrase', '$title Module: $module_name', array('$title'=>$title, '$module_name'=>$model->name));
+		$this->pageTitle = Yii::t('phrase', '{title} Module: {module_name}', array('{title}'=>$title, '{module_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_install',array(

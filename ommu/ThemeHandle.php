@@ -6,10 +6,11 @@
  * Reference start
  * TOC :
  *	getIgnoreTheme
- *	getThemeFromDb
- *	getThemeFromDir
+ *	getThemesFromDb
+ *	getThemesFromDir
  *	cacheThemeConfig
  *	getThemeConfig
+ *	deleteThemeDb
  *	deleteThemeFolder
  *	deleteTheme
  *	setThemes
@@ -24,8 +25,8 @@
 
 class ThemeHandle extends CApplicationComponent
 {
-	public $themePath        = 'webroot.themes';
-	private $_themeTableName = 'ommu_core_themes';
+	public $themePath			= 'webroot.themes';
+	private $_themeTableName	= 'ommu_core_themes';
 	
 	/**
 	 * return ignore theme from scanner.
@@ -39,7 +40,7 @@ class ThemeHandle extends CApplicationComponent
 	 Dapatkan total modul yang ada pada tabel modul.
 	 @return integer rows.
 	*/
-	public function getThemeFromDb($default_theme=null)
+	public function getThemesFromDb($default_theme=null)
 	{
 		$criteria = new CDbCriteria;
 		if($default_theme != null)
@@ -55,7 +56,7 @@ class ThemeHandle extends CApplicationComponent
 	 *
 	 * @return array daftar theme yang ada atau false jika tidak terdapat theme.
 	 */
-	public function getThemeFromDir()
+	public function getThemesFromDir()
 	{
 		$themeList = array();
 		$themePath = Yii::getPathOfAlias('webroot.themes');
@@ -82,7 +83,7 @@ class ThemeHandle extends CApplicationComponent
 	 */
 	public function cacheThemeConfig($return=false)
 	{
-		$themes = $this->getThemeFromDb();
+		$themes = $this->getThemesFromDb();
 		$arrayTheme = array();
 
 		foreach($themes as $theme) {
@@ -176,9 +177,9 @@ class ThemeHandle extends CApplicationComponent
 	 */
 	public function setThemes()
 	{
-		$installedTheme	= $this->getThemeFromDir();
+		$installedTheme	= $this->getThemesFromDir();
 		$cacheTheme		= file(Yii::getPathOfAlias('application.config').'/cache_theme.php');
-		$toBeInstalled    = array();
+		$toBeInstalled	= array();
 		
 		$caches = array();
 		foreach($cacheTheme as $val) {

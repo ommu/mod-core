@@ -5,17 +5,22 @@
  *
  * Reference start
  * TOC :
+ *	getIgnoreModule
  *	getModulesFromDb
- *	getModuleConfig
+ *	getModulesFromDir
  *	cacheModuleConfig
+ *	getModuleConfig
+ *	getModuleClassName
+ *	deleteModuleDatabase
+ *	deleteModuleDb
  *	deleteModuleFolder
  *	deleteModule
- *	getIgnoreModule
- *	getModulesFromDir
+ *	setModules
+ *	updateModuleAddon
+
+ 
  *	updateModuleAddonFromDir
  *	getIdMax
- *	setModuleToDb
- *	updateModuleAddon
  *	installModule
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
@@ -30,10 +35,18 @@
 
 class ModuleHandle extends CApplicationComponent
 {
-	public $modulePath        = 'protected/modules';
-	public $configPath        = 'protected/config/module_addon.php';
+	public $modulePath			= 'protected/modules';
+	public $moduleVendorPath	= 'protected/vendor/ommu';
+	public $configPath			= 'protected/config/module_addon.php';
+	private $_moduleTableName	= 'ommu_core_plugins';
 	
-	private $_moduleTableName = 'ommu_core_plugins';
+	/**
+	 * return ignore module from scanner.
+	 */
+	public function getIgnoreModule()
+	{
+		return array();
+	}
 	
 	/*
 	 Dapatkan total modul yang ada pada tabel modul.
@@ -68,113 +81,6 @@ class ModuleHandle extends CApplicationComponent
 	}
 
 	/**
-	 * Get module config from yaml file
-	 *
-	 * @param string $moduleName
-	 * @return array
-	 */
-	public function getModuleConfig($moduleName)
-	{
-		Yii::import('mustangostang.spyc.Spyc');
-		define('DS', DIRECTORY_SEPARATOR);
-		
-		$configPath = Yii::getPathOfAlias('application.modules.'.$moduleName).DS.$moduleName.'.yaml';
-		if(file_exists($configPath))
-			return Spyc::YAMLLoad($configPath);
-		else
-			return null;
-	}
-	
-	/**
-	 * Cache modul dari database ke bentuk file.
-	 * Untuk mengurangi query pada saat install ke database.
-	 */
-	public function cacheModuleConfig()
-	{
-		$modules = $this->getModulesFromDb();
-		$arrayModule = '';
-
-		foreach($modules as $module) {
-			$arrayModule .= $module->folder . "\n";
-		}
-		$filePath   = Yii::getPathOfAlias('application.config');
-		$fileHandle = fopen($filePath.'/cache_module.php', 'w');
-		fwrite($fileHandle, $arrayModule);
-		fclose($fileHandle);
-	}
-	
-	/**
-	 * Delete Folder
-	 */
-	public function deleteModuleFolder($dirname)
-	{
-	    // Sanity check
-	    if (file_exists($dirname)) {
-			// Simple delete for a file
-			if (is_file($dirname) || is_link($dirname)) {
-				return unlink($dirname);
-			}
-
-			// Loop through the folder
-			$dir = dir($dirname);
-			while (false !== $entry = $dir->read()) {
-				// Skip pointers
-				if ($entry == '.' || $entry == '..') {
-					continue;
-				}
-
-				// Recurse
-				$this->deleteModuleFolder($dirname . DIRECTORY_SEPARATOR . $entry);
-			}
-
-			// Clean up
-			$dir->close();
-			return rmdir($dirname);
-		
-		} else
-			return false;
-	}
-
-	/**
-	 * Delete modules
-	 */
-	public function deleteModule($module=null)
-	{
-		if($module != null) {
-			$config    = $this->getModuleConfig($module);
-			$tableName = $config['db_table_name'];
-			if(count($config) > 0) {
-				if($tableName != null) {
-					foreach($tableName as $val){
-						Yii::app()->db->createCommand("DROP TABLE {$val}")->execute();
-					}
-				}
-			}
-		
-			$sourcePath = Yii::getPathOfAlias('application.modules.'.trim($module));
-			//$externalPath = Yii::getPathOfAlias('webroot.externals.'.trim($module));
-			$publicPath = Yii::getPathOfAlias('webroot.public.'.trim($module));
-
-			//Delete module source
-			$this->deleteModuleFolder($sourcePath);
-			//Delete external source
-			$this->deleteModuleFolder($externalPath);
-			//Delete public source
-			$this->deleteModuleFolder($publicPath);
-		
-		} else
-			return false;
-	}
-	
-	/**
-	 * return ignore module from scanner.
-	 */
-	public function getIgnoreModule()
-	{
-		return array();
-	}
-
-	/**
 	 * Mendapatkan daftar modul dari folder protected/modules.
 	 *
 	 * @return array daftar modul yang ada atau false jika tidak terdapat modul.
@@ -182,13 +88,13 @@ class ModuleHandle extends CApplicationComponent
 	public function getModulesFromDir()
 	{
 		$moduleList = array();
-		$modulePath = Yii::getPathOfAlias('application.modules');
-		$modules    = scandir(Yii::getPathOfAlias('application.modules'));
-		foreach($modules as $name) {
-			$moduleFile = $modulePath.'/'.$name.'/'.ucfirst($name).'Module.php';
+		$moduleVendorPath = Yii::getPathOfAlias('application.vendor.ommu');
+		$modules = scandir($moduleVendorPath);
+		foreach($modules as $module) {
+			$moduleFile = $moduleVendorPath.'/'.$module.'/'.ucfirst($module).'Module.php';
 			if (file_exists($moduleFile)) {
-				$moduleName = strtolower(trim($name));
-				if(!in_array($moduleName, self::getIgnoreModule())) {
+				$moduleName = strtolower(trim($module));
+				if(!in_array($moduleName, $this->getIgnoreModule())) {
 					$moduleList[] = $moduleName;
 				}
 			}
@@ -199,6 +105,267 @@ class ModuleHandle extends CApplicationComponent
 		else
 			return false;
 	}
+	
+	/**
+	 * Cache modul dari database ke bentuk file.
+	 * Untuk mengurangi query pada saat install ke database.
+	 */
+	public function cacheModuleConfig($return=false)
+	{
+		$modules = $this->getModulesFromDb();
+		$arrayModule = array();
+
+		foreach($modules as $module) {
+			if(!in_array($module->folder, $arrayModule))
+				$arrayModule[] = $module->folder;
+		}
+		if($return == false) {
+			$filePath   = Yii::getPathOfAlias('application.config');
+			$fileHandle = fopen($filePath.'/cache_module.php', 'w');
+			fwrite($fileHandle, implode("\n", $arrayModule));
+			fclose($fileHandle);
+
+		} else 
+			return $arrayModule;
+	}
+
+	/**
+	 * Get module config from yaml file
+	 *
+	 * @param string $module
+	 * @return array
+	 */
+	public function getModuleConfig($module)
+	{
+		Yii::import('mustangostang.spyc.Spyc');
+		define('DS', DIRECTORY_SEPARATOR);
+		
+		$configPath = Yii::getPathOfAlias('application.vendor.ommu.'.$module).DS.$module.'.yaml';
+
+		if(file_exists($configPath))
+			return Spyc::YAMLLoad($configPath);
+		else
+			return null;
+	}
+
+	/**
+	 * get module classname
+	 */
+	public function getModuleClassName($module) 
+	{
+		return ucfirst($module).'Module';
+	}
+	
+	/**
+	 * Delete Module Database 
+	 */
+	public function deleteModuleDatabase($module)
+	{
+		$config = $this->getModuleConfig($module);
+		$tableName = $config['db_table_name'];
+
+		if($config && $tableName) {
+			foreach($tableName as $val){
+				Yii::app()->db->createCommand("DROP TABLE {$val}")->execute();
+			}
+
+		} else
+			return false;
+	}
+	
+	/**
+	 * Delete Module from Plugin Database
+	 */
+	public function deleteModuleDb($module)
+	{
+		if($module != null) {
+			$model = OmmuPlugins::model()->findByAttributes(array('folder'=>$module));
+			
+			if($model != null)
+				$model->delete();
+
+			else 
+				return true;
+
+		} else 
+			return true;
+	}
+
+	/**
+	 * Delete Module Directory
+	 */
+	public function deleteModuleFolder($modulePath)
+	{
+		// Sanity check
+		if (file_exists($modulePath)) {
+			Utility::deleteFolder($modulePath);
+			//Utility::recursiveDelete($modulePath);
+			//echo $modulePath;
+			//exit();
+
+		} else 
+			return false;
+	}
+
+	/**
+	 * Delete modules
+	 */
+	public function deleteModule($module=null, $db=false)
+	{
+		if($module != null) {
+			$module = trim($module);
+
+			//Delete theme database
+			if($db == true)
+				$this->deleteModuleDb($module);
+
+			$this->deleteModuleDatabase($module);
+			
+			//Delete vendor source
+			$vendorPath = Yii::getPathOfAlias('application.vendor.ommu.'.$module);
+			$this->deleteModuleFolder($vendorPath);
+			//Delete module source
+			$modulePath = Yii::getPathOfAlias('application.modules.'.$module);
+			$this->deleteModuleFolder($modulePath);
+			//Delete public source
+			$publicPath = Yii::getPathOfAlias('webroot.public.'.$module);
+			$this->deleteModuleFolder($publicPath);
+		
+		} else
+			return false;
+	}
+	
+	/**
+	 * Install modul ke database
+	 */
+	public function setModules()
+	{
+		$moduleVendorPath	= Yii::getPathOfAlias('application.vendor.ommu');
+		$installedModule	= $this->getModulesFromDir();
+		$cacheModule		= file(Yii::getPathOfAlias('application.config').'/cache_module.php');
+		$toBeInstalled		= array();
+		
+		$caches = array();
+		foreach($cacheModule as $val) {
+			$caches[] = $val;
+		}
+
+		if(!$installedModule)
+			$installedModule = array();
+			
+		foreach($caches as $cache) {
+			$cache = trim($cache);
+			if(!in_array($cache, array_map("trim", $installedModule))) {
+				$this->deleteModuleDb($cache);
+			}
+		}
+
+		$moduleDb = $this->cacheModuleConfig(true);
+		foreach($installedModule as $module) {
+			$module = trim($module);
+			if(!in_array($module, array_map("trim", $moduleDb))) {
+				$config = $this->getModuleConfig($module);
+				$moduleFile = $moduleVendorPath.'/'.$module.'/'.ucfirst($module).'Module.php';
+
+				if ($config && file_exists($moduleFile) && $module == $config['folder_name']) {
+					$model=new OmmuPlugins;
+					$model->folder = $module;
+					$model->name = $config['name'];
+					$model->desc = $config['description'];
+					$model->save();
+				}
+			}
+		}
+	}
+
+	/**
+	 * Update module from db to file
+	 */
+	public function updateModuleAddon()
+	{
+		$modules = $this->getModulesFromDb('enabled');
+		$countModules = count($modules);
+
+		$config  = "<?php \n";
+		if($countModules > 0) {
+			$config .= "return array(\n\t'modules' => array(\n";
+			$i = 1;
+			foreach($modules as $val) {
+				$module =  $val['folder'];
+				/*
+				$moduleClass =  $this->getModuleClassName($module);
+				$config .= "\t\t'$module'=>array(\n";
+				$config .= "\t\t\t'class'=>'\ommu\\$module\\$moduleClass',\n";
+				if($i !== $countModules)
+					$config .= "\t\t),\n";
+				else
+					$config .= "\t\t)\n";
+				*/
+				if($i !== $countModules)
+					$config .= "\t\t'$module',\n";
+				else
+					$config .= "\t\t'$module'\n";
+				$i++;
+			}
+
+		} else {
+			$config .= "return array(\n\t'modules' => array(\n";
+		}
+		$config .= "\t),\n);";
+
+		$fileHandle = @fopen(Yii::getPathOfAlias('application.config').'/module_addon.php', 'w');
+		@fwrite($fileHandle, $config, strlen($config));
+		@fclose($fileHandle);
+	}
+
+	/**
+	 * Create additional table inside module(if any)
+	 *
+	 * @param string $moduleName
+	 * @return void.
+	 */
+	public function installModule($plugin_id)
+	{
+		$moduleVendorPath = Yii::getPathOfAlias('application.vendor.ommu');
+		$module = OmmuPlugins::model()->findByPk($plugin_id);
+
+		if($module != null) {
+			$moduleName = $module->folder;
+			if($model->parent_id != 0)
+				$moduleName = $module->parent->folder;
+			
+			if($model->install == 1) {
+				$config = $this->getModuleConfig($moduleName);
+				if($config) {
+					$tableName = $config['db_table_name'];
+					$fileName  = trim($config['db_sql_filename']);
+					$sqlFile = $moduleVendorPath.'/'.$moduleName.'/data/'.$fileName;
+	
+					if($tableName && !empty($tableName) && $fileName != '' && file_exists($sqlFile)) {
+						$tables  = Yii::app()->db->createCommand('SHOW FULL TABLES WHERE table_type = "BASE TABLE"')->queryColumn();
+	
+						if(!in_array($tableName[0], $tables)) {
+							$sql = file_get_contents($sqlFile);
+							Yii::app()->db->createCommand($sql)->execute();
+						}
+					}
+				}
+
+			} else
+				$this->deleteModuleDatabase($moduleName);
+
+		} else
+			return false;
+	}
+
+
+
+
+
+
+
+
+	
 	
 	/**
 	 * Install modul ke file protected/config/modules.php
@@ -235,170 +402,6 @@ class ModuleHandle extends CApplicationComponent
 		$conn = Yii::app()->db;
 		$sql  = 'SELECT IFNULL(MAX(' . $fieldName . ')+1, 1) as id FROM ' . $tableName;
 		return $conn->createCommand($sql)->queryScalar();
-	}
-	
-	/**
-	 * Install modul ke database
-	 */
-	public function setModuleToDb()
-	{
-		$countModulesFile = count($this->getModulesFromDir());
-		$countModulesDb = count($this->getModulesFromDb());
-		$toBeInstalled    = array();
-
-		if($countModulesFile > $countModulesDb) {
-			$cacheModule     = file(Yii::getPathOfAlias('application.config').'/cache_module.php');
-			$installedModule = $this->getModulesFromDir();
-			$toBeInstalled   = array();
-			$caches = array();
-			foreach($cacheModule as $val) {
-				$caches[] = trim(strtolower($val));
-			}
-
-			// Cari nama modul yang belum masuk database.
-			if(count($cacheModule) == 0 || count($cacheModule) < 1) {
-				if($installedModule) {
-					foreach($installedModule as $val) {
-						$toBeInstalled[] = $val;
-					}
-				}
-
-			} else {
-				if($installedModule) {
-					foreach($installedModule as $val) {
-						$val = trim($val);
-						if(!in_array(strtolower($val), $caches)) {
-							$toBeInstalled[] = $val;
-						}
-					}
-				}
-			}
-
-			$sql = "INSERT INTO {$this->_moduleTableName}(plugin_id, folder) VALUES";
-			$id  = $this->getIdMax('plugin_id', 'ommu_core_plugins');
-			for($i = 0; $i < count($toBeInstalled); $i++) {
-				if(isset(Yii::app()->getModule($toBeInstalled[$i])->active))
-					$active = Yii::app()->getModule($toBeInstalled[$i])->active;
-				else
-					$active = 0;
-
-				$desc = Yii::app()->getModule($toBeInstalled[$i])->description;
-
-				if($i == (count($toBeInstalled) - 1)) {
-					$sql .= '(' . $id . ', "' . $toBeInstalled[$i] . '")';
-				}else
-					$sql .= '(' . $id . ', "' . $toBeInstalled[$i] . '"),';
-
-				$id++;
-			}
-
-			//Check if module already inserted to table.
-			$conn    = Yii::app()->db;
-
-			if(count($toBeInstalled) > 0) {
-				$result  = $conn->createCommand($sql)->execute();
-				if($result)
-					return true;
-				else
-					return false;
-			}
-		}
-	}
-
-	/**
-	 * get module classname
-	 */
-	public function getModuleClassName($module) 
-	{
-		return ucfirst($module).'Module';
-	}
-
-	/**
-	 * Update module from db to file
-	 */
-	public function updateModuleAddon()
-	{
-		$modules = $this->getModulesFromDb('enabled');
-
-		if(count($modules) > 0) {
-			$config  = "<?php \n";
-			$config .= "return array(\n\t'modules' => array(\n";
-			$i = 1;
-			foreach($modules as $val) {
-				$module =  $val['folder'];
-				/*
-				$moduleClass =  $this->getModuleClassName($module);
-				$config .= "\t\t'$module'=>array(\n";
-				$config .= "\t\t\t'class'=>'\ommu\\$module\\$moduleClass',\n";
-				if($i !== count($modules))
-					$config .= "\t\t),\n";
-				else
-					$config .= "\t\t)\n";
-				*/
-				if($i !== count($modules))
-					$config .= "\t\t'$module',\n";
-				else
-					$config .= "\t\t'$module'\n";
-				$i++;
-			}
-			$config .= "\t),\n);";
-
-		} else {
-			$config  = "<?php \n";
-			$config .= "return array(\n\t'modules' => array(\n";
-			$config .= "\t),\n);";
-		}
-
-		$fileHandle = @fopen(Yii::getPathOfAlias('application.config').'/module_addon.php', 'w');
-		@fwrite($fileHandle, $config, strlen($config));
-		@fclose($fileHandle);
-	}
-
-	/**
-	 * Create additional table inside module(if any)
-	 *
-	 * @param string $moduleName
-	 * @return void.
-	 */
-	public function installModule($id, $moduleName)
-	{
-		$module		= OmmuPlugins::model()->findByPk($id);
-		$config		= $this->getModuleConfig($moduleName);
-		if($config != null) {
-			$name = trim($config['name']);
-			$description = trim($config['description']);
-			$folder_name = trim($config['folder_name']);
-			$global_model = trim($config['global_model']);
-			$version = trim($config['version']);
-			
-			if($folder_name)
-				$module->folder = $folder_name;
-			if($name)
-				$module->name = $name;
-			if($description)
-				$module->desc = $description;
-			if($global_model)
-				$module->model = $global_model;
-			if($module->isNewRecord)
-				$module->creation_date = date('Y-m-d H:i:s');
-			else
-				$module->modified_date = date('Y-m-d H:i:s');
-			
-			if($module->save()) {
-				$tableName = $config['db_table_name'];
-				$fileName  = trim($config['db_sql_filename']);
-
-				if($tableName != null && $fileName != '') {
-					$sqlPath = Yii::getPathOfAlias('application.modules.'.$moduleName).DS.'assets'.DS.$fileName;
-					$tables  = Yii::app()->db->createCommand('SHOW FULL TABLES WHERE table_type = "BASE TABLE"')->queryColumn();
-
-					if(!in_array($tableName, $tables)) {
-						$sql = file_get_contents($sqlPath);
-						Yii::app()->db->createCommand($sql)->execute();
-					}
-				}
-			}
-		}
 	}
 	
 }
