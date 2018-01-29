@@ -17,7 +17,8 @@
  *	deleteModule
  *	setModules
  *	updateModuleAddon
-
+ *	generateModuleDirectory
+ *	generateModules
  
  *	updateModuleAddonFromDir
  *	getIdMax
@@ -276,6 +277,8 @@ class ModuleHandle extends CApplicationComponent
 				}
 			}
 		}
+		
+		$this->generateModules();
 	}
 
 	/**
@@ -316,6 +319,67 @@ class ModuleHandle extends CApplicationComponent
 		$fileHandle = @fopen(Yii::getPathOfAlias('application.config').'/module_addon.php', 'w');
 		@fwrite($fileHandle, $config, strlen($config));
 		@fclose($fileHandle);
+	}
+
+	/**
+	 * Update module from db to file
+	 */
+	public function generateModuleDirectory($path)
+	{
+		// Add directory
+		if(!file_exists($path)) {
+			@mkdir($path, 0755, true);
+
+			// Add file in directory (index.php)
+			$newFile = $path.'/index.php';
+			$FileHandle = fopen($newFile, 'w');
+		} else
+			@chmod($path, 0755, true);
+	}
+
+	/**
+	 * Update module from db to file
+	 */
+	public function generateModules()
+	{
+		$modules = $this->getModulesFromDir();
+		$modulePath = Yii::getPathOfAlias('application.modules');
+		$moduleComponent = array('assets','components','controllers','models','views');
+
+		if(count($modules) > 0) {
+			foreach($modules as $module) {
+				$moduleClass = ucfirst($module).'Module';
+				$module_path = $modulePath.'/'.$module;
+				$module_class = $module_path.'/'.$moduleClass.'.php';
+
+				if(!file_exists($module_class)) {
+					$this->generateModuleDirectory($module_path);
+	
+					foreach($moduleComponent as $component) {
+						$module_component_path = $module_path.'/'.$component;
+						$this->generateModuleDirectory($module_component_path);
+					}
+
+					$config = "<?php\n";
+					$config .= "/**\n";
+					$config .= " * $moduleClass\n";
+					$config .= " *\n";
+					$config .= " * @author Putra Sudaryanto <putra@sudaryanto.id>\n";
+					$config .= " * @contact (+62)856-299-4114\n";
+					$config .= " * @copyright Copyright (c) ".date('Y')." Ommu Platform (opensource.ommu.co)\n";
+					$config .= " * @created date ".date('j F Y, H:i')." WIB\n";
+					$config .= " *\n";
+					$config .= " *----------------------------------------------------------------------------------------------------------\n */\n\n";
+					$config .= "Yii::import('application.vendor.ommu.$module.$moduleClass');";
+
+					if(!file_exists($module_class)) {
+						$fileHandle = @fopen($module_class, 'w');
+						@fwrite($fileHandle, $config, strlen($config));
+						@fclose($fileHandle);
+					}
+				}
+			}
+		}
 	}
 
 	/**
