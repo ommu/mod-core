@@ -42,9 +42,6 @@ content_menu	:
 	- urlTitle: Upload Module
 		urlRules: {module, manage, siteType: "0,1", userLevel: 1}
 		urlPath: {url: module/upload, attr: -, icon: -}
-	- urlTitle: View All Module
-		urlRules: {module, manage, siteType: "0,1", userLevel: 1}
-		urlPath: {url: module/manage, attr: type=all, icon: -}
 		
 # controller content
 	- urlTitle: Add Pages
