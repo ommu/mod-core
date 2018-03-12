@@ -243,6 +243,8 @@ class OmmuPlugins extends OActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
+				'filter' => 'native-datepicker',
+				/*
 				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
 					'model'=>$this,
 					'attribute'=>'creation_date',
@@ -251,6 +253,8 @@ class OmmuPlugins extends OActiveRecord
 					//'mode'=>'datetime',
 					'htmlOptions' => array(
 						'id' => 'creation_date_filter',
+						'on_datepicker' => 'on',
+						'placeholder' => Yii::t('phrase', 'filter'),
 					),
 					'options'=>array(
 						'showOn' => 'focus',
@@ -262,6 +266,7 @@ class OmmuPlugins extends OActiveRecord
 						'showButtonPanel' => true,
 					),
 				), true),
+				*/
 			);
 			$this->templateColumns['modified_date'] = array(
 				'name' => 'modified_date',
@@ -269,6 +274,8 @@ class OmmuPlugins extends OActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
+				'filter' => 'native-datepicker',
+				/*
 				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
 					'model'=>$this,
 					'attribute'=>'modified_date',
@@ -277,6 +284,8 @@ class OmmuPlugins extends OActiveRecord
 					//'mode'=>'datetime',
 					'htmlOptions' => array(
 						'id' => 'modified_date_filter',
+						'on_datepicker' => 'on',
+						'placeholder' => Yii::t('phrase', 'filter'),
 					),
 					'options'=>array(
 						'showOn' => 'focus',
@@ -288,6 +297,7 @@ class OmmuPlugins extends OActiveRecord
 						'showButtonPanel' => true,
 					),
 				), true),
+				*/
 			);
 			if(!Yii::app()->getRequest()->getParam('modified')) {
 				$this->templateColumns['modified_search'] = array(
@@ -375,7 +385,7 @@ class OmmuPlugins extends OActiveRecord
 		if($actived != null)
 			$criteria->compare('actived', $actived);
 		$criteria->addNotInCondition('orders', array(0));
-		if($actived == null || ($actived != null && $actived == 0))
+		if($actived == null || $actived == 0)
 			$criteria->order = 'folder ASC';
 		else
 			$criteria->order = 'orders ASC';
@@ -386,7 +396,7 @@ class OmmuPlugins extends OActiveRecord
 			$items = array();
 			if($model != null) {
 				foreach($model as $key => $val) {
-					if($keypath == null)
+					if($keypath == null || $keypath == 'folder')
 						$items[$val->folder] = $val->name;
 					else
 						$items[$val->plugin_id] = $val->name;

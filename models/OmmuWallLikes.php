@@ -218,6 +218,8 @@ class OmmuWallLikes extends CActiveRecord
 				'htmlOptions' => array(
 					//'class' => 'center',
 				),
+				'filter' => 'native-datepicker',
+				/*
 				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
 					'model'=>$this,
 					'attribute'=>'likes_date',
@@ -226,6 +228,8 @@ class OmmuWallLikes extends CActiveRecord
 					//'mode'=>'datetime',
 					'htmlOptions' => array(
 						'id' => 'likes_date_filter',
+						'on_datepicker' => 'on',
+						'placeholder' => Yii::t('phrase', 'filter'),
 					),
 					'options'=>array(
 						'showOn' => 'focus',
@@ -237,6 +241,7 @@ class OmmuWallLikes extends CActiveRecord
 						'showButtonPanel' => true,
 					),
 				), true),
+				*/
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'likes_ip',

@@ -446,7 +446,7 @@ class OGridView extends CBaseListView
 			'enableHistory'=>$this->enableHistory,
 			'updateSelector'=>$this->updateSelector,
 			'filterSelector'=>$this->filterSelector,
-			'afterAjaxUpdate'=>'reinstallDatePicker',
+			//'afterAjaxUpdate'=>'reinstallDatePicker',
 		);
 		if($this->ajaxUrl!==null)
 			$options['url']=CHtml::normalizeUrl($this->ajaxUrl);
@@ -547,6 +547,7 @@ class OGridView extends CBaseListView
 			echo "</tr>\n";
 		}
 
+		/*
 		$cs = Yii::app()->getClientScript();
 		$datepicker = '';
 		$i=0;
@@ -565,6 +566,7 @@ $js=<<<EOP
 	}
 EOP;
 		$cs->registerScript('reinstall-datepicker', $js, CClientScript::POS_END);
+		*/
 	}
 
 	/**

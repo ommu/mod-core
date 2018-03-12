@@ -100,12 +100,16 @@ class CDataColumn extends CGridColumn
 	{
 		if(is_string($this->filter))
 		{
-			//echo $this->filter;
 			//echo '<pre>';
-			//print_r($this->grid);
+			//print_r($this);
 			//echo '</pre>';
 			//exit();
-			echo CHtml::activeTextField($this->grid->filter, $this->name, array('id'=>$this->name."_filter", 'on_datepicker'=>'on', 'placeholder'=>'filter'));
+
+			if($this->filter == 'native-datepicker')
+				return CHtml::activeDateField($this->grid->filter, $this->name, array('placeholder'=>'filter'));
+				//return CHtml::activeTextField($this->grid->filter, $this->name, array('id'=>$this->name."_filter", 'on_datepicker'=>'on', 'placeholder'=>'filter'));
+			else
+				return $this->filter;
 		}
 		elseif($this->filter!==false && $this->grid->filter!==null && $this->name!==null && strpos($this->name,'.')===false)
 		{

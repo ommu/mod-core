@@ -569,7 +569,7 @@ class Utility
 	 * get Language
 	 *
 	 */
-    public static function getLanguage(){
+    public static function getLanguage() {
 		if(Yii::app()->session['language'] != null)
 			$lang = Yii::app()->session['language'];
 			
