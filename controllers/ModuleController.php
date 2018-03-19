@@ -304,7 +304,7 @@ class ModuleController extends Controller
 			// we only allow deletion via POST request
 			//change value active or publish
 			$model->actived = $replace;
-			$model->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
+			$model->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : null;
 
 			if($model->update()) {
 				echo CJSON::encode(array(
@@ -343,7 +343,7 @@ class ModuleController extends Controller
 			// we only allow deletion via POST request
 			//change value active or publish
 			$model->default = 1;
-			$model->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
+			$model->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : null;
 
 			if($model->update()) {
 				echo CJSON::encode(array(
@@ -382,7 +382,7 @@ class ModuleController extends Controller
 			// we only allow deletion via POST request
 			//change value install
 			$model->install = $replace;
-			$model->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
+			$model->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : null;
 
 			if($model->update()) {
 				$this->moduleHandle->installModule($model->plugin_id);

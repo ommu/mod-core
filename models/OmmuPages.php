@@ -494,9 +494,9 @@ class OmmuPages extends OActiveRecord
 	{
 		if(parent::beforeValidate()) {
 			if($this->isNewRecord)
-				$this->creation_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
+				$this->creation_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : null;
 			else
-				$this->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
+				$this->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : null;
 			
 			$media = CUploadedFile::getInstance($this, 'media');
 			if($media->name != '') {

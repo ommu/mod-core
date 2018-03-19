@@ -955,7 +955,7 @@ class OmmuSettings extends OActiveRecord
 				}
 			}
 			
-			$this->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
+			$this->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : null;
 		}
 		return true;
 	}

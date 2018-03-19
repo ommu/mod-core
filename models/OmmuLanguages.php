@@ -398,9 +398,9 @@ class OmmuLanguages extends OActiveRecord
 			if($this->isNewRecord) {
 				if($this->default == 1)
 					$this->actived = 1;
-				$this->creation_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
+				$this->creation_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : null;
 			} else
-				$this->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : 0;
+				$this->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : null;
 		}
 		return true;
 	}
