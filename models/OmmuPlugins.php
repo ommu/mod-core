@@ -29,8 +29,8 @@
  *
  * The followings are the available model relations:
  * @property OmmuPluginPhrase[] $phrases
- * @property Users $creation;
- * @property Users $modified;
+ * @property Users $creation
+ * @property Users $modified
  */
 
 class OmmuPlugins extends OActiveRecord

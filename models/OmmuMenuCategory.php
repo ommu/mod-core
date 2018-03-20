@@ -26,8 +26,8 @@
  *
  * The followings are the available model relations:
  * @property OmmuMenus[] $menus
- * @property Users $creation;
- * @property Users $modified;
+ * @property Users $creation
+ * @property Users $modified
  */
 
 class OmmuMenuCategory extends OActiveRecord

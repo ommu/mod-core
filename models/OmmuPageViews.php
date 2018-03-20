@@ -24,7 +24,7 @@
  * The followings are the available model relations:
  * @property OmmuPageViewHistory[] $histories
  * @property OmmuPages $page
- * @property Users $user;
+ * @property Users $user
  */
 
 class OmmuPageViews extends OActiveRecord

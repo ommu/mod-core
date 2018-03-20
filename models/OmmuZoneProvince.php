@@ -26,8 +26,8 @@
  * The followings are the available model relations:
  * @property OmmuZoneCity[] $cities
  * @property OmmuZoneCountry $country
- * @property Users $creation;
- * @property Users $modified;
+ * @property Users $creation
+ * @property Users $modified
  */
 
 class OmmuZoneProvince extends OActiveRecord

@@ -28,8 +28,8 @@
  *
  * The followings are the available model relations:
  * @property OmmuPageViews[] $views
- * @property Users $creation;
- * @property Users $modified;
+ * @property Users $creation
+ * @property Users $modified
  */
 
 class OmmuPages extends OActiveRecord

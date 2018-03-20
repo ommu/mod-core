@@ -23,8 +23,8 @@
  *
  * The followings are the available model relations:
  * @property Message[] $messages
- * @property Users $creation;
- * @property Users $modified;
+ * @property Users $creation
+ * @property Users $modified
  */
 
 class SourceMessage extends OActiveRecord
