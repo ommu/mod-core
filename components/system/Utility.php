@@ -22,6 +22,7 @@
  *	recursiveDelete
  *	generateEmailTemplate
  *	getEmailTemplate
+ *	getPublish
 
  
  *	getConnected
@@ -32,7 +33,6 @@
  *	dateFormat
  *	getTimThumb
  *	replaceSpaceWithUnderscore
- *	getPublish
  *	shortText
  *	convert_smart_quotes
  *	softDecode
@@ -497,6 +497,55 @@ class Utility
 		return $email_ireplace;
 	}
 
+	/**
+	 * get publish status
+	 * 1 = Publish
+	 * 2 = Active
+	 * 3 = Enabled
+	 * 4 = Dialog
+	 * 5 = BUG and Report
+	 * 6 = Default
+	 * 7 = Verify
+	 * 8 = Subcribe
+	 * 9 = Headline
+	 * 10 = Install
+	 */
+	public static function getPublish($url, $id, $type='1') 
+	{
+		$baseUrl = !empty(Yii::app()->theme->name) ? Yii::app()->theme->baseUrl : Yii::app()->request->baseUrl;
+		
+		$arrType = explode(',', $type);
+		if(count($arrType) > 1 )
+			$phrase = $id == '0' ? Yii::t('phrase', trim($arrType[0])) : Yii::t('phrase', trim($arrType[1]));
+		else {
+			if($type == '1')
+				$phrase = $id == '0' ? Yii::t('phrase', 'Publish') : Yii::t('phrase', 'Unpublish');
+			else if($type == '2')
+				$phrase = $id == '0' ? Yii::t('phrase', 'Actived') : Yii::t('phrase', 'Deactived');
+			else if($type == '3')
+				$phrase = $id == '0' ? Yii::t('phrase', 'Enabled') : Yii::t('phrase', 'Disabled');
+			else if($type == '4')
+				$phrase = $id == '0' ? Yii::t('phrase', 'Enabled Dialog') : Yii::t('phrase', 'Disable Dialog');
+			else if($type == '5')
+				$phrase = $id == '0' ? Yii::t('phrase', 'Unresolved') : Yii::t('phrase', 'Resolved');
+			else if($type == '6')
+				$phrase = $id == '0' ? Yii::t('phrase', 'Defaults') : Yii::t('phrase', 'Defaults');
+			else if($type == '7')
+				$phrase = $id == '0' ? Yii::t('phrase', 'Verified') : Yii::t('phrase', 'Unverified');
+			else if($type == '8')
+				$phrase = $id == '0' ? Yii::t('phrase', 'Subcribe') : Yii::t('phrase', 'Unsubcribe');
+			else if($type == '9')
+				$phrase = $id == '0' ? Yii::t('phrase', 'Headline') : Yii::t('phrase', 'Headline');
+			else if($type == '10')
+				$phrase = $id == '0' ? Yii::t('phrase', 'Install Module') : Yii::t('phrase', 'Install Module');
+		}
+		
+		$image = $id == '0' ? $baseUrl.'/images/icons/unpublish.png' : $baseUrl.'/images/icons/publish.png';
+		$publish = '<a href="'.$url.'" title="'.$phrase.'"><img src="'.$image.'"></a>';
+
+		return $publish;
+	}
+
 
 
 
@@ -697,55 +746,6 @@ class Utility
 	 */
 	public static function replaceSpaceWithUnderscore($fileName) {
 		return str_ireplace(' ', '_', strtolower(trim($fileName)));
-	}
-
-	/**
-	 * get publish status
-	 * 1 = Publish
-	 * 2 = Active
-	 * 3 = Enabled
-	 * 4 = Dialog
-	 * 5 = BUG and Report
-	 * 6 = Default
-	 * 7 = Verify
-	 * 8 = Subcribe
-	 * 9 = Headline
-	 * 10 = Install
-	 */
-	public static function getPublish($url, $id, $type=1) 
-	{
-		$baseUrl = !empty(Yii::app()->theme->name) ? Yii::app()->theme->baseUrl : Yii::app()->request->baseUrl;
-		
-		$arrType = explode(',', $type);
-		if(count($arrType) > 1 )
-			$phrase = $id == '0' ? Yii::t('phrase', trim($arrType[0])) : Yii::t('phrase', trim($arrType[1]));
-		else {
-			if($type == '1')
-				$phrase = $id == '0' ? Yii::t('phrase', 'Publish') : Yii::t('phrase', 'Unpublish');
-			else if($type == '2')
-				$phrase = $id == '0' ? Yii::t('phrase', 'Actived') : Yii::t('phrase', 'Deactived');
-			else if($type == '3')
-				$phrase = $id == '0' ? Yii::t('phrase', 'Enabled') : Yii::t('phrase', 'Disabled');
-			else if($type == '4')
-				$phrase = $id == '0' ? Yii::t('phrase', 'Enabled Dialog') : Yii::t('phrase', 'Disable Dialog');
-			else if($type == '5')
-				$phrase = $id == '0' ? Yii::t('phrase', 'Unresolved') : Yii::t('phrase', 'Resolved');
-			else if($type == '6')
-				$phrase = $id == '0' ? Yii::t('phrase', 'Defaults') : Yii::t('phrase', 'Defaults');
-			else if($type == '7')
-				$phrase = $id == '0' ? Yii::t('phrase', 'Verified') : Yii::t('phrase', 'Unverified');
-			else if($type == '8')
-				$phrase = $id == '0' ? Yii::t('phrase', 'Subcribe') : Yii::t('phrase', 'Unsubcribe');
-			else if($type == '9')
-				$phrase = $id == '0' ? Yii::t('phrase', 'Headline') : Yii::t('phrase', 'Headline');
-			else if($type == '10')
-				$phrase = $id == '0' ? Yii::t('phrase', 'Install Module') : Yii::t('phrase', 'Install Module');
-		}
-		
-		$image = $id == '0' ? $baseUrl.'/images/icons/unpublish.png' : $baseUrl.'/images/icons/publish.png';
-		$publish = '<a href="'.$url.'" title="'.$phrase.'"><img src="'.$image.'"></a>';
-
-		return $publish;
 	}
 
     /**

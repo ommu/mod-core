@@ -327,7 +327,7 @@ class OmmuPageViews extends OActiveRecord
 		$criteria->select = 'view_id, publish, page_id, user_id, views';
 		$criteria->compare('publish', 1);
 		$criteria->compare('page_id', $page_id);
-		$criteria->compare('user_id', !Yii::app()->user->isGuest ? Yii::app()->user->id : '0');
+		$criteria->compare('user_id', !Yii::app()->user->isGuest ? Yii::app()->user->id : null);
 		$findView = self::model()->find($criteria);
 		
 		if($findView != null)
