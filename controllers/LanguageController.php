@@ -139,7 +139,7 @@ class LanguageController extends /*SBaseController*/ Controller
 			if(strlen($jsonError) > 2) {
 				echo $jsonError;
 			} else {
-				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
+				if(Yii::app()->getRequest()->getParam('enablesave') == 1) {
 					if($model->save()) {
 						echo CJSON::encode(array(
 							'type' => 5,
@@ -186,7 +186,7 @@ class LanguageController extends /*SBaseController*/ Controller
 			if(strlen($jsonError) > 2) {
 				echo $jsonError;
 			} else {
-				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
+				if(Yii::app()->getRequest()->getParam('enablesave') == 1) {
 					if($model->save()) {
 						echo CJSON::encode(array(
 							'type' => 5,
@@ -326,7 +326,7 @@ class LanguageController extends /*SBaseController*/ Controller
 				echo $jsonError;
 				
 			} else {
-				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
+				if(Yii::app()->getRequest()->getParam('enablesave') == 1) {
 					if($setting->save()) {
 						echo CJSON::encode(array(
 							'type' => 0,

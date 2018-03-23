@@ -146,7 +146,7 @@ class ZonecityController extends Controller
 				echo $jsonError;
 
 			} else {
-				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
+				if(Yii::app()->getRequest()->getParam('enablesave') == 1) {
 					if($model->save()) {
 						echo CJSON::encode(array(
 							'type' => 5,
@@ -194,7 +194,7 @@ class ZonecityController extends Controller
 				echo $jsonError;
 
 			} else {
-				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
+				if(Yii::app()->getRequest()->getParam('enablesave') == 1) {
 					if($model->save()) {
 						echo CJSON::encode(array(
 							'type' => 5,
@@ -229,7 +229,7 @@ class ZonecityController extends Controller
 	public function actionRunAction() {
 		$id       = $_POST['trash_id'];
 		$criteria = null;
-		$actions  = $_GET['action'];
+		$actions  = Yii::app()->getRequest()->getParam('action');
 
 		if(count($id) > 0) {
 			$criteria = new CDbCriteria;
@@ -253,7 +253,7 @@ class ZonecityController extends Controller
 		}
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax'])) {
+		if(!(Yii::app()->getRequest()->getParam('ajax'))) {
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('manage'));
 		}
 	}
@@ -341,11 +341,12 @@ class ZonecityController extends Controller
 	public function actionSuggest($id=null, $limit=10) 
 	{
 		if($id == null) {
-			if(isset($_GET['term'])) {
+			$term = Yii::app()->getRequest()->getParam('term');
+			if($term) {
 				$criteria = new CDbCriteria;
 				$criteria->select = "city_id, province_id, city_name";
 				$criteria->condition = 'city_name LIKE :city';
-				$criteria->params = array(':city' => '%' . strtolower($_GET['term']) . '%');
+				$criteria->params = array(':city' => '%' . strtolower($term) . '%');
 				$criteria->order = "city_name ASC";
 				$criteria->limit = $limit;
 				$model = OmmuZoneCity::model()->findAll($criteria);

@@ -51,8 +51,8 @@ class Ommu extends CApplicationComponent
 		 * set default themes
 		 */
 		$theme = $this->getDefaultTheme();
-		if(isset($_GET['theme'])) {
-			$theme = trim($_GET['theme']);
+		if(Yii::app()->getRequest()->getParam('theme')) {
+			$theme = trim(Yii::app()->getRequest()->getParam('theme'));
 		}
 		//Yii::app()->theme = $theme;
 		

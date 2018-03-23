@@ -141,8 +141,8 @@ class OmmuWallUser extends CActiveRecord
 			$criteria->compare('t.wall_id',$_GET['wall']);
 		else
 			$criteria->compare('t.wall_id',$this->wall_id);
-		if(isset($_GET['user']))
-			$criteria->compare('t.user_id',$_GET['user']);
+		if(Yii::app()->getRequest()->getParam('user'))
+			$criteria->compare('t.user_id',Yii::app()->getRequest()->getParam('user'));
 		else
 			$criteria->compare('t.user_id',$this->user_id);
 		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
@@ -205,7 +205,7 @@ class OmmuWallUser extends CActiveRecord
 					'value' => '$data->wall->wall_status',
 				);
 			}
-			if(!isset($_GET['user'])) {
+			if(!Yii::app()->getRequest()->getParam('user')) {
 				$this->defaultColumns[] = array(
 					'name' => 'user_search',
 					'value' => '$data->user->displayname',

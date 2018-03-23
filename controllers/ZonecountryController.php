@@ -144,7 +144,7 @@ class ZonecountryController extends Controller
 				echo $jsonError;
 
 			} else {
-				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
+				if(Yii::app()->getRequest()->getParam('enablesave') == 1) {
 					if($model->save()) {
 						echo CJSON::encode(array(
 							'type' => 5,
@@ -192,7 +192,7 @@ class ZonecountryController extends Controller
 				echo $jsonError;
 
 			} else {
-				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
+				if(Yii::app()->getRequest()->getParam('enablesave') == 1) {
 					if($model->save()) {
 						echo CJSON::encode(array(
 							'type' => 5,
@@ -259,11 +259,12 @@ class ZonecountryController extends Controller
 	public function actionSuggest($id=null, $limit=10) 
 	{
 		if($id == null) {
-			if(isset($_GET['term'])) {
+			$term = Yii::app()->getRequest()->getParam('term');
+			if($term) {
 				$criteria = new CDbCriteria;
 				$criteria->select = "country_id, country_name";
 				$criteria->condition = 'country_name LIKE :country';
-				$criteria->params = array(':country' => '%' . strtolower($_GET['term']) . '%');
+				$criteria->params = array(':country' => '%' . strtolower($term) . '%');
 				$criteria->order = "country_id ASC";
 				$criteria->limit = $limit;
 				$model = OmmuZoneCountry::model()->findAll($criteria);

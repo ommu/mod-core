@@ -623,7 +623,7 @@ class Utility
 			$lang = Yii::app()->session['language'];
 			
         else {
-			$lang = isset($_GET['lang']) && $_GET['lang'] != '' ? $_GET['lang'] : null;
+			$lang = Yii::app()->getRequest()->getParam('lang') != '' ? Yii::app()->getRequest()->getParam('lang') : null;
 			if($lang == null) //find default language 
 			    $lang = Yii::app()->params['primaryLang'];
         }

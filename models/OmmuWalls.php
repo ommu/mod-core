@@ -146,18 +146,18 @@ class OmmuWalls extends CActiveRecord
 		);
 
 		$criteria->compare('t.wall_id',$this->wall_id,true);
-		if(isset($_GET['type']) && $_GET['type'] == 'publish')
+		if(Yii::app()->getRequest()->getParam('type') == 'publish')
 			$criteria->compare('t.publish',1);
-		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
+		elseif(Yii::app()->getRequest()->getParam('type') == 'unpublish')
 			$criteria->compare('t.publish',0);
-		elseif(isset($_GET['type']) && $_GET['type'] == 'trash')
+		elseif(Yii::app()->getRequest()->getParam('type') == 'trash')
 			$criteria->compare('t.publish',2);
 		else {
 			$criteria->addInCondition('t.publish',array(0,1));
 			$criteria->compare('t.publish',$this->publish);
 		}
-		if(isset($_GET['user']))
-			$criteria->compare('t.user_id',$_GET['user']);
+		if(Yii::app()->getRequest()->getParam('user'))
+			$criteria->compare('t.user_id',Yii::app()->getRequest()->getParam('user'));
 		else
 			$criteria->compare('t.user_id',$this->user_id);
 		$criteria->compare('t.wall_media',$this->wall_media,true);
@@ -231,7 +231,7 @@ class OmmuWalls extends CActiveRecord
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			if(!isset($_GET['user'])) {
+			if(!Yii::app()->getRequest()->getParam('user')) {
 				$this->defaultColumns[] = array(
 					'name' => 'user_search',
 					'value' => '$data->user->displayname',
@@ -286,7 +286,7 @@ class OmmuWalls extends CActiveRecord
 				), true),
 				*/
 			);
-			if(!isset($_GET['type'])) {
+			if(!(Yii::app()->getRequest()->getParam('type'))) {
 				$this->defaultColumns[] = array(
 					'name' => 'publish',
 					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish",array("id"=>$data->wall_id)), $data->publish, 1)',

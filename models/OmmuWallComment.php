@@ -145,11 +145,11 @@ class OmmuWallComment extends CActiveRecord
 		);
 
 		$criteria->compare('t.comment_id',$this->comment_id);
-		if(isset($_GET['type']) && $_GET['type'] == 'publish')
+		if(Yii::app()->getRequest()->getParam('type') == 'publish')
 			$criteria->compare('t.publish',1);
-		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
+		elseif(Yii::app()->getRequest()->getParam('type') == 'unpublish')
 			$criteria->compare('t.publish',0);
-		elseif(isset($_GET['type']) && $_GET['type'] == 'trash')
+		elseif(Yii::app()->getRequest()->getParam('type') == 'trash')
 			$criteria->compare('t.publish',2);
 		else {
 			$criteria->addInCondition('t.publish',array(0,1));
@@ -160,8 +160,8 @@ class OmmuWallComment extends CActiveRecord
 			$criteria->compare('t.wall_id',$_GET['wall']);
 		else
 			$criteria->compare('t.wall_id',$this->wall_id);
-		if(isset($_GET['user']))
-			$criteria->compare('t.user_id',$_GET['user']);
+		if(Yii::app()->getRequest()->getParam('user'))
+			$criteria->compare('t.user_id',Yii::app()->getRequest()->getParam('user'));
 		else
 			$criteria->compare('t.user_id',$this->user_id);
 		$criteria->compare('t.comment',$this->comment);
@@ -239,7 +239,7 @@ class OmmuWallComment extends CActiveRecord
 					'value' => '$data->wall->wall_status',
 				);
 			}
-			if(!isset($_GET['user'])) {
+			if(!Yii::app()->getRequest()->getParam('user')) {
 				$this->defaultColumns[] = array(
 					'name' => 'user_search',
 					'value' => '$data->user->displayname',
@@ -277,7 +277,7 @@ class OmmuWallComment extends CActiveRecord
 				), true),
 				*/
 			);
-			if(!isset($_GET['type'])) {
+			if(!(Yii::app()->getRequest()->getParam('type'))) {
 				$this->defaultColumns[] = array(
 					'name' => 'publish',
 					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish",array("id"=>$data->comment_id)), $data->publish, 1)',
