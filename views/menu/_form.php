@@ -104,6 +104,7 @@
 				if(!$model->getErrors())
 					$model->userlevel_access = unserialize($model->userlevel_access);
 				$userlevel = UserLevel::getUserLevel();
+				$userlevel[0] = Yii::t('phrase', 'Public');
 				echo $form->checkBoxList($model,'userlevel_access', $userlevel, array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'userlevel_access'); ?>
 			</div>
