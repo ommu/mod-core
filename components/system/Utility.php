@@ -272,11 +272,23 @@ class Utility
 	{
 		define('DS', DIRECTORY_SEPARATOR);
 		if($module != null) {
-			$YMLPath = Yii::getPathOfAlias('ommu.'.$module).DS.$module.'.yaml';
+			$modulePath = Yii::getPathOfAlias('application.modules.'.$module);
+			$moduleFile = $module.'.yaml';
 			if($parent != null) {
+				$modulePath = Yii::getPathOfAlias('application.modules.'.$parent);
 				$module = $parent.'-'.$module;
-				$YMLPath = Yii::getPathOfAlias('ommu.'.$parent).DS.$module.'.yaml';
+				$moduleFile = $module.'.yaml';
 			}
+			$YMLPath = $modulePath.'/'.$moduleFile;
+
+			if(!file_exists($YMLPath)) {
+				$modulePath = Yii::getPathOfAlias('ommu.'.$module);
+				if($parent != null) {
+					$modulePath = Yii::getPathOfAlias('ommu.'.$parent);
+				}
+				$YMLPath = $modulePath.'/'.$moduleFile;
+			}
+			
 		} else
 			$YMLPath = Yii::getPathOfAlias('application.libraries.core').DS.'core.yaml';
 			

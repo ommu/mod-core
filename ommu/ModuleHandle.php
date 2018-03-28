@@ -90,13 +90,31 @@ class ModuleHandle extends CApplicationComponent
 	{
 		$moduleList = array();
 		$moduleVendorPath = Yii::getPathOfAlias('application.vendor.ommu');
-		$modules = scandir($moduleVendorPath);
-		foreach($modules as $module) {
-			$moduleFile = $moduleVendorPath.'/'.$module.'/'.ucfirst($module).'Module.php';
-			if (file_exists($moduleFile)) {
-				$moduleName = strtolower(trim($module));
-				if(!in_array($moduleName, $this->getIgnoreModule())) {
-					$moduleList[] = $moduleName;
+		if (file_exists($moduleVendorPath)) {
+			$modules = scandir($moduleVendorPath);
+			foreach($modules as $module) {
+				$moduleFile = $moduleVendorPath.'/'.$module.'/'.ucfirst($module).'Module.php';
+				if (file_exists($moduleFile)) {
+					$moduleName = strtolower(trim($module));
+					if(!in_array($moduleName, $this->getIgnoreModule())) {
+						$moduleList[] = $moduleName;
+					}
+				}
+			}
+		}
+		
+		$modulePath = Yii::getPathOfAlias('application.modules');
+		if (file_exists($modulePath)) {
+			$modules = scandir($modulePath);
+			foreach($modules as $module) {
+				$moduleFile = $modulePath.'/'.$module.'/'.ucfirst($module).'Module.php';
+				if (file_exists($moduleFile)) {
+					$moduleName = strtolower(trim($module));
+					if(!in_array($moduleName, $moduleList)) {
+						if(!in_array($moduleName, $this->getIgnoreModule())) {
+							$moduleList[] = $moduleName;
+						}
+					}
 				}
 			}
 		}

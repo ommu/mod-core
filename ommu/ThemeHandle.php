@@ -188,9 +188,10 @@ class ThemeHandle extends CApplicationComponent
 
 		if(!$installedTheme)
 			$installedTheme = array();
-			
+		
 		foreach($caches as $cache) {
-			if(!in_array(trim($cache), array_map("trim", $installedTheme))) {
+			$cache = trim($cache);
+			if(!in_array($cache, array_map("trim", $installedTheme))) {
 				$this->deleteTheme($cache, true);
 			}
 		}
