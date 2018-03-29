@@ -87,5 +87,5 @@ $commentNextPager = $commentPager['nextPage'] != 0 ? Yii::app()->createUrl('wall
 				comment post
 			</div>
 		</div>
-	</div>	
+	</div>
 </div>
