@@ -273,14 +273,6 @@ class OmmuPages extends OActiveRecord
 				'name' => 'media',
 				'value' => '$data->media',
 			);
-			$this->templateColumns['view_search'] = array(
-				'name' => 'view_search',
-				'value' => 'CHtml::link($data->view->views ? $data->view->views : 0, Yii::app()->createUrl("view/manage",array(\'page\'=>$data->page_id)))',
-				'htmlOptions' => array(
-					'class' => 'center',
-				),
-				'type' => 'raw',
-			);
 			if(!Yii::app()->getRequest()->getParam('creation')) {
 				$this->templateColumns['creation_search'] = array(
 					'name' => 'creation_search',
@@ -389,6 +381,14 @@ class OmmuPages extends OActiveRecord
 			$this->templateColumns['slug'] = array(
 				'name' => 'slug',
 				'value' => '$data->slug',
+			);
+			$this->templateColumns['view_search'] = array(
+				'name' => 'view_search',
+				'value' => 'CHtml::link($data->view->views ? $data->view->views : 0, Yii::app()->createUrl("view/manage",array(\'page\'=>$data->page_id)))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'type' => 'raw',
 			);
 			$this->templateColumns['media_show'] = array(
 				'name' => 'media_show',

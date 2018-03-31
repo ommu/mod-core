@@ -63,11 +63,11 @@ class OmmuPageViews extends OActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('page_id, user_id', 'required'),
+			array('page_id', 'required'),
 			array('publish, page_id, views', 'numerical', 'integerOnly'=>true),
 			array('user_id', 'length', 'max'=>11),
 			array('view_ip', 'length', 'max'=>20),
-			array('deleted_date', 'safe'),
+			array('publish, user_id, deleted_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('view_id, publish, page_id, user_id, views, view_date, view_ip, deleted_date, 
@@ -327,7 +327,10 @@ class OmmuPageViews extends OActiveRecord
 		$criteria->select = 'view_id, publish, page_id, user_id, views';
 		$criteria->compare('publish', 1);
 		$criteria->compare('page_id', $page_id);
-		$criteria->compare('user_id', !Yii::app()->user->isGuest ? Yii::app()->user->id : null);
+		if(!Yii::app()->user->isGuest)
+			$criteria->compare('user_id', Yii::app()->user->id);
+		else
+			$criteria->addCondition('user_id IS NULL');
 		$findView = self::model()->find($criteria);
 		
 		if($findView != null)

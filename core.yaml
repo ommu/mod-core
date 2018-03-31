@@ -56,6 +56,9 @@ content_menu	:
 	- urlTitle: View Page
 		urlRules: {content, edit, siteType: "0,1", userLevel: "1,2"}
 		urlPath: {url: view, attr: id=$_GET*id, icon: -}
+	- urlTitle: Delete Page
+		urlRules: {content, "edit,view", siteType: "0,1", userLevel: "1,2"}
+		urlPath: {url: delete, attr: id=$_GET*id, icon: -}
 		
 # controller view
 	- urlTitle: Back to Pages
