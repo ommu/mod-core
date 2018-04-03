@@ -40,8 +40,8 @@
 				'value'=>$model->title->message,
 			),
 			array(
-				'name'=>'parent',
-				'value'=>$model->parent ? $model->parentmenu->title->message : '-',
+				'name'=>'parent_id',
+				'value'=>$model->parent_id ? $model->parent->title->message : '-',
 			),
 			array(
 				'name'=>'orders',

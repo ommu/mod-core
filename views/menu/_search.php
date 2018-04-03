@@ -35,8 +35,8 @@
 		</li>
 
 		<li>
-			<?php echo $model->getAttributeLabel('parent'); ?><br/>
-			<?php echo $form->textField($model,'parent'); ?>
+			<?php echo $model->getAttributeLabel('parent_id'); ?><br/>
+			<?php echo $form->textField($model,'parent_id'); ?>
 		</li>
 
 		<li>

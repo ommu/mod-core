@@ -47,10 +47,10 @@
 		$menu = OmmuMenus::getParentMenu(null, $parent);
 		if($menu != null) {?>
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'parent', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
+			<?php echo $form->labelEx($model,'parent_id', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->dropDownList($model,'parent', $menu, array('prompt'=>Yii::t('phrase', 'No Parent'), 'class'=>'form-control')); ?>
-				<?php echo $form->error($model,'parent'); ?>
+				<?php echo $form->dropDownList($model,'parent_id', $menu, array('prompt'=>Yii::t('phrase', 'No Parent'), 'class'=>'form-control')); ?>
+				<?php echo $form->error($model,'parent_id'); ?>
 				<?php /*<div class="small-px"></div>*/?>
 			</div>
 		</div>

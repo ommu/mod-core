@@ -15,7 +15,7 @@
  * @property string $id
  * @property integer $publish
  * @property integer $cat_id
- * @property integer $parent
+ * @property integer $parent_id
  * @property integer $orders
  * @property string $name
  * @property string $url
@@ -89,13 +89,13 @@ class OmmuMenus extends OActiveRecord
 		// will receive user inputs.
 		return array(
 			array('publish, cat_id, url, name_i', 'required'),
-			array('publish, cat_id, parent, orders', 'numerical', 'integerOnly'=>true),
+			array('publish, cat_id, parent_id, orders', 'numerical', 'integerOnly'=>true),
 			array('name, creation_id, modified_id', 'length', 'max'=>11),
 			array('slug, name_i', 'length', 'max'=>32),
 			array('attr, sitetype_access, userlevel_access', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, publish, cat_id, parent, orders, name, url, attr, sitetype_access, userlevel_access, creation_date, creation_id, modified_date, modified_id, updated_date, slug,
+			array('id, publish, cat_id, parent_id, orders, name, url, attr, sitetype_access, userlevel_access, creation_date, creation_id, modified_date, modified_id, updated_date, slug,
 				name_i, parent_search, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
@@ -113,8 +113,8 @@ class OmmuMenus extends OActiveRecord
 			'title' => array(self::BELONGS_TO, 'SourceMessage', 'name'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
-			'parentmenu' => array(self::BELONGS_TO, 'OmmuMenus', 'parent'),
-			'submenus' => array(self::HAS_MANY, 'OmmuMenus', 'parent', 'on'=>'submenus.publish=1'),
+			'parent' => array(self::BELONGS_TO, 'OmmuMenus', 'parent_id'),
+			'submenus' => array(self::HAS_MANY, 'OmmuMenus', 'parent_id', 'on'=>'submenus.publish=1'),
 		);
 	}
 
@@ -127,7 +127,7 @@ class OmmuMenus extends OActiveRecord
 			'id' => Yii::t('attribute', 'ID'),
 			'publish' => Yii::t('attribute', 'Publish'),
 			'cat_id' => Yii::t('attribute', 'Category'),
-			'parent' => Yii::t('attribute', 'Parent'),
+			'parent_id' => Yii::t('attribute', 'Parent'),
 			'orders' => Yii::t('attribute', 'Order'),
 			'name' => Yii::t('attribute', 'Menu'),
 			'url' => Yii::t('attribute', 'Url'),
@@ -171,12 +171,12 @@ class OmmuMenus extends OActiveRecord
 				'alias'=>'title',
 				'select'=>'message',
 			),
-			'parentmenu' => array(
-				'alias'=>'parentmenu',
+			'parent' => array(
+				'alias'=>'parent',
 				'select'=>'name',
 			),
-			'parentmenu.title' => array(
-				'alias'=>'parentmenu_title',
+			'parent.title' => array(
+				'alias'=>'parent_title',
 				'select'=>'message',
 			),
 			'creation' => array(
@@ -201,7 +201,7 @@ class OmmuMenus extends OActiveRecord
 			$criteria->compare('t.publish', $this->publish);
 		}
 		$criteria->compare('t.cat_id', Yii::app()->getRequest()->getParam('category') ? Yii::app()->getRequest()->getParam('category') : $this->cat_id);
-		$criteria->compare('t.parent', $this->parent);
+		$criteria->compare('t.parent_id', $this->parent_id);
 		$criteria->compare('t.orders', $this->orders);
 		$criteria->compare('t.name', $this->name);
 		$criteria->compare('t.url', strtolower($this->url), true);
@@ -219,7 +219,7 @@ class OmmuMenus extends OActiveRecord
 		$criteria->compare('t.slug', strtolower($this->slug), true);
 
 		$criteria->compare('title.message', strtolower($this->name_i), true);
-		$criteria->compare('parentmenu_title.message', strtolower($this->parent_search), true);
+		$criteria->compare('parent_title.message', strtolower($this->parent_search), true);
 		$criteria->compare('creation.displayname', strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname', strtolower($this->modified_search), true);
 
@@ -266,7 +266,7 @@ class OmmuMenus extends OActiveRecord
 			);
 			$this->templateColumns['parent_search'] = array(
 				'name' => 'parent_search',
-				'value' => '$data->parent ? $data->parentmenu->title->message : \'-\'',
+				'value' => '$data->parent_id ? $data->parent->title->message : \'-\'',
 			);
 			$this->templateColumns['orders'] = array(
 				'name' => 'orders',
@@ -443,7 +443,7 @@ class OmmuMenus extends OActiveRecord
 		if($publish != null)
 			$criteria->compare('t.publish',$publish);
 		if($parent != null)
-			$criteria->compare('t.parent',$parent);
+			$criteria->compare('t.parent_id',$parent);
 		
 		$model = self::model()->findAll($criteria);
 
