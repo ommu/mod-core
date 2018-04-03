@@ -85,7 +85,7 @@ class Utility
 	 * @return string the root directory of view files. Defaults to 'moduleDir/views' where
 	 * moduleDir is the directory containing the module class.
 	 */
-	public function applyViewPath($path, $core=true)
+	public static function applyViewPath($path, $core=true)
 	{
 		$module = strtolower(Yii::app()->controller->module->id);
 		$basePath = Yii::app()->basePath;

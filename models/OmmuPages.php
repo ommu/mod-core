@@ -93,7 +93,8 @@ class OmmuPages extends OActiveRecord
 			array('name, desc, quote, creation_id, modified_id', 'length', 'max'=>11),
 			array('name_i', 'length', 'max'=>64),
 			array('quote_i', 'length', 'max'=>128),
-			array('media, quote_i, old_media_i', 'safe'),
+			array('media, media_show, media_type, 
+				quote_i, old_media_i', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('page_id, publish, name, desc, quote, media, media_show, media_type, creation_date, creation_id, modified_date, modified_id, updated_date, slug,
@@ -404,7 +405,7 @@ class OmmuPages extends OActiveRecord
 			);
 			$this->templateColumns['media_type'] = array(
 				'name' => 'media_type',
-				'value' => '$data->page_id == 1 ? Yii::t(\'phrase\', \'Large\') : Yii::t(\'phrase\', \'Medium\')',
+				'value' => '$data->media_type == 1 ? Yii::t(\'phrase\', \'Large\') : Yii::t(\'phrase\', \'Medium\')',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -583,8 +584,10 @@ class OmmuPages extends OActiveRecord
 						$pageImg = PhpThumbFactory::create($page_path.'/'.$fileName, array('jpegQuality' => 90, 'correctPermissions' => true));
 						$pageImg->resize(700);
 						if($pageImg->save($page_path.'/'.$fileName)) {
-							$this->media_show = 1;
-							$this->media_type = 1;
+							if($this->isNewRecord) {
+								$this->media_show = 1;
+								$this->media_type = 1;
+							}
 						}
 						
 						if(!$this->isNewRecord && $this->old_media_i != '' && file_exists($page_path.'/'.$this->old_media_i))
