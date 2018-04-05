@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co) 
  * @created date 15 January 2016, 16:53 WIB
  * @modified date 20 January 2018, 06:28 WIB
- * @link https://github.com/ommu/ommu-core
+ * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "ommu_core_menu_category".
  *

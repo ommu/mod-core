@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 5 November 2017, 18:28 WIB
  * @modified date 20 January 2018, 06:27 WIB
- * @link https://github.com/ommu/ommu-core
+ * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "message".
  *

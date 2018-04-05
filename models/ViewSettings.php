@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
  * @created date 28 November 2017, 18:46 WIB
  * @modified date 20 January 2018, 06:36 WIB
- * @link https://github.com/ommu/ommu-core
+ * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "_view_core_settings".
  *

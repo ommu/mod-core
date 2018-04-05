@@ -17,7 +17,7 @@
  * @contact (+62)856-299-4114
  * @create date April 15, 2014 10:29 WIB
  * @copyright Copyright (c) 2014 Ommu Platform (opensource.ommu.co)
- * @link https://github.com/ommu/ommu-core
+ * @link https://github.com/ommu/mod-core
  *
  * Contains many function that most used
  *

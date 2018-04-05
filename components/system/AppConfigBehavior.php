@@ -9,7 +9,7 @@
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2014 Ommu Platform (opensource.ommu.co)
- * @link https://github.com/ommu/ommu-core
+ * @link https://github.com/ommu/mod-core
  *
  */
  
@@ -31,9 +31,6 @@ class AppConfigBehavior extends CBehavior
 	*/
 	public function beginRequest()
 	{
-		if($this->owner->user->getState('applicationLanguage'))
-			$this->owner->language = $this->owner->user->getState('applicationLanguage');
-		else
-			$this->owner->language = Utility::getLanguage();
+		
 	}
 }

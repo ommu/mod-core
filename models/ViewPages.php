@@ -6,7 +6,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2015 Ommu Platform (opensource.ommu.co)
  * @modified date 20 January 2018, 06:36 WIB
- * @link https://github.com/ommu/ommu-core
+ * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "_view_core_pages".
  *
