@@ -114,7 +114,7 @@ EOP;
 						'model'=>$model, 
 						'attribute'=>'construction_date',
 						'options'=>array(
-							'dateFormat' => 'dd-mm-yy',
+							'dateFormat' => 'yy-mm-dd',
 						),
 						'htmlOptions'=>array(
 							'class'=>'form-control'
@@ -174,7 +174,7 @@ EOP;
 						'model'=>$model, 
 						'attribute'=>'event_startdate',
 						'options'=>array(
-							'dateFormat' => 'dd-mm-yy',
+							'dateFormat' => 'yy-mm-dd',
 						),
 						'htmlOptions'=>array(
 							'class'=>'form-control'
@@ -196,7 +196,7 @@ EOP;
 						'model'=>$model, 
 						'attribute'=>'event_finishdate',
 						'options'=>array(
-							'dateFormat' => 'dd-mm-yy',
+							'dateFormat' => 'yy-mm-dd',
 						),
 						'htmlOptions'=>array(
 							'class'=>'form-control'
