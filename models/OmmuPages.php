@@ -6,6 +6,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
  * @modified date 20 January 2018, 06:30 WIB
+ * @modified date 10 April 2018, 13:21 WIB
  * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "ommu_core_pages".
@@ -15,7 +16,7 @@
  * @property integer $publish
  * @property string $name
  * @property string $desc
- * @property integer $quote
+ * @property string $quote
  * @property string $media
  * @property integer $media_show
  * @property integer $media_type
@@ -114,7 +115,7 @@ class OmmuPages extends OActiveRecord
 			'views' => array(self::HAS_MANY, 'OmmuPageViews', 'page_id'),
 			'title' => array(self::BELONGS_TO, 'SourceMessage', 'name'),
 			'description' => array(self::BELONGS_TO, 'SourceMessage', 'desc'),
-			'quote_r' => array(self::BELONGS_TO, 'SourceMessage', 'quote'),
+			'quoteRltn' => array(self::BELONGS_TO, 'SourceMessage', 'quote'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
 		);
@@ -181,8 +182,8 @@ class OmmuPages extends OActiveRecord
 				'alias'=>'description',
 				'select'=>'message',
 			),
-			'quote_r' => array(
-				'alias'=>'quote_r',
+			'quoteRltn' => array(
+				'alias'=>'quoteRltn',
 				'select'=>'message',
 			),
 			'creation' => array(
@@ -194,7 +195,7 @@ class OmmuPages extends OActiveRecord
 				'select'=>'displayname',
 			),
 		);
-		
+
 		$criteria->compare('t.page_id', $this->page_id);
 		if(Yii::app()->getRequest()->getParam('type') == 'publish')
 			$criteria->compare('t.publish', 1);
@@ -224,7 +225,7 @@ class OmmuPages extends OActiveRecord
 
 		$criteria->compare('title.message', strtolower($this->name_i), true);
 		$criteria->compare('description.message', strtolower($this->desc_i), true);
-		$criteria->compare('quote_r.message', strtolower($this->quote_i), true);
+		$criteria->compare('quoteRltn.message', strtolower($this->quote_i), true);
 		$criteria->compare('creation.displayname', strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname', strtolower($this->modified_search), true);
 		$criteria->compare('view.views',$this->view_search);
@@ -235,7 +236,7 @@ class OmmuPages extends OActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 20,
+				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 50,
 			),
 		));
 	}
@@ -268,11 +269,11 @@ class OmmuPages extends OActiveRecord
 			);
 			$this->templateColumns['quote_i'] = array(
 				'name' => 'quote_i',
-				'value' => '$data->description->message',
+				'value' => '$data->quoteRltn->message',
 			);
 			$this->templateColumns['media'] = array(
 				'name' => 'media',
-				'value' => '$data->media',
+				'value' => '$data->media ? CHtml::link($data->media, Yii::app()->request->baseUrl.\'/public/banner/\'.$data->page_id.\'/\'.$data->media, array(\'target\' => \'_blank\')) : \'-\'',
 			);
 			if(!Yii::app()->getRequest()->getParam('creation')) {
 				$this->templateColumns['creation_search'] = array(
@@ -301,7 +302,7 @@ class OmmuPages extends OActiveRecord
 					),
 					'options'=>array(
 						'showOn' => 'focus',
-						'dateFormat' => 'dd-mm-yy',
+						'dateFormat' => 'yy-mm-dd',
 						'showOtherMonths' => true,
 						'selectOtherMonths' => true,
 						'changeMonth' => true,
@@ -332,7 +333,7 @@ class OmmuPages extends OActiveRecord
 					),
 					'options'=>array(
 						'showOn' => 'focus',
-						'dateFormat' => 'dd-mm-yy',
+						'dateFormat' => 'yy-mm-dd',
 						'showOtherMonths' => true,
 						'selectOtherMonths' => true,
 						'changeMonth' => true,
@@ -369,7 +370,7 @@ class OmmuPages extends OActiveRecord
 					),
 					'options'=>array(
 						'showOn' => 'focus',
-						'dateFormat' => 'dd-mm-yy',
+						'dateFormat' => 'yy-mm-dd',
 						'showOtherMonths' => true,
 						'selectOtherMonths' => true,
 						'changeMonth' => true,
@@ -418,7 +419,7 @@ class OmmuPages extends OActiveRecord
 			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->templateColumns['publish'] = array(
 					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'publish\',array(\'id\'=>$data->page_id)), $data->publish)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'publish\', array(\'id\'=>$data->page_id)), $data->publish)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),
@@ -439,7 +440,7 @@ class OmmuPages extends OActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column
 			));
 			return $model->$column;
@@ -483,7 +484,7 @@ class OmmuPages extends OActiveRecord
 	{
 		$this->name_i = $this->title->message;
 		$this->desc_i = $this->description->message;
-		$this->quote_i = $this->quote_r->message;
+		$this->quote_i = $this->quoteRltn->message;
 		
 		parent::afterFind();
 	}
@@ -498,39 +499,51 @@ class OmmuPages extends OActiveRecord
 				$this->creation_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : null;
 			else
 				$this->modified_id = !Yii::app()->user->isGuest ? Yii::app()->user->id : null;
-			
+
+			$mediaFileType = array('bmp','gif','jpg','png');
 			$media = CUploadedFile::getInstance($this, 'media');
-			if($media->name != '') {
+			if($media->name != null) {
 				$extension = pathinfo($media->name, PATHINFO_EXTENSION);
-				if(!in_array(strtolower($extension), array('bmp','gif','jpg','png')))
-					$this->addError('media', 'The file $media_name cannot be uploaded. Only files with these extensions are allowed: bmp, gif, jpg, png.', array('$media_name'=>$media->name));
+				if(!in_array(strtolower($extension), $mediaFileType))
+					$this->addError('media', 'The file {name} cannot be uploaded. Only files with these extensions are allowed: {extensions}', array(
+						'{name}'=>$media->name,
+						'{extensions}'=>Utility::formatFileType($mediaFileType, false),
+					));
 			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * before save attributes
 	 */
 	protected function beforeSave() 
 	{
+		$module = strtolower(Yii::app()->controller->module->id);
 		$controller = strtolower(Yii::app()->controller->id);
 		$action = strtolower(Yii::app()->controller->action->id);
 
 		$location = $controller;
 		
 		if(parent::beforeSave()) {
-			$page_path = "public/page";
+			$page_path = 'public/page';
+			$verwijderen_path = join('/', array($page_path, 'verwijderen'));
 			// Add directory
-			if(!file_exists($page_path)) {
-				@mkdir($page_path, 0755,true);
+			if(!file_exists($page_path) || !file_exists($verwijderen_path)) {
+				@mkdir($page_path, 0755, true);
+				@mkdir($verwijderen_path, 0755, true);
 
 				// Add file in directory (index.php)
 				$newFile = $page_path.'/index.php';
 				$FileHandle = fopen($newFile, 'w');
-			} else
-				@chmod($page_path, 0755,true);
-			
+
+				$newVerwijderenFile = $verwijderen_path.'/index.php';
+				$FileHandle = fopen($newVerwijderenFile, 'w');
+			} else {
+				@chmod($page_path, 0755, true);
+				@chmod($verwijderen_path, 0755, true);
+			}
+
 			if($this->isNewRecord || (!$this->isNewRecord && !$this->name)) {
 				$name=new SourceMessage;
 				$name->message = $this->name_i;
@@ -549,7 +562,7 @@ class OmmuPages extends OActiveRecord
 			if($this->isNewRecord || (!$this->isNewRecord && !$this->desc)) {
 				$desc=new SourceMessage;
 				$desc->message = $this->desc_i;
-				$desc->location = $location.'_desc';
+				$desc->location = $location.'_description';
 				if($desc->save())
 					$this->desc = $desc->id;
 				
@@ -609,11 +622,11 @@ class OmmuPages extends OActiveRecord
 	protected function afterDelete() 
 	{
 		parent::afterDelete();
-		//delete page image
-		$page_path = "public/page";
-		if($this->media != '' && file_exists($page_path.'/'.$this->media)) {
-			rename($page_path.'/'.$this->media, 'public/page/verwijderen/'.$this->page_id.'_'.$this->media);
-		}
-	}
+		
+		//delete article image
+		$page_path = 'public/page';
 
+		if($this->media != '' && file_exists($page_path.'/'.$this->media))
+			rename($page_path.'/'.$this->media, 'public/page/verwijderen/'.$this->page_id.'_'.$this->media);
+	}
 }
