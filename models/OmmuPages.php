@@ -6,7 +6,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
  * @modified date 20 January 2018, 06:30 WIB
- * @modified date 10 April 2018, 13:21 WIB
+ * @modified date 10 April 2018, 16:41 WIB
  * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "ommu_core_pages".
@@ -92,10 +92,10 @@ class OmmuPages extends OActiveRecord
 			array('name_i, desc_i', 'required'),
 			array('publish, media_show, media_type', 'numerical', 'integerOnly'=>true),
 			array('name, desc, quote, creation_id, modified_id', 'length', 'max'=>11),
-			array('name_i', 'length', 'max'=>64),
-			array('quote_i', 'length', 'max'=>128),
 			array('media, media_show, media_type, 
 				quote_i, old_media_i', 'safe'),
+			array('name_i', 'length', 'max'=>64),
+			array('quote_i', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('page_id, publish, name, desc, quote, media, media_show, media_type, creation_date, creation_id, modified_date, modified_id, updated_date, slug,
@@ -228,9 +228,9 @@ class OmmuPages extends OActiveRecord
 		$criteria->compare('quoteRltn.message', strtolower($this->quote_i), true);
 		$criteria->compare('creation.displayname', strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname', strtolower($this->modified_search), true);
-		$criteria->compare('view.views',$this->view_search);
+		$criteria->compare('view.views', $this->view_search);
 
-		if(!Yii::app()->getRequest()->getParam('OmmuPages_sort'))
+		if(!(Yii::app()->getRequest()->getParam('OmmuPages_sort')))
 			$criteria->order = 't.page_id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -273,7 +273,7 @@ class OmmuPages extends OActiveRecord
 			);
 			$this->templateColumns['media'] = array(
 				'name' => 'media',
-				'value' => '$data->media ? CHtml::link($data->media, Yii::app()->request->baseUrl.\'/public/banner/\'.$data->page_id.\'/\'.$data->media, array(\'target\' => \'_blank\')) : \'-\'',
+				'value' => '$data->media ? CHtml::link($data->media, Yii::app()->request->baseUrl.\'/public/page/\'.$data->media, array(\'target\' => \'_blank\')) : \'-\'',
 			);
 			if(!Yii::app()->getRequest()->getParam('creation')) {
 				$this->templateColumns['creation_search'] = array(
@@ -526,22 +526,45 @@ class OmmuPages extends OActiveRecord
 		$location = $controller;
 		
 		if(parent::beforeSave()) {
-			$page_path = 'public/page';
-			$verwijderen_path = join('/', array($page_path, 'verwijderen'));
-			// Add directory
-			if(!file_exists($page_path) || !file_exists($verwijderen_path)) {
-				@mkdir($page_path, 0755, true);
-				@mkdir($verwijderen_path, 0755, true);
+			if(!$this->isNewRecord) {
+				$page_path = 'public/page';
+				$verwijderen_path = join('/', array($page_path, 'verwijderen'));
+				// Add directory
+				if(!file_exists($page_path) || !file_exists($verwijderen_path)) {
+					@mkdir($page_path, 0755, true);
+					@mkdir($verwijderen_path, 0755, true);
 
-				// Add file in directory (index.php)
-				$newFile = $page_path.'/index.php';
-				$FileHandle = fopen($newFile, 'w');
+					// Add file in directory (index.php)
+					$newFile = $page_path.'/index.php';
+					$FileHandle = fopen($newFile, 'w');
 
-				$newVerwijderenFile = $verwijderen_path.'/index.php';
-				$FileHandle = fopen($newVerwijderenFile, 'w');
-			} else {
-				@chmod($page_path, 0755, true);
-				@chmod($verwijderen_path, 0755, true);
+					$newVerwijderenFile = $verwijderen_path.'/index.php';
+					$FileHandle = fopen($newVerwijderenFile, 'w');
+				} else {
+					@chmod($page_path, 0755, true);
+					@chmod($verwijderen_path, 0755, true);
+				}
+
+				$this->media = CUploadedFile::getInstance($this, 'media');
+				if($this->media != null) {
+					if($this->media instanceOf CUploadedFile) {
+						$fileName = time().'_'.$this->page_id.'.'.strtolower($this->media->extensionName);
+						if($this->media->saveAs($page_path.'/'.$fileName)) {
+							//create thumb image
+							Yii::import('ext.phpthumb.PhpThumbFactory');
+							$pageImg = PhpThumbFactory::create($page_path.'/'.$fileName, array('jpegQuality' => 90, 'correctPermissions' => true));
+							$pageImg->resize(700);
+							$pageImg->save($page_path.'/'.$fileName);
+
+							if($this->old_media_i != '' && file_exists($page_path.'/'.$this->old_media_i))
+								rename($page_path.'/'.$this->old_media_i, 'public/page/verwijderen/'.$this->page_id.'_'.$this->old_media_i);
+							$this->media = $fileName;
+						}
+					}
+				} else {
+					if($this->media == '')
+						$this->media = $this->old_media_i;
+				}
 			}
 
 			if($this->isNewRecord || (!$this->isNewRecord && !$this->name)) {
@@ -585,35 +608,53 @@ class OmmuPages extends OActiveRecord
 				$quote->save();
 			}
 
-			//upload new photo
-			if(in_array($action, array('add','edit'))) 
-			{
-				$this->media = CUploadedFile::getInstance($this, 'media');
+			// Create action
+		}
+		return true;
+	}
+
+	/**
+	 * After save attributes
+	 */
+	protected function afterSave() 
+	{
+		parent::afterSave();
+
+		$page_path = 'public/page';
+		$verwijderen_path = join('/', array($page_path, 'verwijderen'));
+		// Add directory
+		if(!file_exists($page_path) || !file_exists($verwijderen_path)) {
+			@mkdir($page_path, 0755, true);
+			@mkdir($verwijderen_path, 0755,true);
+
+			// Add file in directory (index.php)
+			$newFile = $page_path.'/index.php';
+			$FileHandle = fopen($newFile, 'w');
+			
+			$newVerwijderenFile = $verwijderen_path.'/index.php';
+			$FileHandle = fopen($newVerwijderenFile, 'w');
+		} else {
+			@chmod($page_path, 0755, true);
+			@chmod($verwijderen_path, 0755,true);
+		}
+
+		if($this->isNewRecord) {
+			$this->media = CUploadedFile::getInstance($this, 'media');
+			if($this->media != null) {
 				if($this->media instanceOf CUploadedFile) {
-					$fileName = time().'_'.Utility::getUrlTitle($this->title->message).'.'.strtolower($this->media->extensionName);
+					$fileName = time().'_'.$this->page_id.'.'.strtolower($this->media->extensionName);
 					if($this->media->saveAs($page_path.'/'.$fileName)) {
 						//create thumb image
 						Yii::import('ext.phpthumb.PhpThumbFactory');
 						$pageImg = PhpThumbFactory::create($page_path.'/'.$fileName, array('jpegQuality' => 90, 'correctPermissions' => true));
 						$pageImg->resize(700);
-						if($pageImg->save($page_path.'/'.$fileName)) {
-							if($this->isNewRecord) {
-								$this->media_show = 1;
-								$this->media_type = 1;
-							}
-						}
-						
-						if(!$this->isNewRecord && $this->old_media_i != '' && file_exists($page_path.'/'.$this->old_media_i))
-							rename($page_path.'/'.$this->old_media_i, 'public/page/verwijderen/'.$this->page_id.'_'.$this->old_media_i);
-						$this->media = $fileName;
+						$pageImg->save($page_path.'/'.$fileName);
+
+						self::model()->updateByPk($this->page_id, array('media'=>$fileName, 'media_show'=>1, 'media_type'=>1));
 					}
 				}
-				
-				if(!$this->isNewRecord && $this->media == '')
-					$this->media = $this->old_media_i;
 			}
 		}
-		return true;
 	}
 
 	/**
