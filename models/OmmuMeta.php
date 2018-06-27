@@ -564,7 +564,7 @@ class OmmuMeta extends OActiveRecord
 			}
 			
 			if($currentAction == 'meta/twitter') {
-				if($this->twitter_card == 3) {			
+				if($this->twitter_card == 3) {
 					if($this->twitter_photo_size['width'] == '')
 						$this->addError('twitter_photo_size[width]', Yii::t('phrase', 'Photo Width cannot be blank.'));
 					if($this->twitter_photo_size['height'] == '')
@@ -572,7 +572,7 @@ class OmmuMeta extends OActiveRecord
 				}
 			}
 			
-			$this->modified_id = Yii::app()->user->id;	
+			$this->modified_id = Yii::app()->user->id;
 		}
 		return true;
 	}

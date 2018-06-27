@@ -172,7 +172,7 @@ class OmmuSettings extends OActiveRecord
 			'signup_terms' => Yii::t('attribute', 'Require users to agree to your terms of service?'),
 			'signup_invitepage' => Yii::t('attribute', 'Show "Invite Friends" Page?'),
 			'signup_inviteonly' => Yii::t('attribute', 'Invite Only?'),
-			'signup_checkemail' => Yii::t('attribute', 'Signup Checkemail'),
+			'signup_checkemail' => Yii::t('attribute', 'Signup Checkemail'),	
 			'signup_numgiven' => Yii::t('attribute', 'Signup Numgiven'),
 			'signup_adminemail' => Yii::t('attribute', 'Notify Admin by email when user signs up?'),
 			'general_profile' => Yii::t('attribute', 'Member Profiles'),
@@ -920,6 +920,7 @@ class OmmuSettings extends OActiveRecord
 	 */
 	protected function beforeValidate() 
 	{
+		$controller = strtolower(Yii::app()->controller->id);
 		$action = strtolower(Yii::app()->controller->action->id);
 		$currentAction = strtolower(Yii::app()->controller->id.'/'.Yii::app()->controller->action->id);
 
@@ -965,6 +966,10 @@ class OmmuSettings extends OActiveRecord
 	 */
 	protected function beforeSave() 
 	{
+		$controller = strtolower(Yii::app()->controller->id);
+		$action = strtolower(Yii::app()->controller->action->id);
+		$currentAction = strtolower(Yii::app()->controller->id.'/'.Yii::app()->controller->action->id);
+
 		if(parent::beforeSave()) {
 			$this->construction_date = date('Y-m-d', strtotime($this->construction_date));
 			if($currentAction == 'settings/general')

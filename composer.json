@@ -7,7 +7,7 @@
 		"module",
 		"core",
 		"ommu",
-		"ommu platform"
+		"ommu-platform"
 	],
 	"homepage": "https://github.com/ommu/mod-core",
 	"type": "ommu-library",
