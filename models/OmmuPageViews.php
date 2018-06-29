@@ -156,10 +156,10 @@ class OmmuPageViews extends OActiveRecord
 		$criteria->compare('t.page_id', Yii::app()->getRequest()->getParam('page') ? Yii::app()->getRequest()->getParam('page') : $this->page_id);
 		$criteria->compare('t.user_id', Yii::app()->getRequest()->getParam('user') ? Yii::app()->getRequest()->getParam('user') : $this->user_id);
 		$criteria->compare('t.views', $this->views);
-		if($this->view_date != null && !in_array($this->view_date, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
+		if($this->view_date != null && !in_array($this->view_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')))
 			$criteria->compare('date(t.view_date)', date('Y-m-d', strtotime($this->view_date)));
 		$criteria->compare('t.view_ip', strtolower($this->view_ip), true);
-		if($this->deleted_date != null && !in_array($this->deleted_date, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
+		if($this->deleted_date != null && !in_array($this->deleted_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')))
 			$criteria->compare('date(t.deleted_date)', date('Y-m-d', strtotime($this->deleted_date)));
 
 		$criteria->compare('page_title.message', strtolower($this->page_search), true);
@@ -216,7 +216,7 @@ class OmmuPageViews extends OActiveRecord
 			);
 			$this->templateColumns['view_date'] = array(
 				'name' => 'view_date',
-				'value' => '!in_array($data->view_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\')) ? Utility::dateFormat($data->view_date, true) : \'-\'',
+				'value' => '!in_array($data->view_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\', \'0002-12-02 07:07:12\', \'-0001-11-30 00:00:00\')) ? Utility::dateFormat($data->view_date, true) : \'-\'',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -254,7 +254,7 @@ class OmmuPageViews extends OActiveRecord
 			);
 			$this->templateColumns['deleted_date'] = array(
 				'name' => 'deleted_date',
-				'value' => '!in_array($data->deleted_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\')) ? Utility::dateFormat($data->deleted_date) : \'-\'',
+				'value' => '!in_array($data->deleted_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\', \'0002-12-02 07:07:12\', \'-0001-11-30 00:00:00\')) ? Utility::dateFormat($data->deleted_date) : \'-\'',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),

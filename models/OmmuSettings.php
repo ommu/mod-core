@@ -241,16 +241,16 @@ class OmmuSettings extends OActiveRecord
 		$criteria->compare('t.site_title', $this->site_title, true);
 		$criteria->compare('t.site_keywords', $this->site_keywords, true);
 		$criteria->compare('t.site_description', $this->site_description, true);
-		if($this->site_creation != null && !in_array($this->site_creation, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
+		if($this->site_creation != null && !in_array($this->site_creation, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')))
 			$criteria->compare('date(t.site_creation)', date('Y-m-d', strtotime($this->site_creation)));
 		$criteria->compare('t.site_dateformat', $this->site_dateformat, true);
 		$criteria->compare('t.site_timeformat', $this->site_timeformat, true);
-		if($this->construction_date != null && !in_array($this->construction_date, array('0000-00-00', '1970-01-01')))
+		if($this->construction_date != null && !in_array($this->construction_date, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')))
 			$criteria->compare('date(t.construction_date)', date('Y-m-d', strtotime($this->construction_date)));
 		$criteria->compare('t.construction_text', $this->construction_text, true);
-		if($this->event_startdate != null && !in_array($this->event_startdate, array('0000-00-00', '1970-01-01')))
+		if($this->event_startdate != null && !in_array($this->event_startdate, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')))
 			$criteria->compare('date(t.event_startdate)', date('Y-m-d', strtotime($this->event_startdate)));
-		if($this->event_finishdate != null && !in_array($this->event_finishdate, array('0000-00-00', '1970-01-01')))
+		if($this->event_finishdate != null && !in_array($this->event_finishdate, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')))
 			$criteria->compare('date(t.event_finishdate)', date('Y-m-d', strtotime($this->event_finishdate)));
 		$criteria->compare('t.event_tag', strtolower($this->event_tag), true);
 		$criteria->compare('t.signup_username', $this->signup_username);
@@ -290,7 +290,7 @@ class OmmuSettings extends OActiveRecord
 		$criteria->compare('t.license_email', $this->license_email, true);
 		$criteria->compare('t.license_key', $this->license_key, true);
 		$criteria->compare('t.ommu_version', $this->ommu_version, true);
-		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00', '1970-01-01 00:00:00')))
+		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')))
 			$criteria->compare('date(t.modified_date)', date('Y-m-d', strtotime($this->modified_date)));
 		$criteria->compare('t.modified_id', Yii::app()->getRequest()->getParam('modified') ? Yii::app()->getRequest()->getParam('modified') : $this->modified_id);
 
@@ -343,7 +343,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['site_creation'] = array(
 				'name' => 'site_creation',
-				'value' => '!in_array($data->site_creation, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\')) ? Utility::dateFormat($data->site_creation) : \'-\'',
+				'value' => '!in_array($data->site_creation, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\', \'0002-12-02 07:07:12\', \'-0001-11-30 00:00:00\')) ? Utility::dateFormat($data->site_creation) : \'-\'',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -535,7 +535,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['modified_date'] = array(
 				'name' => 'modified_date',
-				'value' => '!in_array($data->modified_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\')) ? Utility::dateFormat($data->modified_date) : \'-\'',
+				'value' => '!in_array($data->modified_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\', \'0002-12-02 07:07:12\', \'-0001-11-30 00:00:00\')) ? Utility::dateFormat($data->modified_date) : \'-\'',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -944,12 +944,12 @@ class OmmuSettings extends OActiveRecord
 					
 				} else {
 					$condition = 0;
-					if($this->event_startdate != '' && in_array(date('Y-m-d', strtotime($this->event_startdate)), array('0000-00-00','1970-01-01','-0001-11-30'))) {
+					if($this->event_startdate != '' && in_array(date('Y-m-d', strtotime($this->event_startdate)), array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30'))) {
 						$condition = 0;
 						$this->addError('event_startdate', Yii::t('phrase', 'Event Startdate cannot be blank or default date.'));
 					} else
 						$condition = 1;
-					if($this->event_finishdate != '' && in_array(date('Y-m-d', strtotime($this->event_finishdate)), array('0000-00-00','1970-01-01','-0001-11-30'))) {
+					if($this->event_finishdate != '' && in_array(date('Y-m-d', strtotime($this->event_finishdate)), array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30'))) {
 						$condition = 0;
 						$this->addError('event_finishdate', Yii::t('phrase', 'Event Finishdate cannot be blank or default date.'));
 					} else

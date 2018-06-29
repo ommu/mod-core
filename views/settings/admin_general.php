@@ -150,7 +150,7 @@ EOP;
 				<?php 
 				if(!$model->getErrors()) {
 					$model->event_i = 0;
-					if($model->isNewRecord || (!$model->isNewRecord && !in_array($model->event_startdate, array('0000-00-00','1970-01-01')) && !in_array($model->event_finishdate, array('0000-00-00','1970-01-01'))))
+					if($model->isNewRecord || (!$model->isNewRecord && !in_array($model->event_startdate, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) && !in_array($model->event_finishdate, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30'))))
 						$model->event_i = 1;
 				}
 				echo $form->radioButtonList($model,'event_i', array(
@@ -167,7 +167,7 @@ EOP;
 				<div class="col-lg-8 col-md-9 col-sm-12">
 					<?php 
 					if(!$model->getErrors())
-						$model->event_startdate = !$model->isNewRecord ? (!in_array($model->event_startdate, array('0000-00-00','1970-01-01')) ? date('d-m-Y', strtotime($model->event_startdate)) : '00-00-0000') : '';
+						$model->event_startdate = !$model->isNewRecord ? (!in_array($model->event_startdate, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? date('d-m-Y', strtotime($model->event_startdate)) : '00-00-0000') : '';
 					//$model->event_startdate = date('d-m-Y', strtotime($model->event_startdate));
 					//echo $form->textField($model,'event_startdate',array('maxlength'=>10, 'class'=>'span-3'));
 					$this->widget('application.libraries.core.components.system.CJuiDatePicker',array(
@@ -189,7 +189,7 @@ EOP;
 				<div class="col-lg-8 col-md-9 col-sm-12">
 					<?php 
 					if(!$model->getErrors())
-						$model->event_finishdate = !$model->isNewRecord ? (!in_array($model->event_finishdate, array('0000-00-00','1970-01-01')) ? date('d-m-Y', strtotime($model->event_finishdate)) : '00-00-0000') : '';
+						$model->event_finishdate = !$model->isNewRecord ? (!in_array($model->event_finishdate, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? date('d-m-Y', strtotime($model->event_finishdate)) : '00-00-0000') : '';
 					//$model->event_finishdate = date('d-m-Y', strtotime($model->event_finishdate));
 					//echo $form->textField($model,'event_finishdate',array('maxlength'=>10, 'class'=>'span-3'));
 					$this->widget('application.libraries.core.components.system.CJuiDatePicker',array(
