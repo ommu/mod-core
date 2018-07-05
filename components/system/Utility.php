@@ -9,10 +9,10 @@
  *	getProtocol
  *	getKeyIndex
  *	getActiveDefaultColumns
- *	getUrlTitle
+ *			getUrlTitle
  *	deleteFolder
- *	flashSuccess
- *	flashError
+ *			flashSuccess
+ *			flashError
  *	getArrayFromYML
  *	getModuleInfo
  *	getContentMenu
@@ -57,12 +57,14 @@ class Utility
 	public static function getCurrentTemplate($typePage) {
 		$model = OmmuThemes::model()->find(array(
 			'select'=>'folder, layout',
-			'condition' => 'group_page = :group AND default_theme = "1"',
-			'params' => array(':group' => $typePage)
+			'condition' => 'group_page = :group AND default_theme = :default',
+			'params' => array(
+				':group' => $typePage,
+				':default' => 1,
+			)
 		));
-		if($model != null) {
+		if($model != null)
 			return array('folder' => $model->folder, 'layout' => $model->layout);
-		}
 	}
 
 	/**
