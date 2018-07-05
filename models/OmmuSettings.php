@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2012 Ommu Platform (www.ommu.co)
  * @modified date 20 January 2018, 06:30 WIB
  * @link https://github.com/ommu/mod-core
  *
@@ -572,7 +572,7 @@ class OmmuSettings extends OActiveRecord
 			}
 			$this->templateColumns['online'] = array(
 				'name' => 'online',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'online\',array(\'id\'=>$data->id)), $data->online)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'online\', array(\'id\'=>$data->id)), $data->online)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -584,7 +584,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['site_oauth'] = array(
 				'name' => 'site_oauth',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'site_oauth\',array(\'id\'=>$data->id)), $data->site_oauth)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'site_oauth\', array(\'id\'=>$data->id)), $data->site_oauth)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -596,7 +596,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['site_type'] = array(
 				'name' => 'site_type',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'site_type\',array(\'id\'=>$data->id)), $data->site_type)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'site_type\', array(\'id\'=>$data->id)), $data->site_type)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -608,7 +608,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['signup_username'] = array(
 				'name' => 'signup_username',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_username\',array(\'id\'=>$data->id)), $data->signup_username)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_username\', array(\'id\'=>$data->id)), $data->signup_username)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -620,7 +620,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['signup_approve'] = array(
 				'name' => 'signup_approve',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_approve\',array(\'id\'=>$data->id)), $data->signup_approve)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_approve\', array(\'id\'=>$data->id)), $data->signup_approve)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -632,7 +632,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['signup_verifyemail'] = array(
 				'name' => 'signup_verifyemail',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_verifyemail\',array(\'id\'=>$data->id)), $data->signup_verifyemail)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_verifyemail\', array(\'id\'=>$data->id)), $data->signup_verifyemail)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -644,7 +644,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['signup_photo'] = array(
 				'name' => 'signup_photo',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_photo\',array(\'id\'=>$data->id)), $data->signup_photo)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_photo\', array(\'id\'=>$data->id)), $data->signup_photo)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -656,7 +656,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['signup_welcome'] = array(
 				'name' => 'signup_welcome',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_welcome\',array(\'id\'=>$data->id)), $data->signup_welcome)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_welcome\', array(\'id\'=>$data->id)), $data->signup_welcome)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -668,7 +668,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['signup_random'] = array(
 				'name' => 'signup_random',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_random\',array(\'id\'=>$data->id)), $data->signup_random)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_random\', array(\'id\'=>$data->id)), $data->signup_random)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -680,7 +680,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['signup_terms'] = array(
 				'name' => 'signup_terms',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_terms\',array(\'id\'=>$data->id)), $data->signup_terms)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_terms\', array(\'id\'=>$data->id)), $data->signup_terms)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -692,7 +692,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['signup_invitepage'] = array(
 				'name' => 'signup_invitepage',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_invitepage\',array(\'id\'=>$data->id)), $data->signup_invitepage)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_invitepage\', array(\'id\'=>$data->id)), $data->signup_invitepage)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -704,7 +704,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['signup_inviteonly'] = array(
 				'name' => 'signup_inviteonly',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_inviteonly\',array(\'id\'=>$data->id)), $data->signup_inviteonly)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_inviteonly\', array(\'id\'=>$data->id)), $data->signup_inviteonly)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -716,7 +716,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['signup_checkemail'] = array(
 				'name' => 'signup_checkemail',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_checkemail\',array(\'id\'=>$data->id)), $data->signup_checkemail)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_checkemail\', array(\'id\'=>$data->id)), $data->signup_checkemail)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -728,7 +728,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['signup_adminemail'] = array(
 				'name' => 'signup_adminemail',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_adminemail\',array(\'id\'=>$data->id)), $data->signup_adminemail)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'signup_adminemail\', array(\'id\'=>$data->id)), $data->signup_adminemail)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -740,7 +740,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['general_profile'] = array(
 				'name' => 'general_profile',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'general_profile\',array(\'id\'=>$data->id)), $data->general_profile)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'general_profile\', array(\'id\'=>$data->id)), $data->general_profile)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -752,7 +752,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['general_invite'] = array(
 				'name' => 'general_invite',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'general_invite\',array(\'id\'=>$data->id)), $data->general_invite)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'general_invite\', array(\'id\'=>$data->id)), $data->general_invite)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -764,7 +764,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['general_search'] = array(
 				'name' => 'general_search',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'general_search\',array(\'id\'=>$data->id)), $data->general_search)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'general_search\', array(\'id\'=>$data->id)), $data->general_search)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -776,7 +776,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['general_portal'] = array(
 				'name' => 'general_portal',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'general_portal\',array(\'id\'=>$data->id)), $data->general_portal)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'general_portal\', array(\'id\'=>$data->id)), $data->general_portal)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -788,7 +788,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['lang_allow'] = array(
 				'name' => 'lang_allow',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'lang_allow\',array(\'id\'=>$data->id)), $data->lang_allow)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'lang_allow\', array(\'id\'=>$data->id)), $data->lang_allow)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -800,7 +800,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['lang_autodetect'] = array(
 				'name' => 'lang_autodetect',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'lang_autodetect\',array(\'id\'=>$data->id)), $data->lang_autodetect)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'lang_autodetect\', array(\'id\'=>$data->id)), $data->lang_autodetect)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -812,7 +812,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['lang_anonymous'] = array(
 				'name' => 'lang_anonymous',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'lang_anonymous\',array(\'id\'=>$data->id)), $data->lang_anonymous)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'lang_anonymous\', array(\'id\'=>$data->id)), $data->lang_anonymous)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -824,7 +824,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['spam_comment'] = array(
 				'name' => 'spam_comment',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'spam_comment\',array(\'id\'=>$data->id)), $data->spam_comment)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'spam_comment\', array(\'id\'=>$data->id)), $data->spam_comment)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -836,7 +836,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['spam_contact'] = array(
 				'name' => 'spam_contact',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'spam_contact\',array(\'id\'=>$data->id)), $data->spam_contact)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'spam_contact\', array(\'id\'=>$data->id)), $data->spam_contact)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -848,7 +848,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['spam_invite'] = array(
 				'name' => 'spam_invite',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'spam_invite\',array(\'id\'=>$data->id)), $data->spam_invite)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'spam_invite\', array(\'id\'=>$data->id)), $data->spam_invite)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -860,7 +860,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['spam_login'] = array(
 				'name' => 'spam_login',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'spam_login\',array(\'id\'=>$data->id)), $data->spam_login)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'spam_login\', array(\'id\'=>$data->id)), $data->spam_login)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -872,7 +872,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['spam_signup'] = array(
 				'name' => 'spam_signup',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'spam_signup\',array(\'id\'=>$data->id)), $data->spam_signup)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'spam_signup\', array(\'id\'=>$data->id)), $data->spam_signup)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -884,7 +884,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['analytic'] = array(
 				'name' => 'analytic',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'analytic\',array(\'id\'=>$data->id)), $data->analytic)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'analytic\', array(\'id\'=>$data->id)), $data->analytic)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -904,7 +904,7 @@ class OmmuSettings extends OActiveRecord
 	public static function getInfo($column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk(1,array(
+			$model = self::model()->findByPk(1, array(
 				'select' => $column,
 			));
 			if(count(explode(',', $column)) == 1)

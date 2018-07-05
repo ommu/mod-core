@@ -19,7 +19,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2012 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  *----------------------------------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ class ContentController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Static Pages');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_manage',array(
+		$this->render('admin_manage', array(
 			'model'=>$model,
 			'columns' => $columns,
 		));
@@ -149,7 +149,7 @@ class ContentController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Add Page');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_add',array(
+		$this->render('admin_add', array(
 			'model'=>$model,
 		));
 	}
@@ -178,7 +178,7 @@ class ContentController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Update Page: $page_name', array('$page_name'=>$model->title->message));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_edit',array(
+		$this->render('admin_edit', array(
 			'model'=>$model,
 		));
 	}
@@ -194,7 +194,7 @@ class ContentController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'View Page: $page_name', array('$page_name'=>$model->title->message));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_view',array(
+		$this->render('admin_view', array(
 			'model'=>$model,
 		));
 	}
@@ -230,7 +230,7 @@ class ContentController extends Controller
         }
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if(!(Yii::app()->getRequest()->getParam('ajax'))) {
+        if(!Yii::app()->getRequest()->getParam('ajax')) {
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('manage'));
         }
     }
@@ -306,7 +306,7 @@ class ContentController extends Controller
 		$this->pageTitle = Yii::t('phrase', '$title Page: $page_name', array('$title'=>$title, '$page_name'=>$model->title->message));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_publish',array(
+		$this->render('admin_publish', array(
 			'title'=>$title,
 			'model'=>$model,
 		));

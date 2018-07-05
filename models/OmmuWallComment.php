@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2015 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2015 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  * This is the template for generating the model class of a specified table.
@@ -144,36 +144,36 @@ class OmmuWallComment extends CActiveRecord
 			),
 		);
 
-		$criteria->compare('t.comment_id',$this->comment_id);
+		$criteria->compare('t.comment_id', $this->comment_id);
 		if(Yii::app()->getRequest()->getParam('type') == 'publish')
-			$criteria->compare('t.publish',1);
+			$criteria->compare('t.publish', 1);
 		elseif(Yii::app()->getRequest()->getParam('type') == 'unpublish')
-			$criteria->compare('t.publish',0);
+			$criteria->compare('t.publish', 0);
 		elseif(Yii::app()->getRequest()->getParam('type') == 'trash')
-			$criteria->compare('t.publish',2);
+			$criteria->compare('t.publish', 2);
 		else {
-			$criteria->addInCondition('t.publish',array(0,1));
-			$criteria->compare('t.publish',$this->publish);
+			$criteria->addInCondition('t.publish', array(0,1));
+			$criteria->compare('t.publish', $this->publish);
 		}
-		$criteria->compare('t.parent_id',$this->parent_id);
-		if(isset($_GET['wall']))
-			$criteria->compare('t.wall_id',$_GET['wall']);
+		$criteria->compare('t.parent_id', $this->parent_id);
+		if(Yii::app()->getRequest()->getParam('wall'))
+			$criteria->compare('t.wall_id', Yii::app()->getRequest()->getParam('wall'));
 		else
-			$criteria->compare('t.wall_id',$this->wall_id);
+			$criteria->compare('t.wall_id', $this->wall_id);
 		if(Yii::app()->getRequest()->getParam('user'))
 			$criteria->compare('t.user_id',Yii::app()->getRequest()->getParam('user'));
 		else
-			$criteria->compare('t.user_id',$this->user_id);
-		$criteria->compare('t.comment',$this->comment);
-		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
-		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.modified_date)',date('Y-m-d', strtotime($this->modified_date)));
+			$criteria->compare('t.user_id', $this->user_id);
+		$criteria->compare('t.comment', $this->comment);
+		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')))
+			$criteria->compare('date(t.creation_date)', date('Y-m-d', strtotime($this->creation_date)));
+		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')))
+			$criteria->compare('date(t.modified_date)', date('Y-m-d', strtotime($this->modified_date)));
 		
-		$criteria->compare('wall.wall_status',strtolower($this->wall_search),true);
-		$criteria->compare('user.displayname',strtolower($this->user_search),true);
+		$criteria->compare('wall.wall_status', strtolower($this->wall_search), true);
+		$criteria->compare('user.displayname', strtolower($this->user_search), true);
 
-		if(!isset($_GET['OmmuWallComment_sort']))
+		if(!Yii::app()->getRequest()->getParam('OmmuWallComment_sort'))
 			$criteria->order = 't.comment_id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -233,7 +233,7 @@ class OmmuWallComment extends CActiveRecord
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
 			$this->defaultColumns[] = 'parent_id';
-			if(!isset($_GET['wall'])) {
+			if(!Yii::app()->getRequest()->getParam('wall')) {
 				$this->defaultColumns[] = array(
 					'name' => 'wall_search',
 					'value' => '$data->wall->wall_status',
@@ -277,10 +277,10 @@ class OmmuWallComment extends CActiveRecord
 				), true),
 				*/
 			);
-			if(!(Yii::app()->getRequest()->getParam('type'))) {
+			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->defaultColumns[] = array(
 					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish",array("id"=>$data->comment_id)), $data->publish, 1)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish", array("id"=>$data->comment_id)), $data->publish, 1)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),
@@ -301,7 +301,7 @@ class OmmuWallComment extends CActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

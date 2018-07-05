@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
  * @created date 5 November 2017, 18:28 WIB
  * @modified date 20 January 2018, 06:27 WIB
  * @link https://github.com/ommu/mod-core
@@ -121,7 +121,7 @@ class Message extends OActiveRecord
 		$criteria->compare('t.language', Yii::app()->getRequest()->getParam('language') ? Yii::app()->getRequest()->getParam('language') : $this->language);
 		$criteria->compare('t.translation', strtolower($this->translation), true);
 
-		$criteria->compare('phrase.message',strtolower($this->phrase_search),true);
+		$criteria->compare('phrase.message', strtolower($this->phrase_search), true);
 
 		if(!Yii::app()->getRequest()->getParam('Message_sort'))
 			$criteria->order = 't.id DESC';
@@ -180,7 +180,7 @@ class Message extends OActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

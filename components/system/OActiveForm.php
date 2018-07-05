@@ -128,7 +128,7 @@
  *         if($model->save())
  *			 $this->redirect('index');
  *     }
- *     $this->render('create',array('model'=>$model));
+ *     $this->render('create', array('model'=>$model));
  * }
  *
  * protected function performAjaxValidation($model)
@@ -347,7 +347,7 @@ class OActiveForm extends CWidget
 	public function run()
 	{
 		if(is_array($this->focus))
-			$this->focus="#".CHtml::activeId($this->focus[0],$this->focus[1]);
+			$this->focus="#".CHtml::activeId($this->focus[0], $this->focus[1]);
 
 		echo CHtml::endForm();
 		$cs=Yii::app()->clientScript;
@@ -426,7 +426,7 @@ class OActiveForm extends CWidget
 	 * <div class="form-element">
 	 *    <?php echo $form->labelEx($model,'attribute'); ?>
 	 *    <?php echo $form->textField($model,'attribute', array('id'=>'custom-id')); ?>
-	 *    <?php echo $form->error($model,'attribute',array('inputID'=>'custom-id')); ?>
+	 *    <?php echo $form->error($model,'attribute', array('inputID'=>'custom-id')); ?>
 	 * </div>
 	 * </pre>
 	 *

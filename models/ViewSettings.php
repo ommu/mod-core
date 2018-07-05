@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
  * @created date 28 November 2017, 18:46 WIB
  * @modified date 20 January 2018, 06:36 WIB
  * @link https://github.com/ommu/mod-core
@@ -153,7 +153,7 @@ class ViewSettings extends OActiveRecord
 	public static function getInfo($column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk(1,array(
+			$model = self::model()->findByPk(1, array(
 				'select' => $column,
 			));
 			if(count(explode(',', $column)) == 1)

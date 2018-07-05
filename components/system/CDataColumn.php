@@ -131,7 +131,7 @@ class CDataColumn extends CGridColumn
 	public function getHeaderCellContent()
 	{
 		if($this->grid->enableSorting && $this->sortable && $this->name!==null)
-			return $this->grid->dataProvider->getSort()->link($this->name,$this->header,array('class'=>'sort-link'));
+			return $this->grid->dataProvider->getSort()->link($this->name, $this->header, array('class'=>'sort-link'));
 		elseif($this->name!==null && $this->header===null)
 		{
 			if($this->grid->dataProvider instanceof CActiveDataProvider)
@@ -154,9 +154,9 @@ class CDataColumn extends CGridColumn
 	{
 		$data=$this->grid->dataProvider->data[$row];
 		if($this->value!==null)
-			$value=$this->evaluateExpression($this->value,array('data'=>$data,'row'=>$row));
+			$value=$this->evaluateExpression($this->value, array('data'=>$data,'row'=>$row));
 		elseif($this->name!==null)
-			$value=CHtml::value($data,$this->name);
-		return $value===null ? $this->grid->nullDisplay : $this->grid->getFormatter()->format($value,$this->type);
+			$value=CHtml::value($data, $this->name);
+		return $value===null ? $this->grid->nullDisplay : $this->grid->getFormatter()->format($value, $this->type);
 	}
 }

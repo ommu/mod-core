@@ -28,7 +28,7 @@
  * @contact (+62)856-299-4114
  * @create date November 27, 2013 15:02 WIB
  * @version 1.0
- * @copyright Copyright (c) 2013 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2013 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  *----------------------------------------------------------------------------------------------------------
@@ -384,7 +384,7 @@ class ModuleHandle extends CApplicationComponent
 					$config .= " *\n";
 					$config .= " * @author Putra Sudaryanto <putra@sudaryanto.id>\n";
 					$config .= " * @contact (+62)856-299-4114\n";
-					$config .= " * @copyright Copyright (c) ".date('Y')." Ommu Platform (opensource.ommu.co)\n";
+					$config .= " * @copyright Copyright (c) ".date('Y')." Ommu Platform (www.ommu.co)\n";
 					$config .= " * @created date ".date('j F Y, H:i')." WIB\n";
 					$config .= " *\n";
 					$config .= " *----------------------------------------------------------------------------------------------------------\n */\n\n";

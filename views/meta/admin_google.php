@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2012 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -49,7 +49,7 @@
 		<div class="form-group row">
 			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('office_location');?></label>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textField($model,'office_location',array('maxlength'=>32, 'class'=>'form-control')); ?>
+				<?php echo $form->textField($model,'office_location', array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_location'); ?>
 				<span class="small-px"><?php echo Yii::t('phrase', 'A struct containing metadata defining the location of a place');?></span>
 			</div>
@@ -66,7 +66,7 @@
 		<div class="form-group row">
 			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('office_place');?> <span class="required">*</span></label>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textArea($model,'office_place',array('rows'=>6, 'cols'=>50, 'class'=>'form-control smaller')); ?>
+				<?php echo $form->textArea($model,'office_place', array('rows'=>6, 'cols'=>50, 'class'=>'form-control smaller')); ?>
 				<div class="pt-10"></div>
 				<?php echo $form->textField($model,'office_village', array('maxlength'=>32, 'class'=>'form-control', 'placeholder'=>$model->getAttributeLabel('office_village'))); ?>
 				<?php echo $form->textField($model,'office_district', array('maxlength'=>32, 'class'=>'form-control', 'placeholder'=>$model->getAttributeLabel('office_district'))); ?>
@@ -95,7 +95,7 @@
 		<div class="form-group row">
 			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('office_zipcode');?></label>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textField($model,'office_zipcode',array('maxlength'=>6, 'class'=>'form-control')); ?>
+				<?php echo $form->textField($model,'office_zipcode', array('maxlength'=>6, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_zipcode'); ?>
 				<span class="small-px"><?php echo Yii::t('phrase', 'The state (or region) line of the postal address for this business');?></span>
 			</div>
@@ -104,7 +104,7 @@
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'office_phone', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textField($model,'office_phone',array('maxlength'=>32, 'class'=>'form-control')); ?>
+				<?php echo $form->textField($model,'office_phone', array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_phone'); ?>
 				<span class="small-px"><?php echo Yii::t('phrase', 'A telephone number to contact this business');?></span>
 			</div>
@@ -113,7 +113,7 @@
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'office_fax', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textField($model,'office_fax',array('maxlength'=>32, 'class'=>'form-control')); ?>
+				<?php echo $form->textField($model,'office_fax', array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_fax'); ?>
 				<span class="small-px"><?php echo Yii::t('phrase', 'A fax number to contact this business');?></span>
 			</div>
@@ -122,7 +122,7 @@
 		<div class="form-group row">
 			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('office_email');?> <span class="required">*</span></label>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textField($model,'office_email',array('maxlength'=>32, 'class'=>'form-control')); ?>
+				<?php echo $form->textField($model,'office_email', array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_email'); ?>
 				<span class="small-px"><?php echo Yii::t('phrase', 'An email address to contact this business');?></span>
 			</div>
@@ -131,7 +131,7 @@
 		<div class="form-group row">
 			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('office_website');?> <span class="required">*</span></label>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textField($model,'office_website',array('maxlength'=>32, 'class'=>'form-control')); ?>
+				<?php echo $form->textField($model,'office_website', array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_website'); ?>
 				<span class="small-px"><?php echo Yii::t('phrase', 'A website for this business');?></span>
 			</div>

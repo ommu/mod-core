@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2012 Ommu Platform (www.ommu.co)
  * @modified date 20 January 2018, 06:30 WIB
  * @link https://github.com/ommu/mod-core
  *
@@ -307,7 +307,7 @@ class OmmuPlugins extends OActiveRecord
 			}
 			$this->templateColumns['install'] = array(
 				'name' => 'install',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'install\',array(\'id\'=>$data->plugin_id)), $data->install, \'Install,Uninstall\')',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'install\', array(\'id\'=>$data->plugin_id)), $data->install, \'Install,Uninstall\')',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -319,7 +319,7 @@ class OmmuPlugins extends OActiveRecord
 			);
 			$this->templateColumns['actived'] = array(
 				'name' => 'actived',
-				'value' => '$data->install == 1 ? ($data->actived == 2 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Utility::getPublish(Yii::app()->controller->createUrl(\'active\',array("id"=>$data->plugin_id)), $data->actived, \'Actived,Deactived\')) : "-"',
+				'value' => '$data->install == 1 ? ($data->actived == 2 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Utility::getPublish(Yii::app()->controller->createUrl(\'active\', array("id"=>$data->plugin_id)), $data->actived, \'Actived,Deactived\')) : "-"',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -343,7 +343,7 @@ class OmmuPlugins extends OActiveRecord
 			);
 			$this->templateColumns['default'] = array(
 				'name' => 'default',
-				'value' => '$data->install == 1 ? ($data->default == 1 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Utility::getPublish(Yii::app()->controller->createUrl(\'default\',array("id"=>$data->plugin_id)), $data->default)) : "-"',
+				'value' => '$data->install == 1 ? ($data->default == 1 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Utility::getPublish(Yii::app()->controller->createUrl(\'default\', array("id"=>$data->plugin_id)), $data->default)) : "-"',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -363,7 +363,7 @@ class OmmuPlugins extends OActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

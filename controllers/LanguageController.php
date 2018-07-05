@@ -19,7 +19,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2012 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  *----------------------------------------------------------------------------------------------------------
@@ -114,7 +114,7 @@ class LanguageController extends /*SBaseController*/ Controller
 		$this->pageTitle = Yii::t('phrase', 'Language Settings');
 		$this->pageDescription = Yii::t('phrase', 'The layout of your social network includes hundreds of phrases of text which are stored in a language pack. SocialEngine comes with an English pack which is the default when you first install the platform. If you want to change any of these phrases on your social network, you can edit the pack below. If you want to allow users to pick from multiple languages, you can also create additional packs below. If you have multiple language packs, the pack you\'ve selected as your "default" will be the language that displays if a user has not selected any other language. Note: You can not delete the default language. To edit a language\'s details, click its name.');
 		$this->pageMeta = '';
-		$this->render('admin_manage',array(
+		$this->render('admin_manage', array(
 			'model'=>$model,
 			'columns' => $columns,
 			'setting' => $setting,
@@ -162,7 +162,7 @@ class LanguageController extends /*SBaseController*/ Controller
 		$this->pageTitle = Yii::t('phrase', 'Create New Language Pack');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_add',array(
+		$this->render('admin_add', array(
 			'model'=>$model,
 		));
 	}
@@ -209,7 +209,7 @@ class LanguageController extends /*SBaseController*/ Controller
 		$this->pageTitle = Yii::t('phrase', 'Update Language: {language_name}', array('{language_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_edit',array(
+		$this->render('admin_edit', array(
 			'model'=>$model,
 		));
 	}
@@ -229,7 +229,7 @@ class LanguageController extends /*SBaseController*/ Controller
 		$this->pageTitle = Yii::t('phrase', 'View Language: {language_name}', array('{language_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_view',array(
+		$this->render('admin_view', array(
 			'model'=>$model,
 		));
 	}
@@ -302,7 +302,7 @@ class LanguageController extends /*SBaseController*/ Controller
 		$this->pageTitle = Yii::t('phrase', '{title} Language: {language_name}', array('{title}'=>$title, '{language_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_active',array(
+		$this->render('admin_active', array(
 			'title'=>$title,
 			'model'=>$model,
 		));

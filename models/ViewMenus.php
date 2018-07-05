@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2015 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2015 Ommu Platform (www.ommu.co)
  * @modified date 20 January 2018, 06:35 WIB
  * @link https://github.com/ommu/mod-core
  *
@@ -100,7 +100,7 @@ class ViewMenus extends OActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.menu_id',$this->menu_id);
+		$criteria->compare('t.menu_id', $this->menu_id);
 
 		if(!Yii::app()->getRequest()->getParam('ViewMenus_sort'))
 			$criteria->order = 't.menu_id DESC';
@@ -145,7 +145,7 @@ class ViewMenus extends OActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

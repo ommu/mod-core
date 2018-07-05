@@ -18,7 +18,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2012 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  *----------------------------------------------------------------------------------------------------------
@@ -125,7 +125,7 @@ class ThemeController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Themes');
 		$this->pageDescription = Yii::t('phrase', 'You have complete control over the look and feel of your social network. The PHP code that powers your social network is completely separate from the HTML code used for presentation. Your HTML code is stored in the templates listed below, which can be edited directly on this page. To edit a template, simply click it\'s name.');
 		$this->pageMeta = '';
-		$this->render('admin_manage',array(
+		$this->render('admin_manage', array(
 			'model'=>$model,
 			'columns' => $columns,
 		));
@@ -177,7 +177,7 @@ class ThemeController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Update Theme: $theme_name', array('$theme_name'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_edit',array(
+		$this->render('admin_edit', array(
 			'model'=>$model,
 			'theme'=>$theme,
 		));
@@ -250,7 +250,7 @@ class ThemeController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Default Theme: $theme_name', array('$theme_name'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_default',array(
+		$this->render('admin_default', array(
 			'model'=>$model,
 		));
 	}

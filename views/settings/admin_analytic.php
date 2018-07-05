@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2012 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -46,7 +46,7 @@
 		<div class="form-group row">
 			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('analytic_id');?> <span class="required">*</span></label>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textField($model,'analytic_id',array('maxlength'=>32, 'class'=>'form-control')); ?>
+				<?php echo $form->textField($model,'analytic_id', array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'analytic_id'); ?>
 				<div class="small-px"><?php echo Yii::t('phrase', 'Enter the Website Profile ID to use Google Analytics.');?></div>
 			</div>
@@ -57,7 +57,7 @@
 				<?php echo $model->getAttributeLabel('analytic_profile_id');?>
 			</label>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textField($model,'analytic_profile_id',array('maxlength'=>32, 'class'=>'form-control')); ?>
+				<?php echo $form->textField($model,'analytic_profile_id', array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'analytic_profile_id'); ?>
 				<?php /*<div class="small-px"></div>*/?>
 			</div>

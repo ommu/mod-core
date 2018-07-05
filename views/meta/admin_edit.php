@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2012 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -57,7 +57,7 @@
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'meta_image', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->fileField($model,'meta_image',array('maxlength'=>64, 'class'=>'form-control')); ?>
+				<?php echo $form->fileField($model,'meta_image', array('maxlength'=>64, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'meta_image'); ?>
 				<?php echo $form->error($model,'meta_image'); ?>
 			</div>
@@ -66,7 +66,7 @@
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'meta_image_alt', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textField($model,'meta_image_alt',array('class'=>'form-control')); ?>
+				<?php echo $form->textField($model,'meta_image_alt', array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'meta_image_alt'); ?>
 				<span class="small-px"><?php echo Yii::t('phrase', 'A text description of the image conveying the essential nature of an image to users who are visually impaired');?></span>
 			</div>

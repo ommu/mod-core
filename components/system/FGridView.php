@@ -434,7 +434,7 @@ class FGridView extends CBaseListView
 		if($this->ajaxUpdate===false)
 			$ajaxUpdate=false;
 		else
-			$ajaxUpdate=array_unique(preg_split('/\s*,\s*/',$this->ajaxUpdate.','.$id,-1,PREG_SPLIT_NO_EMPTY));
+			$ajaxUpdate=array_unique(preg_split('/\s*,\s*/', $this->ajaxUpdate.','.$id,-1,PREG_SPLIT_NO_EMPTY));
 		$options=array(
 			'ajaxUpdate'=>$ajaxUpdate,
 			'ajaxVar'=>$this->ajaxVar,
@@ -610,7 +610,7 @@ class FGridView extends CBaseListView
 		if($this->rowHtmlOptionsExpression!==null)
 		{
 			$data=$this->dataProvider->data[$row];
-			$options=$this->evaluateExpression($this->rowHtmlOptionsExpression,array('row'=>$row,'data'=>$data));
+			$options=$this->evaluateExpression($this->rowHtmlOptionsExpression, array('row'=>$row,'data'=>$data));
 			if(is_array($options))
 				$htmlOptions = $options;
 		}
@@ -618,7 +618,7 @@ class FGridView extends CBaseListView
 		if($this->rowCssClassExpression!==null)
 		{
 			$data=$this->dataProvider->data[$row];
-			$class=$this->evaluateExpression($this->rowCssClassExpression,array('row'=>$row,'data'=>$data));
+			$class=$this->evaluateExpression($this->rowCssClassExpression, array('row'=>$row,'data'=>$data));
 		}
 		elseif(is_array($this->rowCssClass) && ($n=count($this->rowCssClass))>0)
 			$class=$this->rowCssClass[$row%$n];

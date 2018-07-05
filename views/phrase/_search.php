@@ -7,9 +7,9 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2018 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2018 Ommu Platform (www.ommu.co)
  * @created date 21 January 2018, 07:20 WIB
- * @link http://opensource.ommu.co
+ * @link https://github.com/ommu/mod-core
  *
  */
 ?>
@@ -37,7 +37,7 @@
 		<li>
 			<?php echo $model->getAttributeLabel('creation_date'); ?>
 			<?php //echo $form->textField($model, 'creation_date', array('class'=>'form-control'));
-			$this->widget('application.libraries.core.components.system.CJuiDatePicker',array(
+			$this->widget('application.libraries.core.components.system.CJuiDatePicker', array(
 				'model'=>$model,
 				'attribute'=>'creation_date',
 				//'mode'=>'datetime',
@@ -58,7 +58,7 @@
 		<li>
 			<?php echo $model->getAttributeLabel('modified_date'); ?>
 			<?php //echo $form->textField($model, 'modified_date', array('class'=>'form-control'));
-			$this->widget('application.libraries.core.components.system.CJuiDatePicker',array(
+			$this->widget('application.libraries.core.components.system.CJuiDatePicker', array(
 				'model'=>$model,
 				'attribute'=>'modified_date',
 				//'mode'=>'datetime',

@@ -178,7 +178,7 @@ class FDetailView extends CWidget
 	{
 		$formatter=$this->getFormatter();
 		if ($this->tagName!==null)
-			echo CHtml::openTag($this->tagName,$this->htmlOptions);
+			echo CHtml::openTag($this->tagName, $this->htmlOptions);
 
 		$i=0;
 		$n=is_array($this->itemCssClass) ? count($this->itemCssClass) : 0;
@@ -217,7 +217,7 @@ class FDetailView extends CWidget
 			if(!isset($attribute['type']))
 				$attribute['type']='text';
 			if(isset($attribute['value']))
-				$value=is_object($attribute['value']) && get_class($attribute['value']) === 'Closure' ? call_user_func($attribute['value'],$this->data) : $attribute['value'];
+				$value=is_object($attribute['value']) && get_class($attribute['value']) === 'Closure' ? call_user_func($attribute['value'], $this->data) : $attribute['value'];
 			elseif(isset($attribute['name']))
 				$value=CHtml::value($this->data,$attribute['name']);
 			else

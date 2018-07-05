@@ -148,7 +148,7 @@ abstract class CBaseListView extends CWidget
 	{
 		$this->registerClientScript();
 
-		echo CHtml::openTag($this->tagName,$this->htmlOptions)."\n";
+		echo CHtml::openTag($this->tagName, $this->htmlOptions)."\n";
 
 		$this->renderContent();
 		$this->renderKeys();
@@ -165,7 +165,7 @@ abstract class CBaseListView extends CWidget
 	public function renderContent()
 	{
 		ob_start();
-		echo preg_replace_callback("/{(\w+)}/",array($this,'renderSection'),$this->template);
+		echo preg_replace_callback("/{(\w+)}/", array($this,'renderSection'), $this->template);
 		ob_end_flush();
 	}
 
@@ -205,7 +205,7 @@ abstract class CBaseListView extends CWidget
 	 */
 	public function renderKeys()
 	{
-		echo CHtml::openTag('div',array(
+		echo CHtml::openTag('div', array(
 			'class'=>'keys',
 			'style'=>'display:none',
 			'title'=>Yii::app()->getRequest()->getUrl(),
@@ -239,7 +239,7 @@ abstract class CBaseListView extends CWidget
 			}
 			if(($summaryText=$this->summaryText)===null)
 				$summaryText=Yii::t('zii','<span>Displaying {start}-{end} of 1 result.</span>|<span>Displaying {start}-{end} of {count} results.</span>',$total);
-			echo strtr($summaryText,array(
+			echo strtr($summaryText, array(
 				'{start}'=>$start,
 				'{end}'=>$end,
 				'{count}'=>$total,
@@ -251,7 +251,7 @@ abstract class CBaseListView extends CWidget
 		{
 			if(($summaryText=$this->summaryText)===null)
 				$summaryText=Yii::t('zii','<span>Total 1 result.</span>|<span>Total {count} results.</span>',$count);
-			echo strtr($summaryText,array(
+			echo strtr($summaryText, array(
 				'{count}'=>$count,
 				'{start}'=>1,
 				'{end}'=>$count,

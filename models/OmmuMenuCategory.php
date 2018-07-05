@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co) 
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co) 
  * @created date 15 January 2016, 16:53 WIB
  * @modified date 20 January 2018, 06:28 WIB
  * @link https://github.com/ommu/mod-core
@@ -48,7 +48,7 @@ class OmmuMenuCategory extends OActiveRecord
 	{
 		return array(
 			'sluggable' => array(
-				'class'=>'ext.yii-behavior-sluggable.SluggableBehavior',
+				'class'=>'ext.yii-sluggable.SluggableBehavior',
 				'columns' => array('title.message'),
 				'unique' => true,
 				'update' => true,
@@ -256,7 +256,7 @@ class OmmuMenuCategory extends OActiveRecord
 			);
 			$this->templateColumns['menu_search'] = array(
 				'name' => 'menu_search',
-				'value' => 'CHtml::link($data->view->menus ? $data->view->menus : 0, Yii::app()->controller->createUrl(\'menu/manage\',array(\'category\'=>$data->cat_id)))',
+				'value' => 'CHtml::link($data->view->menus ? $data->view->menus : 0, Yii::app()->controller->createUrl(\'menu/manage\', array(\'category\'=>$data->cat_id)))',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -374,7 +374,7 @@ class OmmuMenuCategory extends OActiveRecord
 			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->templateColumns['publish'] = array(
 					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'publish\',array(\'id\'=>$data->cat_id)), $data->publish)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'publish\', array(\'id\'=>$data->cat_id)), $data->publish)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),
@@ -395,7 +395,7 @@ class OmmuMenuCategory extends OActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

@@ -240,7 +240,7 @@ class OListView extends CBaseListView
 		if($this->ajaxUpdate===false)
 			$ajaxUpdate=array();
 		else
-			$ajaxUpdate=array_unique(preg_split('/\s*,\s*/',$this->ajaxUpdate.','.$id,-1,PREG_SPLIT_NO_EMPTY));
+			$ajaxUpdate=array_unique(preg_split('/\s*,\s*/', $this->ajaxUpdate.','.$id,-1,PREG_SPLIT_NO_EMPTY));
 		$options=array(
 			'ajaxUpdate'=>$ajaxUpdate,
 			'ajaxVar'=>$this->ajaxVar,
@@ -281,7 +281,7 @@ class OListView extends CBaseListView
 	 */
 	public function renderItems()
 	{
-		echo CHtml::openTag($this->itemsTagName,array('class'=>$this->itemsCssClass))."\n";
+		echo CHtml::openTag($this->itemsTagName, array('class'=>$this->itemsCssClass))."\n";
 		$data=$this->dataProvider->getData();
 		if(($n=count($data))>0)
 		{
@@ -311,7 +311,7 @@ class OListView extends CBaseListView
 	{
 		if($this->dataProvider->getItemCount()<=0 || !$this->enableSorting || empty($this->sortableAttributes))
 			return;
-		echo CHtml::openTag('div',array('class'=>$this->sorterCssClass))."\n";
+		echo CHtml::openTag('div', array('class'=>$this->sorterCssClass))."\n";
 		echo $this->sorterHeader===null ? Yii::t('zii','Sort by: ') : $this->sorterHeader;
 		echo "<ul>\n";
 		$sort=$this->dataProvider->getSort();

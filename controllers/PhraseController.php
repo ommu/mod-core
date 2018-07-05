@@ -19,9 +19,9 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2018 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2018 Ommu Platform (www.ommu.co)
  * @created date 21 January 2018, 07:20 WIB
- * @link http://opensource.ommu.co
+ * @link https://github.com/ommu/mod-core
  *
  *----------------------------------------------------------------------------------------------------------
  */
@@ -100,7 +100,7 @@ class PhraseController extends Controller
 			$model->attributes=$_GET['SourceMessage'];
 		}
 
-		$gridColumn = $_GET['GridColumn'];
+		$gridColumn = Yii::app()->getRequest()->getParam('GridColumn');
 		$columnTemp = array();
 		if(isset($gridColumn)) {
 			foreach($gridColumn as $key => $val) {
@@ -113,7 +113,7 @@ class PhraseController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Phrases');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_manage',array(
+		$this->render('admin_manage', array(
 			'model'=>$model,
 			'columns' => $columns,
 		));
@@ -164,7 +164,7 @@ class PhraseController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Create Phrase');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_add',array(
+		$this->render('admin_add', array(
 			'model'=>$model,
 		));
 	}
@@ -215,7 +215,7 @@ class PhraseController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Update Phrase: {id}', array('{id}'=>$model->id));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_edit',array(
+		$this->render('admin_edit', array(
 			'model'=>$model,
 		));
 	}
@@ -235,7 +235,7 @@ class PhraseController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'View Phrase: {id}', array('{id}'=>$model->id));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_view',array(
+		$this->render('admin_view', array(
 			'model'=>$model,
 		));
 	}

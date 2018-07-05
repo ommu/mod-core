@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2012 Ommu Platform (www.ommu.co)
  * @modified date 20 January 2018, 06:31 WIB
  * @link https://github.com/ommu/mod-core
  *
@@ -296,7 +296,7 @@ class OmmuThemes extends OActiveRecord
 			}
 			$this->templateColumns['default_theme'] = array(
 				'name' => 'default_theme',
-				'value' => '$data->default_theme == 1 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Utility::getPublish(Yii::app()->controller->createUrl(\'default\',array(\'id\'=>$data->theme_id)), $data->default_theme, \'Default,Default\')',
+				'value' => '$data->default_theme == 1 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Utility::getPublish(Yii::app()->controller->createUrl(\'default\', array(\'id\'=>$data->theme_id)), $data->default_theme, \'Default,Default\')',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -316,7 +316,7 @@ class OmmuThemes extends OActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

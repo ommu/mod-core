@@ -2,7 +2,7 @@
 /**
  * MetaController
  * Handle MetaController
- * Copyright (c) 2012, Ommu Platform (opensource.ommu.co). All rights reserved.
+ * Copyright (c) 2012, Ommu Platform (www.ommu.co). All rights reserved.
  * 
  * Reference start
  * TOC :
@@ -17,7 +17,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2012 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/core
  *
  *----------------------------------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ class MetaController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Meta Settings');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_edit',array(
+		$this->render('admin_edit', array(
 			'model'=>$model,
 		));
 	}
@@ -169,7 +169,7 @@ class MetaController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Meta Settings: $meta_name', array('$meta_name'=>'Google Owner'));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_google',array(
+		$this->render('admin_google', array(
 			'model'=>$model,
 		));
 	}
@@ -228,7 +228,7 @@ class MetaController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Meta Settings: $meta_name', array('$meta_name'=>'Facebook OpenGraph'));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_facebook',array(
+		$this->render('admin_facebook', array(
 			'model'=>$model,
 		));
 	}
@@ -284,7 +284,7 @@ class MetaController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Meta Settings: $meta_name', array('$meta_name'=>'Twitter'));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_twitter',array(
+		$this->render('admin_twitter', array(
 			'model'=>$model,
 		));
 	}

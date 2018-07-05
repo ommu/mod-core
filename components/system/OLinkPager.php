@@ -141,7 +141,7 @@ class OLinkPager extends CBasePager
 		if(empty($buttons))
 			return;
 		//echo $this->header;
-		echo CHtml::tag('ul',$this->htmlOptions,implode("\n",$buttons));
+		echo CHtml::tag('ul', $this->htmlOptions,implode("\n",$buttons));
 		echo $this->footer;
 	}
 
@@ -160,28 +160,28 @@ class OLinkPager extends CBasePager
 
 		// first page
 		if ($this->firstPageLabel !== false) {
-			$buttons[]=$this->createPageButton($this->firstPageLabel,0,$this->firstPageCssClass,$currentPage<=0,false);
+			$buttons[]=$this->createPageButton($this->firstPageLabel,0, $this->firstPageCssClass,$currentPage<=0,false);
 		}
 		// prev page
 		if ($this->prevPageLabel !== false) {
 			if(($page=$currentPage-1)<0)
 				$page=0;
-			$buttons[]=$this->createPageButton($this->prevPageLabel,$page,$this->previousPageCssClass,$currentPage<=0,false);
+			$buttons[]=$this->createPageButton($this->prevPageLabel,$page, $this->previousPageCssClass,$currentPage<=0,false);
 		}
 
 		// internal pages
 		for($i=$beginPage;$i<=$endPage;++$i)
-			$buttons[]=$this->createPageButton($i+1,$i,$this->internalPageCssClass,false,$i==$currentPage);
+			$buttons[]=$this->createPageButton($i+1,$i, $this->internalPageCssClass,false,$i==$currentPage);
 
 		// next page
 		if ($this->nextPageLabel !== false) {
 			if(($page=$currentPage+1)>=$pageCount-1)
 				$page=$pageCount-1;
-			$buttons[]=$this->createPageButton($this->nextPageLabel,$page,$this->nextPageCssClass,$currentPage>=$pageCount-1,false);
+			$buttons[]=$this->createPageButton($this->nextPageLabel,$page, $this->nextPageCssClass,$currentPage>=$pageCount-1,false);
 		}
 		// last page
 		if ($this->lastPageLabel !== false) {
-			$buttons[]=$this->createPageButton($this->lastPageLabel,$pageCount-1,$this->lastPageCssClass,$currentPage>=$pageCount-1,false);
+			$buttons[]=$this->createPageButton($this->lastPageLabel,$pageCount-1, $this->lastPageCssClass,$currentPage>=$pageCount-1,false);
 		}
 
 		return $buttons;
@@ -201,7 +201,7 @@ class OLinkPager extends CBasePager
 	{
 		if($hidden || $selected)
 			$class.=' '.($hidden ? $this->hiddenPageCssClass : $this->selectedPageCssClass);
-		return '<li class="'.$class.'">'.CHtml::link($label,$this->createPageUrl($page), array('off_address'=>'')).'</li>';
+		return '<li class="'.$class.'">'.CHtml::link($label, $this->createPageUrl($page), array('off_address'=>'')).'</li>';
 	}
 
 	/**

@@ -71,7 +71,7 @@ class CButtonColumn extends CGridColumn
 	 * A PHP expression can be any PHP code that has a value. To learn more about what an expression is,
 	 * please refer to the {@link http://www.php.net/manual/en/language.expressions.php php manual}.
 	 */
-	public $viewButtonUrl='Yii::app()->controller->createUrl("view",array("id"=>$data->primaryKey))';
+	public $viewButtonUrl='Yii::app()->controller->createUrl("view", array("id"=>$data->primaryKey))';
 	/**
 	 * @var array the HTML options for the view button tag.
 	 */
@@ -100,7 +100,7 @@ class CButtonColumn extends CGridColumn
 	 * A PHP expression can be any PHP code that has a value. To learn more about what an expression is,
 	 * please refer to the {@link http://www.php.net/manual/en/language.expressions.php php manual}.
 	 */
-	public $updateButtonUrl='Yii::app()->controller->createUrl("update",array("id"=>$data->primaryKey))';
+	public $updateButtonUrl='Yii::app()->controller->createUrl("update", array("id"=>$data->primaryKey))';
 	/**
 	 * @var array the HTML options for the update button tag.
 	 */
@@ -129,7 +129,7 @@ class CButtonColumn extends CGridColumn
 	 * A PHP expression can be any PHP code that has a value. To learn more about what an expression is,
 	 * please refer to the {@link http://www.php.net/manual/en/language.expressions.php php manual}.
 	 */
-	public $deleteButtonUrl='Yii::app()->controller->createUrl("delete",array("id"=>$data->primaryKey))';
+	public $deleteButtonUrl='Yii::app()->controller->createUrl("delete", array("id"=>$data->primaryKey))';
 	/**
 	 * @var array the HTML options for the delete button tag.
 	 */
@@ -242,7 +242,7 @@ class CButtonColumn extends CGridColumn
 				'options'=>$this->{$id.'ButtonOptions'},
 			);
 			if(isset($this->buttons[$id]))
-				$this->buttons[$id]=array_merge($button,$this->buttons[$id]);
+				$this->buttons[$id]=array_merge($button, $this->buttons[$id]);
 			else
 				$this->buttons[$id]=$button;
 		}
@@ -342,10 +342,10 @@ EOD;
 	 */
 	protected function renderButton($id,$button,$row,$data)
 	{
-		if (isset($button['visible']) && !$this->evaluateExpression($button['visible'],array('row'=>$row,'data'=>$data)))
+		if (isset($button['visible']) && !$this->evaluateExpression($button['visible'], array('row'=>$row,'data'=>$data)))
   			return;
 		$label=isset($button['label']) ? $button['label'] : $id;
-		$url=isset($button['url']) ? $this->evaluateExpression($button['url'],array('data'=>$data,'row'=>$row)) : '#';
+		$url=isset($button['url']) ? $this->evaluateExpression($button['url'], array('data'=>$data,'row'=>$row)) : '#';
 		$options=isset($button['options']) ? $button['options'] : array();
 		if(!isset($options['title']))
 			$options['title']=$label;

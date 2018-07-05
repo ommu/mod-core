@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2012 Ommu Platform (www.ommu.co)
  * @modified date 20 January 2018, 06:30 WIB
  * @modified date 10 April 2018, 16:41 WIB
  * @link https://github.com/ommu/mod-core
@@ -53,7 +53,7 @@ class OmmuPages extends OActiveRecord
 	{
 		return array(
 			'sluggable' => array(
-				'class'=>'ext.yii-behavior-sluggable.SluggableBehavior',
+				'class'=>'ext.yii-sluggable.SluggableBehavior',
 				'columns' => array('title.message'),
 				'unique' => true,
 				'update' => true,
@@ -230,7 +230,7 @@ class OmmuPages extends OActiveRecord
 		$criteria->compare('modified.displayname', strtolower($this->modified_search), true);
 		$criteria->compare('view.views', $this->view_search);
 
-		if(!(Yii::app()->getRequest()->getParam('OmmuPages_sort')))
+		if(!Yii::app()->getRequest()->getParam('OmmuPages_sort'))
 			$criteria->order = 't.page_id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -386,7 +386,7 @@ class OmmuPages extends OActiveRecord
 			);
 			$this->templateColumns['view_search'] = array(
 				'name' => 'view_search',
-				'value' => 'CHtml::link($data->view->views ? $data->view->views : 0, Yii::app()->createUrl("view/manage",array(\'page\'=>$data->page_id)))',
+				'value' => 'CHtml::link($data->view->views ? $data->view->views : 0, Yii::app()->createUrl("view/manage", array(\'page\'=>$data->page_id)))',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),

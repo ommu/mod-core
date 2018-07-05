@@ -21,7 +21,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2015 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2015 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  *----------------------------------------------------------------------------------------------------------
@@ -121,7 +121,7 @@ class ZonevillageController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Villages');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/zone_village/admin_manage',array(
+		$this->render('/zone_village/admin_manage', array(
 			'model'=>$model,
 			'columns' => $columns,
 		));
@@ -169,7 +169,7 @@ class ZonevillageController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Create Village');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/zone_village/admin_add',array(
+		$this->render('/zone_village/admin_add', array(
 			'model'=>$model,
 		));
 	}
@@ -217,7 +217,7 @@ class ZonevillageController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Update Village: $village_name', array('$village_name'=>$model->village_name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/zone_village/admin_edit',array(
+		$this->render('/zone_village/admin_edit', array(
 			'model'=>$model,
 		));
 	}
@@ -253,7 +253,7 @@ class ZonevillageController extends Controller
 		}
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!(Yii::app()->getRequest()->getParam('ajax'))) {
+		if(!Yii::app()->getRequest()->getParam('ajax')) {
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('manage'));
 		}
 	}
@@ -329,7 +329,7 @@ class ZonevillageController extends Controller
 		$this->pageTitle = Yii::t('phrase', '$title Village: $village_name', array('$title'=>$title, '$village_name'=>$model->village_name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/zone_village/admin_publish',array(
+		$this->render('/zone_village/admin_publish', array(
 			'title'=>$title,
 			'model'=>$model,
 		));

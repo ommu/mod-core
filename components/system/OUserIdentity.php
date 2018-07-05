@@ -65,7 +65,7 @@ class OUserIdentity extends CBaseUserIdentity
 	 */
 	public function authenticate()
 	{
-		throw new CException(Yii::t('yii','{class}::authenticate() must be implemented.',array('{class}'=>get_class($this))));
+		throw new CException(Yii::t('yii','{class}::authenticate() must be implemented.', array('{class}'=>get_class($this))));
 	}
 
 	/**

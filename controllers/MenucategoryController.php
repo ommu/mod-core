@@ -21,7 +21,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @created date 15 January 2016, 16:57 WIB
  * @link https://github.com/ommu/mod-core
  *
@@ -115,7 +115,7 @@ class MenucategoryController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Menu Categories');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/menu_category/admin_manage',array(
+		$this->render('/menu_category/admin_manage', array(
 			'model'=>$model,
 			'columns' => $columns,
 		));
@@ -163,7 +163,7 @@ class MenucategoryController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Create Menu Category');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/menu_category/admin_add',array(
+		$this->render('/menu_category/admin_add', array(
 			'model'=>$model,
 		));
 	}
@@ -210,7 +210,7 @@ class MenucategoryController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Update Menu Category: $category_name', array('$category_name'=>$model->title->message));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/menu_category/admin_edit',array(
+		$this->render('/menu_category/admin_edit', array(
 			'model'=>$model,
 		));
 	}
@@ -230,7 +230,7 @@ class MenucategoryController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'View Menu Category: $category_name', array('$category_name'=>$model->title->message));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/menu_category/admin_view',array(
+		$this->render('/menu_category/admin_view', array(
 			'model'=>$model,
 		));
 	}
@@ -266,7 +266,7 @@ class MenucategoryController extends Controller
 		}
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!(Yii::app()->getRequest()->getParam('ajax'))) {
+		if(!Yii::app()->getRequest()->getParam('ajax')) {
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('manage'));
 		}
 	}
@@ -342,7 +342,7 @@ class MenucategoryController extends Controller
 		$this->pageTitle = Yii::t('phrase', '$title Menu Category: $category_name', array('$title'=>$title, '$category_name'=>$model->title->message));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/menu_category/admin_publish',array(
+		$this->render('/menu_category/admin_publish', array(
 			'title'=>$title,
 			'model'=>$model,
 		));

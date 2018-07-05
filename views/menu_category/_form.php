@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @created date 15 January 2016, 16:57 WIB
  * @link https://github.com/ommu/mod-core
  *
@@ -30,7 +30,7 @@
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'name_i', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textField($model,'name_i',array('maxlength'=>32,'class'=>'form-control')); ?>
+				<?php echo $form->textField($model,'name_i', array('maxlength'=>32,'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'name_i'); ?>
 				<?php /*<div class="small-px"></div>*/?>
 			</div>
@@ -39,7 +39,7 @@
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'desc_i', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textArea($model,'desc_i',array('maxlength'=>128,'class'=>'form-control smaller')); ?>
+				<?php echo $form->textArea($model,'desc_i', array('maxlength'=>128,'class'=>'form-control smaller')); ?>
 				<?php echo $form->error($model,'desc_i'); ?>
 				<?php /*<div class="small-px"></div>*/?>
 			</div>
@@ -58,7 +58,7 @@
 	</fieldset>
 </div>
 <div class="dialog-submit">
-	<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save') ,array('onclick' => 'setEnableSave()')); ?>
+	<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save') , array('onclick' => 'setEnableSave()')); ?>
 	<?php echo CHtml::button(Yii::t('phrase', 'Close'), array('id'=>'closed')); ?>
 </div>
 <?php $this->endWidget(); ?>

@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2012 Ommu Platform (www.ommu.co)
  * @modified date 20 January 2018, 06:29 WIB
  * @link https://github.com/ommu/mod-core
  *
@@ -450,7 +450,7 @@ class OmmuMeta extends OActiveRecord
 			}
 			$this->templateColumns['office_on'] = array(
 				'name' => 'office_on',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'office_on\',array(\'id\'=>$data->id)), $data->office_on)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'office_on\', array(\'id\'=>$data->id)), $data->office_on)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -462,7 +462,7 @@ class OmmuMeta extends OActiveRecord
 			);
 			$this->templateColumns['google_on'] = array(
 				'name' => 'google_on',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'google_on\',array(\'id\'=>$data->id)), $data->google_on)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'google_on\', array(\'id\'=>$data->id)), $data->google_on)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -474,7 +474,7 @@ class OmmuMeta extends OActiveRecord
 			);
 			$this->templateColumns['twitter_on'] = array(
 				'name' => 'twitter_on',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'twitter_on\',array(\'id\'=>$data->id)), $data->twitter_on)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'twitter_on\', array(\'id\'=>$data->id)), $data->twitter_on)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -486,7 +486,7 @@ class OmmuMeta extends OActiveRecord
 			);
 			$this->templateColumns['twitter_card'] = array(
 				'name' => 'twitter_card',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'twitter_card\',array(\'id\'=>$data->id)), $data->twitter_card)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'twitter_card\', array(\'id\'=>$data->id)), $data->twitter_card)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -498,7 +498,7 @@ class OmmuMeta extends OActiveRecord
 			);
 			$this->templateColumns['facebook_on'] = array(
 				'name' => 'facebook_on',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'facebook_on\',array(\'id\'=>$data->id)), $data->facebook_on)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'facebook_on\', array(\'id\'=>$data->id)), $data->facebook_on)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -510,7 +510,7 @@ class OmmuMeta extends OActiveRecord
 			);
 			$this->templateColumns['facebook_type'] = array(
 				'name' => 'facebook_type',
-				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'facebook_type\',array(\'id\'=>$data->id)), $data->facebook_type)',
+				'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'facebook_type\', array(\'id\'=>$data->id)), $data->facebook_type)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -530,7 +530,7 @@ class OmmuMeta extends OActiveRecord
 	public static function getInfo($column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk(1,array(
+			$model = self::model()->findByPk(1, array(
 				'select' => $column,
 			));
 			if(count(explode(',', $column)) == 1)

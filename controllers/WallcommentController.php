@@ -22,7 +22,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2015 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2015 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  *----------------------------------------------------------------------------------------------------------
@@ -120,7 +120,7 @@ class WallcommentController extends Controller
 		$this->pageTitle = 'Ommu Wall Comments Manage';
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/wall_comment/admin_manage',array(
+		$this->render('/wall_comment/admin_manage', array(
 			'model'=>$model,
 			'columns' => $columns,
 		));
@@ -168,7 +168,7 @@ class WallcommentController extends Controller
 		$this->pageTitle = 'Create Ommu Wall Comments';
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/wall_comment/admin_add',array(
+		$this->render('/wall_comment/admin_add', array(
 			'model'=>$model,
 		));
 	}
@@ -216,7 +216,7 @@ class WallcommentController extends Controller
 		$this->pageTitle = 'Update Ommu Wall Comments';
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/wall_comment/admin_edit',array(
+		$this->render('/wall_comment/admin_edit', array(
 			'model'=>$model,
 		));
 	}
@@ -236,7 +236,7 @@ class WallcommentController extends Controller
 		$this->pageTitle = 'View Ommu Wall Comments';
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/wall_comment/admin_view',array(
+		$this->render('/wall_comment/admin_view', array(
 			'model'=>$model,
 		));
 	}
@@ -272,7 +272,7 @@ class WallcommentController extends Controller
 		}
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!(Yii::app()->getRequest()->getParam('ajax'))) {
+		if(!Yii::app()->getRequest()->getParam('ajax')) {
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('manage'));
 		}
 	}
@@ -346,7 +346,7 @@ class WallcommentController extends Controller
 		$this->pageTitle = $title;
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/wall_comment/admin_publish',array(
+		$this->render('/wall_comment/admin_publish', array(
 			'title'=>$title,
 			'model'=>$model,
 		));

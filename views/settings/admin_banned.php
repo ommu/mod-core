@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2012 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -39,7 +39,7 @@
 				<span><?php echo Yii::t('phrase', 'To ban users by their IP address, enter their address into the field below. Addresses should be separated by commas, like 123.456.789.123, 23.45.67.89');?></span>
 			</label>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textArea($model,'banned_ips',array('rows'=>6, 'cols'=>50, 'class'=>'span-10', 'class'=>'form-control')); ?>
+				<?php echo $form->textArea($model,'banned_ips', array('rows'=>6, 'cols'=>50, 'class'=>'span-10', 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'banned_ips'); ?>
 			</div>
 		</div>
@@ -50,7 +50,7 @@
 				<span><?php echo Yii::t('phrase', 'To ban users by their email address, enter their email into the field below. Emails should be separated by commas, like user1@domain1.com, user2@domain2.com. Note that you can ban all email addresses with a specific domain as follows: *@domain.com');?></span>
 			</label>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textArea($model,'banned_emails',array('rows'=>6, 'cols'=>50, 'class'=>'span-10', 'class'=>'form-control')); ?>
+				<?php echo $form->textArea($model,'banned_emails', array('rows'=>6, 'cols'=>50, 'class'=>'span-10', 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'banned_emails'); ?>
 			</div>
 		</div>
@@ -61,7 +61,7 @@
 				<span><?php echo Yii::t('phrase', 'Enter the usernames that are not permitted on your social network. Usernames should be separated by commas, like username1, username2');?></span>
 			</label>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textArea($model,'banned_usernames',array('rows'=>6, 'cols'=>50, 'class'=>'span-10', 'class'=>'form-control')); ?>
+				<?php echo $form->textArea($model,'banned_usernames', array('rows'=>6, 'cols'=>50, 'class'=>'span-10', 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'banned_usernames'); ?>
 			</div>
 		</div>
@@ -72,7 +72,7 @@
 				<span><?php echo Yii::t('phrase', 'Enter any words that you you want to censor on your users\' profiles as well as any plugins you have installed. These will be replaced with asterisks (*). Separate words by commas like word1, word2 ');?></span>
 			</label>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textArea($model,'banned_words',array('rows'=>6, 'cols'=>50, 'class'=>'span-10', 'class'=>'form-control')); ?>
+				<?php echo $form->textArea($model,'banned_words', array('rows'=>6, 'cols'=>50, 'class'=>'span-10', 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'banned_words'); ?>
 			</div>
 		</div>
@@ -145,7 +145,7 @@
 		<div class="form-group row">
 			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('general_commenthtml');?> <span class="required">*</span></label>
 			<div class="col-lg-8 col-md-9 col-sm-12">
-				<?php echo $form->textField($model,'general_commenthtml',array('maxlength'=>256, 'class'=>'form-control')); ?>
+				<?php echo $form->textField($model,'general_commenthtml', array('maxlength'=>256, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'general_commenthtml'); ?>
 				<div class="small-px"><?php echo Yii::t('phrase', 'By default, the user may not enter any HTML tags into comments. If you want to allow specific tags, you can enter them below (separated by commas). Example: b, img, a, embed, font');?></div>
 			</div>

@@ -119,7 +119,7 @@ abstract class CGridColumn extends CComponent
 	 */
 	public function renderFilterCell()
 	{
-		echo CHtml::openTag('td',$this->filterHtmlOptions);
+		echo CHtml::openTag('td', $this->filterHtmlOptions);
 		$this->renderFilterCellContent();
 		echo "</td>";
 	}
@@ -130,7 +130,7 @@ abstract class CGridColumn extends CComponent
 	public function renderHeaderCell()
 	{
 		$this->headerHtmlOptions['id']=$this->id;
-		echo CHtml::openTag('th',$this->headerHtmlOptions);
+		echo CHtml::openTag('th', $this->headerHtmlOptions);
 		$this->renderHeaderCellContent();
 		echo "</th>";
 	}
@@ -145,7 +145,7 @@ abstract class CGridColumn extends CComponent
 		$options=$this->htmlOptions;
 		if($this->cssClassExpression!==null)
 		{
-			$class=$this->evaluateExpression($this->cssClassExpression,array('row'=>$row,'data'=>$data));
+			$class=$this->evaluateExpression($this->cssClassExpression, array('row'=>$row,'data'=>$data));
 			if(!empty($class))
 			{
 				if(isset($options['class']))
@@ -164,7 +164,7 @@ abstract class CGridColumn extends CComponent
 	 */
 	public function renderFooterCell()
 	{
-		echo CHtml::openTag('td',$this->footerHtmlOptions);
+		echo CHtml::openTag('td', $this->footerHtmlOptions);
 		$this->renderFooterCellContent();
 		echo '</td>';
 	}

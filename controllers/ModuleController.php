@@ -22,7 +22,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2012 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  *----------------------------------------------------------------------------------------------------------
@@ -130,7 +130,7 @@ class ModuleController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Modules');
 		$this->pageDescription = Yii::t('phrase', 'Any Ommu Platform plugins that you have installed will appear on this page. Note that some plugins may have user level-specific settings which are available on the User Levels page.');
 		$this->pageMeta = '';
-		$this->render('admin_manage',array(
+		$this->render('admin_manage', array(
 			'model'=>$model,
 			'columns' => $columns,
 		));
@@ -180,7 +180,7 @@ class ModuleController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Add Module');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_add',array(
+		$this->render('admin_add', array(
 			'model'=>$model,
 		));
 	}
@@ -228,7 +228,7 @@ class ModuleController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Update Module: {module_name}', array('{module_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_edit',array(
+		$this->render('admin_edit', array(
 			'model'=>$model,
 		));
 	}
@@ -248,7 +248,7 @@ class ModuleController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'View Module: {module_name}', array('{module_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_view',array(
+		$this->render('admin_view', array(
 			'model'=>$model,
 		));
 	}
@@ -324,7 +324,7 @@ class ModuleController extends Controller
 		$this->pageTitle = Yii::t('phrase', '{title} Module: {module_name}', array('{title}'=>$title, '{module_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_active',array(
+		$this->render('admin_active', array(
 			'title'=>$title,
 			'model'=>$model,
 		));
@@ -363,7 +363,7 @@ class ModuleController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Default Module: {module_name}', array('{module_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_default',array(
+		$this->render('admin_default', array(
 			'model'=>$model,
 		));
 	}
@@ -403,7 +403,7 @@ class ModuleController extends Controller
 		$this->pageTitle = Yii::t('phrase', '{title} Module: {module_name}', array('{title}'=>$title, '{module_name}'=>$model->name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_install',array(
+		$this->render('admin_install', array(
 			'title'=>$title,
 			'model'=>$model,
 		));

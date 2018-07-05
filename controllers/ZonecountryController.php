@@ -19,7 +19,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2015 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2015 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  *----------------------------------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ class ZonecountryController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Countries');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/zone_country/admin_manage',array(
+		$this->render('/zone_country/admin_manage', array(
 			'model'=>$model,
 			'columns' => $columns,
 		));
@@ -167,7 +167,7 @@ class ZonecountryController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Create Country');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/zone_country/admin_add',array(
+		$this->render('/zone_country/admin_add', array(
 			'model'=>$model,
 		));
 	}
@@ -215,7 +215,7 @@ class ZonecountryController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Update Country: $country_name', array('$country_name'=>$model->country_name));
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/zone_country/admin_edit',array(
+		$this->render('/zone_country/admin_edit', array(
 			'model'=>$model,
 		));
 	}

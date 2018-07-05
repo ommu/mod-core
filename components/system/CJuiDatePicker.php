@@ -19,7 +19,7 @@ Yii::import('application.libraries.core.components.system.OGridView');
  *
  * To use this widget, you may insert the following code in a view:
  * <pre>
- * $this->widget('application.libraries.core.components.system.CJuiDatePicker',array(
+ * $this->widget('application.libraries.core.components.system.CJuiDatePicker', array(
  *     'name'=>'publishDate',
  *     // additional javascript options for the date picker plugin
  *     'options'=>array(
@@ -82,21 +82,21 @@ class CJuiDatePicker extends CJuiInputWidget
 		if($this->flat===false)
 		{
 			if($this->hasModel())
-				echo CHtml::activeTextField($this->model,$this->attribute,$this->htmlOptions);
+				echo CHtml::activeTextField($this->model, $this->attribute, $this->htmlOptions);
 			else
-				echo CHtml::textField($name,$this->value,$this->htmlOptions);
+				echo CHtml::textField($name, $this->value, $this->htmlOptions);
 		}
 		else
 		{
 			if($this->hasModel())
 			{
-				echo CHtml::activeHiddenField($this->model,$this->attribute,$this->htmlOptions);
+				echo CHtml::activeHiddenField($this->model, $this->attribute, $this->htmlOptions);
 				$attribute=$this->attribute;
 				$this->options['defaultDate']=$this->model->$attribute;
 			}
 			else
 			{
-				echo CHtml::hiddenField($name,$this->value,$this->htmlOptions);
+				echo CHtml::hiddenField($name, $this->value, $this->htmlOptions);
 				$this->options['defaultDate']=$this->value;
 			}
 
@@ -105,7 +105,7 @@ class CJuiDatePicker extends CJuiInputWidget
 			$id=$this->htmlOptions['id']=$id.'_container';
 			$this->htmlOptions['name']=$name.'_container';
 
-			echo CHtml::tag('div',$this->htmlOptions,'');
+			echo CHtml::tag('div', $this->htmlOptions,'');
 		}
 
 		$options=CJavaScript::encode($this->options);
@@ -123,7 +123,7 @@ class CJuiDatePicker extends CJuiInputWidget
 		if(isset($this->defaultOptions))
 		{
 			$this->registerScriptFile($this->i18nScriptFile);
-			$cs->registerScript(__CLASS__,$this->defaultOptions!==null?'jQuery.datepicker.setDefaults('.CJavaScript::encode($this->defaultOptions).');':'');
+			$cs->registerScript(__CLASS__, $this->defaultOptions!==null?'jQuery.datepicker.setDefaults('.CJavaScript::encode($this->defaultOptions).');':'');
 		}
 		$cs->registerScript(__CLASS__.'#'.$id,$js);
 	}

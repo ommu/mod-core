@@ -182,7 +182,7 @@ class CMenu extends CWidget
 	{
 		if(count($items))
 		{
-			echo CHtml::openTag('ul',$this->htmlOptions)."\n";
+			echo CHtml::openTag('ul', $this->htmlOptions)."\n";
 			$this->renderMenuRecursive($items);
 			echo CHtml::closeTag('ul');
 		}
@@ -223,7 +223,7 @@ class CMenu extends CWidget
 			if(isset($this->itemTemplate) || isset($item['template']))
 			{
 				$template=isset($item['template']) ? $item['template'] : $this->itemTemplate;
-				echo strtr($template,array('{menu}'=>$menu));
+				echo strtr($template, array('{menu}'=>$menu));
 			}
 			else
 				echo $menu;

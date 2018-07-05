@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2015 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2015 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  * This is the template for generating the model class of a specified table.
@@ -135,23 +135,23 @@ class OmmuWallUser extends CActiveRecord
 			),
 		);
 
-		$criteria->compare('t.id',$this->id);
-		$criteria->compare('t.status',$this->status);
-		if(isset($_GET['wall']))
-			$criteria->compare('t.wall_id',$_GET['wall']);
+		$criteria->compare('t.id', $this->id);
+		$criteria->compare('t.status', $this->status);
+		if(Yii::app()->getRequest()->getParam('wall'))
+			$criteria->compare('t.wall_id', Yii::app()->getRequest()->getParam('wall'));
 		else
-			$criteria->compare('t.wall_id',$this->wall_id);
+			$criteria->compare('t.wall_id', $this->wall_id);
 		if(Yii::app()->getRequest()->getParam('user'))
 			$criteria->compare('t.user_id',Yii::app()->getRequest()->getParam('user'));
 		else
-			$criteria->compare('t.user_id',$this->user_id);
-		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
+			$criteria->compare('t.user_id', $this->user_id);
+		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')))
+			$criteria->compare('date(t.creation_date)', date('Y-m-d', strtotime($this->creation_date)));
 		
-		$criteria->compare('wall.wall_status',strtolower($this->wall_search),true);
-		$criteria->compare('user.displayname',strtolower($this->user_search),true);
+		$criteria->compare('wall.wall_status', strtolower($this->wall_search), true);
+		$criteria->compare('user.displayname', strtolower($this->user_search), true);
 
-		if(!isset($_GET['OmmuWallUser_sort']))
+		if(!Yii::app()->getRequest()->getParam('OmmuWallUser_sort'))
 			$criteria->order = 't.id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -199,7 +199,7 @@ class OmmuWallUser extends CActiveRecord
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			if(!isset($_GET['wall'])) {
+			if(!Yii::app()->getRequest()->getParam('wall')) {
 				$this->defaultColumns[] = array(
 					'name' => 'wall_search',
 					'value' => '$data->wall->wall_status',
@@ -264,7 +264,7 @@ class OmmuWallUser extends CActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2015 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2015 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -21,7 +21,7 @@
 	)); ?>
 	<fieldset>
 		<div>
-			<?php echo $form->textArea($model,'wall_status',array('rows'=>6, 'cols'=>50, 'class'=>'span-11 smaller', 'placeholder'=>'Post your status..')); ?>
+			<?php echo $form->textArea($model,'wall_status', array('rows'=>6, 'cols'=>50, 'class'=>'span-11 smaller', 'placeholder'=>'Post your status..')); ?>
 		</div>
 		<div class="clearfix">
 			<?php echo CHtml::submitButton('Share', array('onclick' => 'setEnableSave()')); ?>

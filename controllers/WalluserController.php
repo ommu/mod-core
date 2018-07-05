@@ -15,7 +15,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2015 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2015 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  *----------------------------------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ class WalluserController extends Controller
 		$this->pageTitle = 'Ommu Wall Users Manage';
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/wall_user/admin_manage',array(
+		$this->render('/wall_user/admin_manage', array(
 			'model'=>$model,
 			'columns' => $columns,
 		));

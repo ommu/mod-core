@@ -20,7 +20,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2012 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2012 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/mod-core
  *
  *----------------------------------------------------------------------------------------------------------
@@ -147,7 +147,7 @@ class SettingsController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'General Settings');
 		$this->pageDescription = Yii::t('phrase', 'This page contains general settings that affect your entire social network.');
 		$this->pageMeta = '';
-		$this->render('admin_general',array(
+		$this->render('admin_general', array(
 			'model'=>$model,
 		));
 	}
@@ -207,7 +207,7 @@ class SettingsController extends Controller
 			'{setting}' => CHtml::link(Yii::t('phrase', 'Signup Settings'), Yii::app()->createUrl('settings/signup')),
 		));
 		$this->pageMeta = '';
-		$this->render('admin_banned',array(
+		$this->render('admin_banned', array(
 			'model'=>$model,
 		));
 	}
@@ -265,7 +265,7 @@ class SettingsController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Signup Settings');
 		$this->pageDescription = Yii::t('phrase', 'The user signup process is a crucial element of your social network. You need to design a signup process that is user friendly but also gets the initial information you need from new users. On this page, you can configure your signup process.');
 		$this->pageMeta = '';
-		$this->render('admin_signup',array(
+		$this->render('admin_signup', array(
 			'model'=>$model,
 		));
 	}
@@ -323,7 +323,7 @@ class SettingsController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Google Analytics Settings');
 		$this->pageDescription = Yii::t('phrase', 'Want to use Google Analytics to keep track of your site\'s traffic data? Setup is super easy. Just enter your Google Analytics Tracking ID and *bam*... you\'re tracking your site\'s traffic stats! If you need help finding your ID, check here.');
 		$this->pageMeta = '';
-		$this->render('admin_analytic',array(
+		$this->render('admin_analytic', array(
 			'model'=>$model,
 		));
 	}
@@ -381,7 +381,7 @@ class SettingsController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Locale Settings');
 		$this->pageDescription = Yii::t('phrase', 'Please select a default timezone setting for your social network. This will be the default timezone applied to users\' accounts if they do not select a timezone during signup, or if they are not signed in. Select the default locale you want to use on your social network. This will affect the language of the dates that appear on your social network pages.');
 		$this->pageMeta = '';
-		$this->render('admin_locale',array(
+		$this->render('admin_locale', array(
 			'model'=>$model,
 		));
 	}
