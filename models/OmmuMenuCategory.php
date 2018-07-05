@@ -32,6 +32,8 @@
 
 class OmmuMenuCategory extends OActiveRecord
 {
+	use UtilityTrait;
+
 	public $gridForbiddenColumn = array('desc_i','modified_date','modified_search','updated_date','slug');
 	public $name_i;
 	public $desc_i;
@@ -478,7 +480,7 @@ class OmmuMenuCategory extends OActiveRecord
 				if($name->save())
 					$this->name = $name->id;
 
-				$this->slug = Utility::getUrlTitle($this->name_i);
+				$this->slug = $this->urlTitle($this->name_i);
 				
 			} else {
 				$name = SourceMessage::model()->findByPk($this->name);
@@ -500,7 +502,7 @@ class OmmuMenuCategory extends OActiveRecord
 			}
 
 			if($action != 'publish')
-				$this->cat_code = Utility::getUrlTitle(strtolower(trim($this->name_i)));
+				$this->cat_code = $this->urlTitle($this->name_i);
 		}
 		return true;
 	}

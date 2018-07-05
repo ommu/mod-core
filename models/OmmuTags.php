@@ -23,6 +23,8 @@
 
 class OmmuTags extends OActiveRecord
 {
+	use UtilityTrait;
+
 	public $gridForbiddenColumn = array('modified_date','modified_search','updated_date');
 
 	// Variable Search
@@ -351,7 +353,7 @@ class OmmuTags extends OActiveRecord
 	protected function beforeSave() 
 	{
 		if(parent::beforeSave()) {
-			$this->body = Utility::getUrlTitle(trim($this->body));
+			$this->body = $this->urlTitle($this->body);
 		}
 		return true;
 	}

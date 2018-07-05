@@ -29,6 +29,8 @@
 
 class SourceMessage extends OActiveRecord
 {
+	use UtilityTrait;
+
 	public $gridForbiddenColumn = array('modified_date','modified_search');
 
 	// Variable Search
@@ -328,7 +330,7 @@ class SourceMessage extends OActiveRecord
 	{
 		if(parent::beforeSave()) {
 			if($this->isNewRecord)
-				$this->location = Utility::getUrlTitle($this->location);
+				$this->location = $this->urlTitle($this->location);
 		}
 		return true;
 	}

@@ -25,6 +25,8 @@
 
 class ThemeHandle extends CApplicationComponent
 {
+	use UtilityTrait;
+
 	public $themePath			= 'webroot.themes';
 	private $_themeTableName	= 'ommu_core_themes';
 	
@@ -62,7 +64,7 @@ class ThemeHandle extends CApplicationComponent
 		$themePath = Yii::getPathOfAlias('webroot.themes');
 		$themes    = scandir($themePath);
 		foreach($themes as $theme) {
-			$themeName = Utility::getUrlTitle($theme);
+			$themeName = $this->urlTitle($theme);
 			$themeFile = $themePath.'/'.$theme.'/'.$themeName.'.yaml';
 			if(file_exists($themeFile)) {
 				if(!in_array($themeName, $this->getIgnoreTheme())) {
@@ -112,7 +114,7 @@ class ThemeHandle extends CApplicationComponent
 		Yii::import('mustangostang.spyc.Spyc');
 		define('DS', DIRECTORY_SEPARATOR);
 
-		$themeName = Utility::getUrlTitle($theme);
+		$themeName = $this->urlTitle($theme);
 		$configPath = Yii::getPathOfAlias('webroot.themes.'.$theme).DS.$themeName.'.yaml';
 
 		if(file_exists($configPath))
@@ -200,7 +202,7 @@ class ThemeHandle extends CApplicationComponent
 		foreach($installedTheme as $theme) {
 			if(!in_array(trim($theme), array_map("trim", $themeDb))) {
 				$config = $this->getThemeConfig($theme);
-				$themeName = Utility::getUrlTitle($theme);
+				$themeName = $this->urlTitle($theme);
 
 				if($config && $themeName == $config['folder']) {
 					$model=new OmmuThemes;

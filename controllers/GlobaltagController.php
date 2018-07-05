@@ -106,7 +106,7 @@ class GlobaltagController extends Controller
 				$criteria = new CDbCriteria;
 				$criteria->select = 'tag_id, body';
 				$criteria->compare('publish', 1);
-				$criteria->compare('body',Utility::getUrlTitle(strtolower(trim($term))), true);
+				$criteria->compare('body',$this->urlTitle($term), true);
 				$criteria->limit = $limit;
 				$criteria->order = "tag_id ASC";
 				$model = OmmuTags::model()->findAll($criteria);

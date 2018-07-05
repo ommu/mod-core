@@ -37,6 +37,8 @@
 
 class OmmuMenus extends OActiveRecord
 {
+	use UtilityTrait;
+
 	public $gridForbiddenColumn = array('url','attr','sitetype_access','userlevel_access','modified_date','modified_search','updated_date','slug');
 	public $name_i;
 
@@ -506,7 +508,7 @@ class OmmuMenus extends OActiveRecord
 				if($name->save())
 					$this->name = $name->id;
 
-				$this->slug = Utility::getUrlTitle($this->name_i);
+				$this->slug = $this->urlTitle($this->name_i);
 				
 			} else {
 				$name = SourceMessage::model()->findByPk($this->name);
