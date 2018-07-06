@@ -3,9 +3,9 @@
  * Utility class file
  *
  * Contains many function that most used :
- *	getCurrentTemplate
- *	applyCurrentTheme
- *	applyViewPath
+ *		getCurrentTemplate
+ *		applyCurrentTheme
+ *		applyViewPath
  *	getProtocol
  *	getKeyIndex
  *	getActiveDefaultColumns
@@ -73,7 +73,8 @@ class Utility
 	 * @param object $module that currently active [optional]
 	 * @return void
 	 */
-	public static function applyCurrentTheme($module = null) {
+	public static function applyCurrentTheme($module = null) 
+	{
 		$theme = Yii::app()->theme->name;
 		Yii::app()->theme = $theme;
 
