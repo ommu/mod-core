@@ -3,12 +3,12 @@
  * Utility class file
  *
  * Contains many function that most used :
- *		getCurrentTemplate
- *		applyCurrentTheme
- *		applyViewPath
+ *			getCurrentTemplate
+ *			applyCurrentTheme
+ *			applyViewPath
  *	getProtocol
- *	getKeyIndex
- *	getActiveDefaultColumns
+ *			getKeyIndex
+ *			getActiveDefaultColumns
  *			getUrlTitle
  *	deleteFolder
  *			flashSuccess

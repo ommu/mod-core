@@ -38,6 +38,7 @@
 class OmmuMenus extends OActiveRecord
 {
 	use UtilityTrait;
+	use GridViewTrait;
 
 	public $gridForbiddenColumn = array('url','attr','sitetype_access','userlevel_access','modified_date','modified_search','updated_date','slug');
 	public $name_i;
@@ -406,10 +407,7 @@ class OmmuMenus extends OActiveRecord
 					'htmlOptions' => array(
 						'class' => 'center',
 					),
-					'filter'=>array(
-						1=>Yii::t('phrase', 'Yes'),
-						0=>Yii::t('phrase', 'No'),
-					),
+					'filter' => $this->filterYesNo(),
 					'type' => 'raw',
 				);
 			}
