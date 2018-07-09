@@ -288,12 +288,12 @@ class OmmuThemes extends OActiveRecord
 	 * 0 = unpublish
 	 * 1 = publish
 	 */
-	public static function getThemes() 
+	public static function getThemes($array=true) 
 	{
 		$criteria=new CDbCriteria;
 		$model = self::model()->findAll($criteria);
 
-		if($type == null) {
+		if($array == true) {
 			$items = array();
 			if($model != null) {
 				foreach($model as $key => $val) {

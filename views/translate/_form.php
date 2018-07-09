@@ -52,7 +52,7 @@
 			<?php echo $form->labelEx($model, 'language', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-8 col-md-9 col-sm-12">
 				<?php 
-				$language = OmmuLanguages::getLanguage(null, null, 'code');
+				$language = OmmuLanguages::getLanguage(null, 'code');
 				if($language != null)
 					echo $form->dropDownList($model,'language', $language, array('prompt'=>Yii::t('phrase', 'Select One'), 'class'=>'form-control'));
 				else

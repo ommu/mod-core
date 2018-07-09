@@ -162,7 +162,7 @@ class Message extends OActiveRecord
 				$this->templateColumns['language'] = array(
 					'name' => 'language',
 					'value' => '$data->language_r->name',
-					'filter'=> OmmuLanguages::getLanguage(null, null, 'code'),
+					'filter'=> OmmuLanguages::getLanguage(null, 'code'),
 					'type' => 'raw',
 				);
 			}

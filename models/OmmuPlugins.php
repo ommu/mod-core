@@ -326,7 +326,7 @@ class OmmuPlugins extends OActiveRecord
 	 * 0 = unpublish
 	 * 1 = publish
 	 */
-	public static function getPlugin($actived=null, $keypath=null, $type=null)
+	public static function getPlugin($actived=null, $keypath=null, $array=true)
 	{
 		$criteria=new CDbCriteria;
 		if($actived != null)
@@ -339,7 +339,7 @@ class OmmuPlugins extends OActiveRecord
 		
 		$model = self::model()->findAll($criteria);
 
-		if($type == null) {
+		if($array == true) {
 			$items = array();
 			if($model != null) {
 				foreach($model as $key => $val) {

@@ -281,7 +281,7 @@ class OmmuLanguages extends OActiveRecord
 	/**
 	 * getLanguages
 	 */
-	public static function getLanguage($actived=null, $type=null, $view='id') 
+	public static function getLanguage($actived=null, $view='id', $array=true) 
 	{
 		$criteria=new CDbCriteria;
 		if($actived != null)
@@ -289,7 +289,7 @@ class OmmuLanguages extends OActiveRecord
 		
 		$model = self::model()->findAll($criteria);
 
-		if($type == null) {
+		if($array == true) {
 			$items = array();
 			if($model != null) {
 				foreach($model as $key => $val) {
