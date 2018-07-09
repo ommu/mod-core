@@ -19,7 +19,7 @@
 ?>
 
 <div class="form" name="post-on">
-	<?php $form=$this->beginWidget('application.libraries.core.components.system.OActiveForm', array(
+	<?php $form=$this->beginWidget('application.libraries.yii-traits.system.OActiveForm', array(
 		'id'=>'ommu-locale-form',
 		'enableAjaxValidation'=>true,
 		//'htmlOptions' => array('enctype' => 'multipart/form-data')

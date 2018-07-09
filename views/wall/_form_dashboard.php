@@ -13,7 +13,7 @@
  */
 ?>
 <div name="post-on">
-	<?php $form=$this->beginWidget('application.libraries.core.components.system.OActiveForm', array(
+	<?php $form=$this->beginWidget('application.libraries.yii-traits.system.OActiveForm', array(
 		'id'=>'ommu-walls-form',
 		'action'=>Yii::app()->createUrl('wall/post'),
 		'enableAjaxValidation'=>true,

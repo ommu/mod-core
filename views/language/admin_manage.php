@@ -95,7 +95,7 @@
 <?php if($setting->site_type == 1) {?>
 <div class="form mt-15" name="post-on">
 
-	<?php $form=$this->beginWidget('application.libraries.core.components.system.OActiveForm', array(
+	<?php $form=$this->beginWidget('application.libraries.yii-traits.system.OActiveForm', array(
 		'action' => Yii::app()->controller->createUrl('settings'),
 		'id'=>'ommu-settings-form',
 		'enableAjaxValidation'=>true,
