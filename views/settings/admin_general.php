@@ -110,7 +110,7 @@ EOP;
 					<?php 
 					$model->construction_date = date('d-m-Y', strtotime($model->construction_date));
 					//echo $form->textField($model,'construction_date', array('maxlength'=>10, 'class'=>'span-3'));
-					$this->widget('application.libraries.core.components.system.CJuiDatePicker', array(
+					$this->widget('zii.widgets.jui.CJuiDatePicker', array(
 						'model'=>$model, 
 						'attribute'=>'construction_date',
 						'options'=>array(
@@ -170,7 +170,7 @@ EOP;
 						$model->event_startdate = !$model->isNewRecord ? (!in_array($model->event_startdate, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? date('d-m-Y', strtotime($model->event_startdate)) : '00-00-0000') : '';
 					//$model->event_startdate = date('d-m-Y', strtotime($model->event_startdate));
 					//echo $form->textField($model,'event_startdate', array('maxlength'=>10, 'class'=>'span-3'));
-					$this->widget('application.libraries.core.components.system.CJuiDatePicker', array(
+					$this->widget('zii.widgets.jui.CJuiDatePicker', array(
 						'model'=>$model, 
 						'attribute'=>'event_startdate',
 						'options'=>array(
@@ -192,7 +192,7 @@ EOP;
 						$model->event_finishdate = !$model->isNewRecord ? (!in_array($model->event_finishdate, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? date('d-m-Y', strtotime($model->event_finishdate)) : '00-00-0000') : '';
 					//$model->event_finishdate = date('d-m-Y', strtotime($model->event_finishdate));
 					//echo $form->textField($model,'event_finishdate', array('maxlength'=>10, 'class'=>'span-3'));
-					$this->widget('application.libraries.core.components.system.CJuiDatePicker', array(
+					$this->widget('zii.widgets.jui.CJuiDatePicker', array(
 						'model'=>$model, 
 						'attribute'=>'event_finishdate',
 						'options'=>array(

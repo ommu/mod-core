@@ -349,30 +349,7 @@ class OmmuSettings extends OActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
-				'filter' => 'native-datepicker',
-				/*
-				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
-					'model'=>$this,
-					'attribute'=>'site_creation',
-					'language' => 'en',
-					'i18nScriptFile' => 'jquery-ui-i18n.min.js',
-					//'mode'=>'datetime',
-					'htmlOptions' => array(
-						'id' => 'site_creation_filter',
-						'on_datepicker' => 'on',
-						'placeholder' => Yii::t('phrase', 'filter'),
-					),
-					'options'=>array(
-						'showOn' => 'focus',
-						'dateFormat' => 'yy-mm-dd',
-						'showOtherMonths' => true,
-						'selectOtherMonths' => true,
-						'changeMonth' => true,
-						'changeYear' => true,
-						'showButtonPanel' => true,
-					),
-				), true),
-				*/
+				'filter' => $this->filterDatepicker($this, 'site_creation'),
 			);
 			$this->templateColumns['site_dateformat'] = array(
 				'name' => 'site_dateformat',
@@ -388,30 +365,7 @@ class OmmuSettings extends OActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
-				'filter' => 'native-datepicker',
-				/*
-				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
-					'model'=>$this,
-					'attribute'=>'construction_date',
-					'language' => 'en',
-					'i18nScriptFile' => 'jquery-ui-i18n.min.js',
-					//'mode'=>'datetime',
-					'htmlOptions' => array(
-						'id' => 'construction_date_filter',
-						'on_datepicker' => 'on',
-						'placeholder' => Yii::t('phrase', 'filter'),
-					),
-					'options'=>array(
-						'showOn' => 'focus',
-						'dateFormat' => 'yy-mm-dd',
-						'showOtherMonths' => true,
-						'selectOtherMonths' => true,
-						'changeMonth' => true,
-						'changeYear' => true,
-						'showButtonPanel' => true,
-					),
-				), true),
-				*/
+				'filter' => $this->filterDatepicker($this, 'construction_date'),
 			);
 			$this->templateColumns['construction_text'] = array(
 				'name' => 'construction_text',
@@ -423,30 +377,7 @@ class OmmuSettings extends OActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
-				'filter' => 'native-datepicker',
-				/*
-				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
-					'model'=>$this,
-					'attribute'=>'event_startdate',
-					'language' => 'en',
-					'i18nScriptFile' => 'jquery-ui-i18n.min.js',
-					//'mode'=>'datetime',
-					'htmlOptions' => array(
-						'id' => 'event_startdate_filter',
-						'on_datepicker' => 'on',
-						'placeholder' => Yii::t('phrase', 'filter'),
-					),
-					'options'=>array(
-						'showOn' => 'focus',
-						'dateFormat' => 'yy-mm-dd',
-						'showOtherMonths' => true,
-						'selectOtherMonths' => true,
-						'changeMonth' => true,
-						'changeYear' => true,
-						'showButtonPanel' => true,
-					),
-				), true),
-				*/
+				'filter' => $this->filterDatepicker($this, 'event_startdate'),
 			);
 			$this->templateColumns['event_finishdate'] = array(
 				'name' => 'event_finishdate',
@@ -454,30 +385,7 @@ class OmmuSettings extends OActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
-				'filter' => 'native-datepicker',
-				/*
-				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
-					'model'=>$this,
-					'attribute'=>'event_finishdate',
-					'language' => 'en',
-					'i18nScriptFile' => 'jquery-ui-i18n.min.js',
-					//'mode'=>'datetime',
-					'htmlOptions' => array(
-						'id' => 'event_finishdate_filter',
-						'on_datepicker' => 'on',
-						'placeholder' => Yii::t('phrase', 'filter'),
-					),
-					'options'=>array(
-						'showOn' => 'focus',
-						'dateFormat' => 'yy-mm-dd',
-						'showOtherMonths' => true,
-						'selectOtherMonths' => true,
-						'changeMonth' => true,
-						'changeYear' => true,
-						'showButtonPanel' => true,
-					),
-				), true),
-				*/
+				'filter' => $this->filterDatepicker($this, 'event_finishdate'),
 			);
 			$this->templateColumns['event_tag'] = array(
 				'name' => 'event_tag',
@@ -541,30 +449,7 @@ class OmmuSettings extends OActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
-				'filter' => 'native-datepicker',
-				/*
-				'filter' => Yii::app()->controller->widget('application.libraries.core.components.system.CJuiDatePicker', array(
-					'model'=>$this,
-					'attribute'=>'modified_date',
-					'language' => 'en',
-					'i18nScriptFile' => 'jquery-ui-i18n.min.js',
-					//'mode'=>'datetime',
-					'htmlOptions' => array(
-						'id' => 'modified_date_filter',
-						'on_datepicker' => 'on',
-						'placeholder' => Yii::t('phrase', 'filter'),
-					),
-					'options'=>array(
-						'showOn' => 'focus',
-						'dateFormat' => 'yy-mm-dd',
-						'showOtherMonths' => true,
-						'selectOtherMonths' => true,
-						'changeMonth' => true,
-						'changeYear' => true,
-						'showButtonPanel' => true,
-					),
-				), true),
-				*/
+				'filter' => $this->filterDatepicker($this, 'modified_date'),
 			);
 			if(!Yii::app()->getRequest()->getParam('modified')) {
 				$this->templateColumns['modified_search'] = array(
