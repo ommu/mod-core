@@ -30,7 +30,7 @@
  *	getDifferenceDay
  *	getLocalDayName
  *	getLocalMonthName
- *	dateFormat
+ *		dateFormat
  *	getTimThumb
  *	replaceSpaceWithUnderscore
  *	shortText
