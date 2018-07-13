@@ -105,15 +105,7 @@ class TranslateController extends Controller
 			$model->attributes=$_GET['Message'];
 		}
 
-		$gridColumn = Yii::app()->getRequest()->getParam('GridColumn');
-		$columnTemp = array();
-		if(isset($gridColumn)) {
-			foreach($gridColumn as $key => $val) {
-				if($gridColumn[$key] == 1)
-					$columnTemp[] = $key;
-			}
-		}
-		$columns = $model->getGridColumn($columnTemp);
+		$columns = $model->getGridColumn($this->gridColumnTemp());
 
 		$pageTitle = Yii::t('phrase', 'Translates');
 		if($phrase != null) {

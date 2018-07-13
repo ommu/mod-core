@@ -117,15 +117,7 @@ class ModuleController extends Controller
 			$model->attributes=$_GET['OmmuPlugins'];
 		}
 
-		$columnTemp = array();
-		if(isset($_GET['GridColumn'])) {
-			foreach($_GET['GridColumn'] as $key => $val) {
-				if($_GET['GridColumn'][$key] == 1) {
-					$columnTemp[] = $key;
-				}
-			}
-		}
-		$columns = $model->getGridColumn($columnTemp);
+		$columns = $model->getGridColumn($this->gridColumnTemp());
 
 		$this->pageTitle = Yii::t('phrase', 'Modules');
 		$this->pageDescription = Yii::t('phrase', 'Any Ommu Platform plugins that you have installed will appear on this page. Note that some plugins may have user level-specific settings which are available on the User Levels page.');
