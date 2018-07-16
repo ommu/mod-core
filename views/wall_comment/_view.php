@@ -22,9 +22,9 @@
 	<div class="comment">
 		<h4>
 			<?php if($data->modified_date == '0000-00-00 00:00:00') {
-				$date = Utility::dateFormat($data->creation_date, true);
+				$date = Utility::dateFormat($data->creation_date);
 			} else {
-				$date = 'Edited: '.Utility::dateFormat($data->modified_date, true);
+				$date = 'Edited: '.Utility::dateFormat($data->modified_date);
 			}?>
 			<a href="javascript:void(0);" title="<?php echo $data->user->displayname;?>"><?php echo $data->user->displayname;?></a> / 
 			<?php echo $date;?>

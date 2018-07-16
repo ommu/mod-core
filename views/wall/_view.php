@@ -53,9 +53,9 @@ $commentNextPager = $commentPager['nextPage'] != 0 ? Yii::app()->createUrl('wall
 		}?>
 		<h3>
 			<?php if($data->modified_date == '0000-00-00 00:00:00') {
-				$date = $this->dateFormat($data->creation_date, true);
+				$date = $this->dateFormat($data->creation_date);
 			} else {
-				$date = 'Edited: '.$this->dateFormat($data->modified_date, true);
+				$date = 'Edited: '.$this->dateFormat($data->modified_date);
 			}?>
 			<a href="javascript:void(0);" title="<?php echo $data->user->displayname;?>"><?php echo $data->user->displayname;?></a> / 
 			<?php echo $date;?>
