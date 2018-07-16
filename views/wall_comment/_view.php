@@ -22,9 +22,9 @@
 	<div class="comment">
 		<h4>
 			<?php if($data->modified_date == '0000-00-00 00:00:00') {
-				$date = Utility::dateFormat($data->creation_date);
+				$date = Yii::app()->dateFormatter->formatDateTime($data->creation_date, \'medium\', false);
 			} else {
-				$date = 'Edited: '.Utility::dateFormat($data->modified_date);
+				$date = 'Edited: '.Yii::app()->dateFormatter->formatDateTime($data->modified_date, \'medium\', false);
 			}?>
 			<a href="javascript:void(0);" title="<?php echo $data->user->displayname;?>"><?php echo $data->user->displayname;?></a> / 
 			<?php echo $date;?>

@@ -345,7 +345,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['site_creation'] = array(
 				'name' => 'site_creation',
-				'value' => '!in_array($data->site_creation, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\', \'0002-12-02 07:07:12\', \'-0001-11-30 00:00:00\')) ? Utility::dateFormat($data->site_creation) : \'-\'',
+				'value' => '!in_array($data->site_creation, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\', \'0002-12-02 07:07:12\', \'-0001-11-30 00:00:00\')) ? Yii::app()->dateFormatter->formatDateTime($data->site_creation, \'medium\', false) : \'-\'',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -361,7 +361,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['construction_date'] = array(
 				'name' => 'construction_date',
-				'value' => '!in_array($data->construction_date, array(\'0000-00-00\', \'1970-01-01\')) ? Utility::dateFormat($data->construction_date) : \'-\'',
+				'value' => '!in_array($data->construction_date, array(\'0000-00-00\', \'1970-01-01\')) ? Yii::app()->dateFormatter->formatDateTime($data->construction_date, \'medium\', false) : \'-\'',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -373,7 +373,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['event_startdate'] = array(
 				'name' => 'event_startdate',
-				'value' => '!in_array($data->event_startdate, array(\'0000-00-00\', \'1970-01-01\')) ? Utility::dateFormat($data->event_startdate) : \'-\'',
+				'value' => '!in_array($data->event_startdate, array(\'0000-00-00\', \'1970-01-01\')) ? Yii::app()->dateFormatter->formatDateTime($data->event_startdate, \'medium\', false) : \'-\'',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -381,7 +381,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['event_finishdate'] = array(
 				'name' => 'event_finishdate',
-				'value' => '!in_array($data->event_finishdate, array(\'0000-00-00\', \'1970-01-01\')) ? Utility::dateFormat($data->event_finishdate) : \'-\'',
+				'value' => '!in_array($data->event_finishdate, array(\'0000-00-00\', \'1970-01-01\')) ? Yii::app()->dateFormatter->formatDateTime($data->event_finishdate, \'medium\', false) : \'-\'',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -445,7 +445,7 @@ class OmmuSettings extends OActiveRecord
 			);
 			$this->templateColumns['modified_date'] = array(
 				'name' => 'modified_date',
-				'value' => '!in_array($data->modified_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\', \'0002-12-02 07:07:12\', \'-0001-11-30 00:00:00\')) ? Utility::dateFormat($data->modified_date) : \'-\'',
+				'value' => '!in_array($data->modified_date, array(\'0000-00-00 00:00:00\', \'1970-01-01 00:00:00\', \'0002-12-02 07:07:12\', \'-0001-11-30 00:00:00\')) ? Yii::app()->dateFormatter->formatDateTime($data->modified_date, \'medium\', false) : \'-\'',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
