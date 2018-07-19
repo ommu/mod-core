@@ -103,7 +103,7 @@ class ZonevillageController extends Controller
 	public function actionManage() 
 	{
 		$model=new OmmuZoneVillage('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['OmmuZoneVillage'])) {
 			$model->attributes=$_GET['OmmuZoneVillage'];
 		}

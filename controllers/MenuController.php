@@ -103,7 +103,7 @@ class MenuController extends Controller
 		}
 		
 		$model=new OmmuMenus('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['OmmuMenus'])) {
 			$model->attributes=$_GET['OmmuMenus'];
 		}

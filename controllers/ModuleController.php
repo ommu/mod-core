@@ -112,7 +112,7 @@ class ModuleController extends Controller
 		$this->updateModule();
 		
 		$model=new OmmuPlugins('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['OmmuPlugins'])) {
 			$model->attributes=$_GET['OmmuPlugins'];
 		}

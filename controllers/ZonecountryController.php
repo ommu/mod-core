@@ -101,7 +101,7 @@ class ZonecountryController extends Controller
 	public function actionManage() 
 	{
 		$model=new OmmuZoneCountry('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['OmmuZoneCountry'])) {
 			$model->attributes=$_GET['OmmuZoneCountry'];
 		}

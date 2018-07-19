@@ -95,7 +95,7 @@ class PhraseController extends Controller
 	public function actionManage() 
 	{
 		$model=new SourceMessage('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['SourceMessage'])) {
 			$model->attributes=$_GET['SourceMessage'];
 		}

@@ -90,7 +90,7 @@ class WalluserController extends Controller
 	public function actionManage() 
 	{
 		$model=new OmmuWallUser('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['OmmuWallUser'])) {
 			$model->attributes=$_GET['OmmuWallUser'];
 		}

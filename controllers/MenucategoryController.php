@@ -97,7 +97,7 @@ class MenucategoryController extends Controller
 	public function actionManage() 
 	{
 		$model=new OmmuMenuCategory('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['OmmuMenuCategory'])) {
 			$model->attributes=$_GET['OmmuMenuCategory'];
 		}

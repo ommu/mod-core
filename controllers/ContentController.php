@@ -101,7 +101,7 @@ class ContentController extends Controller
 	public function actionManage() 
 	{
 		$model=new OmmuPages('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['OmmuPages'])) {
 			$model->attributes=$_GET['OmmuPages'];
 		}

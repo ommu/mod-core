@@ -96,7 +96,7 @@ class LanguageController extends /*SBaseController*/ Controller
 		$setting = OmmuSettings::model()->findByPk(1);
 
 		$model=new OmmuLanguages('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['OmmuLanguages'])) {
 			$model->attributes=$_GET['OmmuLanguages'];
 		}

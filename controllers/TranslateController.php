@@ -100,7 +100,7 @@ class TranslateController extends Controller
 	public function actionManage($phrase=null) 
 	{
 		$model=new Message('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['Message'])) {
 			$model->attributes=$_GET['Message'];
 		}

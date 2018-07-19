@@ -107,7 +107,7 @@ class ThemeController extends Controller
 		$this->updateThemes();
 
 		$model=new OmmuThemes('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['OmmuThemes'])) {
 			$model->attributes=$_GET['OmmuThemes'];
 		}

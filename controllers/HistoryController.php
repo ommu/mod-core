@@ -99,7 +99,7 @@ class HistoryController extends Controller
 		}
 		
 		$model=new OmmuPageViewHistory('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['OmmuPageViewHistory'])) {
 			$model->attributes=$_GET['OmmuPageViewHistory'];
 		}

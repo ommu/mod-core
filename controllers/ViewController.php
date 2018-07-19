@@ -100,7 +100,7 @@ class ViewController extends Controller
 		}
 		
 		$model=new OmmuPageViews('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['OmmuPageViews'])) {
 			$model->attributes=$_GET['OmmuPageViews'];
 		}

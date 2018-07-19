@@ -93,7 +93,7 @@ class WalllikeController extends Controller
 	public function actionManage() 
 	{
 		$model=new OmmuWallLikes('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['OmmuWallLikes'])) {
 			$model->attributes=$_GET['OmmuWallLikes'];
 		}

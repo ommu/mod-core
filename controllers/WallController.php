@@ -102,7 +102,7 @@ class WallController extends Controller
 	public function actionManage() 
 	{
 		$model=new OmmuWalls('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['OmmuWalls'])) {
 			$model->attributes=$_GET['OmmuWalls'];
 		}
