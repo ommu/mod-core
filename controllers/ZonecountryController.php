@@ -79,7 +79,7 @@ class ZonecountryController extends Controller
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('index','manage','add','edit','delete'),
 				'users'=>array('@'),
-				'expression'=>'$user->level == 1',
+				'expression'=>'Yii::app()->user->level == 1',
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
