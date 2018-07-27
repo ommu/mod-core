@@ -158,7 +158,7 @@ class OmmuPluginPhrase extends OActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
-				'filter'=>OmmuPlugins::getPlugin(0, 'id'),
+				'filter' =>OmmuPlugins::getPlugin(0, 'id'),
 				'type' => 'raw',
 			);
 			$this->templateColumns['location'] = array(

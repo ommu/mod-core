@@ -133,12 +133,12 @@ class OmmuThemes extends OActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname',
+				'alias' => 'creation',
+				'select' => 'displayname',
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname',
+				'alias' => 'modified',
+				'select' => 'displayname',
 			),
 		);
 
@@ -195,7 +195,7 @@ class OmmuThemes extends OActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
-				'filter'=>array(
+				'filter' =>array(
 					'public' => Yii::t('phrase', 'Public'),
 					'admin' => Yii::t('phrase', 'Administrator'),
 					'maintenance' => Yii::t('phrase', 'Offline (Coming Soon & Maintenance)'),

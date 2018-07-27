@@ -118,20 +118,20 @@ class OmmuPageViewHistory extends OActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'view' => array(
-				'alias'=>'view',
-				'select'=>'page_id, user_id'
+				'alias' => 'view',
+				'select' => 'page_id, user_id'
 			),
 			'view.page' => array(
-				'alias'=>'page',
-				'select'=>'name'
+				'alias' => 'page',
+				'select' => 'name'
 			),
 			'view.page.title' => array(
-				'alias'=>'page_title',
-				'select'=>'message',
+				'alias' => 'page_title',
+				'select' => 'message',
 			),
 			'view.user' => array(
-				'alias'=>'user',
-				'select'=>'displayname'
+				'alias' => 'user',
+				'select' => 'displayname'
 			),
 		);
 		

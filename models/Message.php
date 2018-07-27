@@ -112,8 +112,8 @@ class Message extends OActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'phrase' => array(
-				'alias'=>'phrase',
-				'select'=>'message',
+				'alias' => 'phrase',
+				'select' => 'message',
 			),
 		);
 		
@@ -162,7 +162,7 @@ class Message extends OActiveRecord
 				$this->templateColumns['language'] = array(
 					'name' => 'language',
 					'value' => '$data->language_r->name',
-					'filter'=> OmmuLanguages::getLanguage(null, 'code'),
+					'filter' => OmmuLanguages::getLanguage(null, 'code'),
 					'type' => 'raw',
 				);
 			}

@@ -266,17 +266,15 @@ class ModuleHandle extends CApplicationComponent
 		
 		$caches = array();
 		foreach($cacheModule as $val) {
-			$caches[] = $val;
+			$caches[] = trim($val);
 		}
 
 		if(!$installedModule)
 			$installedModule = array();
-			
+		
 		foreach($caches as $cache) {
-			$cache = trim($cache);
-			if(!in_array($cache, array_map("trim", $installedModule))) {
+			if(!in_array($cache, array_map("trim", $installedModule)))
 				$this->deleteModuleDb($cache);
-			}
 		}
 
 		$moduleDb = $this->cacheModuleConfig(true);
@@ -284,13 +282,15 @@ class ModuleHandle extends CApplicationComponent
 			$module = trim($module);
 			if(!in_array($module, array_map("trim", $moduleDb))) {
 				$config = $this->getModuleConfig($module);
-				$moduleFile = $moduleVendorPath.'/'.$module.'/'.ucfirst($module).'Module.php';
+				$moduleFile = join('/', array($moduleVendorPath, $module, ucfirst($module).'Module.php'));
 
-				if ($config && file_exists($moduleFile) && $module == $config['folder_name']) {
+				if($config && file_exists($moduleFile) && $module == $config['folder_name']) {
 					$model=new OmmuPlugins;
 					$model->folder = $module;
 					$model->name = $config['name'];
 					$model->desc = $config['description'];
+					if($config['model'])
+						$model->model = $config['model'];
 					$model->save();
 				}
 			}

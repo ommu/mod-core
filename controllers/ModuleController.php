@@ -90,8 +90,8 @@ class ModuleController extends Controller
 	 */
 	public function updateModule()
 	{
-		$this->moduleHandle->cacheModuleConfig();
-		$this->moduleHandle->setModules();
+		$this->moduleHandle->cacheModuleConfig();	//oke
+		$this->moduleHandle->setModules();	//oke
 		$this->moduleHandle->updateModuleAddon();
 	}
 	

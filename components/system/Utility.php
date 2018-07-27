@@ -10,7 +10,7 @@
  *			getKeyIndex
  *			getActiveDefaultColumns
  *			getUrlTitle
- *	deleteFolder
+ *			deleteFolder
  *			flashSuccess
  *			flashError
  *	getArrayFromYML
@@ -56,7 +56,7 @@ class Utility
 	*/
 	public static function getCurrentTemplate($typePage) {
 		$model = OmmuThemes::model()->find(array(
-			'select'=>'folder, layout',
+			'select' => 'folder, layout',
 			'condition' => 'group_page = :group AND default_theme = :default',
 			'params' => array(
 				':group' => $typePage,

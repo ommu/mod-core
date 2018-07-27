@@ -171,24 +171,24 @@ class OmmuMenus extends OActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'title' => array(
-				'alias'=>'title',
-				'select'=>'message',
+				'alias' => 'title',
+				'select' => 'message',
 			),
 			'parent' => array(
-				'alias'=>'parent',
-				'select'=>'name',
+				'alias' => 'parent',
+				'select' => 'name',
 			),
 			'parent.title' => array(
-				'alias'=>'parent_title',
-				'select'=>'message',
+				'alias' => 'parent_title',
+				'select' => 'message',
 			),
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname',
+				'alias' => 'creation',
+				'select' => 'displayname',
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname',
+				'alias' => 'modified',
+				'select' => 'displayname',
 			),
 		);
 
@@ -259,7 +259,7 @@ class OmmuMenus extends OActiveRecord
 				$this->templateColumns['cat_id'] = array(
 					'name' => 'cat_id',
 					'value' => '$data->category->title->message ? $data->category->title->message : \'-\'',
-					'filter'=> OmmuMenuCategory::getCategory(),
+					'filter' => OmmuMenuCategory::getCategory(),
 					'type' => 'raw',
 				);
 			}

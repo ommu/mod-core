@@ -142,16 +142,16 @@ class OmmuZoneCity extends OActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'province' => array(
-				'alias'=>'province',
-				'select'=>'province_name',
+				'alias' => 'province',
+				'select' => 'province_name',
 			),
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname',
+				'alias' => 'creation',
+				'select' => 'displayname',
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname',
+				'alias' => 'modified',
+				'select' => 'displayname',
 			),
 		);
 

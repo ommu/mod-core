@@ -134,12 +134,12 @@ class OmmuLanguages extends OActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname',
+				'alias' => 'creation',
+				'select' => 'displayname',
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname',
+				'alias' => 'modified',
+				'select' => 'displayname',
 			),
 		);
 
@@ -281,7 +281,7 @@ class OmmuLanguages extends OActiveRecord
 	/**
 	 * getLanguages
 	 */
-	public static function getLanguage($actived=null, $view='id', $array=true) 
+	public static function getLanguage($actived=null, $key='id', $array=true) 
 	{
 		$criteria=new CDbCriteria;
 		if($actived != null)
@@ -292,10 +292,10 @@ class OmmuLanguages extends OActiveRecord
 		if($array == true) {
 			$items = array();
 			if($model != null) {
-				foreach($model as $key => $val) {
-					if($view == 'id')
+				foreach($model as $val) {
+					if($key == 'id')
 						$items[$val->language_id] = $val->name;
-					else if($view == 'code')
+					else if($key == 'code')
 						$items[$val->code] = $val->name;
 				}
 				return $items;

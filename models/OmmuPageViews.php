@@ -131,16 +131,16 @@ class OmmuPageViews extends OActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'page' => array(
-				'alias'=>'page',
-				'select'=>'page_id, name',
+				'alias' => 'page',
+				'select' => 'page_id, name',
 			),
 			'page.title' => array(
-				'alias'=>'page_title',
-				'select'=>'message',
+				'alias' => 'page_title',
+				'select' => 'message',
 			),
 			'user' => array(
-				'alias'=>'user',
-				'select'=>'displayname',
+				'alias' => 'user',
+				'select' => 'displayname',
 			),
 		);
 

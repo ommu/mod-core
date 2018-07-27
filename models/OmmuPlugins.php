@@ -147,18 +147,18 @@ class OmmuPlugins extends OActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname',
+				'alias' => 'creation',
+				'select' => 'displayname',
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname',
+				'alias' => 'modified',
+				'select' => 'displayname',
 			),
 		);
 
 		$criteria->compare('t.plugin_id', $this->plugin_id);
 		$criteria->compare('t.default', $this->default);
-		$criteria->compare('t.install', Yii::app()->getRequest()->getParam('type') && Yii::app()->getRequest()->getParam('type') == 'all' ? $this->install : 1);
+		$criteria->compare('t.install', $this->install);
 		$criteria->compare('t.actived', $this->actived);
 		$criteria->compare('t.search', $this->search);
 		$criteria->compare('t.orders', $this->orders);

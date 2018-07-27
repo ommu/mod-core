@@ -175,27 +175,27 @@ class OmmuPages extends OActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'view' => array(
-				'alias'=>'view',
+				'alias' => 'view',
 			),
 			'title' => array(
-				'alias'=>'title',
-				'select'=>'message',
+				'alias' => 'title',
+				'select' => 'message',
 			),
 			'description' => array(
-				'alias'=>'description',
-				'select'=>'message',
+				'alias' => 'description',
+				'select' => 'message',
 			),
 			'quoteRltn' => array(
-				'alias'=>'quoteRltn',
-				'select'=>'message',
+				'alias' => 'quoteRltn',
+				'select' => 'message',
 			),
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname',
+				'alias' => 'creation',
+				'select' => 'displayname',
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname',
+				'alias' => 'modified',
+				'select' => 'displayname',
 			),
 		);
 
@@ -341,7 +341,7 @@ class OmmuPages extends OActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
-				'filter'=>array(
+				'filter' =>array(
 					1=>Yii::t('phrase', 'Large'),
 					2=>Yii::t('phrase', 'Medium'),
 				),

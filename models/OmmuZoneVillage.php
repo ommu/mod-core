@@ -141,16 +141,16 @@ class OmmuZoneVillage extends OActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'district' => array(
-				'alias'=>'district',
-				'select'=>'district_name',
+				'alias' => 'district',
+				'select' => 'district_name',
 			),
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname',
+				'alias' => 'creation',
+				'select' => 'displayname',
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname',
+				'alias' => 'modified',
+				'select' => 'displayname',
 			),
 		);
 

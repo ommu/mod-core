@@ -137,12 +137,12 @@ class OmmuWallComment extends CActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'wall' => array(
-				'alias'=>'wall',
-				'select'=>'wall_status'
+				'alias' => 'wall',
+				'select' => 'wall_status'
 			),
 			'user' => array(
-				'alias'=>'user',
-				'select'=>'displayname'
+				'alias' => 'user',
+				'select' => 'displayname'
 			),
 		);
 
