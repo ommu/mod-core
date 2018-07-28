@@ -112,8 +112,8 @@
 		<h3><?php echo Yii::t('phrase', 'Language Selection Settings');?></h3>
 
 		<div class="form-group row">
-			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><span><?php echo Yii::t('phrase', 'If you have more than one language pack, do you want to allow your registered users to select which one will be used while they are logged in? If you select "Yes", users will be able to choose their language on the signup page and the account settings page. Note that this will only apply if you have more than one language pack.');?></span></label>
-			<div class="col-lg-8 col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-3 col-md-3 col-sm-12"><span><?php echo Yii::t('phrase', 'If you have more than one language pack, do you want to allow your registered users to select which one will be used while they are logged in? If you select "Yes", users will be able to choose their language on the signup page and the account settings page. Note that this will only apply if you have more than one language pack.');?></span></label>
+			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->radioButtonList($setting, 'lang_allow', array(
 					1 => Yii::t('phrase', 'Yes, allow registered users to choose their own language.'),
 					0 => Yii::t('phrase', 'No, do not allow registered users to save their language preference.'),
@@ -123,8 +123,8 @@
 		</div>
 
 		<div class="form-group row">
-			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><span><?php echo Yii::t('phrase', 'If you have more than one language pack, do you want to display a select box on your homepage so that unregistered users can change the language in which they view the social network? Note that this will only apply if you have more than one language pack.');?></span></label>
-			<div class="col-lg-8 col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-3 col-md-3 col-sm-12"><span><?php echo Yii::t('phrase', 'If you have more than one language pack, do you want to display a select box on your homepage so that unregistered users can change the language in which they view the social network? Note that this will only apply if you have more than one language pack.');?></span></label>
+			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->radioButtonList($setting, 'lang_anonymous', array(
 					1 => Yii::t('phrase', 'Yes, display a select box that will allow unregistered users to change their language.'),
 					0 => Yii::t('phrase', 'No, do not allow unregistered users to change the site language.'),
@@ -134,8 +134,8 @@
 		</div>
 
 		<div class="form-group row">
-			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><span><?php echo Yii::t('phrase', 'If you have more than one language pack, do you want the system to autodetect the language settings from your visitors\' browsers? If you select "Yes", the system will attempt to detect what language the user has set in their browser settings. If you have a matching language, your site will display in that language, otherwise it will display in the default language.');?></span></label>
-			<div class="col-lg-8 col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-3 col-md-3 col-sm-12"><span><?php echo Yii::t('phrase', 'If you have more than one language pack, do you want the system to autodetect the language settings from your visitors\' browsers? If you select "Yes", the system will attempt to detect what language the user has set in their browser settings. If you have a matching language, your site will display in that language, otherwise it will display in the default language.');?></span></label>
+			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->radioButtonList($setting, 'lang_autodetect', array(
 					1 => Yii::t('phrase', 'Yes, attempt to detect the visitor\'s language based on their browser settings.'),
 					0 => Yii::t('phrase', 'No, do not autodetect the visitor\'s language.'),
@@ -145,8 +145,8 @@
 		</div>
 
 		<div class="form-group row submit">
-			<label class="col-form-label col-lg-4 col-md-3 col-sm-12">&nbsp;</label>
-			<div class="col-lg-8 col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-3 col-md-3 col-sm-12">&nbsp;</label>
+			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo CHtml::submitButton($setting->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save'), array('onclick' => 'setEnableSave()')); ?>
 			</div>
 		</div>

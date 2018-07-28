@@ -31,8 +31,8 @@
 	<fieldset>
 
 		<div class="form-group row">
-			<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo Yii::t('phrase', 'Module File');?></label>
-			<div class="col-lg-8 col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-3 col-md-3 col-sm-12"><?php echo Yii::t('phrase', 'Module File');?></label>
+			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo CHtml::fileField('module_file', '', array('maxlength'=>128, 'class'=>'form-control')); ?>
 				<?php echo Yii::app()->user->hasFlash('error') ? '<div class="errorMessage">'.Yii::app()->user->getFlash('error').'</div>' : ''?>
 			</div>

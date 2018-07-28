@@ -47,16 +47,16 @@
 			$images = Yii::app()->request->baseUrl.'/public/'.$model->old_meta_image;
 			?>
 			<div class="form-group row">
-				<?php echo $form->labelEx($model,'old_meta_image', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
-				<div class="col-lg-8 col-md-9 col-sm-12">
+				<?php echo $form->labelEx($model,'old_meta_image', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
+				<div class="col-lg-6 col-md-9 col-sm-12">
 					<img src="<?php echo Utility::getTimThumb($images, 320, 150, 3);?>" alt="">
 				</div>
 			</div>
 		<?php }?>
 		
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'meta_image', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-8 col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'meta_image', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->fileField($model,'meta_image', array('maxlength'=>64, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'meta_image'); ?>
 				<?php echo $form->error($model,'meta_image'); ?>
@@ -64,8 +64,8 @@
 		</div>
 		
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'meta_image_alt', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-8 col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'meta_image_alt', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'meta_image_alt', array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'meta_image_alt'); ?>
 				<span class="small-px"><?php echo Yii::t('phrase', 'A text description of the image conveying the essential nature of an image to users who are visually impaired');?></span>
@@ -73,8 +73,8 @@
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'office_on', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-8 col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'office_on', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->radioButtonList($model,'office_on', array(
 					1 => Yii::t('phrase', 'Enabled'),
 					0 => Yii::t('phrase', 'Disabled'),
@@ -84,8 +84,8 @@
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'google_on', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-8 col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'google_on', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->radioButtonList($model,'google_on', array(
 					1 => Yii::t('phrase', 'Enabled'),
 					0 => Yii::t('phrase', 'Disabled'),
@@ -95,8 +95,8 @@
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'twitter_on', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-8 col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'twitter_on', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->radioButtonList($model,'twitter_on', array(
 					1 => Yii::t('phrase', 'Enabled'),
 					0 => Yii::t('phrase', 'Disabled'),
@@ -106,8 +106,8 @@
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'facebook_on', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-8 col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'facebook_on', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->radioButtonList($model,'facebook_on', array(
 					1 => Yii::t('phrase', 'Enabled'),
 					0 => Yii::t('phrase', 'Disabled'),
@@ -117,8 +117,8 @@
 		</div>
 
 		<div class="form-group row submit">
-			<label class="col-form-label col-lg-4 col-md-3 col-sm-12">&nbsp;</label>
-			<div class="col-lg-8 col-md-9 col-sm-12">
+			<label class="col-form-label col-lg-3 col-md-3 col-sm-12">&nbsp;</label>
+			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save'), array('onclick' => 'setEnableSave()')); ?>
 			</div>
 		</div>

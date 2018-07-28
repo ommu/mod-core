@@ -27,8 +27,8 @@
 		</div>
 
 		<div class="form-group row">
-			<?php echo $form->labelEx($model,'name', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-8 col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'name', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-6 col-md-9 col-sm-12">
 				<ul>
 					<li><strong><?php echo $model->name;?></strong></li>
 					<?php if($model->group_page == 'admin' && $model->folder == 'ommu') {
@@ -48,8 +48,8 @@
 
 		<?php if(!($model->group_page == 'admin' && $model->folder == 'ommu')) {?>
 			<div class="form-group row">
-				<?php echo $form->labelEx($model,'group_page', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
-				<div class="col-lg-8 col-md-9 col-sm-12">
+				<?php echo $form->labelEx($model,'group_page', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
+				<div class="col-lg-6 col-md-9 col-sm-12">
 					<?php echo $form->dropDownList($model, 'group_page', array(
 						'public' => Yii::t('phrase', 'Public'),
 						'admin' => Yii::t('phrase', 'Administrator'),
@@ -69,8 +69,8 @@
 			//print_r($model->config);
 			foreach($config as $key => $val) {?>
 				<div class="form-group row">
-					<label class="col-form-label col-lg-4 col-md-3 col-sm-12"><?php echo Yii::t('phrase', $config[$key]['label']);?></label>
-					<div class="col-lg-8 col-md-9 col-sm-12">
+					<label class="col-form-label col-lg-3 col-md-3 col-sm-12"><?php echo Yii::t('phrase', $config[$key]['label']);?></label>
+					<div class="col-lg-6 col-md-9 col-sm-12">
 						<?php 
 						foreach($val as $a => $data) {
 							$inputField = "config[{$key}][{$a}]";
@@ -103,8 +103,8 @@
 		}?>
 
 		<div class="form-group row publish">
-			<?php echo $form->labelEx($model,'default_theme', array('class'=>'col-form-label col-lg-4 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-8 col-md-9 col-sm-12">
+			<?php echo $form->labelEx($model,'default_theme', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
+			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'default_theme', array('class'=>'form-control')); ?>
 				<?php echo $form->labelEx($model, 'default_theme'); ?>
 				<?php echo $form->error($model,'default_theme'); ?>
