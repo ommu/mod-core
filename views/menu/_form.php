@@ -30,7 +30,7 @@
 
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'cat_id', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-9 col-sm-12">
 				<?php 
 				$category = OmmuMenuCategory::getCategory();
 				if($category != null)
@@ -48,7 +48,7 @@
 		if($menu != null) {?>
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'parent_id', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-9 col-sm-12">
 				<?php echo $form->dropDownList($model,'parent_id', $menu, array('prompt'=>Yii::t('phrase', 'No Parent'), 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'parent_id'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -58,7 +58,7 @@
 
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'name_i', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'name_i', array('maxlength'=>32,'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'name_i'); ?>
 			</div>
@@ -66,7 +66,7 @@
 
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'url', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-9 col-sm-12">
 				<?php echo $form->textArea($model,'url', array('class'=>'form-control smaller')); ?>
 				<?php echo $form->error($model,'url'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -75,7 +75,7 @@
 
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'attr', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-9 col-sm-12">
 				<?php echo $form->textArea($model,'attr', array('class'=>'form-control smaller')); ?>
 				<?php echo $form->error($model,'attr'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -84,7 +84,7 @@
 		
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'sitetype_access', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-9 col-sm-12">
 				<?php 
 				$siteType = array(
 					'0' => Yii::t('phrase', 'Company Profile'),
@@ -99,7 +99,7 @@
 
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'userlevel_access', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-9 col-sm-12">
 				<?php 
 				if(!$model->getErrors())
 					$model->userlevel_access = unserialize($model->userlevel_access);
@@ -112,7 +112,7 @@
 
 		<div class="form-group row publish">
 			<?php echo $form->labelEx($model,'publish', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'publish', array('class'=>'form-control')); ?>
 				<?php echo $form->labelEx($model, 'publish'); ?>
 				<?php echo $form->error($model,'publish'); ?>

@@ -29,8 +29,9 @@
 
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'country_id', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
-				<?php echo $form->dropDownList($model,'country_id',OmmuZoneCountry::getCountry()); ?>
+			<div class="col-lg-9 col-md-9 col-sm-12">
+				<?php $country_id = OmmuZoneCountry::getCountry();
+				echo $form->dropDownList($model,'country_id',$country_id, array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'country_id'); ?>
 				<?php /*<div class="small-px"></div>*/?>
 			</div>
@@ -38,7 +39,7 @@
 
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'province_name', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'province_name', array('maxlength'=>64, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'province_name'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -47,7 +48,7 @@
 
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'mfdonline', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'mfdonline', array('maxlength'=>2, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'mfdonline'); ?>
 				<?php /*<div class="small-px"></div>*/?>
@@ -56,7 +57,7 @@
 
 		<div class="form-group row publish">
 			<?php echo $form->labelEx($model,'checked', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'checked', array('class'=>'form-control')); ?>
 				<?php echo $form->labelEx($model, 'checked'); ?>
 				<?php echo $form->error($model,'checked'); ?>
@@ -66,7 +67,7 @@
 
 		<div class="form-group row publish">
 			<?php echo $form->labelEx($model,'publish', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-9 col-sm-12">
 				<?php echo $form->checkBox($model,'publish', array('class'=>'form-control')); ?>
 				<?php echo $form->labelEx($model, 'publish'); ?>
 				<?php echo $form->error($model,'publish'); ?>

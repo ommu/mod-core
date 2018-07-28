@@ -439,7 +439,7 @@ class ModuleController extends Controller
 		
 		$this->dialogDetail = true;
 		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-		$this->dialogWidth = 400;
+		$this->dialogWidth = 500;
 		
 		$this->pageTitle = Yii::t('phrase', 'Upload Module');
 		$this->pageDescription = '';

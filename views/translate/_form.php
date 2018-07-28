@@ -41,7 +41,7 @@
 		<?php if(!$model->isNewRecord) {?>
 		<div class="form-group row">
 			<?php echo $form->labelEx($model, 'phrase_search', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-9 col-sm-12">
 				<?php echo $model->phrase->message;?>
 				<?php echo $form->error($model, 'phrase_search'); ?>
 			</div>
@@ -50,7 +50,7 @@
 
 		<div class="form-group row">
 			<?php echo $form->labelEx($model, 'language', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-9 col-sm-12">
 				<?php 
 				$language = OmmuLanguages::getLanguage(null, 'code');
 				if($language != null)
@@ -63,7 +63,7 @@
 
 		<div class="form-group row">
 			<?php echo $form->labelEx($model, 'translation', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
-			<div class="col-lg-6 col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-9 col-sm-12">
 				<?php //echo $form->textArea($model, 'translation', array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
 				$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 					'model'=>$model,
