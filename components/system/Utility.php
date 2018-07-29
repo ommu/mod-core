@@ -13,11 +13,11 @@
  *			deleteFolder
  *			flashSuccess
  *			flashError
- *	getArrayFromYML
+ *			getArrayFromYML
  *	getModuleInfo
  *	getContentMenu
  *	getModuleMenu
- *	getThemeInfo
+ *			getThemeInfo
  *	chmodr
  *	recursiveDelete
  *	generateEmailTemplate

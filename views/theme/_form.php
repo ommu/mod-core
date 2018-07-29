@@ -65,8 +65,6 @@
 		if(!empty($config)) {
 			if(!$model->getErrors())
 				$model->config = unserialize($model->config);
-			//echo '<pre>';
-			//print_r($model->config);
 			foreach($config as $key => $val) {?>
 				<div class="form-group row">
 					<label class="col-form-label col-lg-3 col-md-3 col-sm-12"><?php echo Yii::t('phrase', $config[$key]['label']);?></label>

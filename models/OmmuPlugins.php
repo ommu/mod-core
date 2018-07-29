@@ -343,10 +343,10 @@ class OmmuPlugins extends OActiveRecord
 			$items = array();
 			if($model != null) {
 				foreach($model as $key => $val) {
-					if($keypath == null || $keypath == 'folder')
-						$items[$val->folder] = $val->name;
-					else
+					if($keypath == null || $keypath == 'id')
 						$items[$val->plugin_id] = $val->name;
+					else
+						$items[$val->folder] = $val->name;
 				}
 				return $items;
 			} else
