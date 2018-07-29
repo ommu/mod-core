@@ -62,43 +62,14 @@
 
 		<?php 
 		$config = $theme['config'];
-		if(!empty($config)) {
-			if(!$model->getErrors())
-				$model->config = unserialize($model->config);
-			foreach($config as $key => $val) {?>
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3 col-md-3 col-sm-12"><?php echo Yii::t('phrase', $config[$key]['label']);?></label>
-					<div class="col-lg-9 col-md-9 col-sm-12">
-						<?php 
-						foreach($val as $a => $data) {
-							$inputField = "config[{$key}][{$a}]";
-							
-							if($a == 'label')
-								continue;
-							
-							if(is_array($config[$key][$a]))
-								echo $form->dropDownList($model, $inputField, $config[$key][$a], array('prompt'=>'', 'class'=>'form-control'));
-							else {
-								if($a == 'publish') {
-									$publish = array(
-										'1'=>Yii::t('phrase', 'Publish'),
-										'0'=>Yii::t('phrase', 'Unpublish'),
-									);
-									echo $form->dropDownList($model, $inputField, $publish, array('prompt'=>'', 'class'=>'form-control'));
-								} else {
-									if($a == 'desc')
-										echo $form->textArea($model, $inputField, array('rows'=>6, 'cols'=>50, 'class'=>'form-control smaller', 'placeholder'=>$config[$key][$a]));
-									else
-										echo $form->textField($model, $inputField, array('class'=>'form-control', 'placeholder'=>$config[$key][$a]));
-
-								}
-							}
-							echo $form->error($model, $inputField);
-						} ?>
-					</div>
-				</div>
-		<?php }
-		}?>
+		if(!$model->getErrors())
+			$model->config = unserialize($model->config);
+		echo $this->renderPartial('_config_field', array(
+			'form'=>$form,
+			'model'=>$model,
+			'config'=>$config,
+			'parent'=>false,
+		));?>
 
 		<div class="form-group row publish">
 			<?php echo $form->labelEx($model,'default_theme', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
