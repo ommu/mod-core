@@ -364,12 +364,12 @@ $moduleRules[$val->folder.'/<controller:[a-zA-Z\/]+>/<action:\w+>/<category:\d+>
 				$controllerClass = preg_replace('(.php)', '', $getFilename);
 
 				$controllerMap[$controller] = array(
-					'class'=>$path.'.'.$controllerClass,
+					'class'=>join('.', array($path, $controllerClass)),
 				);
 
 			} else if($fileInfo->isDir()) {
 				$sub = $fileInfo->getFilename();
-				$subPath = $path.'.'.$sub;
+				$subPath = join('.', array($path, $sub));
 				$controllerMap = array_merge($controllerMap, $this->getController($subPath, $sub));
 			}
 		}
