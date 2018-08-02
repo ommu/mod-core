@@ -16,6 +16,27 @@
 
 <?php
 if($parent == false) {
+	$globalConfig = array(
+		'ga'=>array(
+			'label'=>Yii::t('phrase', 'Google Analytic Rules'),
+			'rules'=>'',
+		),
+		'site-controller'=>array(
+			'label'=>Yii::t('phrase', 'Site Controller "site/index"'),
+			'view-render'=>array(
+				'label'=>Yii::t('phrase', 'View Render From'),
+				'option'=>array(
+					'app'=>Yii::t('phrase', 'Application'),
+					'theme'=>Yii::t('phrase', 'Theme'),
+				),
+			),
+			'redirect'=>array(
+				'label'=>Yii::t('phrase', 'Redirect'),
+				'rules'=>'',
+			),
+		),
+	);
+	$config = array_merge($globalConfig, $config);
 	$config['script'] = array(
 		'label'=>Yii::t('phrase', 'Head Scripts/Styles'),
 		'desc'=>Yii::t('phrase', 'Anything entered into the box below will be included at the bottom of the &lt;head&gt; tag. If you want to include a script or stylesheet, be sure to use the &lt;script&gt; or &lt;link&gt; tag.'),
@@ -29,39 +50,44 @@ if(!empty($config)) {
 	<div class="col-lg-9 col-md-9 col-sm-12">
 <?php }
 	if(is_array($val)) {
-		foreach($val as $a => $b) {
-			$inputField = "config[{$key}][{$a}]";
+		if($parent == true) {
+			$inputField = $inputField."[$key]";
+			echo $form->dropDownList($model, $inputField, $val, array('prompt'=>'', 'class'=>'form-control'));
 			
-			if($a == 'label')
-				continue;
-			
-			if(is_array($val[$a])) {
-				if($val[$a]['label'] == null)
-					echo $form->dropDownList($model, $inputField, $val[$a], array('prompt'=>'', 'class'=>'form-control'));
-				else {
-					echo $this->renderPartial('_config_field', array(
-						'form'=>$form,
-						'model'=>$model,
-						'config'=>$b,
-						'inputField'=>$inputField,
-						'parent'=>true,
-					));
-				}
-			} else {
-				if($a == 'publish') {
-					$publish = array(
-						'1'=>Yii::t('phrase', 'Publish'),
-						'0'=>Yii::t('phrase', 'Unpublish'),
-					);
-					echo $form->dropDownList($model, $inputField, $publish, array('prompt'=>'', 'class'=>'form-control'));
+		} else {
+			foreach($val as $a => $b) {
+				if($a == 'label')
+					continue;
+
+				$inputField = "config[{$key}][{$a}]";
+				if(is_array($val[$a])) {
+					if($val[$a]['label'] == null)
+						echo $form->dropDownList($model, $inputField, $val[$a], array('prompt'=>'', 'class'=>'form-control'));
+					else {
+						echo $this->renderPartial('_config_field', array(
+							'form'=>$form,
+							'model'=>$model,
+							'config'=>$b,
+							'inputField'=>$inputField,
+							'parent'=>true,
+						));
+					}
 				} else {
-					if($a == 'desc')
-						echo $form->textArea($model, $inputField, array('rows'=>6, 'cols'=>50, 'class'=>'form-control smaller', 'placeholder'=>$val[$a]));
-					else
-						echo $form->textField($model, $inputField, array('class'=>'form-control', 'placeholder'=>$val[$a]));
+					if($a == 'publish') {
+						$publish = array(
+							'1'=>Yii::t('phrase', 'Publish'),
+							'0'=>Yii::t('phrase', 'Unpublish'),
+						);
+						echo $form->dropDownList($model, $inputField, $publish, array('prompt'=>'', 'class'=>'form-control'));
+					} else {
+						if($a == 'desc')
+							echo $form->textArea($model, $inputField, array('rows'=>6, 'cols'=>50, 'class'=>'form-control smaller', 'placeholder'=>$val[$a]));
+						else
+							echo $form->textField($model, $inputField, array('class'=>'form-control', 'placeholder'=>$val[$a]));
+					}
 				}
+				echo $form->error($model, $inputField);
 			}
-			echo $form->error($model, $inputField);
 		}
 	} else {
 		if($key == 'label') {?>
