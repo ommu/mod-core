@@ -14,7 +14,7 @@
 
 	$this->breadcrumbs=array(
 		'Ommu Settings'=>array('manage'),
-		'Manage',
+		Yii::t('phrase', 'Manage'),
 	);
 ?>
 
@@ -22,7 +22,6 @@
 	<?php $form=$this->beginWidget('application.libraries.yii-traits.system.OActiveForm', array(
 		'id'=>'ommu-locale-form',
 		'enableAjaxValidation'=>true,
-		//'htmlOptions' => array('enctype' => 'multipart/form-data')
 	)); ?>
 
 	<?php //begin.Messages ?>
@@ -41,7 +40,7 @@
 					'n/j/Y' => date('n/j/Y', strtotime($dateformat)),
 					'n-j-Y' => date('n-j-Y', strtotime($dateformat)),
 					'm/j/Y' => date('m/j/Y', strtotime($dateformat)),
-					'm-j-Y' => date('m-j-Y', strtotime($dateformat)),		
+					'm-j-Y' => date('m-j-Y', strtotime($dateformat)),
 					'Y/n/j' => date('Y/n/j', strtotime($dateformat)),
 					'Y-n-j' => date('Y-n-j', strtotime($dateformat)),
 					'Y/m/j' => date('Y/m/j', strtotime($dateformat)),

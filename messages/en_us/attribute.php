@@ -41,7 +41,7 @@ return array(
 	'district_id' => 'District',
 	'district_name' => 'District Name',
 	'email' => 'Email',
-	'event' => 'Event',	
+	'event' => 'Event',
 	'event_finishdate' => 'Event Finishdate',
 	'event_startdate' => 'Event Startdate',
 	'event_tag' => 'Event Tag',

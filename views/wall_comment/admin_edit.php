@@ -15,7 +15,7 @@
 	$this->breadcrumbs=array(
 		'Ommu Wall Comments'=>array('manage'),
 		$model->comment_id=>array('view','id'=>$model->comment_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

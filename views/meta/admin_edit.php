@@ -15,7 +15,7 @@
 	$this->breadcrumbs=array(
 		'Ommu Metas'=>array('manage'),
 		$model->id=>array('view','id'=>$model->id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 
@@ -68,7 +68,7 @@
 			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'meta_image_alt', array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'meta_image_alt'); ?>
-				<span class="small-px"><?php echo Yii::t('phrase', 'A text description of the image conveying the essential nature of an image to users who are visually impaired');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'A text description of the image conveying the essential nature of an image to users who are visually impaired');?></div>
 			</div>
 		</div>
 

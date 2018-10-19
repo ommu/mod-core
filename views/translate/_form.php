@@ -64,8 +64,7 @@
 		<div class="form-group row">
 			<?php echo $form->labelEx($model, 'translation', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-9 col-md-9 col-sm-12">
-				<?php //echo $form->textArea($model, 'translation', array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
-				$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
+				<?php $this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 					'model'=>$model,
 					'attribute'=>'translation',
 					'options'=>array(

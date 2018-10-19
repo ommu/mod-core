@@ -15,7 +15,7 @@
 	$this->breadcrumbs=array(
 		'Ommu Tags'=>array('manage'),
 		$model->tag_id=>array('view','id'=>$model->tag_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

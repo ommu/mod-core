@@ -14,7 +14,7 @@
 
 	$this->breadcrumbs=array(
 		'Ommu Settings'=>array('manage'),
-		'Manage',
+		Yii::t('phrase', 'Manage'),
 	);
 ?>
 
@@ -23,7 +23,6 @@
 	<?php $form=$this->beginWidget('application.libraries.yii-traits.system.OActiveForm', array(
 		'id'=>'ommu-settings-form',
 		'enableAjaxValidation'=>true,
-		//'htmlOptions' => array('enctype' => 'multipart/form-data')
 	)); ?>
 
 	<?php //begin.Messages ?>

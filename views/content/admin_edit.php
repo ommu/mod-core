@@ -15,7 +15,7 @@
 	$this->breadcrumbs=array(
 		'Ommu Pages'=>array('manage'),
 		$model->title->message=>array('view','id'=>$model->page_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

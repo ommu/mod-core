@@ -268,7 +268,7 @@ $moduleRules[$val->folder.'/<controller:[a-zA-Z\/]+>/<action:\w+>/<category:\d+>
 					'place:location:latitude'=>$point[0],
 					'place:location:longitude'=>$point[1],
 					'business:contact_data:street_address'=>$meta->office_place.', '.$meta->office_village.', '.$meta->office_district,
-					'business:contact_data:country_name'=>$meta->view->country_name,			
+					'business:contact_data:country_name'=>$meta->view->country_name,
 					'business:contact_data:locality'=>$meta->view->city_name,
 					'business:contact_data:region'=>$meta->office_district,
 					'business:contact_data:postal_code'=>$meta->office_zipcode,

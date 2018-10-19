@@ -13,7 +13,7 @@
 
 	$this->breadcrumbs=array(
 		'Ommu Languages'=>array('manage'),
-		'Manage',
+		Yii::t('phrase', 'Manage'),
 	);
 ?>
 
@@ -29,6 +29,7 @@
 <div class="grid-form">
 <?php $this->renderPartial('_option_form', array(
 	'model'=>$model,
+	'gridColumns'=>$this->activeDefaultColumns($columns),
 )); ?>
 </div>
 <?php //end.Grid Option ?>
@@ -99,7 +100,6 @@
 		'action' => Yii::app()->controller->createUrl('settings'),
 		'id'=>'ommu-settings-form',
 		'enableAjaxValidation'=>true,
-		//'htmlOptions' => array('enctype' => 'multipart/form-data')
 	)); ?>
 
 	<?php //begin.Messages ?>

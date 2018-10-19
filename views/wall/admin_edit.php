@@ -15,7 +15,7 @@
 	$this->breadcrumbs=array(
 		'Ommu Walls'=>array('manage'),
 		$model->wall_id=>array('view','id'=>$model->wall_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

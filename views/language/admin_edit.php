@@ -15,7 +15,7 @@
 	$this->breadcrumbs=array(
 		'Ommu Languages'=>array('manage'),
 		$model->name=>array('view','id'=>$model->language_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

@@ -15,7 +15,7 @@
 
 	$this->breadcrumbs=array(
 		'Messages'=>array('manage'),
-		'Manage',
+		Yii::t('phrase', 'Manage'),
 	);
 	$this->menu=array(
 		array(

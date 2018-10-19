@@ -14,7 +14,7 @@
 
 	$this->breadcrumbs=array(
 		'Ommu Settings'=>array('manage'),
-		'Manage',
+		Yii::t('phrase', 'Manage'),
 	);
 	$cs = Yii::app()->getClientScript();
 $js=<<<EOP
@@ -65,8 +65,7 @@ EOP;
 		<div class="form-group row">
 			<label class="col-form-label col-lg-3 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('site_type');?> <span class="required">*</span></label>
 			<div class="col-lg-6 col-md-9 col-sm-12">
-				<?php 
-				if($model->isNewRecord && !$model->getErrors())
+				<?php if($model->isNewRecord && !$model->getErrors())
 					$model->site_type = 0;
 				echo $form->dropDownLIst($model,'site_type', array(
 					'1' => Yii::t('phrase', 'Social Media / Community Website'),
@@ -79,8 +78,7 @@ EOP;
 		<div class="form-group row">
 			<label class="col-form-label col-lg-3 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('site_oauth');?> <span class="required">*</span></label>
 			<div class="col-lg-6 col-md-9 col-sm-12">
-				<?php 
-				if($model->isNewRecord && !$model->getErrors())
+				<?php if($model->isNewRecord && !$model->getErrors())
 					$model->site_oauth = 0;
 				echo $form->dropDownLIst($model,'site_oauth', array(
 					'1' => Yii::t('phrase', 'Enable'),
@@ -93,7 +91,7 @@ EOP;
 		<div class="form-group row">
 			<label class="col-form-label col-lg-3 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('online');?> <span class="required">*</span></label>
 			<div class="col-lg-6 col-md-9 col-sm-12">
-				<span class="small-px"><?php echo Yii::t('phrase', 'Maintenance Mode will prevent site visitors from accessing your website. You can customize the maintenance mode page by manually editing the file "/application/maintenance.html".');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'Maintenance Mode will prevent site visitors from accessing your website. You can customize the maintenance mode page by manually editing the file "/application/maintenance.html".');?></div>
 				<?php echo $form->radioButtonList($model, 'online', array(
 					1 => Yii::t('phrase', 'Online'),
 					2 => Yii::t('phrase', 'Offline (Coming Soon)'),
@@ -211,7 +209,7 @@ EOP;
 				<div class="col-lg-6 col-md-9 col-sm-12">
 					<?php echo $form->textArea($model,'event_tag', array('rows'=>6, 'cols'=>50, 'class'=>'form-control smaller')); ?>
 					<?php echo $form->error($model,'event_tag'); ?>
-					<span class="small-px"><?php echo Yii::t('phrase', 'tambahkan tanda koma (,) jika ingin menambahkan event tag lebih dari satu');?></span>
+					<div class="small-px"><?php echo Yii::t('phrase', 'tambahkan tanda koma (,) jika ingin menambahkan event tag lebih dari satu');?></div>
 				</div>
 			</div>
 		</div>
@@ -221,7 +219,7 @@ EOP;
 			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'site_title', array('maxlength'=>256, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'site_title'); ?>
-				<span class="small-px"><?php echo Yii::t('phrase', 'Give your community a unique name. This will appear in the &lt;title&gt; tag throughout most of your site.');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'Give your community a unique name. This will appear in the &lt;title&gt; tag throughout most of your site.');?></div>
 			</div>
 		</div>
 
@@ -252,7 +250,7 @@ EOP;
 			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->textArea($model,'site_keywords', array('rows'=>6, 'cols'=>50, 'class'=>'form-control', 'maxlength'=>256)); ?>
 				<?php echo $form->error($model,'site_keywords'); ?>
-				<span class="small-px"><?php echo Yii::t('phrase', 'tambahkan tanda koma (,) jika ingin menambahkan keyword lebih dari satu');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'tambahkan tanda koma (,) jika ingin menambahkan keyword lebih dari satu');?></div>
 			</div>
 		</div>
 
@@ -297,7 +295,7 @@ EOP;
 		<div class="form-group row">
 			<label class="col-form-label col-lg-3 col-md-3 col-sm-12"><?php echo Yii::t('phrase', 'Enable Username?');?></label>
 			<div class="col-lg-6 col-md-9 col-sm-12">
-				<span class="small-px"><?php echo Yii::t('phrase', 'By default, usernames are used to uniquely identify your users. If you choose to disable this feature, your users will not be given the option to enter a username. Instead, their user ID will be used. Note that if you do decide to enable this feature, you should make sure to create special REQUIRED display name profile fields - otherwise the users\' IDs will be displayed. Also note that if you disable usernames after users have already signed up, their usernames will be deleted and any previous links to their content will not work, as the links will no longer use their username! Finally, all recent activity and all notifications will be deleted if you choose to disable usernames after previously having them enabled.');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'By default, usernames are used to uniquely identify your users. If you choose to disable this feature, your users will not be given the option to enter a username. Instead, their user ID will be used. Note that if you do decide to enable this feature, you should make sure to create special REQUIRED display name profile fields - otherwise the users\' IDs will be displayed. Also note that if you disable usernames after users have already signed up, their usernames will be deleted and any previous links to their content will not work, as the links will no longer use their username! Finally, all recent activity and all notifications will be deleted if you choose to disable usernames after previously having them enabled.');?></div>
 				<?php echo $form->radioButtonList($model, 'signup_username', array(
 					1 => Yii::t('phrase', 'Yes, users are uniquely identified by their username.'),
 					0 => Yii::t('phrase', 'No, usernames will not be used in this network.'),

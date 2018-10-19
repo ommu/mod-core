@@ -174,7 +174,7 @@ class OmmuSettings extends OActiveRecord
 			'signup_terms' => Yii::t('attribute', 'Require users to agree to your terms of service?'),
 			'signup_invitepage' => Yii::t('attribute', 'Show "Invite Friends" Page?'),
 			'signup_inviteonly' => Yii::t('attribute', 'Invite Only?'),
-			'signup_checkemail' => Yii::t('attribute', 'Signup Checkemail'),	
+			'signup_checkemail' => Yii::t('attribute', 'Signup Checkemail'),
 			'signup_numgiven' => Yii::t('attribute', 'Signup Numgiven'),
 			'signup_adminemail' => Yii::t('attribute', 'Notify Admin by email when user signs up?'),
 			'general_profile' => Yii::t('attribute', 'Member Profiles'),
@@ -304,7 +304,7 @@ class OmmuSettings extends OActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 20,
+				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 50,
 			),
 		));
 	}

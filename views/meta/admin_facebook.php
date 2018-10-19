@@ -15,7 +15,7 @@
 	$this->breadcrumbs=array(
 		'Ommu Metas'=>array('manage'),
 		$model->id=>array('view','id'=>$model->id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 
 	$cs = Yii::app()->getClientScript();
@@ -36,7 +36,6 @@ EOP;
 	<?php $form=$this->beginWidget('application.libraries.yii-traits.system.OActiveForm', array(
 		'id'=>'ommu-meta-form',
 		'enableAjaxValidation'=>true,
-		//'htmlOptions' => array('enctype' => 'multipart/form-data')
 	)); ?>
 
 	<?php //begin.Messages ?>
@@ -73,27 +72,27 @@ EOP;
 			<div class="form-group row">
 				<label class="col-form-label col-lg-3 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('facebook_profile_firstname');?> <span class="required">*</span></label>
 				<div class="col-lg-6 col-md-9 col-sm-12">
-					<?php echo $form->textField($model,'facebook_profile_firstname', array('maxlength'=>32,'class'=>'form-control')); ?>
+					<?php echo $form->textField($model,'facebook_profile_firstname', array('maxlength'=>32, 'class'=>'form-control')); ?>
 					<?php echo $form->error($model,'facebook_profile_firstname'); ?>
-					<span class="small-px"><?php echo Yii::t('phrase', 'The first name of the person that this profile represents');?></span>
+					<div class="small-px"><?php echo Yii::t('phrase', 'The first name of the person that this profile represents');?></div>
 				</div>
 			</div>
 
 			<div class="form-group row">
 				<label class="col-form-label col-lg-3 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('facebook_profile_lastname');?> <span class="required">*</span></label>
 				<div class="col-lg-6 col-md-9 col-sm-12">
-					<?php echo $form->textField($model,'facebook_profile_lastname', array('maxlength'=>32,'class'=>'form-control')); ?>
+					<?php echo $form->textField($model,'facebook_profile_lastname', array('maxlength'=>32, 'class'=>'form-control')); ?>
 					<?php echo $form->error($model,'facebook_profile_lastname'); ?>
-					<span class="small-px"><?php echo Yii::t('phrase', 'The last name of the person that this profile represents');?></span>
+					<div class="small-px"><?php echo Yii::t('phrase', 'The last name of the person that this profile represents');?></div>
 				</div>
 			</div>
 
 			<div class="form-group row">
 				<label class="col-form-label col-lg-3 col-md-3 col-sm-12"><?php echo $model->getAttributeLabel('facebook_profile_username');?> <span class="required">*</span></label>
 				<div class="col-lg-6 col-md-9 col-sm-12">
-					<?php echo $form->textField($model,'facebook_profile_username', array('maxlength'=>32,'class'=>'form-control')); ?>
+					<?php echo $form->textField($model,'facebook_profile_username', array('maxlength'=>32, 'class'=>'form-control')); ?>
 					<?php echo $form->error($model,'facebook_profile_username'); ?>
-					<span class="small-px"><?php echo Yii::t('phrase', 'A username for the person that this profile represents (.i.e. "PutraSudaryanto")');?></span>
+					<div class="small-px"><?php echo Yii::t('phrase', 'A username for the person that this profile represents (.i.e. "PutraSudaryanto")');?></div>
 				</div>
 			</div>
 		</div>
@@ -101,27 +100,27 @@ EOP;
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'facebook_sitename', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-6 col-md-9 col-sm-12">
-				<?php echo $form->textField($model,'facebook_sitename', array('maxlength'=>64,'class'=>'form-control')); ?>
+				<?php echo $form->textField($model,'facebook_sitename', array('maxlength'=>64, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'facebook_sitename'); ?>
-				<span class="small-px"><?php echo Yii::t('phrase', 'The name of the web site upon which the object resides (.i.e. "Ommu Platform & Bootstrap")');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'The name of the web site upon which the object resides (.i.e. "Ommu Platform & Bootstrap")');?></div>
 			</div>
 		</div>
 
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'facebook_see_also', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-6 col-md-9 col-sm-12">
-				<?php echo $form->textField($model,'facebook_see_also', array('maxlength'=>256,'class'=>'form-control')); ?>
+				<?php echo $form->textField($model,'facebook_see_also', array('maxlength'=>256, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'facebook_see_also'); ?>
-				<span class="small-px"><?php echo Yii::t('phrase', 'URLs of related resources (.i.e. "http://www.ommu.co")');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'URLs of related resources (.i.e. "http://www.ommu.co")');?></div>
 			</div>
 		</div>
 
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'facebook_admins', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-6 col-md-9 col-sm-12">
-				<?php echo $form->textField($model,'facebook_admins', array('maxlength'=>32,'class'=>'form-control')); ?>
+				<?php echo $form->textField($model,'facebook_admins', array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'facebook_admins'); ?>
-				<span class="small-px"><?php echo Yii::t('phrase', 'Facebook IDs of the app\'s administrators (.i.e. "PutraSudaryanto")');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'Facebook IDs of the app\'s administrators (.i.e. "PutraSudaryanto")');?></div>
 			</div>
 		</div>
 

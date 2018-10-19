@@ -166,7 +166,7 @@ class OmmuLanguages extends OActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 20,
+				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 50,
 			),
 		));
 	}
@@ -344,7 +344,7 @@ class OmmuLanguages extends OActiveRecord
 			// Language set to default
 			if ($this->default == 1) {
 				self::model()->updateAll(array(
-					'default' => 0,	
+					'default' => 0,
 				));
 				$this->default = 1;
 			}

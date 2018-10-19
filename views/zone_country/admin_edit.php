@@ -15,7 +15,7 @@
 	$this->breadcrumbs=array(
 		'Ommu Zone Countries'=>array('manage'),
 		$model->country_id=>array('view','id'=>$model->country_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

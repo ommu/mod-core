@@ -17,7 +17,6 @@
 		'id'=>'ommu-walls-form',
 		'action'=>Yii::app()->createUrl('wall/post'),
 		'enableAjaxValidation'=>true,
-		//'htmlOptions' => array('enctype' => 'multipart/form-data')
 	)); ?>
 	<fieldset>
 		<div>

@@ -337,6 +337,7 @@ class ZonecityController extends Controller
 			if($term) {
 				$criteria = new CDbCriteria;
 				$criteria->select = "city_id, province_id, city_name";
+				$criteria->addInCondition('t.publish', array(0,1));
 				$criteria->condition = 'city_name LIKE :city';
 				$criteria->params = array(':city' => '%' . strtolower($term) . '%');
 				$criteria->order = "city_name ASC";

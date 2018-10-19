@@ -337,6 +337,7 @@ class ZonevillageController extends Controller
 			if($term) {
 				$criteria = new CDbCriteria;
 				$criteria->select = "village_id, district_id, village_name, zipcode";
+				$criteria->addInCondition('t.publish', array(0,1));
 				$criteria->condition = 'village_name LIKE :village';
 				$criteria->params = array(':village' => '%' . strtolower($term) . '%');
 				$criteria->order = "village_name ASC";

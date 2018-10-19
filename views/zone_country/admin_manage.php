@@ -13,7 +13,7 @@
 
 	$this->breadcrumbs=array(
 		'Ommu Zone Countries'=>array('manage'),
-		'Manage',
+		Yii::t('phrase', 'Manage'),
 	);
 	$this->menu=array(
 		array(

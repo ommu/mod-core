@@ -44,7 +44,7 @@ EOP;
 				<div class="form-group row">
 					<?php echo $form->labelEx($model,'name_i', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
 					<div class="col-lg-9 col-md-9 col-sm-12">
-						<?php echo $form->textField($model,'name_i', array('maxlength'=>256,'class'=>'form-control')); ?>
+						<?php echo $form->textField($model,'name_i', array('maxlength'=>256, 'class'=>'form-control')); ?>
 						<?php echo $form->error($model,'name_i'); ?>
 					</div>
 				</div>
@@ -52,14 +52,10 @@ EOP;
 				<div class="form-group row">
 					<?php echo $form->labelEx($model,'quote_i', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
 					<div class="col-lg-9 col-md-9 col-sm-12">
-						<?php 
-						//echo $form->textArea($model,'quote_i', array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
-						$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
+						<?php $this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 							'model'=>$model,
 							'attribute'=>'quote_i',
-							// Redactor options
 							'options'=>array(
-								//'lang'=>'fi',
 								'buttons'=>array(
 									'html', '|', 
 									'bold', 'italic', 'deleted', '|',
@@ -73,7 +69,7 @@ EOP;
 								'class'=>'form-control'
 							 ),
 						)); ?>
-						<span class="small-px">Note : add {$quote} in description static pages</span>
+						<div class="small-px">Note : add {$quote} in description static pages</div>
 						<?php echo $form->error($model,'quote_i'); ?>
 					</div>
 				</div>
@@ -81,14 +77,10 @@ EOP;
 				<div class="form-group row">
 					<?php echo $form->labelEx($model,'desc_i', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
 					<div class="col-lg-9 col-md-9 col-sm-12">
-						<?php
-						//echo $form->textArea($model,'desc_i', array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
-						$this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
+						<?php $this->widget('yiiext.imperavi-redactor-widget.ImperaviRedactorWidget', array(
 							'model'=>$model,
 							'attribute'=>'desc_i',
-							// Redactor options
 							'options'=>array(
-								//'lang'=>'fi',
 								'buttons'=>array(
 									'html', 'formatting', '|', 
 									'bold', 'italic', 'deleted', '|',
@@ -112,9 +104,7 @@ EOP;
 				<?php /*<div class="form-group row">
 					<?php echo $form->labelEx($model,'desc_i', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
 					<div class="col-lg-9 col-md-9 col-sm-12">
-						<?php
-						$model->desc_i = $model->description->message;
-						//echo $form->textArea($model,'desc_i', array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
+						<?php $model->desc_i = $model->description->message;
 						$options = array(
 							'lang' => 'en',
 							'buttons' => array('html', '|', 'bold', 'italic', '|',

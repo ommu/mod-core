@@ -15,7 +15,7 @@
 	$this->breadcrumbs=array(
 		'Ommu Zone Cities'=>array('manage'),
 		$model->city_id=>array('view','id'=>$model->city_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

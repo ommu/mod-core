@@ -17,7 +17,7 @@
 	$this->breadcrumbs=array(
 		'Messages'=>array('manage'),
 		$model->id=>array('view','id'=>$model->id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

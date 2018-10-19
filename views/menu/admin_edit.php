@@ -16,7 +16,7 @@
 	$this->breadcrumbs=array(
 		'Ommu Menus'=>array('manage'),
 		$model->title->message=>array('view','id'=>$model->id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

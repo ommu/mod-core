@@ -15,7 +15,7 @@
 	$this->breadcrumbs=array(
 		'Ommu Themes'=>array('manage'),
 		$model->name=>array('view','id'=>$model->theme_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

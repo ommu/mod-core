@@ -21,7 +21,6 @@
 <?php $form=$this->beginWidget('application.libraries.yii-traits.system.OActiveForm', array(
 	'id'=>'projects-form',
 	'enableAjaxValidation'=>true,
-	//'htmlOptions' => array('enctype' => 'multipart/form-data')
 )); ?>
 	<div class="dialog-content">
 		<?php echo $model->install == 1 ? Yii::t('phrase', 'Are you sure you want to uninstall this item?') : Yii::t('phrase', 'Are you sure you want to install this item?')?>

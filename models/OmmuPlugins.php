@@ -183,7 +183,7 @@ class OmmuPlugins extends OActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 20,
+				'pageSize'=>Yii::app()->params['grid-view'] ? Yii::app()->params['grid-view']['pageSize'] : 50,
 			),
 		));
 	}
@@ -272,7 +272,7 @@ class OmmuPlugins extends OActiveRecord
 			);
 			$this->templateColumns['actived'] = array(
 				'name' => 'actived',
-				'value' => '$data->install == 1 ? ($data->actived == 2 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Utility::getPublish(Yii::app()->controller->createUrl(\'active\', array("id"=>$data->plugin_id)), $data->actived, \'Actived,Deactived\')) : "-"',
+				'value' => '$data->install == 1 ? ($data->actived == 2 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Utility::getPublish(Yii::app()->controller->createUrl(\'active\', array("id"=>$data->plugin_id)), $data->actived, \'Actived,Deactived\')) : \'-\'',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -290,7 +290,7 @@ class OmmuPlugins extends OActiveRecord
 			);
 			$this->templateColumns['default'] = array(
 				'name' => 'default',
-				'value' => '$data->install == 1 ? ($data->default == 1 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Utility::getPublish(Yii::app()->controller->createUrl(\'default\', array("id"=>$data->plugin_id)), $data->default)) : "-"',
+				'value' => '$data->install == 1 ? ($data->default == 1 ? CHtml::image(Yii::app()->theme->baseUrl.\'/images/icons/publish.png\') : Utility::getPublish(Yii::app()->controller->createUrl(\'default\', array("id"=>$data->plugin_id)), $data->default)) : \'-\'',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -392,7 +392,7 @@ class OmmuPlugins extends OActiveRecord
 				// set to default modules
 				if($this->default == 1) {
 					self::model()->updateAll(array(
-						'default' => 0,	
+						'default' => 0,
 					));
 					$this->default = 1;
 				}

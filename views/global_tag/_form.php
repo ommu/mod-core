@@ -16,7 +16,6 @@
 <?php $form=$this->beginWidget('application.libraries.yii-traits.system.OActiveForm', array(
 	'id'=>'ommu-tags-form',
 	'enableAjaxValidation'=>true,
-	//'htmlOptions' => array('enctype' => 'multipart/form-data')
 )); ?>
 <div class="dialog-content">
 
@@ -31,7 +30,7 @@
 		<div class="form-group row">
 			<?php echo $form->labelEx($model,'body', array('class'=>'col-form-label col-lg-3 col-md-3 col-sm-12')); ?>
 			<div class="col-lg-9 col-md-9 col-sm-12">
-				<?php echo $form->textField($model,'body', array('maxlength'=>32,'class'=>'form-control')); ?>
+				<?php echo $form->textField($model,'body', array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'body'); ?>
 			</div>
 		</div>

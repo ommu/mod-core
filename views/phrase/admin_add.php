@@ -15,7 +15,7 @@
 
 	$this->breadcrumbs=array(
 		'Source Messages'=>array('manage'),
-		'Create',
+		Yii::t('phrase', 'Create'),
 	);
 ?>
 

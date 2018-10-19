@@ -337,6 +337,7 @@ class ZoneprovinceController extends Controller
 			if($term) {
 				$criteria = new CDbCriteria;
 				$criteria->select = "province_id, country_id, province_name";
+				$criteria->addInCondition('t.publish', array(0,1));
 				$criteria->condition = 'province_name LIKE :province';
 				$criteria->params = array(':province' => '%' . strtolower($term) . '%');
 				$criteria->order = "province_name ASC";

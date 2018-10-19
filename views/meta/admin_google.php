@@ -15,7 +15,7 @@
 	$this->breadcrumbs=array(
 		'Ommu Metas'=>array('manage'),
 		$model->id=>array('view','id'=>$model->id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 
@@ -24,7 +24,6 @@
 	<?php $form=$this->beginWidget('application.libraries.yii-traits.system.OActiveForm', array(
 		'id'=>'ommu-meta-form',
 		'enableAjaxValidation'=>true,
-		//'htmlOptions' => array('enctype' => 'multipart/form-data')
 	)); ?>
 
 	<?php //begin.Messages ?>
@@ -51,7 +50,7 @@
 			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'office_location', array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_location'); ?>
-				<span class="small-px"><?php echo Yii::t('phrase', 'A struct containing metadata defining the location of a place');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'A struct containing metadata defining the location of a place');?></div>
 			</div>
 		</div>
 
@@ -71,7 +70,7 @@
 				<?php echo $form->textField($model,'office_village', array('maxlength'=>32, 'class'=>'form-control', 'placeholder'=>$model->getAttributeLabel('office_village'))); ?>
 				<?php echo $form->textField($model,'office_district', array('maxlength'=>32, 'class'=>'form-control', 'placeholder'=>$model->getAttributeLabel('office_district'))); ?>
 				<?php echo $form->error($model,'office_place'); ?>
-				<span class="small-px"><?php echo Yii::t('phrase', 'The number, street, district and village of the postal address for this business');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'The number, street, district and village of the postal address for this business');?></div>
 			</div>
 		</div>
 
@@ -80,7 +79,7 @@
 			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->dropDownList($model,'office_city_id', OmmuZoneCity::getCity($model->office_province_id), array('class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_city_id'); ?>
-				<span class="small-px"><?php echo Yii::t('phrase', 'The city (or locality) line of the postal address for this business');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'The city (or locality) line of the postal address for this business');?></div>
 			</div>
 		</div>
 
@@ -97,7 +96,7 @@
 			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'office_zipcode', array('maxlength'=>6, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_zipcode'); ?>
-				<span class="small-px"><?php echo Yii::t('phrase', 'The state (or region) line of the postal address for this business');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'The state (or region) line of the postal address for this business');?></div>
 			</div>
 		</div>
 
@@ -106,7 +105,7 @@
 			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'office_phone', array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_phone'); ?>
-				<span class="small-px"><?php echo Yii::t('phrase', 'A telephone number to contact this business');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'A telephone number to contact this business');?></div>
 			</div>
 		</div>
 
@@ -115,7 +114,7 @@
 			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'office_fax', array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_fax'); ?>
-				<span class="small-px"><?php echo Yii::t('phrase', 'A fax number to contact this business');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'A fax number to contact this business');?></div>
 			</div>
 		</div>
 
@@ -124,7 +123,7 @@
 			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'office_email', array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_email'); ?>
-				<span class="small-px"><?php echo Yii::t('phrase', 'An email address to contact this business');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'An email address to contact this business');?></div>
 			</div>
 		</div>
 		
@@ -133,7 +132,7 @@
 			<div class="col-lg-6 col-md-9 col-sm-12">
 				<?php echo $form->textField($model,'office_website', array('maxlength'=>32, 'class'=>'form-control')); ?>
 				<?php echo $form->error($model,'office_website'); ?>
-				<span class="small-px"><?php echo Yii::t('phrase', 'A website for this business');?></span>
+				<div class="small-px"><?php echo Yii::t('phrase', 'A website for this business');?></div>
 			</div>
 		</div>
 		

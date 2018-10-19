@@ -105,7 +105,7 @@ class GlobaltagController extends Controller
 			if($term) {
 				$criteria = new CDbCriteria;
 				$criteria->select = 'tag_id, body';
-				$criteria->compare('publish', 1);
+				$criteria->addInCondition('t.publish', array(0,1));
 				$criteria->compare('body',$this->urlTitle($term), true);
 				$criteria->limit = $limit;
 				$criteria->order = "tag_id ASC";
