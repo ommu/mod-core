@@ -45,7 +45,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\web\UploadedFile;
 use yii\behaviors\SluggableBehavior;
-use ommu\core\models\SourceMessage;
+use app\models\SourceMessage;
 use ommu\users\models\Users;
 use ommu\core\models\view\CorePages as CorePagesView;
 

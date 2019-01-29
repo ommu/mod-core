@@ -33,7 +33,7 @@ use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use ommu\users\models\Users;
-use ommu\core\models\query\CoreTagsQuery;
+use ommu\core\models\query\CoreTags;
 
 class CoreTags extends \app\components\ActiveRecord
 {
@@ -105,11 +105,11 @@ class CoreTags extends \app\components\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return CoreTagsQuery the active query used by this AR class.
+     * @return CoreTags the active query used by this AR class.
      */
     public static function find()
     {
-        return new CoreTagsQuery(get_called_class());
+        return new CoreTags(get_called_class());
     }
 
     /**

@@ -35,7 +35,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\behaviors\SluggableBehavior;
 use ommu\users\models\Users;
-use ommu\core\models\query\CoreZoneCountryQuery;
+use ommu\core\models\query\CoreZoneCountry;
 
 class CoreZoneCountry extends \app\components\ActiveRecord
 {
@@ -127,11 +127,11 @@ class CoreZoneCountry extends \app\components\ActiveRecord
 
 	/**
 	 * @inheritdoc
-	 * @return CoreZoneCityQuery the active query used by this AR class.
+	 * @return CoreZoneCountry the active query used by this AR class.
 	 */
 	public static function find()
 	{
-		return new CoreZoneCountryQuery(get_called_class());
+		return new CoreZoneCountry(get_called_class());
 	}
 
 	/**

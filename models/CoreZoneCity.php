@@ -41,7 +41,7 @@ use yii\helpers\Html;
 use yii\behaviors\SluggableBehavior;
 use ommu\users\models\Users;
 use ommu\core\models\view\CoreZoneCity as CoreZoneCityView;
-use ommu\core\models\query\CoreZoneCityQuery;
+use ommu\core\models\query\CoreZoneCity;
 
 class CoreZoneCity extends \app\components\ActiveRecord
 {
@@ -159,11 +159,11 @@ class CoreZoneCity extends \app\components\ActiveRecord
 
 	/**
 	 * @inheritdoc
-	 * @return CoreZoneCityQuery the active query used by this AR class.
+	 * @return CoreZoneCity the active query used by this AR class.
 	 */
 	public static function find()
 	{
-		return new CoreZoneCityQuery(get_called_class());
+		return new CoreZoneCity(get_called_class());
 	}
 	
 	/**
