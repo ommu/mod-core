@@ -6,11 +6,11 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 ECC UGM (ecc.ft.ugm.ac.id)
+ * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 08:40 WIB
  * @modified date 23 April 2018, 14:05 WIB
  * @modified by Putra Sudaryanto <putra@sudaryanto.id>
- * @link http://ecc.ft.ugm.ac.id
+ * @link https://github.com/ommu/mod-core
  *
  */
 

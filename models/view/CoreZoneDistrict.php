@@ -4,10 +4,10 @@
  * 
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 ECC UGM (ecc.ft.ugm.ac.id)
+ * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 18 September 2017, 00:04 WIB
  * @modified date 22 April 2018, 19:29 WIB
- * @link https://ecc.ft.ugm.ac.id
+ * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "_view_core_zone_district".
  *
