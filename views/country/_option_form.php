@@ -1,15 +1,16 @@
 <?php
 /**
- * Modules (modules)
+ * Core Zone Countries (core-zone-country)
  * @var $this yii\web\View
- * @var $this ommu\core\controllers\ModuleController
- * @var $model ommu\core\models\search\Modules
+ * @var $this ommu\core\controllers\CountryController
+ * @var $model ommu\core\models\search\CoreZoneCountry
  * @var $form yii\widgets\ActiveForm
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
- * @created date 26 December 2017, 09:41 WIB
+ * @created date 8 September 2017, 11:45 WIB
+ * @modified date 24 April 2018, 22:41 WIB
  * @link https://github.com/ommu/mod-core
  *
  */

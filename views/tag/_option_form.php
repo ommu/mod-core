@@ -1,15 +1,16 @@
 <?php
 /**
- * Modules (modules)
+ * Core Tags (core-tags)
  * @var $this yii\web\View
- * @var $this ommu\core\controllers\ModuleController
- * @var $model ommu\core\models\search\Modules
+ * @var $this ommu\core\controllers\TagController
+ * @var $model ommu\core\models\search\CoreTags
  * @var $form yii\widgets\ActiveForm
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
- * @created date 26 December 2017, 09:41 WIB
+ * @created date 2 October 2017, 00:14 WIB
+ * @modified date 24 April 2018, 11:53 WIB
  * @link https://github.com/ommu/mod-core
  *
  */

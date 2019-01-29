@@ -1,15 +1,15 @@
 <?php
 /**
- * Modules (modules)
+ * Core Tags (core-tags)
  * @var $this yii\web\View
- * @var $this ommu\core\controllers\ModuleController
- * @var $model ommu\core\models\Modules
- * @var $searchModel ommu\core\models\search\Modules
+ * @var $this ommu\core\controllers\TagController
+ * @var $model ommu\core\models\CoreTags
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
- * @created date 26 December 2017, 09:41 WIB
+ * @created date 2 October 2017, 00:14 WIB
+ * @modified date 24 April 2018, 11:53 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -21,13 +21,15 @@ use yii\widgets\Pjax;
 
 $this->params['breadcrumbs'][] = $this->title;
 
+$this->params['menu']['content'] = [
+	['label' => Yii::t('app', 'Add Tag'), 'url' => Url::to(['create']), 'icon' => 'plus-square'],
+];
 $this->params['menu']['option'] = [
 	//['label' => Yii::t('app', 'Search'), 'url' => 'javascript:void(0);'],
 	['label' => Yii::t('app', 'Grid Option'), 'url' => 'javascript:void(0);'],
 ];
 ?>
 
-<div class="modules-index">
 <?php Pjax::begin(); ?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>
@@ -45,24 +47,22 @@ array_push($columnData, [
 	'buttons' => [
 		'view' => function ($url, $model, $key) {
 			$url = Url::to(['view', 'id'=>$model->primaryKey]);
-			return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title' => Yii::t('app', 'Detail Module')]);
+			return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title' => Yii::t('app', 'Detail Tag')]);
 		},
 		'update' => function ($url, $model, $key) {
 			$url = Url::to(['update', 'id'=>$model->primaryKey]);
-			return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['title' => Yii::t('app', 'Update Module')]);
+			return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['title' => Yii::t('app', 'Update Tag')]);
 		},
 		'delete' => function ($url, $model, $key) {
 			$url = Url::to(['delete', 'id'=>$model->primaryKey]);
-			if(Yii::$app->moduleManager->canRemoveModule($model->module_id)) {
-				return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-					'title' => Yii::t('app', 'Delete Module'),
-					'data-confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-					'data-method'  => 'post',
-				]);
-			}
+			return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+				'title' => Yii::t('app', 'Delete Tag'),
+				'data-confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+				'data-method'  => 'post',
+			]);
 		},
 	],
-	'template' => '{view}{delete}',
+	'template' => '{view}{update}{delete}',
 ]);
 
 echo GridView::widget([
@@ -73,4 +73,3 @@ echo GridView::widget([
 ]); ?>
 
 <?php Pjax::end(); ?>
-</div>
