@@ -6,7 +6,6 @@
 		"core",
 		"library",
 		"ommu",
-		"ommu-platform"
 		"ommu-platform",
 		"yii2"
 	],
