@@ -2,13 +2,14 @@
 /**
  * CoreZoneCity
  *
- * This is the ActiveQuery class for [[CoreZoneCity]].
- * @see CoreZoneCity
+ * This is the ActiveQuery class for [[\ommu\core\models\CoreZoneCity]].
+ * @see \ommu\core\models\CoreZoneCity
  * 
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2018 OMMU (www.ommu.co)
  * @created date 26 April 2018, 20:40 WIB
+ * @modified date 30 January 2019, 16:09 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -17,8 +18,15 @@ namespace ommu\core\models\query;
 
 class CoreZoneCity extends \yii\db\ActiveQuery
 {
+	/*
+	public function active()
+	{
+		return $this->andWhere('[[status]]=1');
+	}
+	*/
+
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function published() 
 	{
@@ -26,7 +34,7 @@ class CoreZoneCity extends \yii\db\ActiveQuery
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function unpublish() 
 	{
@@ -34,8 +42,16 @@ class CoreZoneCity extends \yii\db\ActiveQuery
 	}
 
 	/**
-	 * @inheritdoc
-	 * @return IpediaCompanies[]|array
+	 * {@inheritdoc}
+	 */
+	public function deleted() 
+	{
+		return $this->andWhere(['publish' => 2]);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 * @return \ommu\core\models\CoreZoneCity[]|array
 	 */
 	public function all($db = null)
 	{
@@ -43,8 +59,8 @@ class CoreZoneCity extends \yii\db\ActiveQuery
 	}
 
 	/**
-	 * @inheritdoc
-	 * @return IpediaCompanies|array|null
+	 * {@inheritdoc}
+	 * @return \ommu\core\models\CoreZoneCity|array|null
 	 */
 	public function one($db = null)
 	{

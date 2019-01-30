@@ -8,7 +8,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 11 September 2017, 10:39 WIB
- * @modified date 24 April 2018, 22:41 WIB
+ * @modified date 30 January 2019, 17:12 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -23,19 +23,19 @@ use ommu\core\models\CoreZoneCountry as CoreZoneCountryModel;
 class CoreZoneCountry extends CoreZoneCountryModel
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function rules()
 	{
 		return [
 			[['country_id', 'creation_id', 'modified_id'], 'integer'],
 			[['country_name', 'code', 'creation_date', 'modified_date', 'slug',
-				'creation_search', 'modified_search'], 'safe'],
+				'creationDisplayname', 'modifiedDisplayname'], 'safe'],
 		];
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function scenarios()
 	{
@@ -44,7 +44,7 @@ class CoreZoneCountry extends CoreZoneCountryModel
 	}
 
 	/**
-	 * Tambahkan fungsi beforeValidate ini pada model search untuk menumpuk validasi pd model induk.
+	 * Tambahkan fungsi beforeValidate ini pada model search untuk menumpuk validasi pd model induk. 
 	 * dan "jangan" tambahkan parent::beforeValidate, cukup "return true" saja.
 	 * maka validasi yg akan dipakai hanya pd model ini, semua script yg ditaruh di beforeValidate pada model induk
 	 * tidak akan dijalankan.
@@ -57,6 +57,7 @@ class CoreZoneCountry extends CoreZoneCountryModel
 	 * Creates data provider instance with search query applied
 	 *
 	 * @param array $params
+	 *
 	 * @return ActiveDataProvider
 	 */
 	public function search($params)
@@ -68,18 +69,20 @@ class CoreZoneCountry extends CoreZoneCountryModel
 		]);
 
 		// add conditions that should always apply here
-		$dataParams = ['query' => $query];
+		$dataParams = [
+			'query' => $query,
+		];
+		// disable pagination agar data pada api tampil semua
 		if(isset($params['pagination']) && $params['pagination'] == 0)
 			$dataParams['pagination'] = false;
-
 		$dataProvider = new ActiveDataProvider($dataParams);
 
 		$attributes = array_keys($this->getTableSchema()->columns);
-		$attributes['creation_search'] = [
+		$attributes['creationDisplayname'] = [
 			'asc' => ['creation.displayname' => SORT_ASC],
 			'desc' => ['creation.displayname' => SORT_DESC],
 		];
-		$attributes['modified_search'] = [
+		$attributes['modifiedDisplayname'] = [
 			'asc' => ['modified.displayname' => SORT_ASC],
 			'desc' => ['modified.displayname' => SORT_DESC],
 		];
@@ -108,8 +111,8 @@ class CoreZoneCountry extends CoreZoneCountryModel
 		$query->andFilterWhere(['like', 't.country_name', $this->country_name])
 			->andFilterWhere(['like', 't.code', $this->code])
 			->andFilterWhere(['like', 't.slug', $this->slug])
-			->andFilterWhere(['like', 'creation.displayname', $this->creation_search])
-			->andFilterWhere(['like', 'modified.displayname', $this->modified_search]);
+			->andFilterWhere(['like', 'creation.displayname', $this->creationDisplayname])
+			->andFilterWhere(['like', 'modified.displayname', $this->modifiedDisplayname]);
 
 		return $dataProvider;
 	}

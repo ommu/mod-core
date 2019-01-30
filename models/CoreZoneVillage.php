@@ -6,7 +6,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 16 September 2017, 17:35 WIB
- * @modified date 22 April 2018, 18:39 WIB
+ * @modified date 30 January 2019, 16:09 WIB
  * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "ommu_core_zone_village".
@@ -40,21 +40,19 @@ use yii\helpers\Html;
 use yii\behaviors\SluggableBehavior;
 use ommu\users\models\Users;
 use ommu\core\models\view\CoreZoneVillage as CoreZoneVillageView;
-use ommu\core\models\query\CoreZoneVillage;
 
 class CoreZoneVillage extends \app\components\ActiveRecord
 {
 	use \ommu\traits\UtilityTrait;
 
-	public $gridForbiddenColumn = ['checked','creation_date','creation_search','modified_date','modified_search','updated_date','slug'];
+	public $gridForbiddenColumn = ['checked','creation_date','creationDisplayname','modified_date','modifiedDisplayname','updated_date','slug'];
 
-	// Search Variable
-	public $district_search;
-	public $city_search;
-	public $province_search;
-	public $country_search;
-	public $creation_search;
-	public $modified_search;
+	public $districtName;
+	public $creationDisplayname;
+	public $modifiedDisplayname;
+	public $cityName;
+	public $provinceName;
+	public $countryName;
 
 	/**
 	 * @return string the associated database table name
@@ -86,7 +84,6 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 		return [
 			[['district_id', 'village_name', 'zipcode', 'mfdonline'], 'required'],
 			[['publish', 'district_id', 'creation_id', 'modified_id'], 'integer'],
-			[['creation_date', 'modified_date', 'updated_date'], 'safe'],
 			[['village_name', 'slug'], 'string', 'max' => 64],
 			[['zipcode'], 'string', 'max' => 5],
 			[['mfdonline'], 'string', 'max' => 10],
@@ -112,12 +109,12 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 			'modified_id' => Yii::t('app', 'Modified'),
 			'updated_date' => Yii::t('app', 'Updated Date'),
 			'slug' => Yii::t('app', 'Slug'),
-			'district_search' => Yii::t('app', 'District'),
-			'city_search' => Yii::t('app', 'City'),
-			'province_search' => Yii::t('app', 'Province'),
-			'country_search' => Yii::t('app', 'Country'),
-			'creation_search' => Yii::t('app', 'Creation'),
-			'modified_search' => Yii::t('app', 'Modified'),
+			'districtName' => Yii::t('app', 'District'),
+			'creationDisplayname' => Yii::t('app', 'Creation'),
+			'modifiedDisplayname' => Yii::t('app', 'Modified'),
+			'cityName' => Yii::t('app', 'City'),
+			'provinceName' => Yii::t('app', 'Province'),
+			'countryName' => Yii::t('app', 'Country'),
 		];
 	}
 
@@ -154,18 +151,18 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 	}
 
 	/**
-	 * @inheritdoc
-	 * @return CoreZoneVillage the active query used by this AR class.
+	 * {@inheritdoc}
+	 * @return \ommu\core\models\query\CoreZoneVillage the active query used by this AR class.
 	 */
 	public static function find()
 	{
-		return new CoreZoneVillage(get_called_class());
+		return new \ommu\core\models\query\CoreZoneVillage(get_called_class());
 	}
-	
+
 	/**
 	 * Set default columns to display
 	 */
-	public function init() 
+	public function init()
 	{
 		parent::init();
 
@@ -181,32 +178,32 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 			},
 		];
 		if(!Yii::$app->request->get('district')) {
-			$this->templateColumns['district_search'] = [
-				'attribute' => 'district_search',
+			$this->templateColumns['districtName'] = [
+				'attribute' => 'districtName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->district) ? $model->district->district_name : '-';
 				},
 			];
 		}
 		if(!isset($_GET['city'])) {
-			$this->templateColumns['city_search'] = [
-				'attribute' => 'city_search',
+			$this->templateColumns['cityName'] = [
+				'attribute' => 'cityName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->district->city) ? $model->district->city->city_name : '-';
 				},
 			];
 		}
 		if(!Yii::$app->request->get('province')) {
-			$this->templateColumns['province_search'] = [
-				'attribute' => 'province_search',
+			$this->templateColumns['provinceName'] = [
+				'attribute' => 'provinceName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->district->city->province) ? $model->district->city->province->province_name : '-';
 				},
 			];
 		}
 		if(!Yii::$app->request->get('country')) {
-			$this->templateColumns['country_search'] = [
-				'attribute' => 'country_search',
+			$this->templateColumns['countryName'] = [
+				'attribute' => 'countryName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->district->city->province->country) ? $model->district->city->province->country->country_name : '-';
 				},
@@ -228,15 +225,14 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 		];
 		$this->templateColumns['creation_date'] = [
 			'attribute' => 'creation_date',
-			'filter' => Html::input('date', 'creation_date', Yii::$app->request->get('creation_date'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->creation_date, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->creation_date, 'datetime') : '-';
+				return Yii::$app->formatter->asDatetime($model->creation_date, 'medium');
 			},
-			'format' => 'html',
+			'filter' => $this->filterDatepicker($this, 'creation_date'),
 		];
 		if(!Yii::$app->request->get('creation')) {
-			$this->templateColumns['creation_search'] = [
-				'attribute' => 'creation_search',
+			$this->templateColumns['creationDisplayname'] = [
+				'attribute' => 'creationDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->creation) ? $model->creation->displayname : '-';
 				},
@@ -244,15 +240,14 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 		}
 		$this->templateColumns['modified_date'] = [
 			'attribute' => 'modified_date',
-			'filter' => Html::input('date', 'modified_date', Yii::$app->request->get('modified_date'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->modified_date, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->modified_date, 'datetime') : '-';
+				return Yii::$app->formatter->asDatetime($model->modified_date, 'medium');
 			},
-			'format' => 'html',
+			'filter' => $this->filterDatepicker($this, 'modified_date'),
 		];
 		if(!Yii::$app->request->get('modified')) {
-			$this->templateColumns['modified_search'] = [
-				'attribute' => 'modified_search',
+			$this->templateColumns['modifiedDisplayname'] = [
+				'attribute' => 'modifiedDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->modified) ? $model->modified->displayname : '-';
 				},
@@ -260,11 +255,10 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 		}
 		$this->templateColumns['updated_date'] = [
 			'attribute' => 'updated_date',
-			'filter' => Html::input('date', 'updated_date', Yii::$app->request->get('updated_date'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->updated_date, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->updated_date, 'datetime') : '-';
+				return Yii::$app->formatter->asDatetime($model->updated_date, 'medium');
 			},
-			'format' => 'html',
+			'filter' => $this->filterDatepicker($this, 'updated_date'),
 		];
 		$this->templateColumns['slug'] = [
 			'attribute' => 'slug',
@@ -315,29 +309,40 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 
 		$model = $model->orderBy('t.village_name ASC')->all();
 
-		if($array == true) {
-			$items = [];
-			if($model !== null) {
-				foreach($model as $val) {
-					$items[$val->village_id] = $val->village_name;
-				}
-				return $items;
-			} else
-				return false;
-		} else 
-			return $model;
+		if($array == true)
+			return \yii\helpers\ArrayHelper::map($model, 'village_id', 'village_name');
+
+		return $model;
+	}
+
+	/**
+	 * after find attributes
+	 */
+	public function afterFind()
+	{
+		parent::afterFind();
+
+		// $this->districtName = isset($this->district) ? $this->district->district_name : '-';
+		// $this->creationDisplayname = isset($this->creation) ? $this->creation->displayname : '-';
+		// $this->modifiedDisplayname = isset($this->modified) ? $this->modified->displayname : '-';
+		// $this->cityName = isset($this->district) ? $this->district->city->city_name : '-';
+		// $this->provinceName = isset($this->district) ? $this->district->city->province->province_name : '-';
+		// $this->countryName = isset($this->district) ? $this->district->city->province->country->country_name : '-';
 	}
 
 	/**
 	 * before validate attributes
 	 */
-	public function beforeValidate() 
+	public function beforeValidate()
 	{
 		if(parent::beforeValidate()) {
-			if($this->isNewRecord)
-				$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			else
-				$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			if($this->isNewRecord) {
+				if($this->creation_id == null)
+					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			} else {
+				if($this->modified_id == null)
+					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			}
 		}
 		return true;
 	}
