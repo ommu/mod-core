@@ -41,7 +41,7 @@ use ommu\core\models\view\CoreZoneDistrict as CoreZoneDistrictView;
 class DistrictController extends Controller
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function behaviors()
 	{
@@ -67,10 +67,18 @@ class DistrictController extends Controller
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function actionIndex()
+	{
+		return $this->redirect(['manage']);
+	}
+
+	/**
 	 * Lists all CoreZoneDistrict models.
 	 * @return mixed
 	 */
-	public function actionIndex()
+	public function actionManage()
 	{
 		$searchModel = new CoreZoneDistrictSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -88,7 +96,7 @@ class DistrictController extends Controller
 		$this->view->title = Yii::t('app', 'Districts');
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_index', [
+		return $this->render('admin_manage', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,

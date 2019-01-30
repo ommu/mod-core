@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->city_name, 'url' => ['view'
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
 $this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Back To Locale Settings'), 'url' => Url::to(['country/index']), 'icon' => 'table'],
+	['label' => Yii::t('app', 'Back To Locale Settings'), 'url' => Url::to(['zone/country/index']), 'icon' => 'table'],
 	['label' => Yii::t('app', 'Back To Cities'), 'url' => Url::to(['index']), 'icon' => 'table'],
 	['label' => Yii::t('app', 'Detail'), 'url' => Url::to(['view', 'id' => $model->city_id]), 'icon' => 'eye'],
 	['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id' => $model->city_id]), 'confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'), 'method'=>'post', 'icon' => 'trash'],

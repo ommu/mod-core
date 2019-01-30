@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Villages'), 'url' =>
 $this->params['breadcrumbs'][] = Yii::t('app', 'Create');
 
 $this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Back To Locale Settings'), 'url' => Url::to(['country/index']), 'icon' => 'table'],
+	['label' => Yii::t('app', 'Back To Locale Settings'), 'url' => Url::to(['zone/country/index']), 'icon' => 'table'],
 	['label' => Yii::t('app', 'Back To Villages'), 'url' => Url::to(['index']), 'icon' => 'table'],
 ];
 ?>

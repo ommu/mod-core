@@ -41,7 +41,7 @@ use ommu\core\models\view\CoreZoneProvince as CoreZoneProvinceView;
 class ProvinceController extends Controller
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function behaviors()
 	{
@@ -67,10 +67,18 @@ class ProvinceController extends Controller
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function actionIndex()
+	{
+		return $this->redirect(['manage']);
+	}
+
+	/**
 	 * Lists all CoreZoneProvince models.
 	 * @return mixed
 	 */
-	public function actionIndex()
+	public function actionManage()
 	{
 		$searchModel = new CoreZoneProvinceSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -88,7 +96,7 @@ class ProvinceController extends Controller
 		$this->view->title = Yii::t('app', 'Provinces');
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_index', [
+		return $this->render('admin_manage', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,

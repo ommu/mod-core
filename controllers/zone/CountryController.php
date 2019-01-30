@@ -38,7 +38,7 @@ use ommu\core\models\search\CoreZoneCountry as CoreZoneCountrySearch;
 class CountryController extends Controller
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function behaviors()
 	{
@@ -63,10 +63,18 @@ class CountryController extends Controller
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function actionIndex()
+	{
+		return $this->redirect(['manage']);
+	}
+
+	/**
 	 * Lists all CoreZoneCountry models.
 	 * @return mixed
 	 */
-	public function actionIndex()
+	public function actionManage()
 	{
 		$searchModel = new CoreZoneCountrySearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -84,7 +92,7 @@ class CountryController extends Controller
 		$this->view->title = Yii::t('app', 'Countries');
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_index', [
+		return $this->render('admin_manage', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
