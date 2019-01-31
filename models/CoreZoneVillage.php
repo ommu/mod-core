@@ -129,29 +129,29 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getCity()
-	{
-		return $this->hasOne(CoreZoneCity::className(), ['city_id' => 'city_id'])
-			->via('district');
-	}
+	// public function getCity()
+	// {
+	// 	return $this->hasOne(CoreZoneCity::className(), ['city_id' => 'city_id'])
+	// 		->via('district');
+	// }
 
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getProvince()
-	{
-		return $this->hasOne(CoreZoneProvince::className(), ['province_id' => 'province_id'])
-			->via('city');
-	}
+	// public function getProvince()
+	// {
+	// 	return $this->hasOne(CoreZoneProvince::className(), ['province_id' => 'province_id'])
+	// 		->via('city');
+	// }
 
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getCountry()
-	{
-		return $this->hasOne(CoreZoneCountry::className(), ['country_id' => 'country_id'])
-			->via('province');
-	}
+	// public function getCountry()
+	// {
+	// 	return $this->hasOne(CoreZoneCountry::className(), ['country_id' => 'country_id'])
+	// 		->via('province');
+	// }
 
 	/**
 	 * @return \yii\db\ActiveQuery

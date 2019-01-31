@@ -33,25 +33,25 @@ use ommu\core\models\CoreMeta;
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php echo $form->field($model, 'office_hour', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'office_hour', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->textarea(['rows'=>2,'rows'=>6])
 	->label($model->getAttributeLabel('office_hour'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'office_hotline', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'office_hotline', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('office_hotline'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'map_icons', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'map_icons', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('map_icons'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'map_icon_size', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'map_icon_size', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->textarea(['rows'=>2,'rows'=>6])
 	->label($model->getAttributeLabel('map_icon_size'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 	
 <div class="ln_solid"></div>
 <div class="form-group">
-	<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+	<div class="col-md-6 col-sm-9 col-xs-12 col-sm-offset-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>

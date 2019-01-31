@@ -126,11 +126,11 @@ class CoreZoneCity extends \app\components\ActiveRecord
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getCountry()
-	{
-		return $this->hasOne(CoreZoneCountry::className(), ['country_id' => 'country_id'])
-			->via('province');
-	}
+	// public function getCountry()
+	// {
+	// 	return $this->hasOne(CoreZoneCountry::className(), ['country_id' => 'country_id'])
+	// 		->via('province');
+	// }
 
 	/**
 	 * @return \yii\db\ActiveQuery

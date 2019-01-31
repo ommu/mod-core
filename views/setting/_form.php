@@ -30,15 +30,15 @@ use app\components\ActiveForm;
 
 
 
-<?php echo $form->field($model, 'site_creation', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'site_creation', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->textInput(['type' => 'date'])
 	->label($model->getAttributeLabel('site_creation'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'site_dateformat', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'site_dateformat', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('site_dateformat'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'site_timeformat', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'site_timeformat', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('site_timeformat'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
@@ -46,15 +46,15 @@ use app\components\ActiveForm;
 
 
 
-<?php echo $form->field($model, 'license_email', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'license_email', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('license_email'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'license_key', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'license_key', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('license_key'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'ommu_version', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'ommu_version', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('ommu_version'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
@@ -68,7 +68,7 @@ use app\components\ActiveForm;
 
 <div class="ln_solid"></div>
 <div class="form-group">
-	<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+	<div class="col-md-6 col-sm-9 col-xs-12 col-sm-offset-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>

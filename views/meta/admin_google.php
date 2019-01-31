@@ -48,26 +48,26 @@ $setting = [
 	1 => Yii::t('app', 'Enable'),
 	0 => Yii::t('app', 'Disable'),
 ];
-echo $form->field($model, 'office_on', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+echo $form->field($model, 'office_on', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
 	->label($model->getAttributeLabel('office_on'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 	
-<?php echo $form->field($model, 'google_on', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'google_on', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
 	->label($model->getAttributeLabel('google_on'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'office_location', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'A struct containing metadata defining the location of a place').'</span></div>'])
+<?php echo $form->field($model, 'office_location', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'A struct containing metadata defining the location of a place').'</span></div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('office_location'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'office_name', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'office_name', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('office_name'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
 <div class="form-group">
 	<?php echo $form->field($model, 'office_place', ['template' => '{label}', 'options' => ['tag' => null]])
 		->label($model->getAttributeLabel('office_place'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
-	<div class="col-md-9 col-sm-9 col-xs-12">
+	<div class="col-md-6 col-sm-9 col-xs-12">
 		<?php echo $form->field($model, 'office_place', ['template' => '{input}{error}'])
 			->textarea(['rows'=>2,'rows'=>6])
 			->label($model->getAttributeLabel('office_place'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
@@ -126,45 +126,45 @@ echo $form->field($model, 'office_on', ['template' => '{label}<div class="col-md
 
 <?php
 $office_city_id = CoreZoneCity::getCity(1);
-echo $form->field($model, 'office_city_id', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'The city (or locality) line of the postal address for this business').'</span></div>'])
+echo $form->field($model, 'office_city_id', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'The city (or locality) line of the postal address for this business').'</span></div>'])
 	->dropDownList($office_city_id, ['prompt'=>''])
 	->label($model->getAttributeLabel('office_city_id'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
 <?php
 $office_province_id = CoreZoneProvince::getProvince(1);
-echo $form->field($model, 'office_province_id', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+echo $form->field($model, 'office_province_id', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->dropDownList($office_province_id, ['prompt'=>''])
 	->label($model->getAttributeLabel('office_province_id'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
 <?php
 $office_country_id = CoreZoneCountry::getCountry();
-echo $form->field($model, 'office_country_id', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+echo $form->field($model, 'office_country_id', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->dropDownList($office_country_id, ['prompt'=>''])
 	->label($model->getAttributeLabel('office_country_id'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'office_zipcode', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'The state (or region) line of the postal address for this business').'</span></div>'])
+<?php echo $form->field($model, 'office_zipcode', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'The state (or region) line of the postal address for this business').'</span></div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('office_zipcode'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'office_phone', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'A telephone number to contact this business').'</span></div>'])
+<?php echo $form->field($model, 'office_phone', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'A telephone number to contact this business').'</span></div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('office_phone'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'office_fax', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'A fax number to contact this business').'</span></div>'])
+<?php echo $form->field($model, 'office_fax', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'A fax number to contact this business').'</span></div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('office_fax'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'office_email', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'An email address to contact this business').'</span></div>'])
+<?php echo $form->field($model, 'office_email', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'An email address to contact this business').'</span></div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('office_email'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'office_website', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'A website for this business').'</span></div>'])
+<?php echo $form->field($model, 'office_website', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'A website for this business').'</span></div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('office_website'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group">
-	<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+	<div class="col-md-6 col-sm-9 col-xs-12 col-sm-offset-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>

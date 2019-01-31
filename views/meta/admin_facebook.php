@@ -54,7 +54,7 @@ $setting = [
 	1 => Yii::t('app', 'Enable'),
 	0 => Yii::t('app', 'Disable'),
 ];
-echo $form->field($model, 'facebook_on', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+echo $form->field($model, 'facebook_on', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
 	->label($model->getAttributeLabel('facebook_on'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
@@ -65,39 +65,39 @@ $facebook_type = [
 ];
 if($model->isNewRecord && !$model->getErrors())
 	$model->facebook_type = 2;
-echo $form->field($model, 'facebook_type', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+echo $form->field($model, 'facebook_type', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->dropDownList($facebook_type)
 	->label($model->getAttributeLabel('facebook_type'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
 <div id="profile" class="filter mb-10" <?php echo $model->facebook_type != 1 ? 'style="display: none;"' : '';?>>
-	<?php echo $form->field($model, 'facebook_profile_firstname', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'The first name of the person that this profile represents').'</span></div>'])
+	<?php echo $form->field($model, 'facebook_profile_firstname', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'The first name of the person that this profile represents').'</span></div>'])
 		->textInput(['maxlength' => true])
 		->label($model->getAttributeLabel('facebook_profile_firstname'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-	<?php echo $form->field($model, 'facebook_profile_lastname', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'The last name of the person that this profile represents').'</span></div>'])
+	<?php echo $form->field($model, 'facebook_profile_lastname', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'The last name of the person that this profile represents').'</span></div>'])
 		->textInput(['maxlength' => true])
 		->label($model->getAttributeLabel('facebook_profile_lastname'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-	<?php echo $form->field($model, 'facebook_profile_username', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'A username for the person that this profile represents (.i.e. "PutraSudaryanto")').'</span></div>'])
+	<?php echo $form->field($model, 'facebook_profile_username', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'A username for the person that this profile represents (.i.e. "PutraSudaryanto")').'</span></div>'])
 		->textInput(['maxlength' => true])
 		->label($model->getAttributeLabel('facebook_profile_username'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 </div>
 
-<?php echo $form->field($model, 'facebook_sitename', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'The name of the web site upon which the object resides (.i.e. "Ommu Platform, Sudaryanto.ID")').'</span></div>'])
+<?php echo $form->field($model, 'facebook_sitename', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'The name of the web site upon which the object resides (.i.e. "Ommu Platform, Sudaryanto.ID")').'</span></div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('facebook_sitename'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'facebook_see_also', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'URLs of related resources (.i.e. "http://www.ommu.co")').'</span></div>'])
+<?php echo $form->field($model, 'facebook_see_also', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'URLs of related resources (.i.e. "http://www.ommu.co")').'</span></div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('facebook_see_also'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'facebook_admins', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'Facebook IDs of the app\'s administrators (.i.e. "PutraSudaryanto")').'</span></div>'])
+<?php echo $form->field($model, 'facebook_admins', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'Facebook IDs of the app\'s administrators (.i.e. "PutraSudaryanto")').'</span></div>'])
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('facebook_admins'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group">
-	<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+	<div class="col-md-6 col-sm-9 col-xs-12 col-sm-offset-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>

@@ -45,7 +45,7 @@ $this->params['menu']['content'] = [
 <div class="form-group field-meta_image">
 	<?php echo $form->field($model, 'meta_image', ['template' => '{label}', 'options' => ['tag' => null]])
 		->label($model->getAttributeLabel('meta_image'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
-	<div class="col-md-9 col-sm-9 col-xs-12">
+	<div class="col-md-6 col-sm-9 col-xs-12">
 		<?php echo !$model->isNewRecord && $model->old_meta_image_i != '' ? Html::img(join('/', [Url::Base(), CoreMeta::getUploadPath(false), $model->old_meta_image_i]), ['class'=>'mb-15', 'width'=>'100%']) : '';?>
 		<?php echo $form->field($model, 'meta_image', ['template' => '{input}{error}'])
 			->fileInput()
@@ -53,7 +53,7 @@ $this->params['menu']['content'] = [
 	</div>
 </div>
 
-<?php echo $form->field($model, 'meta_image_alt', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'meta_image_alt', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->textInput()
 	->label($model->getAttributeLabel('meta_image_alt'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
@@ -62,25 +62,25 @@ $setting = [
 	1 => Yii::t('app', 'Enable'),
 	0 => Yii::t('app', 'Disable'),
 ];
-echo $form->field($model, 'office_on', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+echo $form->field($model, 'office_on', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
 	->label($model->getAttributeLabel('office_on'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 	
-<?php echo $form->field($model, 'google_on', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'google_on', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
 	->label($model->getAttributeLabel('google_on'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'twitter_on', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'twitter_on', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
 	->label($model->getAttributeLabel('twitter_on'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'facebook_on', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'facebook_on', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
 	->label($model->getAttributeLabel('facebook_on'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group">
-	<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+	<div class="col-md-6 col-sm-9 col-xs-12 col-sm-offset-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>
