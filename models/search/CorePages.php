@@ -8,7 +8,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 16:08 WIB
- * @modified date 20 April 2018, 09:57 WIB
+ * @modified date 31 January 2019, 16:38 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -29,8 +29,8 @@ class CorePages extends CorePagesModel
 	{
 		return [
 			[['page_id', 'publish', 'name', 'desc', 'quote', 'media_show', 'media_type', 'creation_id', 'modified_id'], 'integer'],
-			[['media', 'creation_date', 'modified_date', 'updated_date', 'slug', 
-				'name_i', 'desc_i', 'quote_i', 'creation_search', 'modified_search', 'view_search', 'media_search'], 'safe'],
+			[['media', 'creation_date', 'modified_date', 'updated_date', 'slug',
+				'name_i', 'desc_i', 'quote_i', 'creationDisplayname', 'modifiedDisplayname'], 'safe'],
 		];
 	}
 
@@ -57,6 +57,7 @@ class CorePages extends CorePagesModel
 	 * Creates data provider instance with search query applied
 	 *
 	 * @param array $params
+	 *
 	 * @return ActiveDataProvider
 	 */
 	public function search($params)
@@ -72,9 +73,13 @@ class CorePages extends CorePagesModel
 		]);
 
 		// add conditions that should always apply here
-		$dataProvider = new ActiveDataProvider([
+		$dataParams = [
 			'query' => $query,
-		]);
+		];
+		// disable pagination agar data pada api tampil semua
+		if(isset($params['pagination']) && $params['pagination'] == 0)
+			$dataParams['pagination'] = false;
+		$dataProvider = new ActiveDataProvider($dataParams);
 
 		$attributes = array_keys($this->getTableSchema()->columns);
 		$attributes['name_i'] = [
@@ -89,19 +94,15 @@ class CorePages extends CorePagesModel
 			'asc' => ['quoteRltn.message' => SORT_ASC],
 			'desc' => ['quoteRltn.message' => SORT_DESC],
 		];
-		$attributes['creation_search'] = [
+		$attributes['creationDisplayname'] = [
 			'asc' => ['creation.displayname' => SORT_ASC],
 			'desc' => ['creation.displayname' => SORT_DESC],
 		];
-		$attributes['modified_search'] = [
+		$attributes['modifiedDisplayname'] = [
 			'asc' => ['modified.displayname' => SORT_ASC],
 			'desc' => ['modified.displayname' => SORT_DESC],
 		];
-		$attributes['media_search'] = [
-			'asc' => ['view.media' => SORT_ASC],
-			'desc' => ['view.media' => SORT_DESC],
-		];
-		$attributes['view_search'] = [
+		$attributes['views'] = [
 			'asc' => ['view.views' => SORT_ASC],
 			'desc' => ['view.views' => SORT_DESC],
 		];
@@ -131,8 +132,6 @@ class CorePages extends CorePagesModel
 			'cast(t.modified_date as date)' => $this->modified_date,
 			't.modified_id' => isset($params['modified']) ? $params['modified'] : $this->modified_id,
 			'cast(t.updated_date as date)' => $this->updated_date,
-			'view.media' => $this->media_search,
-			'view.views' => $this->view_search,
 		]);
 
 		if(isset($params['trash']))
@@ -149,8 +148,8 @@ class CorePages extends CorePagesModel
 			->andFilterWhere(['like', 'title.message', $this->name_i])
 			->andFilterWhere(['like', 'description.message', $this->desc_i])
 			->andFilterWhere(['like', 'quoteRltn.message', $this->quote_i])
-			->andFilterWhere(['like', 'creation.displayname', $this->creation_search])
-			->andFilterWhere(['like', 'modified.displayname', $this->modified_search]);
+			->andFilterWhere(['like', 'creation.displayname', $this->creationDisplayname])
+			->andFilterWhere(['like', 'modified.displayname', $this->modifiedDisplayname]);
 
 		return $dataProvider;
 	}

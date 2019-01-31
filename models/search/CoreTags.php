@@ -8,7 +8,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 00:14 WIB
- * @modified date 24 April 2018, 11:53 WIB
+ * @modified date 31 January 2019, 16:40 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -30,7 +30,7 @@ class CoreTags extends CoreTagsModel
 		return [
 			[['tag_id', 'publish', 'creation_id', 'modified_id'], 'integer'],
 			[['body', 'creation_date', 'modified_date', 'updated_date',
-				'creation_search', 'modified_search'], 'safe'],
+				'creationDisplayname', 'modifiedDisplayname'], 'safe'],
 		];
 	}
 
@@ -57,6 +57,7 @@ class CoreTags extends CoreTagsModel
 	 * Creates data provider instance with search query applied
 	 *
 	 * @param array $params
+	 *
 	 * @return ActiveDataProvider
 	 */
 	public function search($params)
@@ -68,16 +69,20 @@ class CoreTags extends CoreTagsModel
 		]);
 
 		// add conditions that should always apply here
-		$dataProvider = new ActiveDataProvider([
+		$dataParams = [
 			'query' => $query,
-		]);
+		];
+		// disable pagination agar data pada api tampil semua
+		if(isset($params['pagination']) && $params['pagination'] == 0)
+			$dataParams['pagination'] = false;
+		$dataProvider = new ActiveDataProvider($dataParams);
 
 		$attributes = array_keys($this->getTableSchema()->columns);
-		$attributes['creation_search'] = [
+		$attributes['creationDisplayname'] = [
 			'asc' => ['creation.displayname' => SORT_ASC],
 			'desc' => ['creation.displayname' => SORT_DESC],
 		];
-		$attributes['modified_search'] = [
+		$attributes['modifiedDisplayname'] = [
 			'asc' => ['modified.displayname' => SORT_ASC],
 			'desc' => ['modified.displayname' => SORT_DESC],
 		];
@@ -114,8 +119,8 @@ class CoreTags extends CoreTagsModel
 		}
 
 		$query->andFilterWhere(['like', 't.body', $this->body])
-			->andFilterWhere(['like', 'creation.displayname', $this->creation_search])
-			->andFilterWhere(['like', 'modified.displayname', $this->modified_search]);
+			->andFilterWhere(['like', 'creation.displayname', $this->creationDisplayname])
+			->andFilterWhere(['like', 'modified.displayname', $this->modifiedDisplayname]);
 
 		return $dataProvider;
 	}

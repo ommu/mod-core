@@ -10,12 +10,11 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 00:14 WIB
- * @modified date 24 April 2018, 11:53 WIB
+ * @modified date 31 January 2019, 16:40 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
 
-use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tags'), 'url' => ['index']];
@@ -26,6 +25,10 @@ $this->params['menu']['content'] = [
 ];
 ?>
 
+<div class="core-tags-create">
+
 <?php echo $this->render('_form', [
 	'model' => $model,
 ]); ?>
+
+</div>

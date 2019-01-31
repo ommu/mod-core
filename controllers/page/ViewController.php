@@ -8,6 +8,7 @@
  * Reference start
  * TOC :
  *	Index
+ *	Manage
  *	View
  *	Delete
  *	RunAction
@@ -19,16 +20,15 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 22:42 WIB
- * @modified date 23 April 2018, 11:43 WIB
+ * @modified date 31 January 2019, 16:39 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
- 
+
 namespace ommu\core\controllers\page;
 
 use Yii;
 use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
 use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\CorePageViews;
@@ -56,10 +56,18 @@ class ViewController extends Controller
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function actionIndex()
+	{
+		return $this->redirect(['manage']);
+	}
+
+	/**
 	 * Lists all CorePageViews models.
 	 * @return mixed
 	 */
-	public function actionIndex()
+	public function actionManage()
 	{
 		$searchModel = new CorePageViewsSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -74,10 +82,10 @@ class ViewController extends Controller
 		}
 		$columns = $searchModel->getGridColumn($cols);
 
-		$this->view->title = Yii::t('app', 'Page Views');
+		$this->view->title = Yii::t('app', 'Views');
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_index', [
+		return $this->render('admin_manage', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
@@ -93,7 +101,7 @@ class ViewController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		$this->view->title = Yii::t('app', 'Detail {model-class}: {page-id}', ['model-class' => 'Page View', 'page-id' => $model->page->title->message]);
+		$this->view->title = Yii::t('app', 'Detail {model-class}: {page-id}', ['model-class' => 'View', 'page-id' => $model->page->title->message]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_view', [
@@ -114,8 +122,7 @@ class ViewController extends Controller
 
 		if($model->save(false, ['publish'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Page view success deleted.'));
-			return $this->redirect(['index']);
-			//return $this->redirect(['view', 'id' => $model->view_id]);
+			return $this->redirect(['manage']);
 		}
 	}
 
@@ -133,7 +140,7 @@ class ViewController extends Controller
 
 		if($model->save(false, ['publish'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Page view success updated.'));
-			return $this->redirect(['index']);
+			return $this->redirect(['manage']);
 		}
 	}
 
@@ -146,9 +153,9 @@ class ViewController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = CorePageViews::findOne($id)) !== null) 
+		if(($model = CorePageViews::findOne($id)) !== null)
 			return $model;
-		else
-			throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+
+		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}
 }

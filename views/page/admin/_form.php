@@ -10,7 +10,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 16:08 WIB
- * @modified date 23 April 2018, 10:07 WIB
+ * @modified date 31 January 2019, 16:38 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -29,6 +29,8 @@ $redactorOptions = [
 ];
 ?>
 
+<div class="core-pages-form">
+
 <?php $form = ActiveForm::begin([
 	'options' => [
 		'enctype' => 'multipart/form-data',
@@ -41,41 +43,32 @@ $redactorOptions = [
 <?php //echo $form->errorSummary($model);?>
 
 <?php echo $form->field($model, 'name_i', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
-	->textInput(['maxlength' => true])
+	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('name_i'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
 <?php echo $form->field($model, 'desc_i', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
-	->textarea(['rows'=>2,'rows'=>6])
+	->textarea(['rows'=>6, 'cols'=>50])
 	->widget(Redactor::className(), ['clientOptions' => $redactorOptions])
 	->label($model->getAttributeLabel('desc_i'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
 <?php echo $form->field($model, 'quote_i', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
-	->textarea(['rows'=>2,'rows'=>6,'maxlength' => true])
+	->textarea(['rows'=>6, 'cols'=>50, 'maxlength'=>true])
 	->label($model->getAttributeLabel('quote_i'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<div class="form-group field-media">
-	<?php echo $form->field($model, 'media', ['template' => '{label}', 'options' => ['tag' => null]])
-		->label($model->getAttributeLabel('media'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
-	<div class="col-md-6 col-sm-9 col-xs-12">
-		<?php echo !$model->isNewRecord && $model->old_media_i != '' ? Html::img(join('/', [Url::Base(), CorePages::getUploadPath(false), $model->old_media_i]), ['class'=>'mb-15', 'width'=>'100%']) : '';?>
-		<?php echo $form->field($model, 'media', ['template' => '{input}{error}'])
-			->fileInput()
-			->label($model->getAttributeLabel('media'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
-	</div>
-</div>
+<?php $uploadPath = CorePages::getUploadPath(false);
+$media = !$model->isNewRecord && $model->old_media != '' ? Html::img(join('/', [Url::Base(), $uploadPath, $model->old_media]), ['class'=>'mb-15', 'width'=>'100%']) : '';
+echo $form->field($model, 'media', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12"><div>'.$media.'</div>{input}{error}</div>'])
+	->fileInput()
+	->label($model->getAttributeLabel('media'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php echo $form->field($model, 'media_show', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12 checkbox">{input}{error}</div>'])
-	->checkbox(['label'=>''])
+<?php $mediaShow = CorePages::getMediaShow();
+echo $form->field($model, 'media_show', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+	->dropDownList($mediaShow, ['prompt'=>''])
 	->label($model->getAttributeLabel('media_show'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
-<?php 
-$media_type = [
-	'0'=>Yii::t('app', 'Small'), 
-	'1'=>Yii::t('app', 'Medium'), 
-	'2'=>Yii::t('app', 'Large'),
-];
+<?php $mediaType = CorePages::getMediaType();
 echo $form->field($model, 'media_type', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
-	->dropDownList($media_type)
+	->dropDownList($mediaType, ['prompt'=>''])
 	->label($model->getAttributeLabel('media_type'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
 <?php echo $form->field($model, 'publish', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12 checkbox">{input}{error}</div>'])
@@ -90,3 +83,5 @@ echo $form->field($model, 'media_type', ['template' => '{label}<div class="col-m
 </div>
 
 <?php ActiveForm::end(); ?>
+
+</div>

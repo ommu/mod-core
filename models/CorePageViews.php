@@ -6,7 +6,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 22:41 WIB
- * @modified date 22 April 2018, 18:35 WIB
+ * @modified date 31 January 2019, 16:07 WIB
  * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "ommu_core_page_views".
@@ -34,7 +34,6 @@ use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use ommu\users\models\Users;
-use yii\web\HeadersAlreadySentException;
 
 class CorePageViews extends \app\components\ActiveRecord
 {
@@ -42,9 +41,8 @@ class CorePageViews extends \app\components\ActiveRecord
 
 	public $gridForbiddenColumn = ['view_ip', 'deleted_date'];
 
-	// Search Variable
-	public $page_search;
-	public $user_search;
+	public $pageName;
+	public $userDisplayname;
 
 	/**
 	 * @return string the associated database table name
@@ -62,7 +60,6 @@ class CorePageViews extends \app\components\ActiveRecord
 		return [
 			[['page_id'], 'required'],
 			[['publish', 'page_id', 'user_id', 'views'], 'integer'],
-			[['user_id', 'view_date', 'view_ip', 'deleted_date'], 'safe'],
 			[['view_ip'], 'string', 'max' => 20],
 			[['page_id'], 'exist', 'skipOnError' => true, 'targetClass' => CorePages::className(), 'targetAttribute' => ['page_id' => 'page_id']],
 			[['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'user_id']],
@@ -83,16 +80,24 @@ class CorePageViews extends \app\components\ActiveRecord
 			'view_date' => Yii::t('app', 'View Date'),
 			'view_ip' => Yii::t('app', 'View Ip'),
 			'deleted_date' => Yii::t('app', 'Deleted Date'),
-			'page_search' => Yii::t('app', 'Page'),
-			'user_search' => Yii::t('app', 'User'),
+			'histories' => Yii::t('app', 'Histories'),
+			'pageName' => Yii::t('app', 'Page'),
+			'userDisplayname' => Yii::t('app', 'User'),
 		];
 	}
 
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getHistories()
+	public function getHistories($count=true)
 	{
+		if($count == true) {
+			$model = CorePageViewHistory::find()
+				->where(['view_id' => $this->view_id]);
+
+			return $model->count();
+		}
+
 		return $this->hasMany(CorePageViewHistory::className(), ['view_id' => 'view_id']);
 	}
 
@@ -113,9 +118,18 @@ class CorePageViews extends \app\components\ActiveRecord
 	}
 
 	/**
+	 * {@inheritdoc}
+	 * @return \ommu\core\models\query\CorePageViews the active query used by this AR class.
+	 */
+	public static function find()
+	{
+		return new \ommu\core\models\query\CorePageViews(get_called_class());
+	}
+
+	/**
 	 * Set default columns to display
 	 */
-	public function init() 
+	public function init()
 	{
 		parent::init();
 
@@ -125,16 +139,16 @@ class CorePageViews extends \app\components\ActiveRecord
 			'contentOptions' => ['class'=>'center'],
 		];
 		if(!Yii::$app->request->get('page')) {
-			$this->templateColumns['page_search'] = [
-				'attribute' => 'page_search',
+			$this->templateColumns['pageName'] = [
+				'attribute' => 'pageName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->page) ? $model->page->title->message : '-';
 				},
 			];
 		}
 		if(!Yii::$app->request->get('user')) {
-			$this->templateColumns['user_search'] = [
-				'attribute' => 'user_search',
+			$this->templateColumns['userDisplayname'] = [
+				'attribute' => 'userDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->user) ? $model->user->displayname : '-';
 				},
@@ -142,11 +156,10 @@ class CorePageViews extends \app\components\ActiveRecord
 		}
 		$this->templateColumns['view_date'] = [
 			'attribute' => 'view_date',
-			'filter' => Html::input('date', 'view_date', Yii::$app->request->get('view_date'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->view_date, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->view_date, 'datetime') : '-';
+				return Yii::$app->formatter->asDatetime($model->view_date, 'medium');
 			},
-			'format' => 'html',
+			'filter' => $this->filterDatepicker($this, 'view_date'),
 		];
 		$this->templateColumns['view_ip'] = [
 			'attribute' => 'view_ip',
@@ -156,20 +169,19 @@ class CorePageViews extends \app\components\ActiveRecord
 		];
 		$this->templateColumns['deleted_date'] = [
 			'attribute' => 'deleted_date',
-			'filter' => Html::input('date', 'deleted_date', Yii::$app->request->get('deleted_date'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->deleted_date, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->deleted_date, 'datetime') : '-';
+				return Yii::$app->formatter->asDatetime($model->deleted_date, 'medium');
 			},
-			'format' => 'html',
+			'filter' => $this->filterDatepicker($this, 'deleted_date'),
 		];
 		$this->templateColumns['views'] = [
 			'attribute' => 'views',
+			'filter' => false,
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['page-history/index', 'view'=>$model->primaryKey]);
-				return Html::a($model->views, $url);
+				return Html::a($model->views, ['page/view-detail/manage', 'view'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} views', ['count'=>$model->views])]);
 			},
 			'contentOptions' => ['class'=>'center'],
-			'format'	=> 'html',
+			'format' => 'html',
 		];
 		if(!Yii::$app->request->get('trash')) {
 			$this->templateColumns['publish'] = [
@@ -204,17 +216,17 @@ class CorePageViews extends \app\components\ActiveRecord
 	}
 
 	/**
-	 * User get information
+	 * {@inheritdoc}
 	 */
 	public static function insertView($page_id)
 	{
 		$user_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
 		
 		$findView = self::find()
-			->select(['view_id','publish','page_id','user_id','views'])
+			->select(['view_id','views'])
 			->where(['publish' => 1])
 			->andWhere(['page_id' => $page_id]);
-		if($user_id != null)
+		if($user_id !== null)
 			$findView->andWhere(['user_id' => $user_id]);
 		else
 			$findView->andWhere(['is', 'user_id', null]);
@@ -231,14 +243,26 @@ class CorePageViews extends \app\components\ActiveRecord
 	}
 
 	/**
+	 * after find attributes
+	 */
+	public function afterFind()
+	{
+		parent::afterFind();
+
+		// $this->pageName = isset($this->page) ? $this->page->title->message : '-';
+		// $this->userDisplayname = isset($this->user) ? $this->user->displayname : '-';
+	}
+
+	/**
 	 * before validate attributes
 	 */
-	public function beforeValidate() 
+	public function beforeValidate()
 	{
 		if(parent::beforeValidate()) {
-			if($this->isNewRecord)
-				$this->user_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			
+			if($this->isNewRecord) {
+				if($this->user_id == null)
+					$this->user_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			}
 			$this->view_ip = $_SERVER['REMOTE_ADDR'];
 		}
 		return true;

@@ -8,6 +8,7 @@
  * Reference start
  * TOC :
  *	Index
+ *	Manage
  *	Create
  *	Update
  *	View
@@ -22,21 +23,19 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 00:14 WIB
- * @modified date 24 April 2018, 11:53 WIB
+ * @modified date 31 January 2019, 16:40 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
- 
+
 namespace ommu\core\controllers;
 
 use Yii;
 use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
 use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\CoreTags;
 use ommu\core\models\search\CoreTags as CoreTagsSearch;
-use yii\helpers\Inflector;
 
 class TagController extends Controller
 {
@@ -67,10 +66,18 @@ class TagController extends Controller
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function actionIndex()
+	{
+		return $this->redirect(['manage']);
+	}
+
+	/**
 	 * Lists all CoreTags models.
 	 * @return mixed
 	 */
-	public function actionIndex()
+	public function actionManage()
 	{
 		$searchModel = new CoreTagsSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -88,7 +95,7 @@ class TagController extends Controller
 		$this->view->title = Yii::t('app', 'Tags');
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_index', [
+		return $this->render('admin_manage', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
@@ -106,17 +113,24 @@ class TagController extends Controller
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
+
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Tag success created.'));
-				return $this->redirect(['index']);
-				//return $this->redirect(['view', 'id' => $model->tag_id]);
-			} 
+				return $this->redirect(['manage']);
+				//return $this->redirect(['view', 'id'=>$model->tag_id]);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
+			}
 		}
 
 		$this->view->title = Yii::t('app', 'Create Tag');
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_create', [
+		return $this->oRender('admin_create', [
 			'model' => $model,
 		]);
 	}
@@ -132,18 +146,23 @@ class TagController extends Controller
 		$model = $this->findModel($id);
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Tag success updated.'));
-				return $this->redirect(['index']);
-				//return $this->redirect(['view', 'id' => $model->tag_id]);
+				return $this->redirect(['manage']);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
 			}
 		}
 
 		$this->view->title = Yii::t('app', 'Update {model-class}: {body}', ['model-class' => 'Tag', 'body' => $model->body]);
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_update', [
+		return $this->oRender('admin_update', [
 			'model' => $model,
 		]);
 	}
@@ -176,10 +195,9 @@ class TagController extends Controller
 		$model = $this->findModel($id);
 		$model->publish = 2;
 
-		if($model->save(false, ['publish'])) {
+		if($model->save(false, ['publish','modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Tag success deleted.'));
-			return $this->redirect(['index']);
-			//return $this->redirect(['view', 'id' => $model->tag_id]);
+			return $this->redirect(['manage']);
 		}
 	}
 
@@ -195,18 +213,21 @@ class TagController extends Controller
 		$replace = $model->publish == 1 ? 0 : 1;
 		$model->publish = $replace;
 
-		if($model->save(false, ['publish'])) {
+		if($model->save(false, ['publish','modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Tag success updated.'));
-			return $this->redirect(['index']);
+			return $this->redirect(['manage']);
 		}
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function actionSuggest() 
 	{
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
 		$term = Yii::$app->request->get('term');
-		$layout = Yii::$app->request->get('layout', 0);
+
 		if($term == null) return [];
 
 		$model = CoreTags::find()->where(['like', 'body', $term])
@@ -214,13 +235,10 @@ class TagController extends Controller
 
 		$result = [];
 		foreach($model as $val) {
-			$labelName = Inflector::id2camel($val->body);
-			$labelName = Inflector::camel2words($labelName);
-			if($layout == 1) {
-				$result[] = ['label' => $labelName, 'value' => $val->tag_id, 'label_tag' => $val->body];
-			}else {
-				$result[] = ['label' => $val->body, 'value' => $val->tag_id];
-			}
+			$result[] = [
+				'id' => $val->tag_id, 
+				'label' => $val->body,
+			];
 		}
 		return $result;
 	}
@@ -234,9 +252,9 @@ class TagController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = CoreTags::findOne($id)) !== null) 
+		if(($model = CoreTags::findOne($id)) !== null)
 			return $model;
-		else
-			throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+
+		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}
 }

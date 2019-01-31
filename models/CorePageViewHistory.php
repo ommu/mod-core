@@ -6,7 +6,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 23:05 WIB
- * @modified date 22 April 2018, 18:34 WIB
+ * @modified date 31 January 2019, 16:07 WIB
  * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "ommu_core_page_view_history".
@@ -25,16 +25,13 @@
 namespace ommu\core\models;
 
 use Yii;
-use yii\helpers\Url;
-use yii\helpers\Html;
 
 class CorePageViewHistory extends \app\components\ActiveRecord
 {
 	public $gridForbiddenColumn = [];
 
-	// Search Variable
-	public $page_search;
-	public $user_search;
+	public $pageName;
+	public $userDisplayname;
 
 	/**
 	 * @return string the associated database table name
@@ -68,8 +65,8 @@ class CorePageViewHistory extends \app\components\ActiveRecord
 			'view_id' => Yii::t('app', 'View'),
 			'view_date' => Yii::t('app', 'View Date'),
 			'view_ip' => Yii::t('app', 'View Ip'),
-			'page_search' => Yii::t('app', 'Pages'),
-			'user_search' => Yii::t('app', 'User'),
+			'pageName' => Yii::t('app', 'Page'),
+			'userDisplayname' => Yii::t('app', 'User'),
 		];
 	}
 
@@ -82,9 +79,18 @@ class CorePageViewHistory extends \app\components\ActiveRecord
 	}
 
 	/**
+	 * {@inheritdoc}
+	 * @return \ommu\core\models\query\CorePageViewHistory the active query used by this AR class.
+	 */
+	public static function find()
+	{
+		return new \ommu\core\models\query\CorePageViewHistory(get_called_class());
+	}
+
+	/**
 	 * Set default columns to display
 	 */
-	public function init() 
+	public function init()
 	{
 		parent::init();
 
@@ -93,27 +99,26 @@ class CorePageViewHistory extends \app\components\ActiveRecord
 			'class'  => 'yii\grid\SerialColumn',
 			'contentOptions' => ['class'=>'center'],
 		];
-		if(!isset($_GET['view'])) {
-			$this->templateColumns['page_search'] = [
-				'attribute' => 'page_search',
+		if(!Yii::$app->request->get('view')) {
+			$this->templateColumns['pageName'] = [
+				'attribute' => 'pageName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->view->page) ? $model->view->page->title->message : '-';
 				},
 			];
-			$this->templateColumns['user_search'] = [
-				'attribute' => 'user_search',
+			$this->templateColumns['userDisplayname'] = [
+				'attribute' => 'userDisplayname',
 				'value' => function($model, $key, $index, $column) {
-					return isset($model->view->user) ? $model->views->user->displayname : '-';
+					return isset($model->view->user) ? $model->view->user->displayname : '-';
 				},
 			];
 		}
 		$this->templateColumns['view_date'] = [
 			'attribute' => 'view_date',
-			'filter' => Html::input('date', 'view_date', Yii::$app->request->get('view_date'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->view_date, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->view_date, 'datetime') : '-';
+				return Yii::$app->formatter->asDatetime($model->view_date, 'medium');
 			},
-			'format' => 'html',
+			'filter' => $this->filterDatepicker($this, 'view_date'),
 		];
 		$this->templateColumns['view_ip'] = [
 			'attribute' => 'view_ip',
@@ -139,5 +144,16 @@ class CorePageViewHistory extends \app\components\ActiveRecord
 			$model = self::findOne($id);
 			return $model;
 		}
+	}
+
+	/**
+	 * after find attributes
+	 */
+	public function afterFind()
+	{
+		parent::afterFind();
+
+		// $this->pageName = isset($this->view->page) ? $this->view->page->title->message : '-';
+		// $this->userDisplayname = isset($this->view->user) ? $this->view->user->displayname : '-';
 	}
 }

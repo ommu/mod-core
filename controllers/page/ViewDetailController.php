@@ -8,6 +8,7 @@
  * Reference start
  * TOC :
  *	Index
+ *	Manage
  *	View
  *	Delete
  *
@@ -17,16 +18,15 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 23:05 WIB
- * @modified date 23 April 2018, 11:44 WIB
+ * @modified date 31 January 2019, 16:39 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
- 
+
 namespace ommu\core\controllers\page;
 
 use Yii;
 use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
 use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\CorePageViewHistory;
@@ -53,10 +53,18 @@ class ViewDetailController extends Controller
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function actionIndex()
+	{
+		return $this->redirect(['manage']);
+	}
+
+	/**
 	 * Lists all CorePageViewHistory models.
 	 * @return mixed
 	 */
-	public function actionIndex()
+	public function actionManage()
 	{
 		$searchModel = new CorePageViewHistorySearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -71,10 +79,10 @@ class ViewDetailController extends Controller
 		}
 		$columns = $searchModel->getGridColumn($cols);
 
-		$this->view->title = Yii::t('app', 'Page View Histories');
+		$this->view->title = Yii::t('app', 'View Histories');
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_index', [
+		return $this->render('admin_manage', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
@@ -90,7 +98,7 @@ class ViewDetailController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		$this->view->title = Yii::t('app', 'Detail {model-class}: {view-id}', ['model-class' => 'Page View History', 'view-id' => $model->view->page->title->message]);
+		$this->view->title = Yii::t('app', 'Detail {model-class}: {view-id}', ['model-class' => 'View History', 'view-id' => $model->view->page->title->message]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_view', [
@@ -109,7 +117,7 @@ class ViewDetailController extends Controller
 		$this->findModel($id)->delete();
 		
 		Yii::$app->session->setFlash('success', Yii::t('app', 'Page view history success deleted.'));
-		return $this->redirect(['index']);
+		return $this->redirect(['manage']);
 	}
 
 	/**
@@ -121,9 +129,9 @@ class ViewDetailController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = CorePageViewHistory::findOne($id)) !== null) 
+		if(($model = CorePageViewHistory::findOne($id)) !== null)
 			return $model;
-		else
-			throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+
+		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}
 }

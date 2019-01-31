@@ -1,15 +1,16 @@
 <?php
 /**
- * Core Pages (core-pages)
+ * Core Tags (core-tags)
  * @var $this app\components\View
- * @var $this ommu\core\controllers\page\AdminController
- * @var $model ommu\core\models\CorePages
+ * @var $this ommu\core\controllers\TagController
+ * @var $model ommu\core\models\CoreTags
+ * @var $searchModel ommu\core\models\search\CoreTags
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
- * @created date 2 October 2017, 16:08 WIB
- * @modified date 23 April 2018, 10:07 WIB
+ * @created date 2 October 2017, 00:14 WIB
+ * @modified date 31 January 2019, 16:40 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -22,7 +23,7 @@ use yii\widgets\Pjax;
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Add Page'), 'url' => Url::to(['create']), 'icon' => 'plus-square'],
+	['label' => Yii::t('app', 'Add Tag'), 'url' => Url::to(['create']), 'htmlOptions' => ['class'=>'modal-btn'], 'icon' => 'plus-square'],
 ];
 $this->params['menu']['option'] = [
 	//['label' => Yii::t('app', 'Search'), 'url' => 'javascript:void(0);'],
@@ -30,6 +31,7 @@ $this->params['menu']['option'] = [
 ];
 ?>
 
+<div class="core-tags-index">
 <?php Pjax::begin(); ?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>
@@ -47,16 +49,16 @@ array_push($columnData, [
 	'buttons' => [
 		'view' => function ($url, $model, $key) {
 			$url = Url::to(['view', 'id'=>$model->primaryKey]);
-			return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title' => Yii::t('app', 'Detail Page')]);
+			return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title' => Yii::t('app', 'Detail Tag')]);
 		},
 		'update' => function ($url, $model, $key) {
 			$url = Url::to(['update', 'id'=>$model->primaryKey]);
-			return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['title' => Yii::t('app', 'Update Page')]);
+			return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['title' => Yii::t('app', 'Update Tag'), 'class'=>'modal-btn']);
 		},
 		'delete' => function ($url, $model, $key) {
 			$url = Url::to(['delete', 'id'=>$model->primaryKey]);
 			return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-				'title' => Yii::t('app', 'Delete Page'),
+				'title' => Yii::t('app', 'Delete Tag'),
 				'data-confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
 				'data-method'  => 'post',
 			]);
@@ -73,3 +75,4 @@ echo GridView::widget([
 ]); ?>
 
 <?php Pjax::end(); ?>
+</div>

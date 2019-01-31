@@ -8,7 +8,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 23:05 WIB
- * @modified date 23 April 2018, 11:44 WIB
+ * @modified date 31 January 2019, 16:39 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -30,7 +30,7 @@ class CorePageViewHistory extends CorePageViewHistoryModel
 		return [
 			[['id', 'view_id'], 'integer'],
 			[['view_date', 'view_ip', 
-				'page_search', 'user_search'], 'safe'],
+				'pageName', 'userDisplayname'], 'safe'],
 		];
 	}
 
@@ -57,6 +57,7 @@ class CorePageViewHistory extends CorePageViewHistoryModel
 	 * Creates data provider instance with search query applied
 	 *
 	 * @param array $params
+	 *
 	 * @return ActiveDataProvider
 	 */
 	public function search($params)
@@ -68,16 +69,20 @@ class CorePageViewHistory extends CorePageViewHistoryModel
 		]);
 
 		// add conditions that should always apply here
-		$dataProvider = new ActiveDataProvider([
+		$dataParams = [
 			'query' => $query,
-		]);
+		];
+		// disable pagination agar data pada api tampil semua
+		if(isset($params['pagination']) && $params['pagination'] == 0)
+			$dataParams['pagination'] = false;
+		$dataProvider = new ActiveDataProvider($dataParams);
 
 		$attributes = array_keys($this->getTableSchema()->columns);
-		$attributes['page_search'] = [
+		$attributes['pageName'] = [
 			'asc' => ['page.message' => SORT_ASC],
 			'desc' => ['page.message' => SORT_DESC],
 		];
-		$attributes['user_search'] = [
+		$attributes['userDisplayname'] = [
 			'asc' => ['user.displayname' => SORT_ASC],
 			'desc' => ['user.displayname' => SORT_DESC],
 		];
@@ -102,8 +107,8 @@ class CorePageViewHistory extends CorePageViewHistoryModel
 		]);
 
 		$query->andFilterWhere(['like', 't.view_ip', $this->view_ip])
-			->andFilterWhere(['like', 'page.message', $this->page_search])
-			->andFilterWhere(['like', 'user.displayname', $this->user_search]);
+			->andFilterWhere(['like', 'page.message', $this->pageName])
+			->andFilterWhere(['like', 'user.displayname', $this->userDisplayname]);
 
 		return $dataProvider;
 	}

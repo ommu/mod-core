@@ -10,8 +10,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 00:14 WIB
- * @modified date 24 April 2018, 11:53 WIB
- * @modified by Putra Sudaryanto <putra@sudaryanto.id>
+ * @modified date 31 January 2019, 16:40 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -19,6 +18,8 @@
 use yii\helpers\Html;
 use app\components\ActiveForm;
 ?>
+
+<div class="core-tags-form">
 
 <?php $form = ActiveForm::begin([
 	'enableClientValidation' => true,
@@ -28,10 +29,8 @@ use app\components\ActiveForm;
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php 
-$model->body = str_replace('-', ' ', $model->body);
-echo $form->field($model, 'body', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
-	->textInput(['maxlength' => true])
+<?php echo $form->field($model, 'body', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('body'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
 <?php echo $form->field($model, 'publish', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12 checkbox">{input}{error}</div>'])
@@ -46,3 +45,5 @@ echo $form->field($model, 'body', ['template' => '{label}<div class="col-md-6 co
 </div>
 
 <?php ActiveForm::end(); ?>
+
+</div>

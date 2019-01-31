@@ -6,14 +6,13 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 21:40 WIB
- * @modified date 22 April 2018, 19:28 WIB
+ * @modified date 31 January 2019, 16:46 WIB
  * @link https://github.com/ommu/mod-core
  *
- * This is the model class for table "_view_core_pages".
+ * This is the model class for table "_core_pages".
  *
- * The followings are the available columns in table "_view_core_pages":
+ * The followings are the available columns in table "_core_pages":
  * @property integer $page_id
- * @property integer $media
  * @property string $views
  * @property string $view_all
  *
@@ -22,8 +21,6 @@
 namespace ommu\core\models\view;
 
 use Yii;
-use yii\helpers\Url;
-use yii\helpers\Html;
 
 class CorePages extends \app\components\ActiveRecord
 {
@@ -34,7 +31,7 @@ class CorePages extends \app\components\ActiveRecord
 	 */
 	public static function tableName()
 	{
-		return '_view_core_pages';
+		return '_core_pages';
 	}
 
 	/**
@@ -51,7 +48,7 @@ class CorePages extends \app\components\ActiveRecord
 	public function rules()
 	{
 		return [
-			[['page_id', 'media'], 'integer'],
+			[['page_id'], 'integer'],
 			[['views', 'view_all'], 'number'],
 		];
 	}
@@ -63,7 +60,6 @@ class CorePages extends \app\components\ActiveRecord
 	{
 		return [
 			'page_id' => Yii::t('app', 'Page'),
-			'media' => Yii::t('app', 'Media'),
 			'views' => Yii::t('app', 'Views'),
 			'view_all' => Yii::t('app', 'View All'),
 		];
@@ -72,7 +68,7 @@ class CorePages extends \app\components\ActiveRecord
 	/**
 	 * Set default columns to display
 	 */
-	public function init() 
+	public function init()
 	{
 		parent::init();
 
@@ -85,12 +81,6 @@ class CorePages extends \app\components\ActiveRecord
 			'attribute' => 'page_id',
 			'value' => function($model, $key, $index, $column) {
 				return $model->page_id;
-			},
-		];
-		$this->templateColumns['media'] = [
-			'attribute' => 'media',
-			'value' => function($model, $key, $index, $column) {
-				return $model->media;
 			},
 		];
 		$this->templateColumns['views'] = [

@@ -1,22 +1,21 @@
 <?php
 /**
- * CoreTags
+ * CorePages
  *
- * This is the ActiveQuery class for [[\ommu\core\models\CoreTags]].
- * @see \ommu\core\models\CoreTags
+ * This is the ActiveQuery class for [[\ommu\core\models\CorePages]].
+ * @see \ommu\core\models\CorePages
  * 
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2019 OMMU (www.ommu.co)
  * @created date 31 January 2019, 16:06 WIB
- * @modified date 31 January 2019, 16:06 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
 
 namespace ommu\core\models\query;
 
-class CoreTags extends \yii\db\ActiveQuery
+class CorePages extends \yii\db\ActiveQuery
 {
 	/*
 	public function active()
@@ -51,7 +50,7 @@ class CoreTags extends \yii\db\ActiveQuery
 
 	/**
 	 * {@inheritdoc}
-	 * @return \ommu\core\models\CoreTags[]|array
+	 * @return \ommu\core\models\CorePages[]|array
 	 */
 	public function all($db = null)
 	{
@@ -60,7 +59,7 @@ class CoreTags extends \yii\db\ActiveQuery
 
 	/**
 	 * {@inheritdoc}
-	 * @return \ommu\core\models\CoreTags|array|null
+	 * @return \ommu\core\models\CorePages|array|null
 	 */
 	public function one($db = null)
 	{
