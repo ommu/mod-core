@@ -188,6 +188,13 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 			'class'  => 'yii\grid\SerialColumn',
 			'contentOptions' => ['class'=>'center'],
 		];
+		$this->templateColumns['mfdonline'] = [
+			'attribute' => 'mfdonline',
+			'value' => function($model, $key, $index, $column) {
+				return $model->mfdonline;
+			},
+			'contentOptions' => ['class'=>'center'],
+		];
 		$this->templateColumns['province_name'] = [
 			'attribute' => 'province_name',
 			'value' => function($model, $key, $index, $column) {
@@ -203,13 +210,6 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 				'filter' => CoreZoneCountry::getCountry(),
 			];
 		}
-		$this->templateColumns['mfdonline'] = [
-			'attribute' => 'mfdonline',
-			'value' => function($model, $key, $index, $column) {
-				return $model->mfdonline;
-			},
-			'contentOptions' => ['class'=>'center'],
-		];
 		$this->templateColumns['creation_date'] = [
 			'attribute' => 'creation_date',
 			'value' => function($model, $key, $index, $column) {

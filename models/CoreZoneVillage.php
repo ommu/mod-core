@@ -129,6 +129,33 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
+	public function getCity()
+	{
+		return $this->hasOne(CoreZoneCity::className(), ['city_id' => 'city_id'])
+			->via('district');
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getProvince()
+	{
+		return $this->hasOne(CoreZoneProvince::className(), ['province_id' => 'province_id'])
+			->via('city');
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getCountry()
+	{
+		return $this->hasOne(CoreZoneCountry::className(), ['country_id' => 'country_id'])
+			->via('province');
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
 	public function getCreation()
 	{
 		return $this->hasOne(Users::className(), ['user_id' => 'creation_id']);
@@ -171,6 +198,13 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 			'class'  => 'yii\grid\SerialColumn',
 			'contentOptions' => ['class'=>'center'],
 		];
+		$this->templateColumns['mfdonline'] = [
+			'attribute' => 'mfdonline',
+			'value' => function($model, $key, $index, $column) {
+				return $model->mfdonline;
+			},
+			'contentOptions' => ['class'=>'center'],
+		];
 		$this->templateColumns['village_name'] = [
 			'attribute' => 'village_name',
 			'value' => function($model, $key, $index, $column) {
@@ -185,7 +219,7 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 				},
 			];
 		}
-		if(!isset($_GET['city'])) {
+		if(!isset($_GET['city']) && !Yii::$app->request->get('district')) {
 			$this->templateColumns['cityName'] = [
 				'attribute' => 'cityName',
 				'value' => function($model, $key, $index, $column) {
@@ -193,7 +227,7 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 				},
 			];
 		}
-		if(!Yii::$app->request->get('province')) {
+		if(!Yii::$app->request->get('province') && !isset($_GET['city']) && !Yii::$app->request->get('district')) {
 			$this->templateColumns['provinceName'] = [
 				'attribute' => 'provinceName',
 				'value' => function($model, $key, $index, $column) {
@@ -201,7 +235,7 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 				},
 			];
 		}
-		if(!Yii::$app->request->get('country')) {
+		if(!Yii::$app->request->get('country') && !Yii::$app->request->get('province') && !isset($_GET['city']) && !Yii::$app->request->get('district')) {
 			$this->templateColumns['countryName'] = [
 				'attribute' => 'countryName',
 				'value' => function($model, $key, $index, $column) {
@@ -213,13 +247,6 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 			'attribute' => 'zipcode',
 			'value' => function($model, $key, $index, $column) {
 				return $model->zipcode;
-			},
-			'contentOptions' => ['class'=>'center'],
-		];
-		$this->templateColumns['mfdonline'] = [
-			'attribute' => 'mfdonline',
-			'value' => function($model, $key, $index, $column) {
-				return $model->mfdonline;
 			},
 			'contentOptions' => ['class'=>'center'],
 		];

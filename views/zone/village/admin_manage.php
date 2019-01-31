@@ -1,15 +1,16 @@
 <?php
 /**
  * Core Zone Villages (core-zone-village)
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $this ommu\core\controllers\zone\VillageController
  * @var $model ommu\core\models\CoreZoneVillage
+ * @var $searchModel ommu\core\models\search\CoreZoneVillage
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 16 September 2017, 17:35 WIB
- * @modified date 24 April 2018, 23:01 WIB
+ * @modified date 30 January 2019, 17:15 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -35,6 +36,7 @@ $this->params['menu']['option'] = [
 ];
 ?>
 
+<div class="core-zone-village-index">
 <?php Pjax::begin(); ?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>
@@ -78,3 +80,4 @@ echo GridView::widget([
 ]); ?>
 
 <?php Pjax::end(); ?>
+</div>

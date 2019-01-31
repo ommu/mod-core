@@ -1,13 +1,14 @@
 <?php
 /**
  * VillageController
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $model ommu\core\models\CoreZoneVillage
  *
  * VillageController implements the CRUD actions for CoreZoneVillage model.
  * Reference start
  * TOC :
  *	Index
+ *	Manage
  *	Create
  *	Update
  *	View
@@ -22,16 +23,15 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 16 September 2017, 17:35 WIB
- * @modified date 24 April 2018, 23:01 WIB
+ * @modified date 30 January 2019, 17:14 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
- 
+
 namespace ommu\core\controllers\zone;
 
 use Yii;
 use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
 use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\CoreZoneVillage;
@@ -114,11 +114,18 @@ class VillageController extends Controller
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
+
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Village success created.'));
-				return $this->redirect(['index']);
-				//return $this->redirect(['view', 'id' => $model->village_id]);
-			} 
+				return $this->redirect(['manage']);
+				//return $this->redirect(['view', 'id'=>$model->village_id]);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
+			}
 		}
 
 		$this->view->title = Yii::t('app', 'Create Village');
@@ -140,11 +147,16 @@ class VillageController extends Controller
 		$model = $this->findModel($id);
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Village success updated.'));
-				return $this->redirect(['index']);
-				//return $this->redirect(['view', 'id' => $model->village_id]);
+				return $this->redirect(['manage']);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
 			}
 		}
 
@@ -184,10 +196,9 @@ class VillageController extends Controller
 		$model = $this->findModel($id);
 		$model->publish = 2;
 
-		if($model->save(false, ['publish'])) {
+		if($model->save(false, ['publish','modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Village success deleted.'));
-			return $this->redirect(['index']);
-			//return $this->redirect(['view', 'id' => $model->village_id]);
+			return $this->redirect(['manage']);
 		}
 	}
 
@@ -203,40 +214,44 @@ class VillageController extends Controller
 		$replace = $model->publish == 1 ? 0 : 1;
 		$model->publish = $replace;
 
-		if($model->save(false, ['publish'])) {
+		if($model->save(false, ['publish','modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Village success updated.'));
-			return $this->redirect(['index']);
+			return $this->redirect(['manage']);
 		}
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function actionSuggest()
 	{
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
 		$term = Yii::$app->request->get('term');
 		$districtId = Yii::$app->request->get('did', null);
-		$extend = Yii::$app->request->get('extend');
+		$extend = Yii::$app->request->get('extend', null);
 
-		$model = CoreZoneVillage::find()->alias('t')
+		$model = CoreZoneVillage::find()
+			->alias('t')
 			->where(['like', 't.village_name', $term]);
 		if($districtId != null)
 			$model->andWhere(['t.district_id' => $districtId]);
-		$model = $model->published()->limit(10)->all();
+		$model = $model->published()->limit(15)->all();
 			
 		$result = [];
 		$i = 0;
 		foreach($model as $val) {
 			if($extend == null) {
 				$result[] = [
+					'id' => $val->village_id,
 					'label' => $val->village_name, 
-					'value' => $val->village_id,
 				];
 			} else {
 				$i++;
 				$extendArray = array_map("trim", explode(',', $extend));
 				$result[$i] = [
+					'id' => $val->village_id,
 					'label' => join(', ', [$val->village_name, $val->district->district_name, $val->district->city->city_name, $val->district->city->province->province_name, $val->district->city->province->country->country_name]),
-					'value' => $val->village_id,
 				];
 				if(!empty($extendArray)) {
 					if(in_array('village_name', $extendArray))
@@ -273,9 +288,9 @@ class VillageController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = CoreZoneVillage::findOne($id)) !== null) 
+		if(($model = CoreZoneVillage::findOne($id)) !== null)
 			return $model;
-		else
-			throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+
+		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}
 }

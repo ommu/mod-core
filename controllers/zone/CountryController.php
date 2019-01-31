@@ -1,13 +1,14 @@
 <?php
 /**
  * CountryController
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $model ommu\core\models\CoreZoneCountry
  *
  * CountryController implements the CRUD actions for CoreZoneCountry model.
  * Reference start
  * TOC :
  *	Index
+ *	Manage
  *	Create
  *	Update
  *	View
@@ -20,16 +21,15 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 8 September 2017, 11:45 WIB
- * @modified date 24 April 2018, 22:41 WIB
+ * @modified date 30 January 2019, 17:12 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
- 
+
 namespace ommu\core\controllers\zone;
 
 use Yii;
 use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
 use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\CoreZoneCountry;
@@ -110,11 +110,18 @@ class CountryController extends Controller
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
+
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Country success created.'));
-				return $this->redirect(['index']);
-				//return $this->redirect(['view', 'id' => $model->country_id]);
-			} 
+				return $this->redirect(['manage']);
+				//return $this->redirect(['view', 'id'=>$model->country_id]);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
+			}
 		}
 
 		$this->view->title = Yii::t('app', 'Create Country');
@@ -136,11 +143,16 @@ class CountryController extends Controller
 		$model = $this->findModel($id);
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Country success updated.'));
-				return $this->redirect(['index']);
-				//return $this->redirect(['view', 'id' => $model->country_id]);
+				return $this->redirect(['manage']);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
 			}
 		}
 
@@ -180,9 +192,12 @@ class CountryController extends Controller
 		$this->findModel($id)->delete();
 		
 		Yii::$app->session->setFlash('success', Yii::t('app', 'Country success deleted.'));
-		return $this->redirect(['index']);
+		return $this->redirect(['manage']);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function actionSuggest()
 	{
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
@@ -190,14 +205,14 @@ class CountryController extends Controller
 		$term = Yii::$app->request->get('term');
 		$model = CoreZoneCountry::find()
 			->where(['like', 'country_name', $term])
-			->limit(10)
+			->limit(15)
 			->all();
 
 		$result = [];
 		foreach($model as $val) {
 			$result[] = [
+				'id' => $val->country_id,
 				'label' => trim($val->country_name), 
-				'value' => $val->country_id,
 			];
 		}
 		return $result;
@@ -212,9 +227,9 @@ class CountryController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = CoreZoneCountry::findOne($id)) !== null) 
+		if(($model = CoreZoneCountry::findOne($id)) !== null)
 			return $model;
-		else
-			throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+
+		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}
 }

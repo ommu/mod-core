@@ -1,15 +1,16 @@
 <?php
 /**
  * Core Zone Provinces (core-zone-province)
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $this ommu\core\controllers\zone\ProvinceController
  * @var $model ommu\core\models\CoreZoneProvince
+ * @var $searchModel ommu\core\models\search\CoreZoneProvince
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 8 September 2017, 15:02 WIB
- * @modified date 24 April 2018, 22:59 WIB
+ * @modified date 30 January 2019, 17:13 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -35,6 +36,7 @@ $this->params['menu']['option'] = [
 ];
 ?>
 
+<div class="core-zone-province-index">
 <?php Pjax::begin(); ?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>
@@ -78,3 +80,4 @@ echo GridView::widget([
 ]); ?>
 
 <?php Pjax::end(); ?>
+</div>

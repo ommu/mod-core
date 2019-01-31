@@ -1,15 +1,16 @@
 <?php
 /**
  * Core Zone Districts (core-zone-district)
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $this ommu\core\controllers\zone\DistrictController
  * @var $model ommu\core\models\CoreZoneDistrict
+ * @var $searchModel ommu\core\models\search\CoreZoneDistrict
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 15 September 2017, 10:26 WIB
- * @modified date 24 April 2018, 23:00 WIB
+ * @modified date 30 January 2019, 17:14 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -35,6 +36,7 @@ $this->params['menu']['option'] = [
 ];
 ?>
 
+<div class="core-zone-district-index">
 <?php Pjax::begin(); ?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>
@@ -78,3 +80,4 @@ echo GridView::widget([
 ]); ?>
 
 <?php Pjax::end(); ?>
+</div>

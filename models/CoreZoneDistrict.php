@@ -128,6 +128,24 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
+	public function getProvince()
+	{
+		return $this->hasOne(CoreZoneProvince::className(), ['province_id' => 'province_id'])
+			->via('city');
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getCountry()
+	{
+		return $this->hasOne(CoreZoneCountry::className(), ['country_id' => 'country_id'])
+			->via('province');
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
 	public function getVillages($count=true, $publish=1)
 	{
 		if($count == true) {
@@ -192,6 +210,13 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 			'class'  => 'yii\grid\SerialColumn',
 			'contentOptions' => ['class'=>'center'],
 		];
+		$this->templateColumns['mfdonline'] = [
+			'attribute' => 'mfdonline',
+			'value' => function($model, $key, $index, $column) {
+				return $model->mfdonline;
+			},
+			'contentOptions' => ['class'=>'center'],
+		];
 		$this->templateColumns['district_name'] = [
 			'attribute' => 'district_name',
 			'value' => function($model, $key, $index, $column) {
@@ -206,7 +231,7 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 				},
 			];
 		}
-		if(!Yii::$app->request->get('province')) {
+		if(!Yii::$app->request->get('province') && !Yii::$app->request->get('city')) {
 			$this->templateColumns['provinceName'] = [
 				'attribute' => 'provinceName',
 				'value' => function($model, $key, $index, $column) {
@@ -214,7 +239,7 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 				},
 			];
 		}
-		if(!Yii::$app->request->get('country')) {
+		if(!Yii::$app->request->get('country') && !Yii::$app->request->get('province') && !Yii::$app->request->get('city')) {
 			$this->templateColumns['countryName'] = [
 				'attribute' => 'countryName',
 				'value' => function($model, $key, $index, $column) {
@@ -222,13 +247,6 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 				},
 			];
 		}
-		$this->templateColumns['mfdonline'] = [
-			'attribute' => 'mfdonline',
-			'value' => function($model, $key, $index, $column) {
-				return $model->mfdonline;
-			},
-			'contentOptions' => ['class'=>'center'],
-		];
 		$this->templateColumns['creation_date'] = [
 			'attribute' => 'creation_date',
 			'value' => function($model, $key, $index, $column) {

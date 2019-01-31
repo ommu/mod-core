@@ -1,13 +1,14 @@
 <?php
 /**
  * CityController
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $model ommu\core\models\CoreZoneCity
  *
  * CityController implements the CRUD actions for CoreZoneCity model.
  * Reference start
  * TOC :
  *	Index
+ *	Manage
  *	Create
  *	Update
  *	View
@@ -22,16 +23,15 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 14 September 2017, 22:22 WIB
- * @modified date 24 April 2018, 23:00 WIB
+ * @modified date 30 January 2019, 17:13 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
- 
+
 namespace ommu\core\controllers\zone;
 
 use Yii;
 use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
 use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\CoreZoneCity;
@@ -114,11 +114,18 @@ class CityController extends Controller
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
+
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'City success created.'));
-				return $this->redirect(['index']);
-				//return $this->redirect(['view', 'id' => $model->city_id]);
-			} 
+				return $this->redirect(['manage']);
+				//return $this->redirect(['view', 'id'=>$model->city_id]);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
+			}
 		}
 
 		$this->view->title = Yii::t('app', 'Create City');
@@ -140,11 +147,16 @@ class CityController extends Controller
 		$model = $this->findModel($id);
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'City success updated.'));
-				return $this->redirect(['index']);
-				//return $this->redirect(['view', 'id' => $model->city_id]);
+				return $this->redirect(['manage']);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
 			}
 		}
 
@@ -184,10 +196,9 @@ class CityController extends Controller
 		$model = $this->findModel($id);
 		$model->publish = 2;
 
-		if($model->save(false, ['publish'])) {
+		if($model->save(false, ['publish','modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'City success deleted.'));
-			return $this->redirect(['index']);
-			//return $this->redirect(['view', 'id' => $model->city_id]);
+			return $this->redirect(['manage']);
 		}
 	}
 
@@ -203,40 +214,44 @@ class CityController extends Controller
 		$replace = $model->publish == 1 ? 0 : 1;
 		$model->publish = $replace;
 
-		if($model->save(false, ['publish'])) {
+		if($model->save(false, ['publish','modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'City success updated.'));
-			return $this->redirect(['index']);
+			return $this->redirect(['manage']);
 		}
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function actionSuggest()
 	{
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
 		$term = Yii::$app->request->get('term');
 		$provinceId = Yii::$app->request->get('pid', null);
-		$extend = Yii::$app->request->get('extend');
+		$extend = Yii::$app->request->get('extend', null);
 		
-		$model = CoreZoneCity::find()->alias('t')
+		$model = CoreZoneCity::find()
+			->alias('t')
 			->where(['like', 't.city_name', $term]);
 		if($provinceId != null)
 			$model->andWhere(['t.province_id' => $provinceId]);
-		$model = $model->published()->limit(10)->all();
+		$model = $model->published()->limit(15)->all();
 
 		$result = [];
 		$i = 0;
 		foreach($model as $val) {
 			if($extend == null) {
 				$result[] = [
+					'id' => $val->city_id,
 					'label' => $val->city_name, 
-					'value' => $val->city_id,
 				];
 			} else {
 				$i++;
 				$extendArray = array_map("trim", explode(',', $extend));
 				$result[$i] = [
+					'id' => $val->city_id,
 					'label' => join(', ', [$val->city_name, $val->province->province_name, $val->province->country->country_name]), 
-					'value' => $val->city_id,
 				];
 				if(!empty($extendArray)) {
 					if(in_array('city_name', $extendArray))
@@ -265,9 +280,9 @@ class CityController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = CoreZoneCity::findOne($id)) !== null) 
+		if(($model = CoreZoneCity::findOne($id)) !== null)
 			return $model;
-		else
-			throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+
+		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}
 }
