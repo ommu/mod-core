@@ -23,7 +23,7 @@ use ommu\core\models\CoreTags as CoreTagsModel;
 class CoreTags extends CoreTagsModel
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function rules()
 	{
@@ -35,7 +35,7 @@ class CoreTags extends CoreTagsModel
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function scenarios()
 	{

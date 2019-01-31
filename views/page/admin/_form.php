@@ -1,10 +1,10 @@
 <?php
 /**
  * Core Pages (core-pages)
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $this ommu\core\controllers\page\AdminController
  * @var $model ommu\core\models\CorePages
- * @var $form yii\widgets\ActiveForm
+ * @var $form app\components\ActiveForm
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114

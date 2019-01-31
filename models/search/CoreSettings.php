@@ -22,7 +22,7 @@ use ommu\core\models\CoreSettings as CoreSettingsModel;
 class CoreSettings extends CoreSettingsModel
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function rules()
 	{
@@ -33,7 +33,7 @@ class CoreSettings extends CoreSettingsModel
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function scenarios()
 	{

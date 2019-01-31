@@ -1,7 +1,7 @@
 <?php
 /**
  * AdminController
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $model ommu\core\models\CorePages
  *
  * AdminController implements the CRUD actions for CorePages model.
@@ -40,7 +40,7 @@ use ommu\core\models\CorePageViews;
 class AdminController extends Controller
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function behaviors()
 	{

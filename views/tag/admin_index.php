@@ -1,7 +1,7 @@
 <?php
 /**
  * Core Tags (core-tags)
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $this ommu\core\controllers\TagController
  * @var $model ommu\core\models\CoreTags
  *

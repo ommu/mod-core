@@ -1,7 +1,7 @@
 <?php
 /**
  * Core Page View Histories (core-page-view-history)
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $this ommu\core\controllers\page\ViewDetailController
  * @var $model ommu\core\models\CorePageViewHistory
  *

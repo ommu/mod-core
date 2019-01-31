@@ -24,7 +24,7 @@ use ommu\core\models\CoreMeta as CoreMetaModel;
 class CoreMeta extends CoreMetaModel
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function rules()
 	{
@@ -35,7 +35,7 @@ class CoreMeta extends CoreMetaModel
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function scenarios()
 	{

@@ -1,7 +1,7 @@
 <?php
 /**
  * Core Languages (core-languages)
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $this ommu\core\controllers\LanguageController
  * @var $model ommu\core\models\CoreLanguages
  *

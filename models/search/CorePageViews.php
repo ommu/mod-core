@@ -23,7 +23,7 @@ use ommu\core\models\CorePageViews as CorePageViewsModel;
 class CorePageViews extends CorePageViewsModel
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function rules()
 	{
@@ -35,7 +35,7 @@ class CorePageViews extends CorePageViewsModel
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function scenarios()
 	{

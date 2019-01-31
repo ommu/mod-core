@@ -23,7 +23,7 @@ use ommu\core\models\CorePages as CorePagesModel;
 class CorePages extends CorePagesModel
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function rules()
 	{
@@ -35,7 +35,7 @@ class CorePages extends CorePagesModel
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function scenarios()
 	{

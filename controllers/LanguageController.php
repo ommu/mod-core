@@ -1,7 +1,7 @@
 <?php
 /**
  * LanguageController
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $model ommu\core\models\CoreLanguages
  *
  * LanguageController implements the CRUD actions for CoreLanguages model.
@@ -39,7 +39,7 @@ use ommu\core\models\search\CoreLanguages as CoreLanguagesSearch;
 class LanguageController extends Controller
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function behaviors()
 	{

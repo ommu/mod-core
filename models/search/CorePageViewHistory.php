@@ -23,7 +23,7 @@ use ommu\core\models\CorePageViewHistory as CorePageViewHistoryModel;
 class CorePageViewHistory extends CorePageViewHistoryModel
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function rules()
 	{
@@ -35,7 +35,7 @@ class CorePageViewHistory extends CorePageViewHistoryModel
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function scenarios()
 	{

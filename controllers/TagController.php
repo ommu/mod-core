@@ -1,7 +1,7 @@
 <?php
 /**
  * TagController
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $model ommu\core\models\CoreTags
  *
  * TagController implements the CRUD actions for CoreTags model.
@@ -41,7 +41,7 @@ use yii\helpers\Inflector;
 class TagController extends Controller
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function behaviors()
 	{
@@ -210,7 +210,7 @@ class TagController extends Controller
 		if($term == null) return [];
 
 		$model = CoreTags::find()->where(['like', 'body', $term])
-			->published()->limit(10)->all();
+			->published()->limit(15)->all();
 
 		$result = [];
 		foreach($model as $val) {

@@ -1,7 +1,7 @@
 <?php
 /**
  * MetaController
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $model ommu\core\models\CoreMeta
  *
  * MetaController implements the CRUD actions for CoreMeta model.
@@ -36,7 +36,7 @@ use ommu\core\models\search\CoreMeta as CoreMetaSearch;
 class MetaController extends Controller
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function behaviors()
 	{

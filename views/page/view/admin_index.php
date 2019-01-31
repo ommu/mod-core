@@ -1,7 +1,7 @@
 <?php
 /**
  * Core Page Views (core-page-views)
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $this ommu\core\controllers\page\ViewController
  * @var $model ommu\core\models\CorePageViews
  *

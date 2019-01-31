@@ -1,7 +1,7 @@
 <?php
 /**
  * ModuleController
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $model ommu\core\models\Modules
  *
  * ModuleController implements the CRUD actions for Modules model.

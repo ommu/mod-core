@@ -18,7 +18,7 @@ namespace ommu\core\models\query;
 class CoreTags extends \yii\db\ActiveQuery
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function published() 
 	{
@@ -26,7 +26,7 @@ class CoreTags extends \yii\db\ActiveQuery
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function unpublish() 
 	{
@@ -34,7 +34,7 @@ class CoreTags extends \yii\db\ActiveQuery
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 * @return IpediaPosition[]|array
 	 */
 	public function all($db = null)
@@ -43,7 +43,7 @@ class CoreTags extends \yii\db\ActiveQuery
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 * @return IpediaPosition|array|null
 	 */
 	public function one($db = null)

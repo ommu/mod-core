@@ -1,7 +1,7 @@
 <?php
 /**
  * SettingController
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $model ommu\core\models\CoreSettings
  *
  * SettingController implements the CRUD actions for CoreSettings model.
@@ -41,7 +41,7 @@ use ommu\core\models\search\CoreLanguages as CoreLanguagesSearch;
 class SettingController extends Controller
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function behaviors()
 	{

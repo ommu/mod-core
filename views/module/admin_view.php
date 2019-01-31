@@ -1,7 +1,7 @@
 <?php
 /**
  * Modules (modules)
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $this ommu\core\controllers\ModuleController
  * @var $model ommu\core\models\Modules
  *

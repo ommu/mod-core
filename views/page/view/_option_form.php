@@ -1,10 +1,10 @@
 <?php
 /**
  * Core Page Views (core-page-views)
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $this ommu\core\controllers\page\ViewController
  * @var $model ommu\core\models\search\CorePageViews
- * @var $form yii\widgets\ActiveForm
+ * @var $form app\components\ActiveForm
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
@@ -33,7 +33,7 @@ $js = <<<JS
 		});
 	});
 JS;
-	$this->registerJs($js, \yii\web\View::POS_READY);
+	$this->registerJs($js, \app\components\View::POS_READY);
 ?>
 
 <div class="grid-form">

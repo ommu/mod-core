@@ -1,10 +1,10 @@
 <?php
 /**
  * Core Settings (core-settings)
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $this ommu\core\controllers\SettingController
  * @var $model ommu\core\models\CoreSettings
- * @var $form yii\widgets\ActiveForm
+ * @var $form app\components\ActiveForm
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114

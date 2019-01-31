@@ -1,7 +1,7 @@
 <?php
 /**
  * ViewController
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $model ommu\core\models\CorePageViews
  *
  * ViewController implements the CRUD actions for CorePageViews model.
@@ -37,7 +37,7 @@ use ommu\core\models\search\CorePageViews as CorePageViewsSearch;
 class ViewController extends Controller
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function behaviors()
 	{

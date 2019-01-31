@@ -24,7 +24,7 @@ use ommu\core\models\CoreLanguages as CoreLanguagesModel;
 class CoreLanguages extends CoreLanguagesModel
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function rules()
 	{
@@ -36,7 +36,7 @@ class CoreLanguages extends CoreLanguagesModel
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function scenarios()
 	{

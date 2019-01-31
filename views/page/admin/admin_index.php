@@ -1,7 +1,7 @@
 <?php
 /**
  * Core Pages (core-pages)
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $this ommu\core\controllers\page\AdminController
  * @var $model ommu\core\models\CorePages
  *

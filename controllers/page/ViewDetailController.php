@@ -1,7 +1,7 @@
 <?php
 /**
  * ViewDetailController
- * @var $this yii\web\View
+ * @var $this app\components\View
  * @var $model ommu\core\models\CorePageViewHistory
  *
  * ViewDetailController implements the CRUD actions for CorePageViewHistory model.
@@ -35,7 +35,7 @@ use ommu\core\models\search\CorePageViewHistory as CorePageViewHistorySearch;
 class ViewDetailController extends Controller
 {
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function behaviors()
 	{
