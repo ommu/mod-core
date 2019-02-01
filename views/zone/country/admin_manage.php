@@ -36,7 +36,7 @@ $this->params['menu']['option'] = [
 ];
 ?>
 
-<div class="core-zone-country-index">
+<div class="core-zone-country-manage">
 <?php Pjax::begin(); ?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>

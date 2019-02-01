@@ -36,7 +36,7 @@ $this->params['menu']['option'] = [
 ];
 ?>
 
-<div class="core-zone-village-index">
+<div class="core-zone-village-manage">
 <?php Pjax::begin(); ?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>

@@ -27,7 +27,7 @@ $this->params['menu']['option'] = [
 ];
 ?>
 
-<div class="modules-index">
+<div class="modules-manage">
 <?php Pjax::begin(); ?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>

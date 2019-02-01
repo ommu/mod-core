@@ -31,7 +31,7 @@ $this->params['menu']['option'] = [
 ];
 ?>
 
-<div class="core-tags-index">
+<div class="core-tags-manage">
 <?php Pjax::begin(); ?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>

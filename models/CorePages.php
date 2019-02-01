@@ -107,7 +107,7 @@ class CorePages extends \app\components\ActiveRecord
 		return [
 			'page_id' => Yii::t('app', 'Page'),
 			'publish' => Yii::t('app', 'Publish'),
-			'name' => Yii::t('app', 'Name'),
+			'name' => Yii::t('app', 'Title'),
 			'desc' => Yii::t('app', 'Description'),
 			'quote' => Yii::t('app', 'Quote'),
 			'media' => Yii::t('app', 'Media'),
@@ -119,7 +119,7 @@ class CorePages extends \app\components\ActiveRecord
 			'modified_id' => Yii::t('app', 'Modified'),
 			'updated_date' => Yii::t('app', 'Updated Date'),
 			'slug' => Yii::t('app', 'Slug'),
-			'name_i' => Yii::t('app', 'Name'),
+			'name_i' => Yii::t('app', 'Title'),
 			'desc_i' => Yii::t('app', 'Description'),
 			'quote_i' => Yii::t('app', 'Quote'),
 			'old_media' => Yii::t('app', 'Old Media'),

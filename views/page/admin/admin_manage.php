@@ -31,7 +31,7 @@ $this->params['menu']['option'] = [
 ];
 ?>
 
-<div class="core-pages-index">
+<div class="core-pages-manage">
 <?php Pjax::begin(); ?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>
