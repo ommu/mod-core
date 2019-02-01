@@ -9,7 +9,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 22:42 WIB
- * @modified date 23 April 2018, 11:43 WIB
+ * @modified date 31 January 2019, 16:39 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -18,13 +18,17 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Page Views'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Views'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = $model->page->title->message;
 
 $this->params['menu']['content'] = [
 	['label' => Yii::t('app', 'Back To Manage'), 'url' => Url::to(['index']), 'icon' => 'table'],
+	['label' => Yii::t('app', 'Detail'), 'url' => Url::to(['view', 'id'=>$model->view_id]), 'icon' => 'eye'],
+	['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->view_id]), 'htmlOptions' => ['data-confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method'=>'post'], 'icon' => 'trash'],
 ];
 ?>
+
+<div class="core-page-views-view">
 
 <?php echo DetailView::widget([
 	'model' => $model,
@@ -32,27 +36,35 @@ $this->params['menu']['content'] = [
 		'class'=>'table table-striped detail-view',
 	],
 	'attributes' => [
+		'view_id',
 		[
 			'attribute' => 'publish',
-			'value' => $model->publish == 1 ? Yii::t('app', 'Yes') : Yii::t('app', 'No'),
+			'value' => $this->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish),
+			'format' => 'raw',
 		],
 		[
-			'attribute' => 'page_search',
+			'attribute' => 'pageName',
 			'value' => isset($model->page) ? $model->page->title->message : '-',
 		],
 		[
-			'attribute' => 'user_search',
+			'attribute' => 'userDisplayname',
 			'value' => isset($model->user) ? $model->user->displayname : '-',
 		],
-		'views',
 		[
 			'attribute' => 'view_date',
-			'value' => !in_array($model->view_date, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->view_date, 'datetime') : '-',
+			'value' => Yii::$app->formatter->asDatetime($model->view_date, 'medium'),
 		],
 		'view_ip',
 		[
 			'attribute' => 'deleted_date',
-			'value' => !in_array($model->deleted_date, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->deleted_date, 'datetime') : '-',
+			'value' => Yii::$app->formatter->asDatetime($model->deleted_date, 'medium'),
+		],
+		[
+			'attribute' => 'views',
+			'value' => Html::a($model->views, ['page/view-detail/manage', 'view'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} views', ['count'=>$model->views])]),
+			'format' => 'html',
 		],
 	],
 ]) ?>
+
+</div>
