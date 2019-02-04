@@ -44,7 +44,13 @@ $this->params['menu']['content'] = [
 		],
 		[
 			'attribute' => 'pageName',
-			'value' => isset($model->page) ? $model->page->title->message : '-',
+			'value' => function ($model) {
+				$pageName = isset($model->page) ? $model->page->title->message : '-';
+				if($pageName != '-')
+					return Html::a($pageName, ['page/admin/view', 'id'=>$model->page_id], ['title'=>$pageName]);
+				return $pageName;
+			},
+			'format' => 'html',
 		],
 		[
 			'attribute' => 'userDisplayname',

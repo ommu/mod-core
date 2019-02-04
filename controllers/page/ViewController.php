@@ -33,6 +33,7 @@ use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\CorePageViews;
 use ommu\core\models\search\CorePageViews as CorePageViewsSearch;
+use ommu\core\models\CorePages;
 
 class ViewController extends Controller
 {
@@ -67,7 +68,7 @@ class ViewController extends Controller
 	 * Lists all CorePageViews models.
 	 * @return mixed
 	 */
-	public function actionManage()
+	public function actionManage($page=null)
 	{
 		$searchModel = new CorePageViewsSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -82,6 +83,9 @@ class ViewController extends Controller
 		}
 		$columns = $searchModel->getGridColumn($cols);
 
+		if($page != null)
+			$model = CorePages::findOne($page);
+
 		$this->view->title = Yii::t('app', 'Views');
 		$this->view->description = '';
 		$this->view->keywords = '';
@@ -89,6 +93,8 @@ class ViewController extends Controller
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
+			'page' => $page,
+			'model' => $model,
 		]);
 	}
 

@@ -14,6 +14,7 @@
  *
  */
 
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
@@ -38,7 +39,13 @@ $this->params['menu']['content'] = [
 		'id',
 		[
 			'attribute' => 'pageName',
-			'value' => isset($model->view->page) ? $model->view->page->title->message : '-',
+			'value' => function ($model) {
+				$pageName = isset($model->view->page) ? $model->view->page->title->message : '-';
+				if($pageName != '-')
+					return Html::a($pageName, ['page/admin/view', 'id'=>$model->view_id], ['title'=>$pageName]);
+				return $pageName;
+			},
+			'format' => 'html',
 		],
 		[
 			'attribute' => 'userDisplayname',

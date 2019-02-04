@@ -19,6 +19,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use app\components\grid\GridView;
 use yii\widgets\Pjax;
+use yii\widgets\DetailView;
 
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -31,8 +32,36 @@ $this->params['menu']['option'] = [
 ];
 ?>
 
-<div class="core-page-views-index">
+<div class="core-page-views-manage">
 <?php Pjax::begin(); ?>
+
+<?php if($page != null) {
+echo DetailView::widget([
+	'model' => $model,
+	'options' => [
+		'class'=>'table table-striped detail-view',
+	],
+	'attributes' => [
+		[
+			'attribute' => 'name_i',
+			'value' => function ($model) {
+				if($model->name_i != '')
+					return Html::a($model->name_i, ['page/admin/view', 'id'=>$model->page_id], ['title'=>$model->name_i]);
+				return $model->name_i;
+			},
+			'format' => 'html',
+		],
+		[
+			'attribute' => 'creation_date',
+			'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),
+		],
+		[
+			'attribute' => 'creationDisplayname',
+			'value' => isset($model->creation) ? $model->creation->displayname : '-',
+		],
+	],
+]);
+}?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>
 

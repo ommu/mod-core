@@ -31,6 +31,7 @@ use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\CorePageViewHistory;
 use ommu\core\models\search\CorePageViewHistory as CorePageViewHistorySearch;
+use ommu\core\models\CorePageViews;
 
 class ViewDetailController extends Controller
 {
@@ -64,7 +65,7 @@ class ViewDetailController extends Controller
 	 * Lists all CorePageViewHistory models.
 	 * @return mixed
 	 */
-	public function actionManage()
+	public function actionManage($view=null)
 	{
 		$searchModel = new CorePageViewHistorySearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -79,6 +80,9 @@ class ViewDetailController extends Controller
 		}
 		$columns = $searchModel->getGridColumn($cols);
 
+		if($view != null)
+			$model = CorePageViews::findOne($view);
+
 		$this->view->title = Yii::t('app', 'View Histories');
 		$this->view->description = '';
 		$this->view->keywords = '';
@@ -86,6 +90,8 @@ class ViewDetailController extends Controller
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
+			'view' => $view,
+			'model' => $model,
 		]);
 	}
 
