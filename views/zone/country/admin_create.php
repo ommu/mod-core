@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Countries'), 'url' =
 $this->params['breadcrumbs'][] = Yii::t('app', 'Create');
 
 $this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Back To Countries'), 'url' => Url::to(['index']), 'icon' => 'table'],
+	['label' => Yii::t('app', 'Back To Countries'), 'url' => Url::to(['manage']), 'icon' => 'table'],
 ];
 ?>
 
