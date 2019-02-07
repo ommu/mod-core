@@ -65,8 +65,10 @@ class ViewDetailController extends Controller
 	 * Lists all CorePageViewHistory models.
 	 * @return mixed
 	 */
-	public function actionManage($view=null)
+	public function actionManage()
 	{
+		$view = Yii::$app->request->get('view');
+
 		$searchModel = new CorePageViewHistorySearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -91,7 +93,7 @@ class ViewDetailController extends Controller
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
 			'view' => $view,
-			'model' => $model,
+			'views' => $views,
 		]);
 	}
 

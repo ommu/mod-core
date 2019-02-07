@@ -21,13 +21,15 @@ use app\components\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
 use yii\widgets\DetailView;
+use ommu\core\models\CorePageViews;
 
 $this->params['breadcrumbs'][] = $this->title;
 
-$this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Back To Pages'), 'url' => Url::to(['page/admin/index']), 'icon' => 'table'],
-	['label' => Yii::t('app', 'Back To Page Views'), 'url' => Url::to(['page/view/manage']), 'icon' => 'table'],
-];
+if($view != null) {
+	$this->params['menu']['content'] = [
+		['label' => Yii::t('app', 'Back To Views'), 'url' => Url::to(ArrayHelper::merge(['page/view/manage'], Yii::$app->request->get())), 'icon' => 'table'],
+	];
+}
 $this->params['menu']['option'] = [
 	//['label' => Yii::t('app', 'Search'), 'url' => 'javascript:void(0);'],
 	['label' => Yii::t('app', 'Grid Option'), 'url' => 'javascript:void(0);'],
@@ -38,33 +40,34 @@ $this->params['menu']['option'] = [
 <?php Pjax::begin(); ?>
 
 <?php if($view != null) {
-	echo DetailView::widget([
-		'model' => $model,
-		'options' => [
-			'class'=>'table table-striped detail-view',
+$model = $views;
+echo DetailView::widget([
+	'model' => $views,
+	'options' => [
+		'class'=>'table table-striped detail-view',
+	],
+	'attributes' => [
+		[
+			'attribute' => 'pageName',
+			'value' => function ($model) {
+				$pageName = isset($model->page) ? $model->page->title->message : '-';
+				if($pageName != '-')
+					return Html::a($pageName, ['page/admin/view', 'id'=>$model->page_id], ['title'=>$pageName]);
+				return $pageName;
+			},
+			'format' => 'html',
 		],
-		'attributes' => [
-			[
-				'attribute' => 'pageName',
-				'value' => function ($model) {
-					$pageName = isset($model->page) ? $model->page->title->message : '-';
-					if($pageName != '-')
-						return Html::a($pageName, ['page/admin/view', 'id'=>$model->page_id], ['title'=>$pageName]);
-					return $pageName;
-				},
-				'format' => 'html',
-			],
-			[
-				'attribute' => 'userDisplayname',
-				'value' => isset($model->user) ? $model->user->displayname : '-',
-			],
-			[
-				'attribute' => 'view_date',
-				'value' => Yii::$app->formatter->asDatetime($model->view_date, 'medium'),
-			],
-			'view_ip',
+		[
+			'attribute' => 'userDisplayname',
+			'value' => isset($model->user) ? $model->user->displayname : '-',
 		],
-	]);
+		[
+			'attribute' => 'view_date',
+			'value' => Yii::$app->formatter->asDatetime($model->view_date, 'medium'),
+		],
+		'view_ip',
+	],
+]);
 }?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>

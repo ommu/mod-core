@@ -21,12 +21,16 @@ use app\components\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
 use yii\widgets\DetailView;
+use ommu\core\models\CorePages;
+use ommu\users\models\Users;
 
 $this->params['breadcrumbs'][] = $this->title;
 
-$this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Back To Pages'), 'url' => Url::to(['page/admin/index']), 'icon' => 'table'],
-];
+if($page != null) {
+	$this->params['menu']['content'] = [
+		['label' => Yii::t('app', 'Back To Pages'), 'url' => Url::to(['page/admin/index']), 'icon' => 'table'],
+	];
+}
 $this->params['menu']['option'] = [
 	//['label' => Yii::t('app', 'Search'), 'url' => 'javascript:void(0);'],
 	['label' => Yii::t('app', 'Grid Option'), 'url' => 'javascript:void(0);'],
@@ -37,8 +41,9 @@ $this->params['menu']['option'] = [
 <?php Pjax::begin(); ?>
 
 <?php if($page != null) {
+$model = $pages;
 echo DetailView::widget([
-	'model' => $model,
+	'model' => $pages,
 	'options' => [
 		'class'=>'table table-striped detail-view',
 	],
@@ -59,6 +64,35 @@ echo DetailView::widget([
 		[
 			'attribute' => 'creationDisplayname',
 			'value' => isset($model->creation) ? $model->creation->displayname : '-',
+		],
+	],
+]);
+}?>
+
+<?php if($user != null) {
+$model = $users;
+echo DetailView::widget([
+	'model' => $users,
+	'options' => [
+		'class'=>'table table-striped detail-view',
+	],
+	'attributes' => [
+		[
+			'attribute' => 'enabled',
+			'value' => Users::getEnabled($model->enabled),
+		],
+		[
+			'attribute' => 'verified',
+			'value' => $model->verified == 1 ? Yii::t('app', 'Verified') : Yii::t('app', 'Unverified'),
+		],
+		[
+			'attribute' => 'levelName',
+			'value' => isset($model->level) ? $model->level->title->message : '-',
+		],
+		'email:email',
+		[
+			'attribute' => 'lastlogin_date',
+			'value' => Yii::$app->formatter->asDatetime($model->lastlogin_date, 'medium'),
 		],
 	],
 ]);
