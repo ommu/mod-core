@@ -89,16 +89,16 @@ class CorePageViews extends \app\components\ActiveRecord
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getHistories($count=true)
+	public function getHistories($count=false)
 	{
-		if($count == true) {
-			$model = CorePageViewHistory::find()
-				->where(['view_id' => $this->view_id]);
+		if($count == false)
+			return $this->hasMany(CorePageViewHistory::className(), ['view_id' => 'view_id']);
 
-			return $model->count();
-		}
+		$model = CorePageViewHistory::find()
+			->where(['view_id' => $this->view_id]);
+		$histories = $model->count();
 
-		return $this->hasMany(CorePageViewHistory::className(), ['view_id' => 'view_id']);
+		return $histories ? $histories : 0;
 	}
 
 	/**
@@ -178,7 +178,8 @@ class CorePageViews extends \app\components\ActiveRecord
 			'attribute' => 'views',
 			'filter' => false,
 			'value' => function($model, $key, $index, $column) {
-				return Html::a($model->views, ['page/view-detail/manage', 'view'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} views', ['count'=>$model->views])]);
+				$views = $model->views;
+				return Html::a($views, ['page/view-detail/manage', 'view'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} views', ['count'=>$views])]);
 			},
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'html',

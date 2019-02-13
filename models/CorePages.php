@@ -132,23 +132,24 @@ class CorePages extends \app\components\ActiveRecord
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getViews($count=true, $publish=1)
+	public function getViews($count=false, $publish=1)
 	{
-		if($count == true) {
-			$model = CorePageViews::find()
-				->where(['page_id' => $this->page_id]);
-			if($publish == 0)
-				$model->unpublish();
-			elseif($publish == 1)
-				$model->published();
-			elseif($publish == 2)
-				$model->deleted();
-
-			return $model->sum('views');
+		if($count == false) {
+			return $this->hasMany(CorePageViews::className(), ['page_id' => 'page_id'])
+				->andOnCondition([sprintf('%s.publish', CorePageViews::tableName()) => $publish]);
 		}
 
-		return $this->hasMany(CorePageViews::className(), ['page_id' => 'page_id'])
-			->andOnCondition([sprintf('%s.publish', CorePageViews::tableName()) => $publish]);
+		$model = CorePageViews::find()
+			->where(['page_id' => $this->page_id]);
+		if($publish == 0)
+			$model->unpublish();
+		elseif($publish == 1)
+			$model->published();
+		elseif($publish == 2)
+			$model->deleted();
+		$views = $model->sum('views');
+
+		return $views ? $views : 0;
 	}
 
 	/**
@@ -294,7 +295,8 @@ class CorePages extends \app\components\ActiveRecord
 			'attribute' => 'views',
 			'filter' => false,
 			'value' => function($model, $key, $index, $column) {
-				return Html::a($model->views ? $model->views : 0, ['page/view/manage', 'page'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} views', ['count'=>$model->views])]);
+				$views = $model->getViews(true);
+				return Html::a($views, ['page/view/manage', 'page'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} views', ['count'=>$views])]);
 			},
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'html',

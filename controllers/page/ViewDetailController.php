@@ -83,7 +83,7 @@ class ViewDetailController extends Controller
 		$columns = $searchModel->getGridColumn($cols);
 
 		if($view != null)
-			$model = CorePageViews::findOne($view);
+			$views = CorePageViews::findOne($view);
 
 		$this->view->title = Yii::t('app', 'View Histories');
 		$this->view->description = '';

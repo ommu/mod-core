@@ -99,7 +99,10 @@ $this->params['menu']['content'] = [
 		],
 		[
 			'attribute' => 'views',
-			'value' => Html::a($model->views, ['page/view/manage', 'page'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} views', ['count'=>$model->views])]),
+			'value' => function ($model) {
+				$views = $model->getViews(true);
+				return Html::a($views, ['page/view/manage', 'page'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} views', ['count'=>$views])]);
+			},
 			'format' => 'html',
 		],
 	],
