@@ -116,23 +116,24 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getCities($count=true, $publish=1)
+	public function getCities($count=false, $publish=1)
 	{
-		if($count == true) {
-			$model = CoreZoneCity::find()
-				->where(['province_id' => $this->province_id]);
-			if($publish == 0)
-				$model->unpublish();
-			elseif($publish == 1)
-				$model->published();
-			elseif($publish == 2)
-				$model->deleted();
-
-			return $model->count();
+		if($count == false) {
+			return $this->hasMany(CoreZoneCity::className(), ['province_id' => 'province_id'])
+				->andOnCondition([sprintf('%s.publish', CoreZoneCity::tableName()) => $publish]);
 		}
 
-		return $this->hasMany(CoreZoneCity::className(), ['province_id' => 'province_id'])
-			->andOnCondition([sprintf('%s.publish', CoreZoneCity::tableName()) => $publish]);
+		$model = CoreZoneCity::find()
+			->where(['province_id' => $this->province_id]);
+		if($publish == 0)
+			$model->unpublish();
+		elseif($publish == 1)
+			$model->published();
+		elseif($publish == 2)
+			$model->deleted();
+		$cities = $model->count();
+
+		return $cities ? $cities : 0;
 	}
 
 	/**
@@ -257,7 +258,8 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 			'attribute' => 'cities',
 			'filter' => false,
 			'value' => function($model, $key, $index, $column) {
-				return Html::a($model->cities, ['zone/city/manage', 'province'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} cities', ['count'=>$model->cities])]);
+				$cities = $model->getCities(true);
+				return Html::a($cities, ['zone/city/manage', 'province'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} cities', ['count'=>$cities])]);
 			},
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'html',

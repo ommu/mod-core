@@ -101,23 +101,24 @@ class CoreZoneCountry extends \app\components\ActiveRecord
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getProvinces($count=true, $publish=1)
+	public function getProvinces($count=false, $publish=1)
 	{
-		if($count == true) {
-			$model = CoreZoneProvince::find()
-				->where(['country_id' => $this->country_id]);
-			if($publish == 0)
-				$model->unpublish();
-			elseif($publish == 1)
-				$model->published();
-			elseif($publish == 2)
-				$model->deleted();
-
-			return $model->count();
+		if($count == false) {
+			return $this->hasMany(CoreZoneProvince::className(), ['country_id' => 'country_id'])
+				->andOnCondition([sprintf('%s.publish', CoreZoneProvince::tableName()) => $publish]);
 		}
 
-		return $this->hasMany(CoreZoneProvince::className(), ['country_id' => 'country_id'])
-			->andOnCondition([sprintf('%s.publish', CoreZoneProvince::tableName()) => $publish]);
+		$model = CoreZoneProvince::find()
+			->where(['country_id' => $this->country_id]);
+		if($publish == 0)
+			$model->unpublish();
+		elseif($publish == 1)
+			$model->published();
+		elseif($publish == 2)
+			$model->deleted();
+		$provinces = $model->count();
+
+		return $provinces ? $provinces : 0;
 	}
 
 	/**
@@ -210,7 +211,8 @@ class CoreZoneCountry extends \app\components\ActiveRecord
 			'attribute' => 'provinces',
 			'filter' => false,
 			'value' => function($model, $key, $index, $column) {
-				return Html::a($model->provinces, ['zone/province/manage', 'country'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} provinces', ['count'=>$model->provinces])]);
+				$provinces = $model->getProvinces(true);
+				return Html::a($provinces, ['zone/province/manage', 'country'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} provinces', ['count'=>$provinces])]);
 			},
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'html',

@@ -128,41 +128,42 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	// public function getProvince()
-	// {
-	// 	return $this->hasOne(CoreZoneProvince::className(), ['province_id' => 'province_id'])
-	// 		->via('city');
-	// }
-
-	/**
-	 * @return \yii\db\ActiveQuery
-	 */
-	// public function getCountry()
-	// {
-	// 	return $this->hasOne(CoreZoneCountry::className(), ['country_id' => 'country_id'])
-	// 		->via('province');
-	// }
-
-	/**
-	 * @return \yii\db\ActiveQuery
-	 */
-	public function getVillages($count=true, $publish=1)
+	public function getProvince()
 	{
-		if($count == true) {
-			$model = CoreZoneVillage::find()
-				->where(['district_id' => $this->district_id]);
-			if($publish == 0)
-				$model->unpublish();
-			elseif($publish == 1)
-				$model->published();
-			elseif($publish == 2)
-				$model->deleted();
+		return $this->hasOne(CoreZoneProvince::className(), ['province_id' => 'province_id'])
+			->via('city');
+	}
 
-			return $model->count();
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getCountry()
+	{
+		return $this->hasOne(CoreZoneCountry::className(), ['country_id' => 'country_id'])
+			->via('province');
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getVillages($count=false, $publish=1)
+	{
+		if($count == false) {
+			return $this->hasMany(CoreZoneVillage::className(), ['district_id' => 'district_id'])
+				->andOnCondition([sprintf('%s.publish', CoreZoneVillage::tableName()) => $publish]);
 		}
 
-		return $this->hasMany(CoreZoneVillage::className(), ['district_id' => 'district_id'])
-			->andOnCondition([sprintf('%s.publish', CoreZoneVillage::tableName()) => $publish]);
+		$model = CoreZoneVillage::find()
+			->where(['district_id' => $this->district_id]);
+		if($publish == 0)
+			$model->unpublish();
+		elseif($publish == 1)
+			$model->published();
+		elseif($publish == 2)
+			$model->deleted();
+		$villages = $model->count();
+
+		return $villages ? $villages : 0;
 	}
 
 	/**
@@ -294,7 +295,8 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 			'attribute' => 'villages',
 			'filter' => false,
 			'value' => function($model, $key, $index, $column) {
-				return Html::a($model->villages, ['zone/village/manage', 'district'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} villages', ['count'=>$model->villages])]);
+				$villages = $model->getVillages(true);
+				return Html::a($villages, ['zone/village/manage', 'district'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} villages', ['count'=>$villages])]);
 			},
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'html',

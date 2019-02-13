@@ -20,6 +20,8 @@ use yii\helpers\Url;
 use app\components\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
+use yii\widgets\DetailView;
+use ommu\banner\models\CoreZoneCountry;
 
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -39,6 +41,26 @@ $this->params['menu']['option'] = [
 
 <div class="core-zone-province-manage">
 <?php Pjax::begin(); ?>
+
+<?php if($country != null) {
+$model = $countries;
+echo DetailView::widget([
+	'model' => $countries,
+	'options' => [
+		'class'=>'table table-striped detail-view',
+	],
+	'attributes' => [
+		[
+			'attribute' => 'country_name',
+			'value' => function ($model) {
+				return Html::a($model->country_name, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$model->country_name]);
+			},
+			'format' => 'html',
+		],
+		'code',
+	],
+]);
+}?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>
 

@@ -37,6 +37,7 @@ use mdm\admin\components\AccessControl;
 use ommu\core\models\CoreZoneProvince;
 use ommu\core\models\search\CoreZoneProvince as CoreZoneProvinceSearch;
 use ommu\core\models\view\CoreZoneProvince as CoreZoneProvinceView;
+use ommu\core\models\CoreZoneCountry;
 
 class ProvinceController extends Controller
 {
@@ -80,6 +81,8 @@ class ProvinceController extends Controller
 	 */
 	public function actionManage()
 	{
+		$country = Yii::$app->request->get('country');
+
 		$searchModel = new CoreZoneProvinceSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -93,6 +96,9 @@ class ProvinceController extends Controller
 		}
 		$columns = $searchModel->getGridColumn($cols);
 
+		if($country != null)
+			$countries = CoreZoneCountry::findOne($country);
+
 		$this->view->title = Yii::t('app', 'Provinces');
 		$this->view->description = '';
 		$this->view->keywords = '';
@@ -100,6 +106,8 @@ class ProvinceController extends Controller
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
+			'country' => $country,
+			'countries' => $countries,
 		]);
 	}
 

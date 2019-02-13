@@ -46,15 +46,33 @@ $this->params['menu']['content'] = [
 		'district_name',
 		[
 			'attribute' => 'cityName',
-			'value' => isset($model->city) ? $model->city->city_name : '-',
+			'value' => function ($model) {
+				$cityName = isset($model->city) ? $model->city->city_name : '-';
+				if($cityName != '-')
+					return Html::a($cityName, ['zone/city/view', 'id'=>$model->city_id], ['title'=>$cityName]);
+				return $cityName;
+			},
+			'format' => 'html',
 		],
 		[
 			'attribute' => 'provinceName',
-			'value' => isset($model->city->province) ? $model->city->province->province_name : '-',
+			'value' => function ($model) {
+				$provinceName = isset($model->city->province) ? $model->city->province->province_name : '-';
+				if($provinceName != '-')
+					return Html::a($provinceName, ['zone/province/view', 'id'=>$model->city->province_id], ['title'=>$provinceName]);
+				return $provinceName;
+			},
+			'format' => 'html',
 		],
 		[
 			'attribute' => 'countryName',
-			'value' => isset($model->city->province->country) ? $model->city->province->country->country_name : '-',
+			'value' => function ($model) {
+				$countryName = isset($model->city->province->country) ? $model->city->province->country->country_name : '-';
+				if($countryName != '-')
+					return Html::a($countryName, ['zone/country/view', 'id'=>$model->city->province->country_id], ['title'=>$countryName]);
+				return $countryName;
+			},
+			'format' => 'html',
 		],
 		'mfdonline',
 		[
@@ -84,7 +102,10 @@ $this->params['menu']['content'] = [
 		'slug',
 		[
 			'attribute' => 'villages',
-			'value' => Html::a($model->villages, ['village/manage', 'district'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} villages', ['count'=>$model->villages])]),
+			'value' => function ($model) {
+				$villages = $model->getVillages(true);
+				return Html::a($villages, ['zone/village/manage', 'district'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} villages', ['count'=>$villages])]);
+			},
 			'format' => 'html',
 		],
 	],

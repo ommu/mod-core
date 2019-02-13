@@ -59,7 +59,10 @@ $this->params['menu']['content'] = [
 		'slug',
 		[
 			'attribute' => 'provinces',
-			'value' => Html::a($model->provinces, ['province/manage', 'country'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} provinces', ['count'=>$model->provinces])]),
+			'value' => function ($model) {
+				$provinces = $model->getProvinces(true);
+				return Html::a($provinces, ['zone/province/manage', 'country'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} provinces', ['count'=>$provinces])]);
+			},
 			'format' => 'html',
 		],
 	],

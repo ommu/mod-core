@@ -20,6 +20,11 @@ use yii\helpers\Url;
 use app\components\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
+use yii\widgets\DetailView;
+use ommu\core\models\CoreZoneCountry;
+use ommu\core\models\CoreZoneProvince;
+use ommu\core\models\CoreZoneCity;
+use ommu\core\models\CoreZoneDistrict;
 
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -39,6 +44,146 @@ $this->params['menu']['option'] = [
 
 <div class="core-zone-village-manage">
 <?php Pjax::begin(); ?>
+
+<?php if($country != null) {
+$model = $countries;
+echo DetailView::widget([
+	'model' => $countries,
+	'options' => [
+		'class'=>'table table-striped detail-view',
+	],
+	'attributes' => [
+		[
+			'attribute' => 'country_name',
+			'value' => function ($model) {
+				return Html::a($model->country_name, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$model->country_name]);
+			},
+			'format' => 'html',
+		],
+		'code',
+	],
+]);
+}?>
+
+<?php if($province != null) {
+$model = $provinces;
+echo DetailView::widget([
+	'model' => $provinces,
+	'options' => [
+		'class'=>'table table-striped detail-view',
+	],
+	'attributes' => [
+		[
+			'attribute' => 'province_name',
+			'value' => function ($model) {
+				return Html::a($model->province_name, ['zone/province/view', 'id'=>$model->province_id], ['title'=>$model->province_name]);
+			},
+			'format' => 'html',
+		],
+		[
+			'attribute' => 'countryName',
+			'value' => function ($model) {
+				$countryName = isset($model->country) ? $model->country->country_name : '-';
+				if($countryName != '-')
+					return Html::a($countryName, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$countryName]);
+				return $countryName;
+			},
+			'format' => 'html',
+		],
+		'mfdonline',
+	],
+]);
+}?>
+
+<?php if($city != null) {
+$model = $cities;
+echo DetailView::widget([
+	'model' => $cities,
+	'options' => [
+		'class'=>'table table-striped detail-view',
+	],
+	'attributes' => [
+		[
+			'attribute' => 'city_name',
+			'value' => function ($model) {
+				return Html::a($model->city_name, ['zone/city/view', 'id'=>$model->city_id], ['title'=>$model->city_name]);
+			},
+			'format' => 'html',
+		],
+		[
+			'attribute' => 'provinceName',
+			'value' => function ($model) {
+				$provinceName = isset($model->province) ? $model->province->province_name : '-';
+				if($provinceName != '-')
+					return Html::a($provinceName, ['zone/province/view', 'id'=>$model->province_id], ['title'=>$provinceName]);
+				return $provinceName;
+			},
+			'format' => 'html',
+		],
+		[
+			'attribute' => 'countryName',
+			'value' => function ($model) {
+				$countryName = isset($model->province->country) ? $model->province->country->country_name : '-';
+				if($countryName != '-')
+					return Html::a($countryName, ['zone/country/view', 'id'=>$model->province->country_id], ['title'=>$countryName]);
+				return $countryName;
+			},
+			'format' => 'html',
+		],
+		'mfdonline',
+	],
+]);
+}?>
+
+<?php if($district != null) {
+$model = $districts;
+echo DetailView::widget([
+	'model' => $districts,
+	'options' => [
+		'class'=>'table table-striped detail-view',
+	],
+	'attributes' => [
+		[
+			'attribute' => 'district_name',
+			'value' => function ($model) {
+				return Html::a($model->district_name, ['zone/district/view', 'id'=>$model->district_id], ['title'=>$model->district_name]);
+			},
+			'format' => 'html',
+		],
+		[
+			'attribute' => 'cityName',
+			'value' => function ($model) {
+				$cityName = isset($model->city) ? $model->city->city_name : '-';
+				if($cityName != '-')
+					return Html::a($cityName, ['zone/city/view', 'id'=>$model->city_id], ['title'=>$cityName]);
+				return $cityName;
+			},
+			'format' => 'html',
+		],
+		[
+			'attribute' => 'provinceName',
+			'value' => function ($model) {
+				$provinceName = isset($model->city->province) ? $model->city->province->province_name : '-';
+				if($provinceName != '-')
+					return Html::a($provinceName, ['zone/province/view', 'id'=>$model->city->province_id], ['title'=>$provinceName]);
+				return $provinceName;
+			},
+			'format' => 'html',
+		],
+		[
+			'attribute' => 'countryName',
+			'value' => function ($model) {
+				$countryName = isset($model->city->province->country) ? $model->city->province->country->country_name : '-';
+				if($countryName != '-')
+					return Html::a($countryName, ['zone/country/view', 'id'=>$model->city->province->country_id], ['title'=>$countryName]);
+				return $countryName;
+			},
+			'format' => 'html',
+		],
+		'mfdonline',
+	],
+]);
+}?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>
 

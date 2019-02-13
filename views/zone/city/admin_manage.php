@@ -20,6 +20,9 @@ use yii\helpers\Url;
 use app\components\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
+use yii\widgets\DetailView;
+use ommu\core\models\CoreZoneCountry;
+use ommu\core\models\CoreZoneProvince;
 
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -39,6 +42,56 @@ $this->params['menu']['option'] = [
 
 <div class="core-zone-city-manage">
 <?php Pjax::begin(); ?>
+
+<?php if($country != null) {
+$model = $countries;
+echo DetailView::widget([
+	'model' => $countries,
+	'options' => [
+		'class'=>'table table-striped detail-view',
+	],
+	'attributes' => [
+		[
+			'attribute' => 'country_name',
+			'value' => function ($model) {
+				return Html::a($model->country_name, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$model->country_name]);
+			},
+			'format' => 'html',
+		],
+		'code',
+	],
+]);
+}?>
+
+<?php if($province != null) {
+$model = $provinces;
+echo DetailView::widget([
+	'model' => $provinces,
+	'options' => [
+		'class'=>'table table-striped detail-view',
+	],
+	'attributes' => [
+		[
+			'attribute' => 'province_name',
+			'value' => function ($model) {
+				return Html::a($model->province_name, ['zone/province/view', 'id'=>$model->province_id], ['title'=>$model->province_name]);
+			},
+			'format' => 'html',
+		],
+		[
+			'attribute' => 'countryName',
+			'value' => function ($model) {
+				$countryName = isset($model->country) ? $model->country->country_name : '-';
+				if($countryName != '-')
+					return Html::a($countryName, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$countryName]);
+				return $countryName;
+			},
+			'format' => 'html',
+		],
+		'mfdonline',
+	],
+]);
+}?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>
 

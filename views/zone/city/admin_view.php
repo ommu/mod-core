@@ -46,11 +46,23 @@ $this->params['menu']['content'] = [
 		'city_name',
 		[
 			'attribute' => 'provinceName',
-			'value' => isset($model->province) ? $model->province->province_name : '-',
+			'value' => function ($model) {
+				$provinceName = isset($model->province) ? $model->province->province_name : '-';
+				if($provinceName != '-')
+					return Html::a($provinceName, ['zone/province/view', 'id'=>$model->province_id], ['title'=>$provinceName]);
+				return $provinceName;
+			},
+			'format' => 'html',
 		],
 		[
 			'attribute' => 'countryName',
-			'value' => isset($model->province->country) ? $model->province->country->country_name : '-',
+			'value' => function ($model) {
+				$countryName = isset($model->province->country) ? $model->province->country->country_name : '-';
+				if($countryName != '-')
+					return Html::a($countryName, ['zone/country/view', 'id'=>$model->province->country_id], ['title'=>$countryName]);
+				return $countryName;
+			},
+			'format' => 'html',
 		],
 		'mfdonline',
 		[
@@ -80,7 +92,10 @@ $this->params['menu']['content'] = [
 		'slug',
 		[
 			'attribute' => 'districts',
-			'value' => Html::a($model->districts, ['district/manage', 'city'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} districts', ['count'=>$model->districts])]),
+			'value' => function ($model) {
+				$districts = $model->getDistricts(true);
+				return Html::a($districts, ['zone/district/manage', 'city'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} districts', ['count'=>$districts])]);
+			},
 			'format' => 'html',
 		],
 	],

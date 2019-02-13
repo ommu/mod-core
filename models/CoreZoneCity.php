@@ -126,32 +126,33 @@ class CoreZoneCity extends \app\components\ActiveRecord
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	// public function getCountry()
-	// {
-	// 	return $this->hasOne(CoreZoneCountry::className(), ['country_id' => 'country_id'])
-	// 		->via('province');
-	// }
+	public function getCountry()
+	{
+		return $this->hasOne(CoreZoneCountry::className(), ['country_id' => 'country_id'])
+			->via('province');
+	}
 
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getDistricts($count=true, $publish=1)
+	public function getDistricts($count=false, $publish=1)
 	{
-		if($count == true) {
-			$model = CoreZoneDistrict::find()
-				->where(['city_id' => $this->city_id]);
-			if($publish == 0)
-				$model->unpublish();
-			elseif($publish == 1)
-				$model->published();
-			elseif($publish == 2)
-				$model->deleted();
-
-			return $model->count();
+		if($count == false) {
+			return $this->hasMany(CoreZoneDistrict::className(), ['city_id' => 'city_id'])
+				->andOnCondition([sprintf('%s.publish', CoreZoneDistrict::tableName()) => $publish]);
 		}
 
-		return $this->hasMany(CoreZoneDistrict::className(), ['city_id' => 'city_id'])
-			->andOnCondition([sprintf('%s.publish', CoreZoneDistrict::tableName()) => $publish]);
+		$model = CoreZoneDistrict::find()
+			->where(['city_id' => $this->city_id]);
+		if($publish == 0)
+			$model->unpublish();
+		elseif($publish == 1)
+			$model->published();
+		elseif($publish == 2)
+			$model->deleted();
+		$districts = $model->count();
+
+		return $districts ? $districts : 0;
 	}
 
 	/**
@@ -276,7 +277,8 @@ class CoreZoneCity extends \app\components\ActiveRecord
 			'attribute' => 'districts',
 			'filter' => false,
 			'value' => function($model, $key, $index, $column) {
-				return Html::a($model->districts, ['zone/district/manage', 'city'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} districts', ['count'=>$model->districts])]);
+				$districts = $model->getDistricts(true);
+				return Html::a($districts, ['zone/district/manage', 'city'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} districts', ['count'=>$districts])]);
 			},
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'html',

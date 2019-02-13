@@ -46,7 +46,13 @@ $this->params['menu']['content'] = [
 		'province_name',
 		[
 			'attribute' => 'countryName',
-			'value' => isset($model->country) ? $model->country->country_name : '-',
+			'value' => function ($model) {
+				$countryName = isset($model->country) ? $model->country->country_name : '-';
+				if($countryName != '-')
+					return Html::a($countryName, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$countryName]);
+				return $countryName;
+			},
+			'format' => 'html',
 		],
 		'mfdonline',
 		[
@@ -76,7 +82,10 @@ $this->params['menu']['content'] = [
 		'slug',
 		[
 			'attribute' => 'cities',
-			'value' => Html::a($model->cities, ['zone/city/manage', 'province'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} cities', ['count'=>$model->cities])]),
+			'value' => function ($model) {
+				$cities = $model->getCities(true);
+				return Html::a($cities, ['zone/city/manage', 'province'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} cities', ['count'=>$cities])]);
+			},
 			'format' => 'html',
 		],
 	],
