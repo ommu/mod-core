@@ -10,9 +10,9 @@
  * @modified by Putra Sudaryanto <putra@sudaryanto.id>
  * @link https://github.com/ommu/mod-core
  *
- * This is the model class for table "_view_core_settings".
+ * This is the model class for table "_core_settings".
  *
- * The followings are the available columns in table "_view_core_settings":
+ * The followings are the available columns in table "_core_settings":
  * @property integer $id
  * @property integer $online
  *
@@ -33,7 +33,7 @@ class CoreSettings extends \app\components\ActiveRecord
 	 */
 	public static function tableName()
 	{
-		return '_view_core_settings';
+		return '_core_settings';
 	}
 
 	/**

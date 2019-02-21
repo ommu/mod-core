@@ -10,9 +10,9 @@
  * @modified by Putra Sudaryanto <putra@sudaryanto.id>
  * @link https://github.com/ommu/mod-core
  *
- * This is the model class for table "_view_core_meta".
+ * This is the model class for table "_core_meta".
  *
- * The followings are the available columns in table "_view_core_meta":
+ * The followings are the available columns in table "_core_meta":
  * @property integer $id
  * @property string $city_name
  * @property string $province_name
@@ -35,7 +35,7 @@ class CoreMeta extends \app\components\ActiveRecord
 	 */
 	public static function tableName()
 	{
-		return '_view_core_meta';
+		return '_core_meta';
 	}
 
 	/**

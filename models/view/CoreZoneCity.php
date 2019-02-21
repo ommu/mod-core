@@ -9,9 +9,9 @@
  * @modified date 22 April 2018, 19:29 WIB
  * @link https://github.com/ommu/mod-core
  *
- * This is the model class for table "_view_core_zone_city".
+ * This is the model class for table "_core_zone_city".
  *
- * The followings are the available columns in table "_view_core_zone_city":
+ * The followings are the available columns in table "_core_zone_city":
  * @property integer $city_id
  * @property string $city_name
  *
@@ -32,7 +32,7 @@ class CoreZoneCity extends \app\components\ActiveRecord
 	 */
 	public static function tableName()
 	{
-		return '_view_core_zone_city';
+		return '_core_zone_city';
 	}
 
 	/**

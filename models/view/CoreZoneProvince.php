@@ -9,9 +9,9 @@
  * @modified date 22 April 2018, 19:30 WIB
  * @link https://github.com/ommu/mod-core
  *
- * This is the model class for table "_view_core_zone_province".
+ * This is the model class for table "_core_zone_province".
  *
- * The followings are the available columns in table "_view_core_zone_province":
+ * The followings are the available columns in table "_core_zone_province":
  * @property integer $province_id
  * @property string $province_name
  *
@@ -32,7 +32,7 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 	 */
 	public static function tableName()
 	{
-		return '_view_core_zone_province';
+		return '_core_zone_province';
 	}
 
 	/**

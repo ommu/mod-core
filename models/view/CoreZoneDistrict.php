@@ -9,9 +9,9 @@
  * @modified date 22 April 2018, 19:29 WIB
  * @link https://github.com/ommu/mod-core
  *
- * This is the model class for table "_view_core_zone_district".
+ * This is the model class for table "_core_zone_district".
  *
- * The followings are the available columns in table "_view_core_zone_district":
+ * The followings are the available columns in table "_core_zone_district":
  * @property integer $district_id
  * @property string $district_name
  *
@@ -32,7 +32,7 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 	 */
 	public static function tableName()
 	{
-		return '_view_core_zone_district';
+		return '_core_zone_district';
 	}
 
 	/**
