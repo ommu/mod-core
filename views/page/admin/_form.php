@@ -33,6 +33,7 @@ $redactorOptions = [
 
 <?php $form = ActiveForm::begin([
 	'options' => [
+		'class' => 'form-horizontal form-label-left',
 		'enctype' => 'multipart/form-data',
 	],
 	'enableClientValidation' => false,
@@ -42,18 +43,18 @@ $redactorOptions = [
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php echo $form->field($model, 'name_i', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'name_i')
 	->textInput(['maxlength'=>true])
-	->label($model->getAttributeLabel('name_i'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('name_i')); ?>
 
-<?php echo $form->field($model, 'desc_i', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'desc_i')
 	->textarea(['rows'=>6, 'cols'=>50])
 	->widget(Redactor::className(), ['clientOptions' => $redactorOptions])
-	->label($model->getAttributeLabel('desc_i'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('desc_i')); ?>
 
-<?php echo $form->field($model, 'quote_i', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'quote_i')
 	->textarea(['rows'=>6, 'cols'=>50, 'maxlength'=>true])
-	->label($model->getAttributeLabel('quote_i'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('quote_i')); ?>
 
 <?php $uploadPath = CorePages::getUploadPath(false);
 $media = !$model->isNewRecord && $model->old_media != '' ? Html::img(join('/', [Url::Base(), $uploadPath, $model->old_media]), ['class'=>'mb-15', 'width'=>'100%']) : '';
@@ -62,18 +63,18 @@ echo $form->field($model, 'media', ['template' => '{label}<div class="col-md-6 c
 	->label($model->getAttributeLabel('media'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
 <?php $mediaShow = CorePages::getMediaShow();
-echo $form->field($model, 'media_show', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+echo $form->field($model, 'media_show')
 	->dropDownList($mediaShow, ['prompt'=>''])
-	->label($model->getAttributeLabel('media_show'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('media_show')); ?>
 
 <?php $mediaType = CorePages::getMediaType();
-echo $form->field($model, 'media_type', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+echo $form->field($model, 'media_type')
 	->dropDownList($mediaType, ['prompt'=>''])
-	->label($model->getAttributeLabel('media_type'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('media_type')); ?>
 
-<?php echo $form->field($model, 'publish', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12 checkbox">{input}{error}</div>'])
+<?php echo $form->field($model, 'publish')
 	->checkbox(['label'=>''])
-	->label($model->getAttributeLabel('publish'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('publish')); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group">

@@ -23,6 +23,7 @@ use ommu\core\models\CoreZoneProvince;
 <div class="core-zone-city-form">
 
 <?php $form = ActiveForm::begin([
+	'options' => ['class'=>'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
@@ -31,25 +32,25 @@ use ommu\core\models\CoreZoneProvince;
 <?php //echo $form->errorSummary($model);?>
 
 <?php $province = CoreZoneProvince::getProvince();
-echo $form->field($model, 'province_id', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+echo $form->field($model, 'province_id')
 	->dropDownList($province, ['prompt'=>''])
-	->label($model->getAttributeLabel('province_id'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('province_id')); ?>
 
-<?php echo $form->field($model, 'city_name', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'city_name')
 	->textInput(['maxlength'=>true])
-	->label($model->getAttributeLabel('city_name'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('city_name')); ?>
 
-<?php echo $form->field($model, 'mfdonline', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'mfdonline')
 	->textInput(['maxlength'=>true])
-	->label($model->getAttributeLabel('mfdonline'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('mfdonline')); ?>
 
-<?php echo $form->field($model, 'checked', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12 checkbox">{input}{error}</div>'])
+<?php echo $form->field($model, 'checked')
 	->checkbox(['label'=>''])
-	->label($model->getAttributeLabel('checked'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('checked')); ?>
 
-<?php echo $form->field($model, 'publish', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12 checkbox">{input}{error}</div>'])
+<?php echo $form->field($model, 'publish')
 	->checkbox(['label'=>''])
-	->label($model->getAttributeLabel('publish'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('publish')); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group">

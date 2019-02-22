@@ -22,6 +22,7 @@ use app\components\ActiveForm;
 <div class="core-zone-country-form">
 
 <?php $form = ActiveForm::begin([
+	'options' => ['class'=>'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
@@ -29,13 +30,13 @@ use app\components\ActiveForm;
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php echo $form->field($model, 'country_name', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'country_name')
 	->textInput(['maxlength'=>true])
-	->label($model->getAttributeLabel('country_name'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('country_name')); ?>
 
-<?php echo $form->field($model, 'code', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'code')
 	->textInput(['maxlength'=>true])
-	->label($model->getAttributeLabel('code'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('code')); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group">
