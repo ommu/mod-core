@@ -27,21 +27,21 @@ use app\components\ActiveForm;
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php echo $form->field($model, 'name', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'name')
 	->textInput(['maxlength' => true])
-	->label($model->getAttributeLabel('name'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('name')); ?>
 
-<?php echo $form->field($model, 'code', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'code')
 	->textInput(['maxlength' => true])
-	->label($model->getAttributeLabel('code'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('code')); ?>
 
-<?php echo $form->field($model, 'actived', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12 checkbox">{input}{error}</div>'])
+<?php echo $form->field($model, 'actived')
 	->checkbox(['label'=>''])
-	->label($model->getAttributeLabel('actived'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('actived')); ?>
 
-<?php echo $form->field($model, 'default', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12 checkbox">{input}{error}</div>'])
+<?php echo $form->field($model, 'default')
 	->checkbox(['label'=>''])
-	->label($model->getAttributeLabel('default'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('default')); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group">

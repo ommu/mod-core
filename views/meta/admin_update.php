@@ -42,41 +42,35 @@ $this->params['menu']['content'] = [
 
 <?php //echo $form->errorSummary($model);?>
 
-<div class="form-group field-meta_image">
-	<?php echo $form->field($model, 'meta_image', ['template' => '{label}', 'options' => ['tag' => null]])
-		->label($model->getAttributeLabel('meta_image'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
-	<div class="col-md-6 col-sm-9 col-xs-12">
-		<?php echo !$model->isNewRecord && $model->old_meta_image_i != '' ? Html::img(join('/', [Url::Base(), CoreMeta::getUploadPath(false), $model->old_meta_image_i]), ['class'=>'mb-15', 'width'=>'100%']) : '';?>
-		<?php echo $form->field($model, 'meta_image', ['template' => '{input}{error}'])
-			->fileInput()
-			->label($model->getAttributeLabel('meta_image'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
-	</div>
-</div>
+<?php $metaImage = !$model->isNewRecord && $model->old_meta_image_i != '' ? Html::img(join('/', [Url::Base(), CoreMeta::getUploadPath(false), $model->old_meta_image_i]), ['class'=>'mb-15', 'width'=>'100%']) : '';
+echo $form->field($model, 'meta_image', ['template'=> '{label}{beginWrapper}<div>'.$metaImage.'</div>{input}{error}{hint}{endWrapper}'])
+	->fileInput()
+	->label($model->getAttributeLabel('meta_image')); ?>
 
-<?php echo $form->field($model, 'meta_image_alt', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'meta_image_alt')
 	->textInput()
-	->label($model->getAttributeLabel('meta_image_alt'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('meta_image_alt')); ?>
 
 <?php 
 $setting = [
 	1 => Yii::t('app', 'Enable'),
 	0 => Yii::t('app', 'Disable'),
 ];
-echo $form->field($model, 'office_on', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+echo $form->field($model, 'office_on')
 	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
-	->label($model->getAttributeLabel('office_on'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('office_on')); ?>
 	
-<?php echo $form->field($model, 'google_on', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'google_on')
 	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
-	->label($model->getAttributeLabel('google_on'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('google_on')); ?>
 
-<?php echo $form->field($model, 'twitter_on', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'twitter_on')
 	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
-	->label($model->getAttributeLabel('twitter_on'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('twitter_on')); ?>
 
-<?php echo $form->field($model, 'facebook_on', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'facebook_on')
 	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
-	->label($model->getAttributeLabel('facebook_on'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('facebook_on')); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group">

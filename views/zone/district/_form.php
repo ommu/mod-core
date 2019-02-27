@@ -34,7 +34,7 @@ use yii\web\JsExpression;
 <?php //echo $form->errorSummary($model);?>
 
 <?php $city_id = $form->field($model, 'city_id', ['template' => '{input}', 'options' => ['tag' => null]])->hiddenInput()->label(false);
-echo $form->field($model, 'cityName', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}'.$city_id.'{error}</div>'])
+echo $form->field($model, 'cityName', ['template' => '{label}{beginWrapper}{input}'.$city_id.'{error}{hint}{endWrapper}'])
 	// ->textInput(['maxlength'=>true])
 	->widget(AutoComplete::className(), [
 		'options' => [
@@ -51,7 +51,7 @@ echo $form->field($model, 'cityName', ['template' => '{label}<div class="col-md-
 			}"),
 		]
 	])
-	->label($model->getAttributeLabel('cityName'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('cityName')); ?>
 
 <?php echo $form->field($model, 'district_name')
 	->textInput(['maxlength'=>true])

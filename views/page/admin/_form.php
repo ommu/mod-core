@@ -58,9 +58,9 @@ $redactorOptions = [
 
 <?php $uploadPath = CorePages::getUploadPath(false);
 $media = !$model->isNewRecord && $model->old_media != '' ? Html::img(join('/', [Url::Base(), $uploadPath, $model->old_media]), ['class'=>'mb-15', 'width'=>'100%']) : '';
-echo $form->field($model, 'media', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12"><div>'.$media.'</div>{input}{error}</div>'])
+echo $form->field($model, 'media', ['template' => '{label}{beginWrapper}<div>'.$media.'</div>{input}{error}{hint}{endWrapper}'])
 	->fileInput()
-	->label($model->getAttributeLabel('media'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('media')); ?>
 
 <?php $mediaShow = CorePages::getMediaShow();
 echo $form->field($model, 'media_show')

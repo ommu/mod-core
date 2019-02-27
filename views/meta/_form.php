@@ -33,21 +33,21 @@ use ommu\core\models\CoreMeta;
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php echo $form->field($model, 'office_hour', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'office_hour')
 	->textarea(['rows'=>2,'rows'=>6])
-	->label($model->getAttributeLabel('office_hour'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('office_hour')); ?>
 
-<?php echo $form->field($model, 'office_hotline', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'office_hotline')
 	->textInput(['maxlength' => true])
-	->label($model->getAttributeLabel('office_hotline'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('office_hotline')); ?>
 
-<?php echo $form->field($model, 'map_icons', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'map_icons')
 	->textInput(['maxlength' => true])
-	->label($model->getAttributeLabel('map_icons'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('map_icons')); ?>
 
-<?php echo $form->field($model, 'map_icon_size', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'map_icon_size')
 	->textarea(['rows'=>2,'rows'=>6])
-	->label($model->getAttributeLabel('map_icon_size'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('map_icon_size')); ?>
 	
 <div class="ln_solid"></div>
 <div class="form-group">

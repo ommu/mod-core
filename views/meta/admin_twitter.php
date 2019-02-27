@@ -56,9 +56,9 @@ $setting = [
 	1 => Yii::t('app', 'Enable'),
 	0 => Yii::t('app', 'Disable'),
 ];
-echo $form->field($model, 'twitter_on', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+echo $form->field($model, 'twitter_on')
 	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
-	->label($model->getAttributeLabel('twitter_on'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('twitter_on')); ?>
 
 <?php 
 $twitter_card = [
@@ -71,17 +71,19 @@ $twitter_card = [
 	//7 => Yii::t('app', 'Player Card: Approval Guide'),
 	//8 => Yii::t('app', 'Product Card'),
 ];
-echo $form->field($model, 'twitter_card', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+echo $form->field($model, 'twitter_card')
 	->dropDownList($twitter_card)
-	->label($model->getAttributeLabel('twitter_card'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('twitter_card')); ?>
 
-<?php echo $form->field($model, 'twitter_site', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'Your official site in twitter (.i.e. "@CareerCenterCodes, @OmmuPlatform")').'</span></div>'])
+<?php echo $form->field($model, 'twitter_site')
 	->textInput(['maxlength' => true])
-	->label($model->getAttributeLabel('twitter_site'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('twitter_site'))
+	->hint(Yii::t('app', 'Your official site in twitter (.i.e. "@CareerCenterCodes, @OmmuPlatform")')); ?>
 
-<?php echo $form->field($model, 'twitter_creator', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'Creator your site in twitter (.i.e. "@PutraSudaryanto, @Mba_Em")').'</span></div>'])
+<?php echo $form->field($model, 'twitter_creator')
 	->textInput(['maxlength' => true])
-	->label($model->getAttributeLabel('twitter_creator'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('twitter_creator'))
+	->hint(Yii::t('app', 'Creator your site in twitter (.i.e. "@PutraSudaryanto, @Mba_Em")')); ?>
 
 <div id="photo" class="form-group field-twitter_photo_size filter" <?php echo $model->twitter_card != 3 ? 'style="display: none;"' : '';?>>
 	<?php echo $form->field($model, 'twitter_photo_size[i]', ['template' => '{label}', 'options' => ['tag' => null]])
@@ -91,23 +93,24 @@ echo $form->field($model, 'twitter_card', ['template' => '{label}<div class="col
 			<?php 
 			if(!$model->isNewRecord && !$model->getErrors())
 				$model->twitter_photo_size = unserialize($model->twitter_photo_size);
-			echo $form->field($model, 'twitter_photo_size[width]', ['template' => '{input}{error}'])
+			echo $form->field($model, 'twitter_photo_size[width]', ['template' => '{input}{error}{hint}'])
 				->textInput(['type'=>'number', 'min'=>1, 'maxlength'=>'3', 'placeholder'=>$model->getAttributeLabel('twitter_photo_size[width]')])
-				->label($model->getAttributeLabel('twitter_photo_size[width]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
-			<span class="small-px"><?php echo Yii::t('app', 'Providing width in px helps us more accurately preserve the aspect ratio of the image when resizing');?></span>
+				->label($model->getAttributeLabel('twitter_photo_size[width]'))
+				->hint(Yii::t('app', 'Providing width in px helps us more accurately preserve the aspect ratio of the image when resizing')); ?>
 		</div>
 		<div class="col-md-6 col-sm-6 col-xs-12">
-			<?php echo $form->field($model, 'twitter_photo_size[height]', ['template' => '{input}{error}'])
+			<?php echo $form->field($model, 'twitter_photo_size[height]', ['template' => '{input}{error}{hint}'])
 				->textInput(['type'=>'number', 'min'=>1, 'maxlength'=>'3', 'placeholder'=>$model->getAttributeLabel('twitter_photo_size[height]')])
-				->label($model->getAttributeLabel('twitter_photo_size[height]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
-			<span class="small-px"><?php echo Yii::t('app', 'Providing height in px helps us more accurately preserve the aspect ratio of the image when resizing');?></span>
+				->label($model->getAttributeLabel('twitter_photo_size[height]'))
+				->hint(Yii::t('app', 'Providing height in px helps us more accurately preserve the aspect ratio of the image when resizing')); ?>
 		</div>
 	</div>
 </div>
 
-<?php echo $form->field($model, 'twitter_country', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}<span class="small-px">'.Yii::t('app', 'If your application is not available in the US App Store, you must set this value to the two-letter country code for the App Store that contains your application.').'</span></div>'])
+<?php echo $form->field($model, 'twitter_country')
 	->textInput(['maxlength' => true])
-	->label($model->getAttributeLabel('twitter_country'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('twitter_country'))
+	->hint(Yii::t('app', 'If your application is not available in the US App Store, you must set this value to the two-letter country code for the App Store that contains your application.')); ?>
 
 <div id="application" class="filter" <?php echo $model->twitter_card != 4 ? 'style="display: none;"' : '';?>>
 	<div class="form-group">
@@ -118,19 +121,22 @@ echo $form->field($model, 'twitter_card', ['template' => '{label}<div class="col
 			<?php 
 			if(!$model->isNewRecord && !$model->getErrors())
 				$model->twitter_iphone = unserialize($model->twitter_iphone);
-			echo $form->field($model, 'twitter_iphone[name]', ['template' => '{input}{error}<span class="small-px">'.Yii::t('app', 'Name of your iPhone app').'</span>'])
+			echo $form->field($model, 'twitter_iphone[name]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => 64])
-				->label($model->getAttributeLabel('twitter_iphone[name]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+				->label($model->getAttributeLabel('twitter_iphone[name]'))
+				->hint(Yii::t('app', 'Name of your iPhone app')); ?>
 
 			<div class="h5"><?php echo $model->getAttributeLabel('twitter_iphone[id]');?></div>
-			<?php echo $form->field($model, 'twitter_iphone[id]', ['template' => '{input}{error}<span class="small-px">'.Yii::t('app', 'String value, and should be the numeric representation of your app ID in the App Store (.i.e. "307234931")').'</span>'])
+			<?php echo $form->field($model, 'twitter_iphone[id]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => 32])
-				->label($model->getAttributeLabel('twitter_iphone[id]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+				->label($model->getAttributeLabel('twitter_iphone[id]'))
+				->hint(Yii::t('app', 'String value, and should be the numeric representation of your app ID in the App Store (.i.e. "307234931")')); ?>
 			
 			<div class="h5"><?php echo $model->getAttributeLabel('twitter_iphone[url]');?></div>
-			<?php echo $form->field($model, 'twitter_iphone[url]', ['template' => '{input}{error}<span class="small-px">'.Yii::t('app', 'Your app\'s custom URL scheme (you must include "://" after your scheme name)').'</span>'])
+			<?php echo $form->field($model, 'twitter_iphone[url]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => false])
-				->label($model->getAttributeLabel('twitter_iphone[url]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+				->label($model->getAttributeLabel('twitter_iphone[url]'))
+				->hint(Yii::t('app', 'Your app\'s custom URL scheme (you must include "://" after your scheme name)')); ?>
 		</div>
 	</div>
 
@@ -142,19 +148,22 @@ echo $form->field($model, 'twitter_card', ['template' => '{label}<div class="col
 			<?php 
 			if(!$model->isNewRecord && !$model->getErrors())
 				$model->twitter_ipad = unserialize($model->twitter_ipad);
-			echo $form->field($model, 'twitter_ipad[name]', ['template' => '{input}{error}<span class="small-px">'.Yii::t('app', 'Name of your iPad optimized app').'</span>'])
+			echo $form->field($model, 'twitter_ipad[name]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => 64])
-				->label($model->getAttributeLabel('twitter_ipad[name]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+				->label($model->getAttributeLabel('twitter_ipad[name]'))
+				->hint(Yii::t('app', 'Name of your iPad optimized app')); ?>
 
 			<div class="h5"><?php echo $model->getAttributeLabel('twitter_ipad[id]');?></div>
-			<?php echo $form->field($model, 'twitter_ipad[id]', ['template' => '{input}{error}<span class="small-px">'.Yii::t('app', 'String value, should be the numeric representation of your app ID in the App Store (.i.e. “307234931”)').'</span>'])
+			<?php echo $form->field($model, 'twitter_ipad[id]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => 32])
-				->label($model->getAttributeLabel('twitter_ipad[id]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+				->label($model->getAttributeLabel('twitter_ipad[id]'))
+				->hint(Yii::t('app', 'String value, should be the numeric representation of your app ID in the App Store (.i.e. “307234931”)')); ?>
 			
 			<div class="h5"><?php echo $model->getAttributeLabel('twitter_ipad[url]');?></div>
-			<?php echo $form->field($model, 'twitter_ipad[url]', ['template' => '{input}{error}<span class="small-px">'.Yii::t('app', 'Your app\'s custom URL scheme (you must include "://" after your scheme name)').'</span>'])
+			<?php echo $form->field($model, 'twitter_ipad[url]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => false])
-				->label($model->getAttributeLabel('twitter_ipad[url]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+				->label($model->getAttributeLabel('twitter_ipad[url]'))
+				->hint(Yii::t('app', 'Your app\'s custom URL scheme (you must include "://" after your scheme name)')); ?>
 		</div>
 	</div>
 
@@ -166,19 +175,22 @@ echo $form->field($model, 'twitter_card', ['template' => '{label}<div class="col
 			<?php 
 			if(!$model->isNewRecord && !$model->getErrors())
 				$model->twitter_googleplay = unserialize($model->twitter_googleplay);
-			echo $form->field($model, 'twitter_googleplay[name]', ['template' => '{input}{error}<span class="small-px">'.Yii::t('app', 'Name of your Android app').'</span>'])
+			echo $form->field($model, 'twitter_googleplay[name]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => 64])
-				->label($model->getAttributeLabel('twitter_googleplay[name]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+				->label($model->getAttributeLabel('twitter_googleplay[name]'))
+				->hint(Yii::t('app', 'Name of your Android app')); ?>
 
 			<div class="h5"><?php echo $model->getAttributeLabel('twitter_googleplay[id]');?></div>
-			<?php echo $form->field($model, 'twitter_googleplay[id]', ['template' => '{input}{error}<span class="small-px">'.Yii::t('app', 'String value, and should be the numeric representation of your app ID in Google Play (.i.e. "co.ommu.nirwasita")').'</span>'])
+			<?php echo $form->field($model, 'twitter_googleplay[id]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => 32])
-				->label($model->getAttributeLabel('twitter_googleplay[id]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+				->label($model->getAttributeLabel('twitter_googleplay[id]'))
+				->hint(Yii::t('app', 'String value, and should be the numeric representation of your app ID in Google Play (.i.e. "co.ommu.nirwasita")')); ?>
 			
 			<div class="h5"><?php echo $model->getAttributeLabel('twitter_googleplay[url]');?></div>
-			<?php echo $form->field($model, 'twitter_googleplay[url]', ['template' => '{input}{error}<span class="small-px">'.Yii::t('app', 'Your app\'s custom URL scheme (.i.e. "http://play.google.com/store/apps/details?id=co.ommu.nirwasita")').'</span>'])
+			<?php echo $form->field($model, 'twitter_googleplay[url]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => false])
-				->label($model->getAttributeLabel('twitter_googleplay[url]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+				->label($model->getAttributeLabel('twitter_googleplay[url]'))
+				->hint(Yii::t('app', 'Your app\'s custom URL scheme (.i.e. "http://play.google.com/store/apps/details?id=co.ommu.nirwasita")')); ?>
 		</div>
 	</div>
 </div>

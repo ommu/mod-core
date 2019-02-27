@@ -28,43 +28,29 @@ use app\components\ActiveForm;
 
 <?php //echo $form->errorSummary($model);?>
 
-
-
-<?php echo $form->field($model, 'site_creation', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'site_creation')
 	->textInput(['type' => 'date'])
-	->label($model->getAttributeLabel('site_creation'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('site_creation')); ?>
 
-<?php echo $form->field($model, 'site_dateformat', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'site_dateformat')
 	->textInput(['maxlength' => true])
-	->label($model->getAttributeLabel('site_dateformat'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('site_dateformat')); ?>
 
-<?php echo $form->field($model, 'site_timeformat', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'site_timeformat')
 	->textInput(['maxlength' => true])
-	->label($model->getAttributeLabel('site_timeformat'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('site_timeformat')); ?>
 
-
-
-
-
-<?php echo $form->field($model, 'license_email', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'license_email')
 	->textInput(['maxlength' => true])
-	->label($model->getAttributeLabel('license_email'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('license_email')); ?>
 
-<?php echo $form->field($model, 'license_key', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'license_key')
 	->textInput(['maxlength' => true])
-	->label($model->getAttributeLabel('license_key'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('license_key')); ?>
 
-<?php echo $form->field($model, 'ommu_version', ['template' => '{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'ommu_version')
 	->textInput(['maxlength' => true])
-	->label($model->getAttributeLabel('ommu_version'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
-
-
-
-
-
-
-
-
+	->label($model->getAttributeLabel('ommu_version')); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group">
