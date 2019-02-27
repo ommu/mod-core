@@ -51,6 +51,7 @@ JS;
 ?>
 
 <?php $form = ActiveForm::begin([
+	'options' => ['class'=>'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,

@@ -21,6 +21,7 @@ use app\components\ActiveForm;
 ?>
 
 <?php $form = ActiveForm::begin([
+	'options' => ['class'=>'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => true,
 	//'enableClientScript' => true,

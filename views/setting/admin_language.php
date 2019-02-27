@@ -111,6 +111,7 @@ echo GridView::widget([
 	<div class="x_panel">
 		<div class="x_content">
 <?php $form = ActiveForm::begin([
+	'options' => ['class'=>'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
