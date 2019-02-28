@@ -33,6 +33,7 @@ $this->params['menu']['content'] = [
 
 <?php $form = ActiveForm::begin([
 	'options' => [
+		'class' => 'form-horizontal form-label-left',
 		'enctype' => 'multipart/form-data',
 	],
 	'enableClientValidation' => false,
@@ -57,24 +58,24 @@ $setting = [
 	0 => Yii::t('app', 'Disable'),
 ];
 echo $form->field($model, 'office_on')
-	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
+	->radioList($setting)
 	->label($model->getAttributeLabel('office_on')); ?>
 	
 <?php echo $form->field($model, 'google_on')
-	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
+	->radioList($setting)
 	->label($model->getAttributeLabel('google_on')); ?>
 
 <?php echo $form->field($model, 'twitter_on')
-	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
+	->radioList($setting)
 	->label($model->getAttributeLabel('twitter_on')); ?>
 
 <?php echo $form->field($model, 'facebook_on')
-	->radioList($setting, ['class'=>'desc', 'separator' => '<br />'])
+	->radioList($setting)
 	->label($model->getAttributeLabel('facebook_on')); ?>
 
 <div class="ln_solid"></div>
-<div class="form-group">
-	<div class="col-md-6 col-sm-9 col-xs-12 col-sm-offset-3">
+<div class="form-group row">
+	<div class="col-md-6 col-sm-9 col-xs-12 offset-sm-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>

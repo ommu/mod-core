@@ -88,7 +88,7 @@ $online = [
 	0 => Yii::t('app', 'Offline (Maintenance Mode)'),
 ];
 echo $form->field($model, 'online', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
-	->radioList($online, ['class'=>'desc pt-10', 'separator' => '<br />'])
+	->radioList($online)
 	->label($model->getAttributeLabel('online'){hint})
 	->hint(Yii::t('app', 'Maintenance Mode will prevent site visitors from accessing your website. You can customize the maintenance mode page by manually editing the file "/application/maintenance.html".')); ?>
 
@@ -134,7 +134,7 @@ $event_i = [
 	0 => Yii::t('app', 'Disable'),
 ];
 echo $form->field($model, 'event_i')
-	->radioList($event_i, ['class'=>'desc', 'separator' => '<br />'])
+	->radioList($event_i)
 	->label($model->getAttributeLabel('event_i')); ?>
 
 <div id="events" <?php echo $model->event_i == '0' ? 'style="display: none;"' : ''; ?>>
@@ -186,7 +186,7 @@ echo $form->field($model, 'event_i')
 			0 => Yii::t('app', 'No, the public cannot view profiles.'),
 		];
 		echo $form->field($model, 'general_profile', ['template' => '<div class="h5">'.$model->getAttributeLabel('general_profile').'</div>{input}{error}'])
-			->radioList($general_profile, ['class'=>'desc', 'separator' => '<br />'])
+			->radioList($general_profile)
 			->label($model->getAttributeLabel('general_profile')); ?>
 
 		<?php 
@@ -195,7 +195,7 @@ echo $form->field($model, 'event_i')
 			0 => Yii::t('app', 'No, the public cannot use the invite page.'),
 		];
 		echo $form->field($model, 'general_invite', ['template' => '<div class="h5">'.$model->getAttributeLabel('general_profile').'</div>{input}{error}'])
-			->radioList($general_invite, ['class'=>'desc', 'separator' => '<br />'])
+			->radioList($general_invite)
 			->label($model->getAttributeLabel('general_invite')); ?>
 
 		<?php 
@@ -204,7 +204,7 @@ echo $form->field($model, 'event_i')
 			0 => Yii::t('app', 'No, the public cannot use the search page.'),
 		];
 		echo $form->field($model, 'general_search', ['template' => '<div class="h5">'.$model->getAttributeLabel('general_profile').'</div>{input}{error}'])
-			->radioList($general_search, ['class'=>'desc', 'separator' => '<br />'])
+			->radioList($general_search)
 			->label($model->getAttributeLabel('general_search')); ?>
 
 		<?php 
@@ -213,7 +213,7 @@ echo $form->field($model, 'event_i')
 			0 => Yii::t('app', 'No, the public cannot view the portal page.'),
 		];
 		echo $form->field($model, 'general_portal', ['template' => '<div class="h5">'.$model->getAttributeLabel('general_profile').'</div>{input}{error}'])
-			->radioList($general_portal, ['class'=>'desc', 'separator' => '<br />'])
+			->radioList($general_portal)
 			->label($model->getAttributeLabel('general_portal')); ?>
 	</div>
 </div>
@@ -224,7 +224,7 @@ $signup_username = [
 	0 => Yii::t('app', 'No, usernames will not be used in this network.'),
 ];
 echo $form->field($model, 'signup_username', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
-	->radioList($signup_username, ['class'=>'desc pt-10', 'separator' => '<br />'])
+	->radioList($signup_username)
 	->label($model->getAttributeLabel('signup_username'))
 	->hint(Yii::t('app', 'By default, usernames are used to uniquely identify your users. If you choose to disable this feature, your users will not be given the option to enter a username. Instead, their user ID will be used. Note that if you do decide to enable this feature, you should make sure to create special REQUIRED display name profile fields - otherwise the users\' IDs will be displayed. Also note that if you disable usernames after users have already signed up, their usernames will be deleted and any previous links to their content will not work, as the links will no longer use their username! Finally, all recent activity and all notifications will be deleted if you choose to disable usernames after previously having them enabled.'));
 }?>
@@ -235,8 +235,8 @@ echo $form->field($model, 'signup_username', ['template' => '{label}{beginWrappe
 	->hint(Yii::t('app', 'Anything entered into the box below will be included at the bottom of the <head> tag. If you want to include a script or stylesheet, be sure to use the &lt;script&gt; or &lt;link&gt; tag.')); ?>
 
 <div class="ln_solid"></div>
-<div class="form-group">
-	<div class="col-md-6 col-sm-9 col-xs-12 col-sm-offset-3">
+<div class="form-group row">
+	<div class="col-md-6 col-sm-9 col-xs-12 offset-sm-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>

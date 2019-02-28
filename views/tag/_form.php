@@ -35,7 +35,7 @@ use app\components\ActiveForm;
 	->label($model->getAttributeLabel('body')); ?>
 
 <?php echo $form->field($model, 'publish')
-	->checkbox(['label'=>''])
+	->checkbox()
 	->label($model->getAttributeLabel('publish')); ?>
 
 <div class="ln_solid"></div>

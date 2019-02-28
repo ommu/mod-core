@@ -58,7 +58,7 @@ $spam_signup = [
 	0 => Yii::t('app', 'No, do not show verification code image.'),
 ];
 echo $form->field($model, 'spam_signup', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
-	->radioList($spam_signup, ['class'=>'desc pt-10', 'separator' => '<br />'])
+	->radioList($spam_signup)
 	->label($model->getAttributeLabel('spam_signup'))
 	->hint(Yii::t('app', 'If you have selected YES, an image containing a random sequence of 6 numbers will be shown to users on the signup page. Users will be required to enter these numbers into the Verification Code field before they can continue. This feature helps prevent users from trying to automatically create accounts on your system. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors or users cannot signup, try turning this off.')); ?>
 
@@ -68,20 +68,20 @@ $spam_invite = [
 	0 => Yii::t('app', 'No, disable validation code for inviting.'),
 ];
 echo $form->field($model, 'spam_invite', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
-	->radioList($spam_invite, ['class'=>'desc pt-10', 'separator' => '<br />'])
+	->radioList($spam_invite)
 	->label($model->getAttributeLabel('spam_invite'))
 	->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "invite" page. Users will be required to enter these numbers into the Verification Code field in order to send their invitation. This feature helps prevent users from trying to create comment spam. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
 
 <div class="form-group">
 	<label class="control-label col-md-3 col-sm-3 col-xs-12"><?php echo Yii::t('app', 'Require users to enter validation code when logging in?');?></label>
-	{beginWrapper}
+	<div class="col-md-6 col-sm-9 col-xs-12">
 		<?php 
 		$spam_login = [
 			1 => Yii::t('app', 'Yes, enable validation code for logging in.'),
 			0 => Yii::t('app', 'No, disable validation code for logging in.'),
 		];
 		echo $form->field($model, 'spam_login', ['template' => '{hint}{input}{error}'])
-			->radioList($spam_login, ['class'=>'desc pt-10', 'separator' => '<br />'])
+			->radioList($spam_login)
 			->label($model->getAttributeLabel('spam_login'))
 			->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "login" page. Users will be required to enter these numbers into the Verification Code field in order to login. This feature helps prevent users from trying to spam the login form. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
 
@@ -98,7 +98,7 @@ $spam_contact = [
 	0 => Yii::t('app', 'No, disable validation code for the contact form.'),
 ];
 echo $form->field($model, 'spam_contact', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
-	->radioList($spam_contact, ['class'=>'desc pt-10', 'separator' => '<br />'])
+	->radioList($spam_contact)
 	->label($model->getAttributeLabel('spam_contact'))
 	->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "contact" page. Users will be required to enter these numbers into the Verification Code field in order to contact you. This feature helps prevent users from trying to spam the contact form. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
 
@@ -108,7 +108,7 @@ $spam_comment = [
 	0 => Yii::t('app', 'No, disable validation code for the contact form.'),
 ];
 echo $form->field($model, 'spam_comment', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
-->radioList($spam_comment, ['class'=>'desc pt-10', 'separator' => '<br />'])
+	->radioList($spam_comment)
 	->label($model->getAttributeLabel('spam_comment'))
 	->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "write a comment" page. Users will be required to enter these numbers into the Verification Code field in order to post their comment. This feature helps prevent users from trying to create comment spam. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
 
@@ -118,8 +118,8 @@ echo $form->field($model, 'spam_comment', ['template' => '{label}{beginWrapper}{
 	->hint(Yii::t('app', 'By default, the user may not enter any HTML tags into comments. If you want to allow specific tags, you can enter them below (separated by commas). Example: b, img, a, embed, font')); ?>
 	
 <div class="ln_solid"></div>
-<div class="form-group">
-	<div class="col-md-6 col-sm-9 col-xs-12 col-sm-offset-3">
+<div class="form-group row">
+	<div class="col-md-6 col-sm-9 col-xs-12 offset-sm-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>

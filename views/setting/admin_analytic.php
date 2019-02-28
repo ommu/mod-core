@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php //echo $form->errorSummary($model);?>
 
 <?php echo $form->field($model, 'analytic')
-	->checkbox(['label'=>''])
+	->checkbox()
 	->label($model->getAttributeLabel('analytic')); ?>
 
 <?php echo $form->field($model, 'analytic_id', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
@@ -46,8 +46,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	->label($model->getAttributeLabel('analytic_profile_id')); ?>
 
 <div class="ln_solid"></div>
-<div class="form-group">
-	<div class="col-md-6 col-sm-9 col-xs-12 col-sm-offset-3">
+<div class="form-group row">
+	<div class="col-md-6 col-sm-9 col-xs-12 offset-sm-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>

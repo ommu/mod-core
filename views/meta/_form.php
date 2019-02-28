@@ -24,6 +24,7 @@ use ommu\core\models\CoreMeta;
 
 <?php $form = ActiveForm::begin([
 	'options' => [
+		'class' => 'form-horizontal form-label-left',
 		'enctype' => 'multipart/form-data',
 	],
 	'enableClientValidation' => false,
@@ -50,8 +51,8 @@ use ommu\core\models\CoreMeta;
 	->label($model->getAttributeLabel('map_icon_size')); ?>
 	
 <div class="ln_solid"></div>
-<div class="form-group">
-	<div class="col-md-6 col-sm-9 col-xs-12 col-sm-offset-3">
+<div class="form-group row">
+	<div class="col-md-6 col-sm-9 col-xs-12 offset-sm-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>

@@ -82,7 +82,7 @@ $this->params['menu']['content'] = [
 							}"),
 						]
 					])
-					->label($model->getAttributeLabel('office_district'), ['placeholder'=>$model->getAttributeLabel('office_district')]); ?>
+					->label($model->getAttributeLabel('office_district')); ?>
 			</div>
 			<div class="col-md-6 col-sm-6 col-xs-12">
 				<?php echo $form->field($model, 'office_village', ['template' => '{input}{error}'])
@@ -106,7 +106,7 @@ $this->params['menu']['content'] = [
 							}"),
 						]
 					])
-					->label($model->getAttributeLabel('office_village'), ['placeholder'=>$model->getAttributeLabel('office_village')]); ?>
+					->label($model->getAttributeLabel('office_village')); ?>
 			</div>
 		</div>
 		<span class="small-px"><?php echo Yii::t('app', 'The number, street, district and village of the postal address for this business');?></span>
@@ -158,8 +158,8 @@ echo $form->field($model, 'office_country_id')
 	->hint(Yii::t('app', 'A website for this business')); ?>
 
 <div class="ln_solid"></div>
-<div class="form-group">
-	<div class="col-md-6 col-sm-9 col-xs-12 col-sm-offset-3">
+<div class="form-group row">
+	<div class="col-md-6 col-sm-9 col-xs-12 offset-sm-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>

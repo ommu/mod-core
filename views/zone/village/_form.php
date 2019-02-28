@@ -66,7 +66,7 @@ echo $form->field($model, 'districtName', ['template' => '{label}{beginWrapper}{
 	->label($model->getAttributeLabel('mfdonline')); ?>
 
 <?php echo $form->field($model, 'publish')
-	->checkbox(['label'=>''])
+	->checkbox()
 	->label($model->getAttributeLabel('publish')); ?>
 
 <div class="ln_solid"></div>

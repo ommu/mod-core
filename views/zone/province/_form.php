@@ -45,11 +45,11 @@ echo $form->field($model, 'country_id')
 	->label($model->getAttributeLabel('mfdonline')); ?>
 
 <?php echo $form->field($model, 'checked')
-	->checkbox(['label'=>''])
+	->checkbox()
 	->label($model->getAttributeLabel('checked')); ?>
 
 <?php echo $form->field($model, 'publish')
-	->checkbox(['label'=>''])
+	->checkbox()
 	->label($model->getAttributeLabel('publish')); ?>
 
 <div class="ln_solid"></div>

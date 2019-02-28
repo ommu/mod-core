@@ -73,7 +73,7 @@ echo $form->field($model, 'media_type')
 	->label($model->getAttributeLabel('media_type')); ?>
 
 <?php echo $form->field($model, 'publish')
-	->checkbox(['label'=>''])
+	->checkbox()
 	->label($model->getAttributeLabel('publish')); ?>
 
 <div class="ln_solid"></div>
