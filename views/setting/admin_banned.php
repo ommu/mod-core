@@ -73,8 +73,8 @@ echo $form->field($model, 'spam_invite', ['template' => '{label}{beginWrapper}{h
 	->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "invite" page. Users will be required to enter these numbers into the Verification Code field in order to send their invitation. This feature helps prevent users from trying to create comment spam. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
 
 <div class="form-group">
-	<label class="control-label col-md-3 col-sm-3 col-xs-12"><?php echo Yii::t('app', 'Require users to enter validation code when logging in?');?></label>
-	<div class="col-md-6 col-sm-9 col-xs-12">
+	<label class="control-label col-md-3 col-sm-3 col-12"><?php echo Yii::t('app', 'Require users to enter validation code when logging in?');?></label>
+	<div class="col-md-6 col-sm-9 col-12">
 		<?php 
 		$spam_login = [
 			1 => Yii::t('app', 'Yes, enable validation code for logging in.'),
@@ -119,7 +119,7 @@ echo $form->field($model, 'spam_comment', ['template' => '{label}{beginWrapper}{
 	
 <div class="ln_solid"></div>
 <div class="form-group row">
-	<div class="col-md-6 col-sm-9 col-xs-12 offset-sm-3">
+	<div class="col-md-6 col-sm-9 col-12 offset-sm-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>

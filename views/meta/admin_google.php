@@ -68,13 +68,13 @@ echo $form->field($model, 'office_on')
 
 <div class="form-group">
 	<?php echo $form->field($model, 'office_place', ['template' => '{label}', 'options' => ['tag' => null]])
-		->label($model->getAttributeLabel('office_place'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
-	<div class="col-md-6 col-sm-9 col-xs-12">
+		->label($model->getAttributeLabel('office_place'), ['class'=>'control-label col-md-3 col-sm-3 col-12']); ?>
+	<div class="col-md-6 col-sm-9 col-12">
 		<?php echo $form->field($model, 'office_place', ['template' => '{input}{error}'])
 			->textarea(['rows'=>2,'rows'=>6])
 			->label($model->getAttributeLabel('office_place')); ?>
 		<div class="row">
-			<div class="col-md-6 col-sm-6 col-xs-12">
+			<div class="col-md-6 col-sm-6 col-12">
 				<?php echo $form->field($model, 'office_district', ['template' => '{input}{error}'])
 					//->textInput(['maxlength' => true, 'placeholder'=>$model->getAttributeLabel('office_district')])
 					->widget(AutoComplete::className(), [
@@ -97,7 +97,7 @@ echo $form->field($model, 'office_on')
 					])
 					->label($model->getAttributeLabel('office_district')); ?>
 			</div>
-			<div class="col-md-6 col-sm-6 col-xs-12">
+			<div class="col-md-6 col-sm-6 col-12">
 				<?php echo $form->field($model, 'office_village', ['template' => '{input}{error}'])
 					//->textInput(['maxlength' => true, 'placeholder'=>$model->getAttributeLabel('office_village')])
 					->widget(AutoComplete::className(), [
@@ -172,7 +172,7 @@ echo $form->field($model, 'office_country_id')
 
 <div class="ln_solid"></div>
 <div class="form-group row">
-	<div class="col-md-6 col-sm-9 col-xs-12 offset-sm-3">
+	<div class="col-md-6 col-sm-9 col-12 offset-sm-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>

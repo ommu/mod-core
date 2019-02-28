@@ -83,8 +83,8 @@ echo $form->field($model, 'signup_welcome', ['template' => '{label}{beginWrapper
 
 <div class="form-group">
 	<?php echo $form->field($model, 'signup_inviteonly', ['template' => '{label}', 'options' => ['tag' => null]])
-		->label($model->getAttributeLabel('signup_inviteonly'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
-	<div class="col-md-6 col-sm-9 col-xs-12">
+		->label($model->getAttributeLabel('signup_inviteonly'), ['class'=>'control-label col-md-3 col-sm-3 col-12']); ?>
+	<div class="col-md-6 col-sm-9 col-12">
 		<?php 
 		$signup_inviteonly = [
 			2 => Yii::t('app', 'Yes, admins and users must invite new users before they can signup.'),
@@ -181,7 +181,7 @@ echo $form->field($model, 'signup_adminemail', ['template' => '{label}{beginWrap
 
 <div class="ln_solid"></div>
 <div class="form-group row">
-	<div class="col-md-6 col-sm-9 col-xs-12 offset-sm-3">
+	<div class="col-md-6 col-sm-9 col-12 offset-sm-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>

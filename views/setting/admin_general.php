@@ -101,8 +101,8 @@ echo $form->field($model, 'online', ['template' => '{label}{beginWrapper}{hint}{
 
 	<div id="comingsoon" class="form-group field-construction_text-comingsoon" <?php echo $model->online != '2' ? 'style="display: none;"' : ''; ?>>
 		<?php echo $form->field($model, 'construction_text[comingsoon]', ['template' => '{label}', 'options' => ['tag' => null]])
-			->label($model->getAttributeLabel('construction_text[comingsoon]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
-		<div class="col-md-6 col-sm-9 col-xs-12">
+			->label($model->getAttributeLabel('construction_text[comingsoon]'), ['class'=>'control-label col-md-3 col-sm-3 col-12']); ?>
+		<div class="col-md-6 col-sm-9 col-12">
 			<?php 
 			if(!$model->isNewRecord && !$model->getErrors())
 				$model->construction_text = unserialize($model->construction_text);
@@ -114,8 +114,8 @@ echo $form->field($model, 'online', ['template' => '{label}{beginWrapper}{hint}{
 
 	<div id="maintenance" class="form-group field-construction_text-maintenance" <?php echo $model->online != '0' ? 'style="display: none;"' : ''; ?>>
 		<?php echo $form->field($model, 'construction_text[maintenance]', ['template' => '{label}', 'options' => ['tag' => null]])
-			->label($model->getAttributeLabel('construction_text[maintenance]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
-		<div class="col-md-6 col-sm-9 col-xs-12">
+			->label($model->getAttributeLabel('construction_text[maintenance]'), ['class'=>'control-label col-md-3 col-sm-3 col-12']); ?>
+		<div class="col-md-6 col-sm-9 col-12">
 			<?php echo $form->field($model, 'construction_text[maintenance]', ['template' => '{input}{error}'])
 				->textarea(['rows'=>2,'rows'=>6])
 				->label($model->getAttributeLabel('construction_text[maintenance]')); ?>
@@ -177,8 +177,8 @@ echo $form->field($model, 'event_i')
 
 <?php if($model->site_type == 1) {?>
 <div class="form-group">
-	<label class="control-label col-md-3 col-sm-3 col-xs-12"><?php echo Yii::t('app', 'Public Permission Defaults');?></label>
-	<div class="col-md-6 col-sm-9 col-xs-12">
+	<label class="control-label col-md-3 col-sm-3 col-12"><?php echo Yii::t('app', 'Public Permission Defaults');?></label>
+	<div class="col-md-6 col-sm-9 col-12">
 		<span class="small-px mb-10"><?php echo Yii::t('app', 'Select whether or not you want to let the public (visitors that are not logged-in) to view the following sections of your social network. In some cases (such as Profiles), if you have given them the option, your users will be able to make their pages private even though you have made them publically viewable here.');?></span>
 		<?php 
 		$general_profile = [
@@ -236,7 +236,7 @@ echo $form->field($model, 'signup_username', ['template' => '{label}{beginWrappe
 
 <div class="ln_solid"></div>
 <div class="form-group row">
-	<div class="col-md-6 col-sm-9 col-xs-12 offset-sm-3">
+	<div class="col-md-6 col-sm-9 col-12 offset-sm-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>
