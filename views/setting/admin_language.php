@@ -36,7 +36,7 @@ $this->params['menu']['option'] = [
 ];
 ?>
 
-<div class="col-md-12 col-sm-12 col-12">
+<div class="col-md-12 col-sm-12 col-xs-12 col-12">
 	<div class="x_panel">
 		<div class="x_title">
 			<?php if($this->params['menu']['content']):
@@ -102,7 +102,7 @@ echo GridView::widget([
 	</div>
 </div>
 
-<div class="col-md-12 col-sm-12 col-12">
+<div class="col-md-12 col-sm-12 col-xs-12 col-12">
 	<?php if(Yii::$app->session->hasFlash('success'))
 		echo $this->flashMessage(Yii::$app->session->getFlash('success'));
 	else if(Yii::$app->session->hasFlash('error'))
@@ -120,8 +120,8 @@ echo GridView::widget([
 <?php //echo $form->errorSummary($model);?>
 
 <div class="form-group">
-	<label class="control-label col-md-3 col-sm-3 col-12"><?php echo Yii::t('app', 'Language Selection Settings');?></label>
-	<div class="col-md-6 col-sm-9 col-12">
+	<label class="control-label col-md-3 col-sm-3 col-xs-12 col-12"><?php echo Yii::t('app', 'Language Selection Settings');?></label>
+	<div class="col-md-6 col-sm-9 col-xs-12 col-12">
 		<?php  
 		$lang_allow = [
 			1 => Yii::t('app', 'Yes, allow registered users to choose their own language.'),
@@ -157,7 +157,7 @@ echo GridView::widget([
 
 <div class="ln_solid"></div>
 <div class="form-group row">
-	<div class="col-md-6 col-sm-9 col-12 offset-sm-3">
+	<div class="col-md-6 col-sm-9 col-xs-12 col-12 offset-sm-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>

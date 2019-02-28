@@ -88,9 +88,9 @@ echo $form->field($model, 'twitter_card')
 
 <div id="photo" class="form-group field-twitter_photo_size filter" <?php echo $model->twitter_card != 3 ? 'style="display: none;"' : '';?>>
 	<?php echo $form->field($model, 'twitter_photo_size[i]', ['template' => '{label}', 'options' => ['tag' => null]])
-		->label($model->getAttributeLabel('twitter_photo_size[i]'), ['class'=>'control-label col-md-3 col-sm-3 col-12']); ?>
-	<div class="col-md-6 col-sm-9 col-12 row">
-		<div class="col-md-6 col-sm-6 col-12">
+		->label($model->getAttributeLabel('twitter_photo_size[i]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12 col-12']); ?>
+	<div class="col-md-6 col-sm-9 col-xs-12 col-12 row">
+		<div class="col-md-6 col-sm-6 col-xs-12 col-12">
 			<?php 
 			if(!$model->isNewRecord && !$model->getErrors())
 				$model->twitter_photo_size = unserialize($model->twitter_photo_size);
@@ -99,7 +99,7 @@ echo $form->field($model, 'twitter_card')
 				->label($model->getAttributeLabel('twitter_photo_size[width]'))
 				->hint(Yii::t('app', 'Providing width in px helps us more accurately preserve the aspect ratio of the image when resizing')); ?>
 		</div>
-		<div class="col-md-6 col-sm-6 col-12">
+		<div class="col-md-6 col-sm-6 col-xs-12 col-12">
 			<?php echo $form->field($model, 'twitter_photo_size[height]', ['template' => '{input}{error}{hint}'])
 				->textInput(['type'=>'number', 'min'=>1, 'maxlength'=>'3', 'placeholder'=>$model->getAttributeLabel('twitter_photo_size[height]')])
 				->label($model->getAttributeLabel('twitter_photo_size[height]'))
@@ -116,8 +116,8 @@ echo $form->field($model, 'twitter_card')
 <div id="application" class="filter" <?php echo $model->twitter_card != 4 ? 'style="display: none;"' : '';?>>
 	<div class="form-group">
 		<?php echo $form->field($model, 'twitter_iphone[i]', ['template' => '{label}', 'options' => ['tag' => null]])
-			->label($model->getAttributeLabel('twitter_iphone[i]'), ['class'=>'control-label col-md-3 col-sm-3 col-12']); ?>
-		<div class="col-md-6 col-sm-9 col-12">
+			->label($model->getAttributeLabel('twitter_iphone[i]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12 col-12']); ?>
+		<div class="col-md-6 col-sm-9 col-xs-12 col-12">
 			<div class="h5"><?php echo $model->getAttributeLabel('twitter_iphone[name]');?></div>
 			<?php 
 			if(!$model->isNewRecord && !$model->getErrors())
@@ -143,8 +143,8 @@ echo $form->field($model, 'twitter_card')
 
 	<div class="form-group">
 		<?php echo $form->field($model, 'twitter_ipad[i]', ['template' => '{label}', 'options' => ['tag' => null]])
-			->label($model->getAttributeLabel('twitter_ipad[i]'), ['class'=>'control-label col-md-3 col-sm-3 col-12']); ?>
-		<div class="col-md-6 col-sm-9 col-12">
+			->label($model->getAttributeLabel('twitter_ipad[i]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12 col-12']); ?>
+		<div class="col-md-6 col-sm-9 col-xs-12 col-12">
 			<div class="h5"><?php echo $model->getAttributeLabel('twitter_ipad[name]');?></div>
 			<?php 
 			if(!$model->isNewRecord && !$model->getErrors())
@@ -170,8 +170,8 @@ echo $form->field($model, 'twitter_card')
 
 	<div class="form-group">
 		<?php echo $form->field($model, 'twitter_googleplay[i]', ['template' => '{label}', 'options' => ['tag' => null]])
-			->label($model->getAttributeLabel('twitter_googleplay[i]'), ['class'=>'control-label col-md-3 col-sm-3 col-12']); ?>
-		<div class="col-md-6 col-sm-9 col-12">
+			->label($model->getAttributeLabel('twitter_googleplay[i]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12 col-12']); ?>
+		<div class="col-md-6 col-sm-9 col-xs-12 col-12">
 			<div class="h5"><?php echo $model->getAttributeLabel('twitter_googleplay[name]');?></div>
 			<?php 
 			if(!$model->isNewRecord && !$model->getErrors())
@@ -198,7 +198,7 @@ echo $form->field($model, 'twitter_card')
 
 <div class="ln_solid"></div>
 <div class="form-group row">
-	<div class="col-md-6 col-sm-9 col-12 offset-sm-3">
+	<div class="col-md-6 col-sm-9 col-xs-12 col-12 offset-sm-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>
