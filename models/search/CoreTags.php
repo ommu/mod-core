@@ -60,9 +60,12 @@ class CoreTags extends CoreTagsModel
 	 *
 	 * @return ActiveDataProvider
 	 */
-	public function search($params)
+	public function search($params, $column=null)
 	{
-		$query = CoreTagsModel::find()->alias('t');
+		if(!($column && is_array($column)))
+			$query = CoreTagsModel::find()->alias('t');
+		else
+			$query = CoreTagsModel::find()->alias('t')->select($column);
 		$query->joinWith([
 			'creation creation', 
 			'modified modified'

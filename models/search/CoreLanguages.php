@@ -60,9 +60,12 @@ class CoreLanguages extends CoreLanguagesModel
 	 * @param array $params
 	 * @return ActiveDataProvider
 	 */
-	public function search($params)
+	public function search($params, $column=null)
 	{
-		$query = CoreLanguagesModel::find()->alias('t');
+		if(!($column && is_array($column)))
+			$query = CoreLanguagesModel::find()->alias('t');
+		else
+			$query = CoreLanguagesModel::find()->alias('t')->select($column);
 		$query->joinWith([
 			'creation creation', 
 			'modified modified'

@@ -57,9 +57,12 @@ class CoreSettings extends CoreSettingsModel
 	 * @param array $params
 	 * @return ActiveDataProvider
 	 */
-	public function search($params)
+	public function search($params, $column=null)
 	{
-		$query = CoreSettingsModel::find()->alias('t');
+		if(!($column && is_array($column)))
+			$query = CoreSettingsModel::find()->alias('t');
+		else
+			$query = CoreSettingsModel::find()->alias('t')->select($column);
 		$query->joinWith([
 			'modified modified'
 		]);

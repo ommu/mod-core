@@ -57,9 +57,12 @@ class Modules extends ModulesModel
 	 *
 	 * @return ActiveDataProvider
 	 */
-	public function search($params)
+	public function search($params, $column=null)
 	{
-		$query = ModulesModel::find()->alias('t');
+		if(!($column && is_array($column)))
+			$query = ModulesModel::find()->alias('t');
+		else
+			$query = ModulesModel::find()->alias('t')->select($column);
 		$query->joinWith([
 			'creation creation', 
 			'modified modified'

@@ -24,9 +24,11 @@ use app\components\ActiveForm;
 		'action' => ['index'],
 		'method' => 'get',
 	]); ?>
-		<?php echo $form->field($model, 'actived')->checkbox();?>
+		<?php echo $form->field($model, 'actived')
+			->checkbox();?>
 
-		<?php echo $form->field($model, 'default')->checkbox();?>
+		<?php echo $form->field($model, 'default')
+			->checkbox();?>
 
 		<?php echo $form->field($model, 'code');?>
 

@@ -60,9 +60,12 @@ class CoreZoneCountry extends CoreZoneCountryModel
 	 *
 	 * @return ActiveDataProvider
 	 */
-	public function search($params)
+	public function search($params, $column=null)
 	{
-		$query = CoreZoneCountryModel::find()->alias('t');
+		if(!($column && is_array($column)))
+			$query = CoreZoneCountryModel::find()->alias('t');
+		else
+			$query = CoreZoneCountryModel::find()->alias('t')->select($column);
 		$query->joinWith([
 			'creation creation', 
 			'modified modified'

@@ -539,7 +539,7 @@ class CoreMeta extends \app\components\ActiveRecord
 	 */
 	public static function getUploadPath($returnAlias=true) 
 	{
-		return ($returnAlias ? Yii::getAlias('@webroot/public') : 'public');
+		return ($returnAlias ? Yii::getAlias('@public') : 'public');
 	}
 
 	/**

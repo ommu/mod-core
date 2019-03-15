@@ -60,9 +60,12 @@ class CoreZoneVillage extends CoreZoneVillageModel
 	 *
 	 * @return ActiveDataProvider
 	 */
-	public function search($params)
+	public function search($params, $column=null)
 	{
-		$query = CoreZoneVillageModel::find()->alias('t');
+		if(!($column && is_array($column)))
+			$query = CoreZoneVillageModel::find()->alias('t');
+		else
+			$query = CoreZoneVillageModel::find()->alias('t')->select($column);
 		$query->joinWith([
 			'district district', 
 			'creation creation', 

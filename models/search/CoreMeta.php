@@ -59,9 +59,12 @@ class CoreMeta extends CoreMetaModel
 	 * @param array $params
 	 * @return ActiveDataProvider
 	 */
-	public function search($params)
+	public function search($params, $column=null)
 	{
-		$query = CoreMetaModel::find()->alias('t');
+		if(!($column && is_array($column)))
+			$query = CoreMetaModel::find()->alias('t');
+		else
+			$query = CoreMetaModel::find()->alias('t')->select($column);
 		$query->joinWith([
 			'modified modified'
 		]);

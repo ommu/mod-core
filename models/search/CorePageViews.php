@@ -60,9 +60,12 @@ class CorePageViews extends CorePageViewsModel
 	 *
 	 * @return ActiveDataProvider
 	 */
-	public function search($params)
+	public function search($params, $column=null)
 	{
-		$query = CorePageViewsModel::find()->alias('t');
+		if(!($column && is_array($column)))
+			$query = CorePageViewsModel::find()->alias('t');
+		else
+			$query = CorePageViewsModel::find()->alias('t')->select($column);
 		$query->joinWith([
 			'page.title page', 
 			'user user'

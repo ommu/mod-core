@@ -60,9 +60,12 @@ class CorePageViewHistory extends CorePageViewHistoryModel
 	 *
 	 * @return ActiveDataProvider
 	 */
-	public function search($params)
+	public function search($params, $column=null)
 	{
-		$query = CorePageViewHistoryModel::find()->alias('t');
+		if(!($column && is_array($column)))
+			$query = CorePageViewHistoryModel::find()->alias('t');
+		else
+			$query = CorePageViewHistoryModel::find()->alias('t')->select($column);
 		$query->joinWith([
 			'view.page.title page',
 			'view.user user'
