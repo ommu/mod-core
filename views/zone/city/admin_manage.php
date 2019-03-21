@@ -28,11 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $this->params['menu']['content'] = [
 	['label' => Yii::t('app', 'Add City'), 'url' => Url::to(['create']), 'icon' => 'plus-square'],
-	['label' => Yii::t('app', 'Countries'), 'url' => Url::to(['zone/country/index']), 'icon' => 'table'],
-	['label' => Yii::t('app', 'Provinces'), 'url' => Url::to(['zone/province/index']), 'icon' => 'table'],
-	['label' => Yii::t('app', 'Cities'), 'url' => Url::to(['zone/city/index']), 'icon' => 'table'],
-	['label' => Yii::t('app', 'Districts'), 'url' => Url::to(['zone/district/index']), 'icon' => 'table'],
-	['label' => Yii::t('app', 'Villages'), 'url' => Url::to(['zone/village/index']), 'icon' => 'table'],
 ];
 $this->params['menu']['option'] = [
 	//['label' => Yii::t('app', 'Search'), 'url' => 'javascript:void(0);'],

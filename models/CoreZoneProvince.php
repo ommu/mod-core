@@ -46,7 +46,7 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 {
 	use \ommu\traits\UtilityTrait;
 
-	public $gridForbiddenColumn = ['checked','modified_date','modifiedDisplayname','updated_date','slug'];
+	public $gridForbiddenColumn = ['checked', 'creation_date', 'creationDisplayname', 'modified_date', 'modifiedDisplayname', 'updated_date', 'slug'];
 
 	public $countryName;
 	public $creationDisplayname;

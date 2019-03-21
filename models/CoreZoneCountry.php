@@ -37,7 +37,7 @@ use ommu\users\models\Users;
 
 class CoreZoneCountry extends \app\components\ActiveRecord
 {
-	public $gridForbiddenColumn = ['modified_date','modifiedDisplayname','slug'];
+	public $gridForbiddenColumn = ['creation_date', 'creationDisplayname', 'modified_date', 'modifiedDisplayname', 'slug'];
 
 	public $creationDisplayname;
 	public $modifiedDisplayname;
