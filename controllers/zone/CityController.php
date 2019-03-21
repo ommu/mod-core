@@ -48,7 +48,7 @@ class CityController extends Controller
 	public function init()
 	{
 		parent::init();
-		$this->subMenu = $this->module->params['config']['zone_submenu'];
+		$this->subMenu = $this->module->params['zone_submenu'];
 	}
 
 	/**
