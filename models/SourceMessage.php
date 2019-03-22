@@ -6,8 +6,8 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 15 September 2017, 19:07 WIB
- * @modified date 22 April 2017, 18:28 WIB
- * @link https://github.com/ommu/ommu
+ * @modified date 22 March 2019, 18:23 WIB
+ * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "source_message".
  *
@@ -31,7 +31,6 @@
 namespace ommu\core\models;
 
 use Yii;
-use yii\helpers\Url;
 use yii\helpers\Html;
 use ommu\users\models\Users;
 
@@ -39,11 +38,10 @@ class SourceMessage extends \app\components\ActiveRecord
 {
 	use \ommu\traits\UtilityTrait;
 
-	public $gridForbiddenColumn = ['modified_date','modified_search'];
+	public $gridForbiddenColumn = ['modified_date', 'modifiedDisplayname'];
 
-	// Search Variable
-	public $creation_search;
-	public $modified_search;
+	public $creationDisplayname;
+	public $modifiedDisplayname;
 
 	/**
 	 * @return string the associated database table name
@@ -62,7 +60,6 @@ class SourceMessage extends \app\components\ActiveRecord
 			[['message'], 'required'],
 			[['creation_id', 'modified_id'], 'integer'],
 			[['message', 'location'], 'string'],
-			[['creation_date', 'modified_date'], 'safe'],
 			[['category'], 'string', 'max' => 255],
 		];
 	}
@@ -81,17 +78,25 @@ class SourceMessage extends \app\components\ActiveRecord
 			'creation_id' => Yii::t('app', 'Creation'),
 			'modified_date' => Yii::t('app', 'Modified Date'),
 			'modified_id' => Yii::t('app', 'Modified'),
-			'creation_search' => Yii::t('app', 'Creation'),
-			'modified_search' => Yii::t('app', 'Modified'),
+			'messages' => Yii::t('app', 'Messages'),
+			'creationDisplayname' => Yii::t('app', 'Creation'),
+			'modifiedDisplayname' => Yii::t('app', 'Modified'),
 		];
 	}
 
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getMessages()
+	public function getMessages($count=false)
 	{
-		return $this->hasMany(Message::className(), ['id' => 'id']);
+		if($count == false)
+			return $this->hasMany(Message::className(), ['id' => 'id']);
+
+		$model = Message::find()
+			->where(['id' => $this->id]);
+		$messages = $model->count();
+
+		return $messages ? $messages : 0;
 	}
 
 	/**
@@ -111,9 +116,18 @@ class SourceMessage extends \app\components\ActiveRecord
 	}
 
 	/**
+	 * {@inheritdoc}
+	 * @return \ommu\core\models\query\SourceMessage the active query used by this AR class.
+	 */
+	public static function find()
+	{
+		return new \ommu\core\models\query\SourceMessage(get_called_class());
+	}
+
+	/**
 	 * Set default columns to display
 	 */
-	public function init() 
+	public function init()
 	{
 		parent::init();
 
@@ -143,15 +157,14 @@ class SourceMessage extends \app\components\ActiveRecord
 		];
 		$this->templateColumns['creation_date'] = [
 			'attribute' => 'creation_date',
-			'filter' => Html::input('date', 'creation_date', Yii::$app->request->get('creation_date'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->creation_date, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->creation_date, 'datetime') : '-';
+				return Yii::$app->formatter->asDatetime($model->creation_date, 'medium');
 			},
-			'format' => 'html',
+			'filter' => $this->filterDatepicker($this, 'creation_date'),
 		];
 		if(!Yii::$app->request->get('creation')) {
-			$this->templateColumns['creation_search'] = [
-				'attribute' => 'creation_search',
+			$this->templateColumns['creationDisplayname'] = [
+				'attribute' => 'creationDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->creation) ? $model->creation->displayname : '-';
 				},
@@ -159,20 +172,29 @@ class SourceMessage extends \app\components\ActiveRecord
 		}
 		$this->templateColumns['modified_date'] = [
 			'attribute' => 'modified_date',
-			'filter' => Html::input('date', 'modified_date', Yii::$app->request->get('modified_date'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->modified_date, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->modified_date, 'datetime') : '-';
+				return Yii::$app->formatter->asDatetime($model->modified_date, 'medium');
 			},
-			'format' => 'html',
+			'filter' => $this->filterDatepicker($this, 'modified_date'),
 		];
 		if(!Yii::$app->request->get('modified')) {
-			$this->templateColumns['modified_search'] = [
-				'attribute' => 'modified_search',
+			$this->templateColumns['modifiedDisplayname'] = [
+				'attribute' => 'modifiedDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->modified) ? $model->modified->displayname : '-';
 				},
 			];
 		}
+		$this->templateColumns['messages'] = [
+			'attribute' => 'messages',
+			'filter' => false,
+			'value' => function($model, $key, $index, $column) {
+				$messages = $model->getMessages(true);
+				return Html::a($messages, ['message/manage', 'id'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} messages', ['count'=>$messages])]);
+			},
+			'contentOptions' => ['class'=>'center'],
+			'format' => 'html',
+		];
 	}
 
 	/**
@@ -194,15 +216,29 @@ class SourceMessage extends \app\components\ActiveRecord
 	}
 
 	/**
+	 * after find attributes
+	 */
+	public function afterFind()
+	{
+		parent::afterFind();
+
+		// $this->creationDisplayname = isset($this->creation) ? $this->creation->displayname : '-';
+		// $this->modifiedDisplayname = isset($this->modified) ? $this->modified->displayname : '-';
+	}
+
+	/**
 	 * before validate attributes
 	 */
-	public function beforeValidate() 
+	public function beforeValidate()
 	{
 		if(parent::beforeValidate()) {
-			if($this->isNewRecord)
-				$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : '0';
-			else
-				$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			if($this->isNewRecord) {
+				if($this->creation_id == null)
+					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			} else {
+				if($this->modified_id == null)
+					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			}
 		}
 		return true;
 	}

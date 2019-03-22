@@ -6,8 +6,8 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 15 September 2017, 19:16 WIB
- * @modified date 22 April 2017, 18:28 WIB
- * @link https://github.com/ommu/ommu
+ * @modified date 22 March 2019, 18:27 WIB
+ * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "message".
  *
@@ -15,24 +15,26 @@
  * @property integer $id
  * @property string $language
  * @property string $translation
+ * @property string $creation_date
+ * @property integer $creation_id
  *
  * The followings are the available model relations:
  * @property SourceMessage $phrase
+ * @property Users $creation
  *
  */
 
 namespace ommu\core\models;
 
 use Yii;
-use yii\helpers\Url;
-use yii\helpers\Html;
+use ommu\users\models\Users;
 
 class Message extends \app\components\ActiveRecord
 {
 	public $gridForbiddenColumn = [];
 
-	// Search Variable
-	public $phrase_search;
+	public $phraseMessage;
+	public $creationDisplayname;
 
 	/**
 	 * @return string the associated database table name
@@ -49,8 +51,8 @@ class Message extends \app\components\ActiveRecord
 	{
 		return [
 			[['id', 'language', 'translation'], 'required'],
-			[['id'], 'integer'],
-			[['translation', 'phrase_search'], 'string'],
+			[['id', 'creation_id'], 'integer'],
+			[['translation', 'phraseMessage'], 'string'],
 			[['language'], 'string', 'max' => 16],
 			[['id', 'language'], 'unique', 'targetAttribute' => ['id', 'language']],
 			[['id'], 'exist', 'skipOnError' => true, 'targetClass' => SourceMessage::className(), 'targetAttribute' => ['id' => 'id']],
@@ -66,7 +68,10 @@ class Message extends \app\components\ActiveRecord
 			'id' => Yii::t('app', 'ID'),
 			'language' => Yii::t('app', 'Language'),
 			'translation' => Yii::t('app', 'Translation'),
-			'phrase_search' => Yii::t('app', 'Phrase'),
+			'creation_date' => Yii::t('app', 'Creation Date'),
+			'creation_id' => Yii::t('app', 'Creation'),
+			'phraseMessage' => Yii::t('app', 'Phrase'),
+			'creationDisplayname' => Yii::t('app', 'Creation'),
 		];
 	}
 
@@ -79,18 +84,26 @@ class Message extends \app\components\ActiveRecord
 	}
 
 	/**
-	 * @inheritdoc
-	 * @return \app\models\query\MessageQuery the active query used by this AR class.
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getCreation()
+	{
+		return $this->hasOne(Users::className(), ['user_id' => 'creation_id']);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 * @return \ommu\core\models\query\Message the active query used by this AR class.
 	 */
 	public static function find()
 	{
-		return new \app\models\query\MessageQuery(get_called_class());
+		return new \ommu\core\models\query\Message(get_called_class());
 	}
 
 	/**
 	 * Set default columns to display
 	 */
-	public function init() 
+	public function init()
 	{
 		parent::init();
 
@@ -100,8 +113,8 @@ class Message extends \app\components\ActiveRecord
 			'contentOptions' => ['class'=>'center'],
 		];
 		if(!Yii::$app->request->get('phrase')) {
-			$this->templateColumns['phrase_search'] = [
-				'attribute' => 'phrase_search',
+			$this->templateColumns['phraseMessage'] = [
+				'attribute' => 'phraseMessage',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->phrase) ? $model->phrase->message : '-';
 				},
@@ -122,6 +135,21 @@ class Message extends \app\components\ActiveRecord
 			},
 			'format' => 'html',
 		];
+		$this->templateColumns['creation_date'] = [
+			'attribute' => 'creation_date',
+			'value' => function($model, $key, $index, $column) {
+				return Yii::$app->formatter->asDatetime($model->creation_date, 'medium');
+			},
+			'filter' => $this->filterDatepicker($this, 'creation_date'),
+		];
+		if(!Yii::$app->request->get('creation')) {
+			$this->templateColumns['creationDisplayname'] = [
+				'attribute' => 'creationDisplayname',
+				'value' => function($model, $key, $index, $column) {
+					return isset($model->creation) ? $model->creation->displayname : '-';
+				},
+			];
+		}
 	}
 
 	/**
@@ -140,5 +168,30 @@ class Message extends \app\components\ActiveRecord
 			$model = self::findOne($id);
 			return $model;
 		}
+	}
+
+	/**
+	 * after find attributes
+	 */
+	public function afterFind()
+	{
+		parent::afterFind();
+
+		// $this->phraseMessage = isset($this->phrase) ? $this->phrase->message : '-';
+		// $this->creationDisplayname = isset($this->creation) ? $this->creation->displayname : '-';
+	}
+
+	/**
+	 * before validate attributes
+	 */
+	public function beforeValidate()
+	{
+		if(parent::beforeValidate()) {
+			if($this->isNewRecord) {
+				if($this->creation_id == null)
+					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			}
+		}
+		return true;
 	}
 }

@@ -1,21 +1,21 @@
 <?php
 /**
- * CoreLanguages
+ * SourceMessage
  *
- * This is the ActiveQuery class for [[\ommu\core\models\CoreLanguages]].
- * @see \ommu\core\models\CoreLanguages
+ * This is the ActiveQuery class for [[\ommu\core\models\SourceMessage]].
+ * @see \ommu\core\models\SourceMessage
  * 
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2019 OMMU (www.ommu.co)
- * @created date 22 March 2019, 17:03 WIB
+ * @created date 22 March 2019, 18:23 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
 
 namespace ommu\core\models\query;
 
-class CoreLanguages extends \yii\db\ActiveQuery
+class SourceMessage extends \yii\db\ActiveQuery
 {
 	/*
 	public function active()
@@ -26,7 +26,7 @@ class CoreLanguages extends \yii\db\ActiveQuery
 
 	/**
 	 * {@inheritdoc}
-	 * @return \ommu\core\models\CoreLanguages[]|array
+	 * @return \ommu\core\models\SourceMessage[]|array
 	 */
 	public function all($db = null)
 	{
@@ -35,7 +35,7 @@ class CoreLanguages extends \yii\db\ActiveQuery
 
 	/**
 	 * {@inheritdoc}
-	 * @return \ommu\core\models\CoreLanguages|array|null
+	 * @return \ommu\core\models\SourceMessage|array|null
 	 */
 	public function one($db = null)
 	{
