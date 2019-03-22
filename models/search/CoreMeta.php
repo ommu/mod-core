@@ -29,7 +29,7 @@ class CoreMeta extends CoreMetaModel
 	public function rules()
 	{
 		return [
-			[['id', 'meta_image', 'meta_image_alt', 'office_name', 'office_location', 'office_place', 'office_district', 'office_village', 'office_zipcode', 'office_hour', 'office_phone', 'office_fax', 'office_email', 'office_hotline', 'office_website', 'map_icons', 'map_icon_size', 'twitter_site', 'twitter_creator', 'twitter_photo_size', 'twitter_country', 'twitter_iphone', 'twitter_ipad', 'twitter_googleplay', 'facebook_profile_firstname', 'facebook_profile_lastname', 'facebook_profile_username', 'facebook_sitename', 'facebook_see_also', 'facebook_admins', 'modified_date', 'modified_search'], 'safe'],
+			[['id', 'meta_image', 'meta_image_alt', 'office_name', 'office_location', 'office_place', 'office_district', 'office_village', 'office_zipcode', 'office_hour', 'office_phone', 'office_fax', 'office_email', 'office_hotline', 'office_website', 'map_icons', 'map_icon_size', 'twitter_site', 'twitter_creator', 'twitter_photo_size', 'twitter_country', 'twitter_iphone', 'twitter_ipad', 'twitter_googleplay', 'facebook_profile_firstname', 'facebook_profile_lastname', 'facebook_profile_username', 'facebook_sitename', 'facebook_see_also', 'facebook_admins', 'modified_date', 'modifiedDisplayname'], 'safe'],
 			[['office_on', 'office_country_id', 'office_province_id', 'office_city_id', 'google_on', 'twitter_on', 'twitter_card', 'facebook_on', 'facebook_type', 'modified_id'], 'integer'],
 		];
 	}
@@ -75,7 +75,7 @@ class CoreMeta extends CoreMetaModel
 		]);
 
 		$attributes = array_keys($this->getTableSchema()->columns);
-		$attributes['modified_search'] = [
+		$attributes['modifiedDisplayname'] = [
 			'asc' => ['modified.displayname' => SORT_ASC],
 			'desc' => ['modified.displayname' => SORT_DESC],
 		];
@@ -137,7 +137,7 @@ class CoreMeta extends CoreMetaModel
 			->andFilterWhere(['like', 't.facebook_sitename', $this->facebook_sitename])
 			->andFilterWhere(['like', 't.facebook_see_also', $this->facebook_see_also])
 			->andFilterWhere(['like', 't.facebook_admins', $this->facebook_admins])
-			->andFilterWhere(['like', 'modified.displayname', $this->modified_search]);
+			->andFilterWhere(['like', 'modified.displayname', $this->modifiedDisplayname]);
 
 		return $dataProvider;
 	}

@@ -79,7 +79,7 @@ class CoreMeta extends \app\components\ActiveRecord
 	public $old_meta_image_i;
 
 	// Search Variable
-	public $modified_search;
+	public $modifiedDisplayname;
 
 	const SCENARIO_SETTING = 'setting';
 	const SCENARIO_GOOGLE = 'google';
@@ -192,7 +192,7 @@ class CoreMeta extends \app\components\ActiveRecord
 			'modified_date' => Yii::t('app', 'Modified Date'),
 			'modified_id' => Yii::t('app', 'Modified'),
 			'old_meta_image_i' => Yii::t('app', 'Old Meta Image'),
-			'modified_search' => Yii::t('app', 'Modified'),
+			'modifiedDisplayname' => Yii::t('app', 'Modified'),
 		];
 	}
 
@@ -446,8 +446,8 @@ class CoreMeta extends \app\components\ActiveRecord
 			'format' => 'html',
 		];
 		if(!Yii::$app->request->get('modified')) {
-			$this->templateColumns['modified_search'] = [
-				'attribute' => 'modified_search',
+			$this->templateColumns['modifiedDisplayname'] = [
+				'attribute' => 'modifiedDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->modified) ? $model->modified->displayname : '-';
 				},
