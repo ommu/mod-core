@@ -159,21 +159,6 @@ class SettingController extends Controller
 	 */
 	public function actionLanguage()
 	{
-		$this->layout = 'admin_default';
-
-		$searchModel = new CoreLanguagesSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-		$gridColumn = Yii::$app->request->get('GridColumn', null);
-		$cols = [];
-		if($gridColumn != null && count($gridColumn) > 0) {
-			foreach($gridColumn as $key => $val) {
-				if($gridColumn[$key] == 1)
-					$cols[] = $key;
-			}
-		}
-		$columns = $searchModel->getGridColumn($cols);
-
 		$model = CoreSettings::findOne(1);
 		if ($model === null) 
 			$model = new CoreSettings();
@@ -186,15 +171,13 @@ class SettingController extends Controller
 				return $this->redirect(['language']);
 			}
 		}
-		
+
+		$this->subMenu = $this->module->params['language_submenu'];
 		$this->view->title = Yii::t('app', 'Language Settings');
 		$this->view->description = Yii::t('app', 'The layout of your br0t0 platform includes hundreds of apps of text which are stored in a language pack. br0t0 platform comes with an English pack which is the default when you first install the platform. If you want to change any of these apps on your br0t0 platform, you can edit the pack below. If you want to allow users to pick from multiple languages, you can also create additional packs below. If you have multiple language packs, the pack you\'ve selected as your "default" will be the language that displays if a user has not selected any other language. Note: You can not delete the default language. To edit a language\'s details, click its name.');
 		$this->view->keywords = '';
 		return $this->render('admin_language', [
 			'model' => $model,
-			'searchModel' => $searchModel,
-			'dataProvider' => $dataProvider,
-			'columns' => $columns,
 		]);
 	}
 
