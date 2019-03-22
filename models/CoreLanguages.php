@@ -6,7 +6,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 08:40 WIB
- * @modified date 22 April 2018, 18:29 WIB
+ * @modified date 22 March 2019, 17:03 WIB
  * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "ommu_core_languages".
@@ -41,11 +41,10 @@ class CoreLanguages extends \app\components\ActiveRecord
 {
 	use \ommu\traits\UtilityTrait;
 
-	public $gridForbiddenColumn = ['modified_date','modified_search','updated_date'];
+	public $gridForbiddenColumn = ['creation_date', 'creationDisplayname', 'modified_date', 'modifiedDisplayname', 'updated_date'];
 
-	// Search Variable
-	public $creation_search;
-	public $modified_search;
+	public $creationDisplayname;
+	public $modifiedDisplayname;
 
 	/**
 	 * @return string the associated database table name
@@ -63,7 +62,6 @@ class CoreLanguages extends \app\components\ActiveRecord
 		return [
 			[['code', 'name'], 'required'],
 			[['actived', 'default', 'creation_id', 'modified_id'], 'integer'],
-			[['creation_date', 'modified_date', 'updated_date'], 'safe'],
 			[['code'], 'string', 'max' => 6],
 			[['name'], 'string', 'max' => 32],
 		];
@@ -85,17 +83,25 @@ class CoreLanguages extends \app\components\ActiveRecord
 			'modified_date' => Yii::t('app', 'Modified Date'),
 			'modified_id' => Yii::t('app', 'Modified'),
 			'updated_date' => Yii::t('app', 'Updated Date'),
-			'creation_search' => Yii::t('app', 'Creation'),
-			'modified_search' => Yii::t('app', 'Modified'),
+			'users' => Yii::t('app', 'Users'),
+			'creationDisplayname' => Yii::t('app', 'Creation'),
+			'modifiedDisplayname' => Yii::t('app', 'Modified'),
 		];
 	}
 
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getUsers()
+	public function getUsers($count=false)
 	{
-		return $this->hasMany(Users::className(), ['language_id' => 'language_id']);
+		if($count == false)
+			return $this->hasMany(Users::className(), ['language_id' => 'language_id']);
+
+		$model = Users::find()
+			->where(['language_id' => $this->language_id]);
+		$users = $model->count();
+
+		return $users ? $users : 0;
 	}
 
 	/**
@@ -115,9 +121,18 @@ class CoreLanguages extends \app\components\ActiveRecord
 	}
 
 	/**
+	 * {@inheritdoc}
+	 * @return \ommu\core\models\query\CoreLanguages the active query used by this AR class.
+	 */
+	public static function find()
+	{
+		return new \ommu\core\models\query\CoreLanguages(get_called_class());
+	}
+
+	/**
 	 * Set default columns to display
 	 */
-	public function init() 
+	public function init()
 	{
 		parent::init();
 
@@ -126,29 +141,28 @@ class CoreLanguages extends \app\components\ActiveRecord
 			'class'  => 'yii\grid\SerialColumn',
 			'contentOptions' => ['class'=>'center'],
 		];
-		$this->templateColumns['code'] = [
-			'attribute' => 'code',
-			'value' => function($model, $key, $index, $column) {
-				return $model->code;
-			},
-		];
 		$this->templateColumns['name'] = [
 			'attribute' => 'name',
 			'value' => function($model, $key, $index, $column) {
 				return $model->name;
 			},
 		];
+		$this->templateColumns['code'] = [
+			'attribute' => 'code',
+			'value' => function($model, $key, $index, $column) {
+				return $model->code;
+			},
+		];
 		$this->templateColumns['creation_date'] = [
 			'attribute' => 'creation_date',
-			'filter' => Html::input('date', 'creation_date', Yii::$app->request->get('creation_date'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->creation_date, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->creation_date, 'datetime') : '-';
+				return Yii::$app->formatter->asDatetime($model->creation_date, 'medium');
 			},
-			'format' => 'html',
+			'filter' => $this->filterDatepicker($this, 'creation_date'),
 		];
 		if(!Yii::$app->request->get('creation')) {
-			$this->templateColumns['creation_search'] = [
-				'attribute' => 'creation_search',
+			$this->templateColumns['creationDisplayname'] = [
+				'attribute' => 'creationDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->creation) ? $model->creation->displayname : '-';
 				},
@@ -156,15 +170,14 @@ class CoreLanguages extends \app\components\ActiveRecord
 		}
 		$this->templateColumns['modified_date'] = [
 			'attribute' => 'modified_date',
-			'filter' => Html::input('date', 'modified_date', Yii::$app->request->get('modified_date'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->modified_date, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->modified_date, 'datetime') : '-';
+				return Yii::$app->formatter->asDatetime($model->modified_date, 'medium');
 			},
-			'format' => 'html',
+			'filter' => $this->filterDatepicker($this, 'modified_date'),
 		];
 		if(!Yii::$app->request->get('modified')) {
-			$this->templateColumns['modified_search'] = [
-				'attribute' => 'modified_search',
+			$this->templateColumns['modifiedDisplayname'] = [
+				'attribute' => 'modifiedDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->modified) ? $model->modified->displayname : '-';
 				},
@@ -172,31 +185,40 @@ class CoreLanguages extends \app\components\ActiveRecord
 		}
 		$this->templateColumns['updated_date'] = [
 			'attribute' => 'updated_date',
-			'filter' => Html::input('date', 'updated_date', Yii::$app->request->get('updated_date'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->updated_date, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->updated_date, 'datetime') : '-';
+				return Yii::$app->formatter->asDatetime($model->updated_date, 'medium');
 			},
+			'filter' => $this->filterDatepicker($this, 'updated_date'),
+		];
+		$this->templateColumns['users'] = [
+			'attribute' => 'users',
+			'filter' => false,
+			'value' => function($model, $key, $index, $column) {
+				$users = $model->getUsers(true);
+				return Html::a($users, ['/users/member/index', 'language'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} users', ['count'=>$users])]);
+			},
+			'contentOptions' => ['class'=>'center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['actived'] = [
 			'attribute' => 'actived',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['language/actived', 'id'=>$model->primaryKey]);
+				$url = Url::to(['actived', 'id'=>$model->primaryKey]);
 				return $this->quickAction($url, $model->actived, 'Enable,Disable');
 			},
 			'contentOptions' => ['class'=>'center'],
-			'format'	=> 'raw',
+			'format' => 'raw',
 		];
 		$this->templateColumns['default'] = [
 			'attribute' => 'default',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['language/default', 'id'=>$model->primaryKey]);
-				return $this->quickAction($url, $model->default, 'Default,No Default', true);
+				$url = Url::to(['default', 'id'=>$model->primaryKey]);
+				return $this->quickAction($url, $model->default, 'Yes,No', true);
 			},
 			'contentOptions' => ['class'=>'center'],
-			'format'	=> 'raw',
+			'format' => 'raw',
 		];
 	}
 
@@ -219,39 +241,43 @@ class CoreLanguages extends \app\components\ActiveRecord
 	}
 
 	/**
-	 * function getLanguages
+	 * function getLanguage
 	 */
-	public static function getLanguage($array=true, $type=null)
+	public static function getLanguage($array=true, $key='id')
 	{
 		$model = self::find()->alias('t');
 		$model = $model->orderBy('t.name ASC')->all();
 
-		if($array == true) {
-			$items = [];
-			if($model !== null) {
-				foreach($model as $val) {
-					if($type == null || $type == 'id')
-						$items[$val->language_id] = $val->name;
-					else
-						$items[$val->code] = $val->name;
-				}
-				return $items;
-			} else
-				return false;
-		} else 
-			return $model;
+		if($array == true)
+			return \yii\helpers\ArrayHelper::map($model, $key == 'id' ? 'language_id' : 'code', 'name');
+
+		return $model;
+	}
+
+	/**
+	 * after find attributes
+	 */
+	public function afterFind()
+	{
+		parent::afterFind();
+
+		// $this->creationDisplayname = isset($this->creation) ? $this->creation->displayname : '-';
+		// $this->modifiedDisplayname = isset($this->modified) ? $this->modified->displayname : '-';
 	}
 
 	/**
 	 * before validate attributes
 	 */
-	public function beforeValidate() 
+	public function beforeValidate()
 	{
 		if(parent::beforeValidate()) {
-			if($this->isNewRecord)
-				$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			else
-				$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			if($this->isNewRecord) {
+				if($this->creation_id == null)
+					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			} else {
+				if($this->modified_id == null)
+					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			}
 
 			if($this->default == 1)
 				$this->actived = 1;

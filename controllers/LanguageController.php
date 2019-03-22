@@ -8,6 +8,7 @@
  * Reference start
  * TOC :
  *	Index
+ *	Manage
  *	Create
  *	Update
  *	View
@@ -21,16 +22,15 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 08:40 WIB
- * @modified date 23 April 2018, 14:05 WIB
+ * @modified date 22 March 2019, 17:18 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
- 
+
 namespace ommu\core\controllers;
 
 use Yii;
 use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
 use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\CoreLanguages;
@@ -38,6 +38,15 @@ use ommu\core\models\search\CoreLanguages as CoreLanguagesSearch;
 
 class LanguageController extends Controller
 {
+	/**
+	 * {@inheritdoc}
+	 */
+	public function init()
+	{
+		parent::init();
+		$this->subMenu = $this->module->params['language_submenu'];
+	}
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -59,10 +68,18 @@ class LanguageController extends Controller
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function actionIndex()
+	{
+		return $this->redirect(['manage']);
+	}
+
+	/**
 	 * Lists all CoreLanguages models.
 	 * @return mixed
 	 */
-	public function actionIndex()
+	public function actionManage()
 	{
 		$searchModel = new CoreLanguagesSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -80,7 +97,7 @@ class LanguageController extends Controller
 		$this->view->title = Yii::t('app', 'Languages');
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_index', [
+		return $this->render('admin_manage', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
@@ -98,11 +115,18 @@ class LanguageController extends Controller
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
+
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Language success created.'));
-				return $this->redirect(['index']);
-				//return $this->redirect(['view', 'id' => $model->language_id]);
-			} 
+				return $this->redirect(['manage']);
+				//return $this->redirect(['view', 'id'=>$model->language_id]);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
+			}
 		}
 
 		$this->view->title = Yii::t('app', 'Create Language');
@@ -124,11 +148,16 @@ class LanguageController extends Controller
 		$model = $this->findModel($id);
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Language success updated.'));
-				return $this->redirect(['index']);
-				//return $this->redirect(['view', 'id' => $model->language_id]);
+				return $this->redirect(['manage']);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
 			}
 		}
 
@@ -168,7 +197,7 @@ class LanguageController extends Controller
 		$this->findModel($id)->delete();
 		
 		Yii::$app->session->setFlash('success', Yii::t('app', 'Language success deleted.'));
-		return $this->redirect(['index']);
+		return $this->redirect(['manage']);
 	}
 
 	/**
@@ -183,9 +212,9 @@ class LanguageController extends Controller
 		$replace = $model->actived == 1 ? 0 : 1;
 		$model->actived = $replace;
 		
-		if($model->save(false, ['actived'])) {
+		if($model->save(false, ['actived','modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Language success updated.'));
-			return $this->redirect(['index']);
+			return $this->redirect(['manage']);
 		}
 	}
 
@@ -201,9 +230,9 @@ class LanguageController extends Controller
 		$model->default = 1;
 		$model->actived = 1;
 		
-		if($model->save(false, ['default','actived'])) {
+		if($model->save(false, ['default','modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Language success updated.'));
-			return $this->redirect(['index']);
+			return $this->redirect(['manage']);
 		}
 	}
 
@@ -216,9 +245,9 @@ class LanguageController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = CoreLanguages::findOne($id)) !== null) 
+		if(($model = CoreLanguages::findOne($id)) !== null)
 			return $model;
-		else
-			throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+
+		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}
 }

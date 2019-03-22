@@ -4,12 +4,13 @@
  * @var $this app\components\View
  * @var $this ommu\core\controllers\LanguageController
  * @var $model ommu\core\models\CoreLanguages
+ * @var $searchModel ommu\core\models\search\CoreLanguages
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 08:40 WIB
- * @modified date 23 April 2018, 14:05 WIB
+ * @modified date 22 March 2019, 17:18 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -18,11 +19,11 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use app\components\widgets\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\ArrayHelper;
 
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Back To Setting'), 'url' => Url::to(['setting/language']), 'icon' => 'gears'],
 	['label' => Yii::t('app', 'Add Language'), 'url' => Url::to(['create']), 'icon' => 'plus-square'],
 ];
 $this->params['menu']['option'] = [
@@ -31,6 +32,7 @@ $this->params['menu']['option'] = [
 ];
 ?>
 
+<div class="core-languages-manage">
 <?php Pjax::begin(); ?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>
@@ -47,11 +49,11 @@ array_push($columnData, [
 	],
 	'buttons' => [
 		'view' => function ($url, $model, $key) {
-			$url = Url::to(['view', 'id'=>$model->primaryKey]);
+			$url = Url::to(ArrayHelper::merge(['view', 'id'=>$model->primaryKey], Yii::$app->request->get()));
 			return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title' => Yii::t('app', 'Detail Language')]);
 		},
 		'update' => function ($url, $model, $key) {
-			$url = Url::to(['update', 'id'=>$model->primaryKey]);
+			$url = Url::to(ArrayHelper::merge(['update', 'id'=>$model->primaryKey], Yii::$app->request->get()));
 			return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['title' => Yii::t('app', 'Update Language')]);
 		},
 		'delete' => function ($url, $model, $key) {
@@ -74,3 +76,4 @@ echo GridView::widget([
 ]); ?>
 
 <?php Pjax::end(); ?>
+</div>

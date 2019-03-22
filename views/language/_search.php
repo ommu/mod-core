@@ -10,7 +10,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 08:40 WIB
- * @modified date 23 April 2018, 14:05 WIB
+ * @modified date 22 March 2019, 17:18 WIB
  * @link https://github.com/ommu/mod-core
  *
  */
@@ -19,16 +19,15 @@ use yii\helpers\Html;
 use app\components\ActiveForm;
 ?>
 
-<div class="search-form">
+<div class="core-languages-search search-form">
+
 	<?php $form = ActiveForm::begin([
 		'action' => ['index'],
 		'method' => 'get',
+		'options' => [
+			'data-pjax' => 1
+		],
 	]); ?>
-		<?php echo $form->field($model, 'actived')
-			->checkbox();?>
-
-		<?php echo $form->field($model, 'default')
-			->checkbox();?>
 
 		<?php echo $form->field($model, 'code');?>
 
@@ -37,19 +36,27 @@ use app\components\ActiveForm;
 		<?php echo $form->field($model, 'creation_date')
 			->input('date');?>
 
-		<?php echo $form->field($model, 'creation_search');?>
+		<?php echo $form->field($model, 'creationDisplayname');?>
 
 		<?php echo $form->field($model, 'modified_date')
 			->input('date');?>
 
-		<?php echo $form->field($model, 'modified_search');?>
+		<?php echo $form->field($model, 'modifiedDisplayname');?>
 
 		<?php echo $form->field($model, 'updated_date')
 			->input('date');?>
+
+		<?php echo $form->field($model, 'actived')
+			->dropDownList($this->filterYesNo(), ['prompt'=>'']);?>
+
+		<?php echo $form->field($model, 'default')
+			->dropDownList($this->filterYesNo(), ['prompt'=>'']);?>
 
 		<div class="form-group">
 			<?php echo Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
 			<?php echo Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
 		</div>
+
 	<?php ActiveForm::end(); ?>
+
 </div>
