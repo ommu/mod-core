@@ -15,7 +15,6 @@
  * @property integer $id
  * @property integer $online
  * @property integer $site_oauth
- * @property integer $site_type
  * @property string $site_url
  * @property string $site_title
  * @property string $site_keywords
@@ -88,7 +87,7 @@ class CoreSettings extends \app\components\ActiveRecord
     public $event_i;
 
     // Search Variable
-    public $modified_search;
+    public $modifiedDisplayname;
 
     const SCENARIO_GENERAL = 'general';
     const SCENARIO_BANNED = 'banned';
@@ -110,8 +109,8 @@ class CoreSettings extends \app\components\ActiveRecord
     public function rules()
     {
         return [
-            [['online', 'site_oauth', 'site_type', 'site_url', 'site_title', 'site_keywords', 'site_description', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'general_commenthtml', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup', 'analytic', 'analytic_id', 'analytic_profile_id', 'license_email', 'license_key'], 'required'],
-            [['online', 'site_oauth', 'site_type', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup', 'analytic', 'modified_id'], 'integer'],
+            [['online', 'site_oauth', 'site_url', 'site_title', 'site_keywords', 'site_description', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'general_commenthtml', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup', 'analytic', 'analytic_id', 'analytic_profile_id', 'license_email', 'license_key'], 'required'],
+            [['online', 'site_oauth', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup', 'analytic', 'modified_id'], 'integer'],
             [['event_tag', 'general_include', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words'], 'string'],
             [['site_creation', 'site_dateformat', 'site_timeformat', 
                 'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'general_include', 'event_i',
@@ -127,7 +126,7 @@ class CoreSettings extends \app\components\ActiveRecord
     public function scenarios()
     {
         return [
-            self::SCENARIO_GENERAL => ['online', 'site_oauth', 'site_type', 'site_url', 'site_title', 'site_keywords', 'site_description', 'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'signup_username', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'general_include',
+            self::SCENARIO_GENERAL => ['online', 'site_oauth', 'site_url', 'site_title', 'site_keywords', 'site_description', 'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'signup_username', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'general_include',
                 'event_i'],
             self::SCENARIO_BANNED => ['general_commenthtml', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup'],
             self::SCENARIO_SIGNUP => ['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'spam_signup'],
@@ -145,7 +144,6 @@ class CoreSettings extends \app\components\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'online' => Yii::t('app', 'Maintenance Mode'),
             'site_oauth' => Yii::t('app', 'Oauth'),
-            'site_type' => Yii::t('app', 'Site Type'),
             'site_url' => Yii::t('app', 'Site Url'),
             'site_title' => Yii::t('app', 'Site Title'),
             'site_keywords' => Yii::t('app', 'Site Keyword'),
@@ -201,7 +199,7 @@ class CoreSettings extends \app\components\ActiveRecord
             'modified_date' => Yii::t('app', 'Modified Date'),
             'modified_id' => Yii::t('app', 'Modified'),
             'event_i' => Yii::t('app', 'Event'),
-            'modified_search' => Yii::t('app', 'Modified'),
+            'modifiedDisplayname' => Yii::t('app', 'Modified'),
         ];
     }
 
@@ -399,14 +397,6 @@ class CoreSettings extends \app\components\ActiveRecord
             },
             'contentOptions' => ['class'=>'center'],
         ];
-        $this->templateColumns['site_type'] = [
-            'attribute' => 'site_type',
-            'filter' => $this->filterYesNo(),
-            'value' => function($model, $key, $index, $column) {
-                return $model->signup_username ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
-            },
-            'contentOptions' => ['class'=>'center'],
-        ];
         $this->templateColumns['modified_date'] = [
             'attribute' => 'modified_date',
             'filter' => Html::input('date', 'modified_date', Yii::$app->request->get('modified_date'), ['class'=>'form-control']),
@@ -416,8 +406,8 @@ class CoreSettings extends \app\components\ActiveRecord
             'format' => 'html',
         ];
         if(!Yii::$app->request->get('modified')) {
-            $this->templateColumns['modified_search'] = [
-                'attribute' => 'modified_search',
+            $this->templateColumns['modifiedDisplayname'] = [
+                'attribute' => 'modifiedDisplayname',
                 'value' => function($model, $key, $index, $column) {
                     return isset($model->modified) ? $model->modified->displayname : '-';
                 },

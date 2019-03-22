@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php //echo $form->errorSummary($model);?>
 
 <?php 
-if($model->site_type == 1) {
+if(Yii::$app->isSocialMedia()) {
 $signup_username = [
 	1 => Yii::t('app', 'Yes, allow members to choose a profile address.'),
 	0 => Yii::t('app', 'No, do not allow profile addresses.'),
@@ -46,7 +46,7 @@ echo $form->field($model, 'signup_username', ['template' => '{label}{beginWrappe
 } ?>
 
 <?php 
-if($model->site_type == 1) {
+if(Yii::$app->isSocialMedia()) {
 $signup_photo = [
 	1 => Yii::t('app', 'Yes, give users the option to upload a photo upon signup.'),
 	0 => Yii::t('app', 'No, do not allow users to upload a photo upon signup.'),
@@ -58,7 +58,7 @@ echo $form->field($model, 'signup_photo', ['template' => '{label}{beginWrapper}{
 } ?>
 
 <?php 
-if($model->site_type == 1) {
+if(Yii::$app->isSocialMedia()) {
 $signup_approve = [
 	1 => Yii::t('app', 'Yes, enable users upon signup.'),
 	0 => Yii::t('app', 'No, do not enable users upon signup.'),
@@ -70,7 +70,7 @@ echo $form->field($model, 'signup_approve', ['template' => '{label}{beginWrapper
 } ?>
 
 <?php 
-if($model->site_type == 1) {
+if(Yii::$app->isSocialMedia()) {
 $signup_welcome = [
 	1 => Yii::t('app', 'Yes, send users a welcome email.'),
 	0 => Yii::t('app', 'No, do not send users a welcome email.'),
@@ -114,7 +114,7 @@ echo $form->field($model, 'signup_welcome', ['template' => '{label}{beginWrapper
 </div>
 
 <?php 
-if($model->site_type == 1) {
+if(Yii::$app->isSocialMedia()) {
 $signup_invitepage = [
 	1 => Yii::t('app', 'Yes, show invite friends page.'),
 	0 => Yii::t('app', 'No, do not show invite friends page.'),
@@ -136,7 +136,7 @@ echo $form->field($model, 'signup_verifyemail', ['template' => '{label}{beginWra
 	->hint(Yii::t('app', 'Force users to verify their email address before they can login? If set to YES, users will be sent an email with a verification link which they must click to activate their account.')); ?>
 	
 <?php 
-if($model->site_type == 1) {
+if(Yii::$app->isSocialMedia()) {
 $spam_signup = [
 	1 => Yii::t('app', 'Yes, show verification code image.'),
 	0 => Yii::t('app', 'No, do not show verification code image.'),
@@ -158,7 +158,7 @@ echo $form->field($model, 'signup_random', ['template' => '{label}{beginWrapper}
 	->hint(Yii::t('app', 'If you have selected YES, a random password will be created for users when they signup. The password will be emailed to them upon the completion of the signup process. This is another method of verifying users\' email addresses.')); ?>
 
 <?php 
-if($model->site_type == 1) {
+if(Yii::$app->isSocialMedia()) {
 $signup_terms = [
 	1 => Yii::t('app', 'No, users will not be shown a terms of service checkbox on signup.'),
 	0 => Yii::t('app', 'Yes, make users agree to your terms of service on signup.'),

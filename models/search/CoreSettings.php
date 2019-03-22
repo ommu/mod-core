@@ -27,8 +27,8 @@ class CoreSettings extends CoreSettingsModel
 	public function rules()
 	{
 		return [
-			[['id', 'site_url', 'site_title', 'site_keywords', 'site_description', 'site_creation', 'site_dateformat', 'site_timeformat', 'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'signup_numgiven', 'general_include', 'general_commenthtml', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 'spam_failedcount', 'analytic_id', 'analytic_profile_id', 'license_email', 'license_key', 'ommu_version', 'modified_date', 'modified_search'], 'safe'],
-			[['online', 'site_oauth', 'site_type', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_signup', 'analytic', 'modified_id'], 'integer'],
+			[['id', 'site_url', 'site_title', 'site_keywords', 'site_description', 'site_creation', 'site_dateformat', 'site_timeformat', 'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'signup_numgiven', 'general_include', 'general_commenthtml', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 'spam_failedcount', 'analytic_id', 'analytic_profile_id', 'license_email', 'license_key', 'ommu_version', 'modified_date', 'modifiedDisplayname'], 'safe'],
+			[['online', 'site_oauth', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_signup', 'analytic', 'modified_id'], 'integer'],
 		];
 	}
 
@@ -73,7 +73,7 @@ class CoreSettings extends CoreSettingsModel
 		]);
 
 		$attributes = array_keys($this->getTableSchema()->columns);
-		$attributes['modified_search'] = [
+		$attributes['modifiedDisplayname'] = [
 			'asc' => ['modified.displayname' => SORT_ASC],
 			'desc' => ['modified.displayname' => SORT_DESC],
 		];
@@ -149,7 +149,7 @@ class CoreSettings extends CoreSettingsModel
 			->andFilterWhere(['like', 't.license_email', $this->license_email])
 			->andFilterWhere(['like', 't.license_key', $this->license_key])
 			->andFilterWhere(['like', 't.ommu_version', $this->ommu_version])
-			->andFilterWhere(['like', 'modified.displayname', $this->modified_search]);
+			->andFilterWhere(['like', 'modified.displayname', $this->modifiedDisplayname]);
 
 		return $dataProvider;
 	}

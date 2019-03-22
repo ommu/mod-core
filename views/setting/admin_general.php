@@ -61,17 +61,6 @@ JS;
 
 <?php 
 if($model->isNewRecord && !$model->getErrors())
-	$model->site_type = 1;
-$site_type = [
-	1 => Yii::t('app', 'Social Media / Community Website'),
-	0 => Yii::t('app', 'Company Profile'),
-];
-echo $form->field($model, 'site_type')
-	->dropDownList($site_type)
-	->label($model->getAttributeLabel('site_type')); ?>
-
-<?php 
-if($model->isNewRecord && !$model->getErrors())
 	$model->site_oauth = 0;
 $site_oauth = [
 	1 => Yii::t('app', 'Enable'),
@@ -89,7 +78,7 @@ $online = [
 ];
 echo $form->field($model, 'online', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
 	->radioList($online)
-	->label($model->getAttributeLabel('online'){hint})
+	->label($model->getAttributeLabel('online'))
 	->hint(Yii::t('app', 'Maintenance Mode will prevent site visitors from accessing your website. You can customize the maintenance mode page by manually editing the file "/application/maintenance.html".')); ?>
 
 <div id="construction" <?php echo $model->online == '1' ? 'style="display: none;"' : ''; ?>>
@@ -97,7 +86,7 @@ echo $form->field($model, 'online', ['template' => '{label}{beginWrapper}{hint}{
 	$model->construction_date = !$model->isNewRecord ? (!in_array($model->construction_date, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? $model->construction_date : '') : '';
 	echo $form->field($model, 'construction_date')
 		->textInput(['type' => 'date'])
-		->label($model->getAttributeLabel('construction_date'){hint}); ?>
+		->label($model->getAttributeLabel('construction_date')); ?>
 
 	<div id="comingsoon" class="form-group field-construction_text-comingsoon" <?php echo $model->online != '2' ? 'style="display: none;"' : ''; ?>>
 		<?php echo $form->field($model, 'construction_text[comingsoon]', ['template' => '{label}', 'options' => ['tag' => null]])
@@ -175,7 +164,7 @@ echo $form->field($model, 'event_i')
 	->label($model->getAttributeLabel('site_keywords'))
 	->hint(Yii::t('app', 'Provide some keywords (separated by commas) that describe your community. These will be the default keywords that appear in the tag in your page header. Enter the most relevant keywords you can think of to help your community\'s search engine rankings.')); ?>
 
-<?php if($model->site_type == 1) {?>
+<?php if(Yii::$app->isSocialMedia()) {?>
 <div class="form-group">
 	<label class="control-label col-md-3 col-sm-3 col-xs-12 col-12"><?php echo Yii::t('app', 'Public Permission Defaults');?></label>
 	<div class="col-md-6 col-sm-9 col-xs-12 col-12">
