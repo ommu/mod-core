@@ -139,10 +139,6 @@ echo $form->field($model, 'event_i')
 	->label($model->getAttributeLabel('site_title'))
 	->hint(Yii::t('app', 'Give your community a unique name. This will appear in the &lt;title&gt; tag throughout most of your site.')); ?>
 
-<?php echo $form->field($model, 'site_url')
-	->textInput(['maxlength' => true])
-	->label($model->getAttributeLabel('site_url')); ?>
-
 <?php echo $form->field($model, 'site_description')
 	->textarea(['rows'=>2,'rows'=>6,'maxlength' => true])
 	->label($model->getAttributeLabel('site_description'))
