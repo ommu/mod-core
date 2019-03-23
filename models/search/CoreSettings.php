@@ -28,7 +28,7 @@ class CoreSettings extends CoreSettingsModel
 	{
 		return [
 			[['id', 'site_url', 'site_title', 'site_keywords', 'site_description', 'site_creation', 'site_dateformat', 'site_timeformat', 'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'signup_numgiven', 'general_include', 'general_commenthtml', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 'spam_failedcount', 'analytic_id', 'analytic_profile_id', 'license_email', 'license_key', 'ommu_version', 'modified_date', 'modifiedDisplayname'], 'safe'],
-			[['online', 'site_oauth', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_signup', 'analytic', 'modified_id'], 'integer'],
+			[['online', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_signup', 'analytic', 'modified_id'], 'integer'],
 		];
 	}
 
@@ -94,8 +94,6 @@ class CoreSettings extends CoreSettingsModel
 		$query->andFilterWhere([
 			't.id' => $this->id,
 			't.online' => $this->online,
-			't.site_oauth' => $this->site_oauth,
-			't.site_type' => $this->site_type,
 			'cast(t.site_creation as date)' => $this->site_creation,
 			'cast(t.construction_date as date)' => $this->construction_date,
 			'cast(t.event_startdate as date)' => $this->event_startdate,

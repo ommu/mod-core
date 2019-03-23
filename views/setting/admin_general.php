@@ -60,17 +60,6 @@ JS;
 <?php echo $form->errorSummary($model);?>
 
 <?php 
-if($model->isNewRecord && !$model->getErrors())
-	$model->site_oauth = 0;
-$site_oauth = [
-	1 => Yii::t('app', 'Enable'),
-	0 => Yii::t('app', 'Disable'),
-];
-echo $form->field($model, 'site_oauth')
-	->dropDownList($site_oauth)
-	->label($model->getAttributeLabel('site_oauth')); ?>
-
-<?php 
 $online = [
 	1 => Yii::t('app', 'Online'),
 	2 => Yii::t('app', 'Offline (Coming Soon)'),

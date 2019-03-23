@@ -14,7 +14,6 @@
  * The followings are the available columns in table "ommu_core_settings":
  * @property integer $id
  * @property integer $online
- * @property integer $site_oauth
  * @property string $site_url
  * @property string $site_title
  * @property string $site_keywords
@@ -109,8 +108,8 @@ class CoreSettings extends \app\components\ActiveRecord
     public function rules()
     {
         return [
-            [['online', 'site_oauth', 'site_url', 'site_title', 'site_keywords', 'site_description', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'general_commenthtml', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup', 'analytic', 'analytic_id', 'analytic_profile_id', 'license_email', 'license_key'], 'required'],
-            [['online', 'site_oauth', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup', 'analytic', 'modified_id'], 'integer'],
+            [['online', 'site_url', 'site_title', 'site_keywords', 'site_description', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'general_commenthtml', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup', 'analytic', 'analytic_id', 'analytic_profile_id', 'license_email', 'license_key'], 'required'],
+            [['online', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup', 'analytic', 'modified_id'], 'integer'],
             [['event_tag', 'general_include', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words'], 'string'],
             [['site_creation', 'site_dateformat', 'site_timeformat', 
                 'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'general_include', 'event_i',
@@ -126,7 +125,7 @@ class CoreSettings extends \app\components\ActiveRecord
     public function scenarios()
     {
         return [
-            self::SCENARIO_GENERAL => ['online', 'site_oauth', 'site_url', 'site_title', 'site_keywords', 'site_description', 'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'signup_username', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'general_include',
+            self::SCENARIO_GENERAL => ['online', 'site_url', 'site_title', 'site_keywords', 'site_description', 'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'signup_username', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'general_include',
                 'event_i'],
             self::SCENARIO_BANNED => ['general_commenthtml', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup'],
             self::SCENARIO_SIGNUP => ['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'spam_signup'],
@@ -143,7 +142,6 @@ class CoreSettings extends \app\components\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'online' => Yii::t('app', 'Maintenance Mode'),
-            'site_oauth' => Yii::t('app', 'Oauth'),
             'site_url' => Yii::t('app', 'Site Url'),
             'site_title' => Yii::t('app', 'Site Title'),
             'site_keywords' => Yii::t('app', 'Site Keyword'),
@@ -388,14 +386,6 @@ class CoreSettings extends \app\components\ActiveRecord
             'value' => function($model, $key, $index, $column) {
                 return $model->ommu_version;
             },
-        ];
-        $this->templateColumns['site_oauth'] = [
-            'attribute' => 'site_oauth',
-            'filter' => $this->filterYesNo(),
-            'value' => function($model, $key, $index, $column) {
-                return $model->signup_username ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
-            },
-            'contentOptions' => ['class'=>'center'],
         ];
         $this->templateColumns['modified_date'] = [
             'attribute' => 'modified_date',
