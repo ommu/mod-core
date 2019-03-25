@@ -73,7 +73,6 @@
 namespace ommu\core\models;
 
 use Yii;
-use yii\helpers\Html;
 use yii\helpers\Url;
 use ommu\users\models\Users;
 use ommu\core\models\view\CoreSettings as CoreSettingsView;
@@ -81,12 +80,10 @@ use ommu\core\models\view\CoreSettings as CoreSettingsView;
 class CoreSettings extends \app\components\ActiveRecord
 {
 	use \ommu\traits\UtilityTrait;
-	use \ommu\traits\GridViewTrait;
 
 	public $gridForbiddenColumn = [];
-	public $event_i;
 
-	// Search Variable
+	public $event_i;
 	public $modifiedDisplayname;
 
 	const SCENARIO_GENERAL = 'general';
@@ -109,30 +106,38 @@ class CoreSettings extends \app\components\ActiveRecord
 	public function rules()
 	{
 		return [
-			[['online', 'site_title', 'site_keywords', 'site_description', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'general_commenthtml', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup', 'analytic', 'analytic_id', 'analytic_profile_id', 'license_email', 'license_key'], 'required'],
+			[['online'], 'required'],
+			[['site_title', 'site_keywords', 'site_description', 'signup_username', 'general_profile', 'general_invite', 'general_search', 'general_portal'], 'required', 'on' => self::SCENARIO_GENERAL],
+			[['general_commenthtml', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup'], 'required', 'on' => self::SCENARIO_BANNED],
+			[['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'spam_signup'], 'required', 'on' => self::SCENARIO_SIGNUP],
+			[['lang_allow', 'lang_autodetect', 'lang_anonymous'], 'required', 'on' => self::SCENARIO_LANGUAGE],
+			[['analytic', 'analytic_id', 'analytic_profile_id'], 'required', 'on' => self::SCENARIO_ANALYTIC],
 			[['online', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup', 'analytic', 'modified_id'], 'integer'],
 			[['event_tag', 'general_include', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words'], 'string'],
+			//[['construction_text'], 'serialize'],
 			[['site_creation', 'site_dateformat', 'site_timeformat', 
 				'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'general_include', 'event_i',
 				'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 
-				'analytic_id', 'analytic_profile_id', 'ommu_version', 'modified_date'], 'safe'],
-			[['analytic_id', 'analytic_profile_id', 'license_email', 'license_key'], 'string', 'max' => 32],
+				'ommu_version'], 'safe'],
+			[['analytic_id', 'analytic_profile_id', 'license_key'], 'string', 'max' => 32],
+			[['license_email'], 'string', 'max' => 64],
 			[['site_title', 'site_keywords', 'site_description', 'general_commenthtml'], 'string', 'max' => 256],
 			[['site_dateformat', 'site_timeformat', 'ommu_version'], 'string', 'max' => 8],
 		];
 	}
 
-	// get scenarios
+	/**
+	 * {@inheritdoc}
+	 */
 	public function scenarios()
 	{
-		return [
-			self::SCENARIO_GENERAL => ['online', 'site_title', 'site_keywords', 'site_description', 'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'signup_username', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'general_include',
-				'event_i'],
-			self::SCENARIO_BANNED => ['general_commenthtml', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup'],
-			self::SCENARIO_SIGNUP => ['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'spam_signup'],
-			self::SCENARIO_LANGUAGE => ['lang_allow', 'lang_autodetect', 'lang_anonymous'],
-			self::SCENARIO_ANALYTIC => ['analytic', 'analytic_id', 'analytic_profile_id'],
-		];
+		$scenarios = parent::scenarios();
+		$scenarios[self::SCENARIO_GENERAL] = ['site_title', 'site_keywords', 'site_description', 'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'signup_username', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'general_include', 'event_i'];
+		$scenarios[self::SCENARIO_BANNED] = ['general_commenthtml', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup'];
+		$scenarios[self::SCENARIO_SIGNUP] = ['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'spam_signup'];
+		$scenarios[self::SCENARIO_LANGUAGE] = ['lang_allow', 'lang_autodetect', 'lang_anonymous'];
+		$scenarios[self::SCENARIO_ANALYTIC] = ['analytic', 'analytic_id', 'analytic_profile_id'];
+		return $scenarios;
 	}
 
 	/**
@@ -174,9 +179,9 @@ class CoreSettings extends \app\components\ActiveRecord
 			'general_portal' => Yii::t('app', 'Portal Page'),
 			'general_include' => Yii::t('app', 'Head Scripts/Styles'),
 			'general_commenthtml' => Yii::t('app', 'HTML in Comments'),
-			'lang_allow' => Yii::t('app', 'Lang Allow'),
-			'lang_autodetect' => Yii::t('app', 'Lang Autodetect'),
-			'lang_anonymous' => Yii::t('app', 'Lang Anonymous'),
+			'lang_allow' => Yii::t('app', 'Language Allow'),
+			'lang_autodetect' => Yii::t('app', 'Language Autodetect'),
+			'lang_anonymous' => Yii::t('app', 'Language Anonymous'),
 			'banned_ips' => Yii::t('app', 'Ban Users by IP Address'),
 			'banned_emails' => Yii::t('app', 'Ban Users by Email Address'),
 			'banned_usernames' => Yii::t('app', 'Ban Users by Username'),
@@ -217,9 +222,18 @@ class CoreSettings extends \app\components\ActiveRecord
 	}
 
 	/**
+	 * {@inheritdoc}
+	 * @return \ommu\core\models\query\CoreSettings the active query used by this AR class.
+	 */
+	public static function find()
+	{
+		return new \ommu\core\models\query\CoreSettings(get_called_class());
+	}
+
+	/**
 	 * Set default columns to display
 	 */
-	public function init() 
+	public function init()
 	{
 		parent::init();
 
@@ -248,11 +262,10 @@ class CoreSettings extends \app\components\ActiveRecord
 		];
 		$this->templateColumns['site_creation'] = [
 			'attribute' => 'site_creation',
-			'filter' => Html::input('date', 'site_creation', Yii::$app->request->get('site_creation'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->site_creation, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->site_creation, 'datetime') : '-';
+				return Yii::$app->formatter->asDatetime($model->site_creation, 'medium');
 			},
-			'format' => 'html',
+			'filter' => $this->filterDatepicker($this, 'site_creation'),
 		];
 		$this->templateColumns['site_dateformat'] = [
 			'attribute' => 'site_dateformat',
@@ -268,11 +281,10 @@ class CoreSettings extends \app\components\ActiveRecord
 		];
 		$this->templateColumns['construction_date'] = [
 			'attribute' => 'construction_date',
-			'filter' => Html::input('date', 'construction_date', Yii::$app->request->get('construction_date'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->construction_date, ['0000-00-00','1970-01-01','0002-12-02','-0001-11-30']) ? Yii::$app->formatter->format($model->construction_date, 'date') : '-';
+				return Yii::$app->formatter->asDate($model->construction_date, 'medium');
 			},
-			'format' => 'html',
+			'filter' => $this->filterDatepicker($this, 'construction_date'),
 		];
 		$this->templateColumns['construction_text'] = [
 			'attribute' => 'construction_text',
@@ -282,19 +294,17 @@ class CoreSettings extends \app\components\ActiveRecord
 		];
 		$this->templateColumns['event_startdate'] = [
 			'attribute' => 'event_startdate',
-			'filter' => Html::input('date', 'event_startdate', Yii::$app->request->get('event_startdate'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->event_startdate, ['0000-00-00','1970-01-01','0002-12-02','-0001-11-30']) ? Yii::$app->formatter->format($model->event_startdate, 'date') : '-';
+				return Yii::$app->formatter->asDate($model->event_startdate, 'medium');
 			},
-			'format' => 'html',
+			'filter' => $this->filterDatepicker($this, 'event_startdate'),
 		];
 		$this->templateColumns['event_finishdate'] = [
 			'attribute' => 'event_finishdate',
-			'filter' => Html::input('date', 'event_finishdate', Yii::$app->request->get('event_finishdate'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->event_finishdate, ['0000-00-00','1970-01-01','0002-12-02','-0001-11-30']) ? Yii::$app->formatter->format($model->event_finishdate, 'date') : '-';
+				return Yii::$app->formatter->asDate($model->event_finishdate, 'medium');
 			},
-			'format' => 'html',
+			'filter' => $this->filterDatepicker($this, 'event_finishdate'),
 		];
 		$this->templateColumns['event_tag'] = [
 			'attribute' => 'event_tag',
@@ -382,11 +392,10 @@ class CoreSettings extends \app\components\ActiveRecord
 		];
 		$this->templateColumns['modified_date'] = [
 			'attribute' => 'modified_date',
-			'filter' => Html::input('date', 'modified_date', Yii::$app->request->get('modified_date'), ['class'=>'form-control']),
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->modified_date, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->modified_date, 'datetime') : '-';
+				return Yii::$app->formatter->asDatetime($model->modified_date, 'medium');
 			},
-			'format' => 'html',
+			'filter' => $this->filterDatepicker($this, 'modified_date'),
 		];
 		if(!Yii::$app->request->get('modified')) {
 			$this->templateColumns['modifiedDisplayname'] = [
@@ -400,7 +409,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'signup_username',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->signup_username ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->signup_username);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -408,7 +417,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'signup_approve',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->signup_approve ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->signup_approve);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -416,7 +425,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'signup_verifyemail',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->signup_verifyemail ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->signup_verifyemail);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -424,7 +433,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'signup_photo',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->signup_photo ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->signup_photo);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -432,7 +441,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'signup_welcome',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->signup_welcome ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->signup_welcome);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -440,7 +449,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'signup_random',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->signup_random ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->signup_random);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -448,7 +457,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'signup_terms',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->signup_terms ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->signup_terms);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -456,7 +465,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'signup_invitepage',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->signup_invitepage ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->signup_invitepage);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -464,7 +473,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'signup_inviteonly',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->signup_inviteonly ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->signup_inviteonly);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -472,7 +481,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'signup_checkemail',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->signup_checkemail ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->signup_checkemail);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -480,7 +489,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'signup_adminemail',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->signup_adminemail ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->signup_adminemail);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -488,7 +497,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'general_profile',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->general_profile ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->general_profile);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -496,7 +505,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'general_invite',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->general_invite ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->general_invite);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -504,7 +513,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'general_search',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->general_search ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->general_search);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -512,7 +521,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'general_portal',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->general_portal ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->general_portal);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -520,7 +529,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'lang_allow',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->lang_allow ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->lang_allow);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -528,7 +537,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'lang_autodetect',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->lang_autodetect ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->lang_autodetect);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -536,7 +545,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'lang_anonymous',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->lang_anonymous ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->lang_anonymous);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -544,7 +553,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'spam_comment',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->spam_comment ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->spam_comment);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -552,7 +561,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'spam_contact',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->spam_contact ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->spam_contact);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -560,7 +569,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'spam_invite',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->spam_invite ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->spam_invite);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -568,7 +577,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'spam_login',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->spam_login ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->spam_login);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -576,7 +585,7 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'spam_signup',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->spam_signup ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->spam_signup);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -584,15 +593,15 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'analytic',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->analytic ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return $this->filterYesNo($model->analytic);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
 		$this->templateColumns['online'] = [
 			'attribute' => 'online',
-			'filter' => $this->filterYesNo(),
+			'filter' => self::getOnline(),
 			'value' => function($model, $key, $index, $column) {
-				return $model->analytic ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+				return self::getOnline($model->online);
 			},
 			'contentOptions' => ['class'=>'center'],
 		];
@@ -617,46 +626,49 @@ class CoreSettings extends \app\components\ActiveRecord
 	}
 
 	/**
-	 * get Module License
+	 * function getOnline
 	 */
-	public static function getLicense($source='1234567890', $length=16, $char=4)
+	public static function getOnline($value=null)
 	{
-		$mod = $length%$char;
-		if($mod == 0)
-			$sep = ($length/$char);
-		else
-			$sep = (int)($length/$char)+1;
-		
-		$sourceLength = strlen($source);
-		$random = '';
-		for ($i = 0; $i < $length; $i++)
-			$random .= $source[rand(0, $sourceLength - 1)];
-		
-		$license = '';
-		for ($i = 0; $i < $sep; $i++) {
-			if($i != $sep-1)
-				$license .= substr($random,($i*$char),$char).'-';
-			else
-				$license .= substr($random,($i*$char),$char);
-		}
+		$items = array(
+			'0' => Yii::t('app', 'Undercontruction'),
+			'1' => Yii::t('app', 'Online'),
+			'2' => Yii::t('app', 'Coming-soon'),
+		);
 
-		return $license;
+		if($value !== null)
+			return $items[$value];
+		else
+			return $items;
+	}
+
+	/**
+	 * after find attributes
+	 */
+	public function afterFind()
+	{
+		parent::afterFind();
+
+		$this->construction_text = unserialize($this->construction_text);
+		// $this->modifiedDisplayname = isset($this->modified) ? $this->modified->displayname : '-';
 	}
 
 	/**
 	 * before validate attributes
 	 */
-	public function beforeValidate() 
+	public function beforeValidate()
 	{
 		if(parent::beforeValidate()) {
 			if($this->isNewRecord) {
 				$this->license_email = 'putra@sudaryanto.id';
-				$this->license_key = self::getLicense();
+				$this->license_key = $this->licenseCode();
 
-			} else
-				$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			
-			if($this->scenario == 'general') {
+			} else {
+				if($this->modified_id == null)
+					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			}
+
+			if($this->scenario == self::SCENARIO_GENERAL) {
 				if($this->online != 1) {
 					if($this->construction_date == '')
 						$this->addError('construction_date', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('construction_date')]));
@@ -665,11 +677,11 @@ class CoreSettings extends \app\components\ActiveRecord
 					if($this->online == 2 && $this->construction_text['comingsoon'] == '')
 						$this->addError('construction_text[comingsoon]', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('construction_text[comingsoon]')]));
 				}
-				
+
 				if($this->event_i == 0) {
 					$this->event_startdate = '00-00-0000';
 					$this->event_finishdate = '00-00-0000';
-					
+
 				} else {
 					$condition = 0;
 					if($this->event_startdate != '' && in_array(Yii::$app->formatter->asDate($this->event_startdate, 'php:Y-m-d'), array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30'))) {
@@ -700,8 +712,9 @@ class CoreSettings extends \app\components\ActiveRecord
 	public function beforeSave($insert)
 	{
 		if(parent::beforeSave($insert)) {
+			// $this->site_creation = Yii::$app->formatter->asDate($this->site_creation, 'php:Y-m-d');
 			$this->construction_date = Yii::$app->formatter->asDate($this->construction_date, 'php:Y-m-d');
-			if($this->scenario == 'general')
+			if($this->scenario == self::SCENARIO_GENERAL)
 				$this->construction_text = serialize($this->construction_text);
 			$this->event_startdate = Yii::$app->formatter->asDate($this->event_startdate, 'php:Y-m-d');
 			$this->event_finishdate = Yii::$app->formatter->asDate($this->event_finishdate, 'php:Y-m-d');

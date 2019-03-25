@@ -6,8 +6,6 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2018 OMMU (www.ommu.co)
  * @created date 22 April 2018, 19:29 WIB
- * @modified date 22 April 2018, 19:29 WIB
- * @modified by Putra Sudaryanto <putra@sudaryanto.id>
  * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "_core_settings".
@@ -21,8 +19,6 @@
 namespace ommu\core\models\view;
 
 use Yii;
-use yii\helpers\Html;
-use yii\helpers\Url;
 
 class CoreSettings extends \app\components\ActiveRecord
 {
@@ -68,7 +64,7 @@ class CoreSettings extends \app\components\ActiveRecord
 	/**
 	 * Set default columns to display
 	 */
-	public function init() 
+	public function init()
 	{
 		parent::init();
 

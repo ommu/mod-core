@@ -23,6 +23,8 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<div class="core-settings-form">
+
 <?php $form = ActiveForm::begin([
 	'options' => ['class'=>'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
@@ -32,87 +34,77 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php echo $form->field($model, 'banned_ips', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
+<?php echo $form->field($model, 'banned_ips', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
 	->textarea(['rows'=>2,'rows'=>6])
 	->label($model->getAttributeLabel('banned_ips'))
 	->hint(Yii::t('app', 'To ban users by their IP address, enter their address into the field below. Addresses should be separated by commas, like 123.456.789.123, 23.45.67.89')); ?>
 
-<?php echo $form->field($model, 'banned_emails', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
+<?php echo $form->field($model, 'banned_emails', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
 	->textarea(['rows'=>2,'rows'=>6])
 	->label($model->getAttributeLabel('banned_emails'))
 	->hint(Yii::t('app', 'To ban users by their email address, enter their email into the field below. Emails should be separated by commas, like user1@domain1.com, user2@domain2.com. Note that you can ban all email addresses with a specific domain as follows: *@domain.com')); ?>
 
-<?php echo $form->field($model, 'banned_usernames', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
+<?php echo $form->field($model, 'banned_usernames', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
 	->textarea(['rows'=>2,'rows'=>6])
 	->label($model->getAttributeLabel('banned_usernames'))
 	->hint(Yii::t('app', 'Enter the usernames that are not permitted on your social network. Usernames should be separated by commas, like username1, username2')); ?>
 
-<?php echo $form->field($model, 'banned_words', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
+<?php echo $form->field($model, 'banned_words', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
 	->textarea(['rows'=>2,'rows'=>6])
 	->label($model->getAttributeLabel('banned_words'))
 	->hint(Yii::t('app', 'Enter any words that you you want to censor on your users\' profiles as well as any plugins you have installed. These will be replaced with asterisks (*). Separate words by commas like word1, word2')); ?>
 	
-<?php 
-$spam_signup = [
+<?php $spamSignup = [
 	1 => Yii::t('app', 'Yes, show verification code image.'),
 	0 => Yii::t('app', 'No, do not show verification code image.'),
 ];
 echo $form->field($model, 'spam_signup', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
-	->radioList($spam_signup)
+	->radioList($spamSignup)
 	->label($model->getAttributeLabel('spam_signup'))
 	->hint(Yii::t('app', 'If you have selected YES, an image containing a random sequence of 6 numbers will be shown to users on the signup page. Users will be required to enter these numbers into the Verification Code field before they can continue. This feature helps prevent users from trying to automatically create accounts on your system. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors or users cannot signup, try turning this off.')); ?>
 
-<?php 
-$spam_invite = [
+<?php $spamInvite = [
 	1 => Yii::t('app', 'Yes, enable validation code for inviting.'),
 	0 => Yii::t('app', 'No, disable validation code for inviting.'),
 ];
 echo $form->field($model, 'spam_invite', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
-	->radioList($spam_invite)
+	->radioList($spamInvite)
 	->label($model->getAttributeLabel('spam_invite'))
 	->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "invite" page. Users will be required to enter these numbers into the Verification Code field in order to send their invitation. This feature helps prevent users from trying to create comment spam. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
 
-<div class="form-group">
-	<label class="control-label col-md-3 col-sm-3 col-xs-12 col-12"><?php echo Yii::t('app', 'Require users to enter validation code when logging in?');?></label>
-	<div class="col-md-6 col-sm-9 col-xs-12 col-12">
-		<?php 
-		$spam_login = [
-			1 => Yii::t('app', 'Yes, enable validation code for logging in.'),
-			0 => Yii::t('app', 'No, disable validation code for logging in.'),
-		];
-		echo $form->field($model, 'spam_login', ['template' => '{hint}{input}{error}'])
-			->radioList($spam_login)
-			->label($model->getAttributeLabel('spam_login'))
-			->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "login" page. Users will be required to enter these numbers into the Verification Code field in order to login. This feature helps prevent users from trying to spam the login form. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
+<?php $spamLogin = [
+	1 => Yii::t('app', 'Yes, enable validation code for logging in.'),
+	0 => Yii::t('app', 'No, disable validation code for logging in.'),
+];
+echo $form->field($model, 'spam_login', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
+	->radioList($spamLogin)
+	->label(Yii::t('app', 'Require users to enter validation code when logging in?'))
+	->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "login" page. Users will be required to enter these numbers into the Verification Code field in order to login. This feature helps prevent users from trying to spam the login form. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
 
-		<?php echo $form->field($model, 'spam_failedcount', ['template' => '{hint}{input}{error}'])
-			->textInput()
-			->label($model->getAttributeLabel('spam_failedcount'))
-			->hint(Yii::t('app', 'If "no" is selected in the setting directly above, a Verification Code will be displayed to the user only after a certain number of failed logins. You can set this to 0 to never display a code.')); ?>
-	</div>
-</div>
+<?php echo $form->field($model, 'spam_failedcount', ['template' => '{beginWrapper}{hint}{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-12 col-sm-offset-3']])
+	->textInput()
+	->label($model->getAttributeLabel('spam_failedcount'))
+	->hint(Yii::t('app', 'If "no" is selected in the setting directly above, a Verification Code will be displayed to the user only after a certain number of failed logins. You can set this to 0 to never display a code.')); ?>
 	
-<?php 
-$spam_contact = [
+<?php $spamContact = [
 	1 => Yii::t('app', 'Yes, enable validation code for the contact form.'),
 	0 => Yii::t('app', 'No, disable validation code for the contact form.'),
 ];
 echo $form->field($model, 'spam_contact', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
-	->radioList($spam_contact)
+	->radioList($spamContact)
 	->label($model->getAttributeLabel('spam_contact'))
 	->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "contact" page. Users will be required to enter these numbers into the Verification Code field in order to contact you. This feature helps prevent users from trying to spam the contact form. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
 
-<?php 
-$spam_comment = [
+<?php $spamComment = [
 	1 => Yii::t('app', 'Yes, enable validation code for the contact form.'),
 	0 => Yii::t('app', 'No, disable validation code for the contact form.'),
 ];
 echo $form->field($model, 'spam_comment', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
-	->radioList($spam_comment)
+	->radioList($spamComment)
 	->label($model->getAttributeLabel('spam_comment'))
 	->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "write a comment" page. Users will be required to enter these numbers into the Verification Code field in order to post their comment. This feature helps prevent users from trying to create comment spam. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
 
-<?php echo $form->field($model, 'general_commenthtml', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
+<?php echo $form->field($model, 'general_commenthtml')
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('general_commenthtml'))
 	->hint(Yii::t('app', 'By default, the user may not enter any HTML tags into comments. If you want to allow specific tags, you can enter them below (separated by commas). Example: b, img, a, embed, font')); ?>
@@ -125,3 +117,5 @@ echo $form->field($model, 'spam_comment', ['template' => '{label}{beginWrapper}{
 </div>
 
 <?php ActiveForm::end(); ?>
+
+</div>

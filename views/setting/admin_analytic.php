@@ -23,6 +23,8 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<div class="core-settings-form">
+
 <?php $form = ActiveForm::begin([
 	'options' => ['class'=>'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
@@ -32,11 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php echo $form->field($model, 'analytic')
-	->checkbox()
-	->label($model->getAttributeLabel('analytic')); ?>
-
-<?php echo $form->field($model, 'analytic_id', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
+<?php echo $form->field($model, 'analytic_id')
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('analytic_id'))
 	->hint(Yii::t('app', 'Enter the Website Profile ID to use Google Analytics.')); ?>
@@ -44,6 +42,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php echo $form->field($model, 'analytic_profile_id')
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('analytic_profile_id')); ?>
+
+<?php echo $form->field($model, 'analytic')
+	->checkbox()
+	->label($model->getAttributeLabel('analytic')); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group row">
@@ -53,3 +55,5 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <?php ActiveForm::end(); ?>
+
+</div>
