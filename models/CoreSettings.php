@@ -530,8 +530,8 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'lang_allow',
 			'value' => function($model, $key, $index, $column) {
 				return $this->filterYesNo($model->lang_allow);
+			},
 			'filter' => $this->filterYesNo(),
-		},
 			'contentOptions' => ['class'=>'center'],
 		];
 		$this->templateColumns['lang_autodetect'] = [
