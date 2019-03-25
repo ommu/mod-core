@@ -84,6 +84,10 @@ class SettingController extends Controller
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'General setting success updated.'));
 				return $this->redirect(['general']);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
 			}
 		}
 
@@ -112,6 +116,10 @@ class SettingController extends Controller
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Spam & banning setting success updated.'));
 				return $this->redirect(['banned']);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
 			}
 		}
 		
@@ -134,13 +142,16 @@ class SettingController extends Controller
 		if ($model === null) 
 			$model = new CoreSettings();
 		$model->scenario = CoreSettings::SCENARIO_SIGNUP;
-		//print_r($model);
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Signup setting success updated.'));
 				return $this->redirect(['signup']);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
 			}
 		}
 
@@ -169,6 +180,10 @@ class SettingController extends Controller
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Language setting success updated.'));
 				return $this->redirect(['language']);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
 			}
 		}
 
@@ -198,6 +213,10 @@ class SettingController extends Controller
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Google analytics setting success updated.'));
 				return $this->redirect(['analytic']);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
 			}
 		}
 		
