@@ -62,7 +62,6 @@
  * @property string $license_email
  * @property string $license_key
  * @property string $ommu_version
- * @property integer $migrate
  * @property string $modified_date
  * @property integer $modified_id
  *
@@ -113,7 +112,7 @@ class CoreSettings extends \app\components\ActiveRecord
             [['site_creation', 'site_dateformat', 'site_timeformat', 
                 'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'general_include', 'event_i',
                 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 
-                'analytic_id', 'analytic_profile_id', 'ommu_version', 'migrate', 'modified_date'], 'safe'],
+                'analytic_id', 'analytic_profile_id', 'ommu_version', 'modified_date'], 'safe'],
             [['analytic_id', 'analytic_profile_id', 'license_email', 'license_key'], 'string', 'max' => 32],
             [['site_title', 'site_keywords', 'site_description', 'general_commenthtml'], 'string', 'max' => 256],
             [['site_dateformat', 'site_timeformat', 'ommu_version'], 'string', 'max' => 8],
@@ -191,7 +190,6 @@ class CoreSettings extends \app\components\ActiveRecord
             'license_email' => Yii::t('app', 'License Email'),
             'license_key' => Yii::t('app', 'License Key'),
             'ommu_version' => Yii::t('app', 'Ommu Version'),
-            'migrate' => Yii::t('app', 'Migrate'),
             'modified_date' => Yii::t('app', 'Modified Date'),
             'modified_id' => Yii::t('app', 'Modified'),
             'event_i' => Yii::t('app', 'Event'),
@@ -592,14 +590,6 @@ class CoreSettings extends \app\components\ActiveRecord
             'filter' => $this->filterYesNo(),
             'value' => function($model, $key, $index, $column) {
                 return $model->analytic ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
-            },
-            'contentOptions' => ['class'=>'center'],
-        ];
-        $this->templateColumns['migrate'] = [
-            'attribute' => 'migrate',
-            'filter' => $this->filterYesNo(),
-            'value' => function($model, $key, $index, $column) {
-                return $this->filterYesNo($model->migrate);
             },
             'contentOptions' => ['class'=>'center'],
         ];
