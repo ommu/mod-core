@@ -143,6 +143,7 @@ class CorePageViews extends \app\components\ActiveRecord
 				'attribute' => 'pageName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->page) ? $model->page->title->message : '-';
+					// return $model->pageName;
 				},
 			];
 		}
@@ -151,6 +152,7 @@ class CorePageViews extends \app\components\ActiveRecord
 				'attribute' => 'userDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->user) ? $model->user->displayname : '-';
+					// return $model->userDisplayname;
 				},
 			];
 		}

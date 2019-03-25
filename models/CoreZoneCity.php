@@ -214,12 +214,13 @@ class CoreZoneCity extends \app\components\ActiveRecord
 			},
 		];
 		if(!Yii::$app->request->get('province')) {
-			$this->templateColumns['province_id'] = [
-				'attribute' => 'province_id',
+			$this->templateColumns['provinceName'] = [
+				'attribute' => 'provinceName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->province) ? $model->province->province_name : '-';
+					// return $model->provinceName;
 				},
-				'filter' => CoreZoneProvince::getProvince(),
+				// 'filter' => CoreZoneProvince::getProvince(),
 			];
 		}
 		if(!Yii::$app->request->get('country') && !Yii::$app->request->get('province')) {
@@ -227,6 +228,7 @@ class CoreZoneCity extends \app\components\ActiveRecord
 				'attribute' => 'countryName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->province->country) ? $model->province->country->country_name : '-';
+					// return $model->countryName;
 				},
 			];
 		}
@@ -242,6 +244,7 @@ class CoreZoneCity extends \app\components\ActiveRecord
 				'attribute' => 'creationDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->creation) ? $model->creation->displayname : '-';
+					// return $model->creationDisplayname;
 				},
 			];
 		}
@@ -257,6 +260,7 @@ class CoreZoneCity extends \app\components\ActiveRecord
 				'attribute' => 'modifiedDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->modified) ? $model->modified->displayname : '-';
+					// return $model->modifiedDisplayname;
 				},
 			];
 		}

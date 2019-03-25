@@ -76,9 +76,8 @@ class CoreMeta extends \app\components\ActiveRecord
 	use \ommu\traits\FileTrait;
 
 	public $gridForbiddenColumn = [];
-	public $old_meta_image_i;
 
-	// Search Variable
+	public $old_meta_image_i;
 	public $modifiedDisplayname;
 
 	const SCENARIO_SETTING = 'setting';
@@ -452,6 +451,7 @@ class CoreMeta extends \app\components\ActiveRecord
 				'attribute' => 'modifiedDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->modified) ? $model->modified->displayname : '-';
+					// return $model->modifiedDisplayname;
 				},
 			];
 		}

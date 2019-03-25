@@ -6,7 +6,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 24 December 2017, 20:11 WIB
- * @link http://github.com/ommu/ommu
+ * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "ommu_core_modules".
  *
@@ -34,7 +34,6 @@ class Modules extends \app\components\ActiveRecord
 	
 	public $gridForbiddenColumn = ['installed', 'modified_date', 'modifiedDisplayname'];
 
-	// Search Variable
 	public $creationDisplayname;
 	public $modifiedDisplayname;
 
@@ -126,6 +125,7 @@ class Modules extends \app\components\ActiveRecord
 				'attribute' => 'creationDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->creation) ? $model->creation->displayname : '-';
+					// return $model->creationDisplayname;
 				},
 			];
 		}
@@ -141,6 +141,7 @@ class Modules extends \app\components\ActiveRecord
 				'attribute' => 'modifiedDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->modified) ? $model->modified->displayname : '-';
+					// return $model->modifiedDisplayname;
 				},
 			];
 		}
@@ -211,15 +212,29 @@ class Modules extends \app\components\ActiveRecord
 	}
 
 	/**
+	 * after find attributes
+	 */
+	public function afterFind()
+	{
+		parent::afterFind();
+
+		// $this->creationDisplayname = isset($this->creation) ? $this->creation->displayname : '-';
+		// $this->modifiedDisplayname = isset($this->modified) ? $this->modified->displayname : '-';
+	}
+
+	/**
 	 * before validate attributes
 	 */
 	public function beforeValidate()
 	{
 		if(parent::beforeValidate()) {
-			if($this->isNewRecord)
-				$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			else
-				$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			if($this->isNewRecord) {
+				if($this->creation_id == null)
+					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			} else {
+				if($this->modified_id == null)
+					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			}
 		}
 		return true;
 	}

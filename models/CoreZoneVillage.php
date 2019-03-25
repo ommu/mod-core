@@ -216,6 +216,7 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 				'attribute' => 'districtName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->district) ? $model->district->district_name : '-';
+					// return $model->districtName;
 				},
 			];
 		}
@@ -224,6 +225,7 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 				'attribute' => 'cityName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->district->city) ? $model->district->city->city_name : '-';
+					// return $model->cityName;
 				},
 			];
 		}
@@ -232,6 +234,7 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 				'attribute' => 'provinceName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->district->city->province) ? $model->district->city->province->province_name : '-';
+					// return $model->provinceName;
 				},
 			];
 		}
@@ -240,6 +243,7 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 				'attribute' => 'countryName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->district->city->province->country) ? $model->district->city->province->country->country_name : '-';
+					// return $model->countryName;
 				},
 			];
 		}
@@ -262,6 +266,7 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 				'attribute' => 'creationDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->creation) ? $model->creation->displayname : '-';
+					// return $model->creationDisplayname;
 				},
 			];
 		}
@@ -277,6 +282,7 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 				'attribute' => 'modifiedDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->modified) ? $model->modified->displayname : '-';
+					// return $model->modifiedDisplayname;
 				},
 			];
 		}

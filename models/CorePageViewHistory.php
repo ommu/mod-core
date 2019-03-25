@@ -104,12 +104,14 @@ class CorePageViewHistory extends \app\components\ActiveRecord
 				'attribute' => 'pageName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->view->page) ? $model->view->page->title->message : '-';
+					// return $model->pageName;
 				},
 			];
 			$this->templateColumns['userDisplayname'] = [
 				'attribute' => 'userDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->view->user) ? $model->view->user->displayname : '-';
+					// return $model->userDisplayname;
 				},
 			];
 		}

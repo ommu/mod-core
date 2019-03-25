@@ -6,7 +6,7 @@
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 20 December 2017, 14:36 WIB
- * @link http://github.com/ommu/ommu
+ * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "ommu_settings".
  *
@@ -39,7 +39,6 @@ class Settings extends \app\components\ActiveRecord
 
 	public $gridForbiddenColumn = ['modified_date', 'modifiedDisplayname'];
 
-	// Search Variable
 	public $creationDisplayname;
 	public $modifiedDisplayname;
 
@@ -158,6 +157,7 @@ class Settings extends \app\components\ActiveRecord
 				'attribute' => 'creationDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->creation) ? $model->creation->displayname : '-';
+					// return $model->creationDisplayname;
 				},
 			];
 		}
@@ -173,6 +173,7 @@ class Settings extends \app\components\ActiveRecord
 				'attribute' => 'modifiedDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->modified) ? $model->modified->displayname : '-';
+					// return $model->modifiedDisplayname;
 				},
 			];
 		}
@@ -194,6 +195,17 @@ class Settings extends \app\components\ActiveRecord
 			$model = self::findOne($id);
 			return $model;
 		}
+	}
+
+	/**
+	 * after find attributes
+	 */
+	public function afterFind()
+	{
+		parent::afterFind();
+
+		// $this->creationDisplayname = isset($this->creation) ? $this->creation->displayname : '-';
+		// $this->modifiedDisplayname = isset($this->modified) ? $this->modified->displayname : '-';
 	}
 
 	/**

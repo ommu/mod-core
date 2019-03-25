@@ -117,16 +117,17 @@ class Message extends \app\components\ActiveRecord
 				'attribute' => 'phraseMessage',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->phrase) ? $model->phrase->message : '-';
+					// return $model->phraseMessage;
 				},
 				'format' => 'html',
 			];
 		}
 		$this->templateColumns['language'] = [
 			'attribute' => 'language',
-			'filter' => CoreLanguages::getLanguage(true, 'code'),
 			'value' => function($model, $key, $index, $column) {
 				return $model->language;
 			},
+			'filter' => CoreLanguages::getLanguage(true, 'code'),
 		];
 		$this->templateColumns['translation'] = [
 			'attribute' => 'translation',
@@ -147,6 +148,7 @@ class Message extends \app\components\ActiveRecord
 				'attribute' => 'creationDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->creation) ? $model->creation->displayname : '-';
+					// return $model->creationDisplayname;
 				},
 			];
 		}

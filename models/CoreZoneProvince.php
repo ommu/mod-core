@@ -203,12 +203,13 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 			},
 		];
 		if(!Yii::$app->request->get('country')) {
-			$this->templateColumns['country_id'] = [
-				'attribute' => 'country_id',
+			$this->templateColumns['countryName'] = [
+				'attribute' => 'countryName',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->country) ? $model->country->country_name : '-';
+					// return $model->countryName;
 				},
-				'filter' => CoreZoneCountry::getCountry(),
+				// 'filter' => CoreZoneCountry::getCountry(),
 			];
 		}
 		$this->templateColumns['creation_date'] = [
@@ -223,6 +224,7 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 				'attribute' => 'creationDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->creation) ? $model->creation->displayname : '-';
+					// return $model->creationDisplayname;
 				},
 			];
 		}
@@ -238,6 +240,7 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 				'attribute' => 'modifiedDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->modified) ? $model->modified->displayname : '-';
+					// return $model->modifiedDisplayname;
 				},
 			];
 		}

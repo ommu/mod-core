@@ -136,6 +136,7 @@ class CoreTags extends \app\components\ActiveRecord
 				'attribute' => 'creationDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->creation) ? $model->creation->displayname : '-';
+					// return $model->creationDisplayname;
 				},
 			];
 		}
@@ -151,6 +152,7 @@ class CoreTags extends \app\components\ActiveRecord
 				'attribute' => 'modifiedDisplayname',
 				'value' => function($model, $key, $index, $column) {
 					return isset($model->modified) ? $model->modified->displayname : '-';
+					// return $model->modifiedDisplayname;
 				},
 			];
 		}
@@ -245,7 +247,7 @@ class CoreTags extends \app\components\ActiveRecord
 	{
 		if(parent::beforeSave($insert)) {
 			if($insert)
-				$this->body =  $this->urlTitle($this->body);
+				$this->body = $this->urlTitle($this->body);
 		}
 		return true;
 	}
