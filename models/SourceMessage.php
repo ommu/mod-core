@@ -189,11 +189,11 @@ class SourceMessage extends \app\components\ActiveRecord
 		}
 		$this->templateColumns['messages'] = [
 			'attribute' => 'messages',
-			'filter' => false,
 			'value' => function($model, $key, $index, $column) {
 				$messages = $model->getMessages(true);
 				return Html::a($messages, ['message/manage', 'id'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} messages', ['count'=>$messages])]);
 			},
+			'filter' => false,
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'html',
 		];

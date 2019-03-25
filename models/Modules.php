@@ -147,19 +147,19 @@ class Modules extends \app\components\ActiveRecord
 		}
 		$this->templateColumns['installed'] = [
 			'attribute' => 'installed',
-			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
 				return $this->filterYesNo($model->installed);
 			},
+			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
 		];
 		$this->templateColumns['enabled'] = [
 			'attribute' => 'enabled',
-			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
 				$url = Url::to(['enabled', 'id'=>$model->primaryKey]);
 				return $this->quickAction($url, $this->getEnableCondition($model->enabled, $model->module_id) ? 1 : 0, 'Yes,No#Enable,Disable');
 			},
+			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'raw',
 		];

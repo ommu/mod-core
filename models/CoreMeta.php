@@ -457,61 +457,61 @@ class CoreMeta extends \app\components\ActiveRecord
 		}
 		$this->templateColumns['twitter_card'] = [
 			'attribute' => 'twitter_card',
-			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
 				$url = Url::to(['twitter-card', 'id'=>$model->primaryKey]);
 				return $this->quickAction($url, $model->twitter_card, '1=summary, 2=summary_large_image, 3=photo,4=app');
 			},
+			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['facebook_type'] = [
 			'attribute' => 'facebook_type',
-			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
 				$url = Url::to(['facebook-type', 'id'=>$model->primaryKey]);
 				return $this->quickAction($url, $model->facebook_type, '1=profile, 2=website');
 			},
+			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['office_on'] = [
 			'attribute' => 'office_on',
-			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
 				$url = Url::to(['office-on', 'id'=>$model->primaryKey]);
 				return $this->quickAction($url, $model->office_on, '0=disable, 1=enable');
 			},
+			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['google_on'] = [
 			'attribute' => 'google_on',
-			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
 				$url = Url::to(['google-on', 'id'=>$model->primaryKey]);
 				return $this->quickAction($url, $model->google_on, '0=disable, 1=enable');
 			},
+			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['twitter_on'] = [
 			'attribute' => 'twitter_on',
-			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
 				$url = Url::to(['twitter-on', 'id'=>$model->primaryKey]);
 				return $this->quickAction($url, $model->twitter_on, '0=disable, 1=enable');
 			},
+			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['facebook_on'] = [
 			'attribute' => 'facebook_on',
-			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
 				$url = Url::to(['facebook-on', 'id'=>$model->primaryKey]);
 				return $this->quickAction($url, $model->facebook_on, '0=disable, 1=enable');
 			},
+			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'raw',
 		];

@@ -279,20 +279,20 @@ class CoreZoneCity extends \app\components\ActiveRecord
 		];
 		$this->templateColumns['districts'] = [
 			'attribute' => 'districts',
-			'filter' => false,
 			'value' => function($model, $key, $index, $column) {
 				$districts = $model->getDistricts(true);
 				return Html::a($districts, ['zone/district/manage', 'city'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} districts', ['count'=>$districts])]);
 			},
+			'filter' => false,
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['checked'] = [
 			'attribute' => 'checked',
-			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
 				return $this->filterYesNo($model->checked);
 			},
+			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
 		];
 		if(!Yii::$app->request->get('trash')) {

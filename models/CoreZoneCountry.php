@@ -211,11 +211,11 @@ class CoreZoneCountry extends \app\components\ActiveRecord
 		];
 		$this->templateColumns['provinces'] = [
 			'attribute' => 'provinces',
-			'filter' => false,
 			'value' => function($model, $key, $index, $column) {
 				$provinces = $model->getProvinces(true);
 				return Html::a($provinces, ['zone/province/manage', 'country'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} provinces', ['count'=>$provinces])]);
 			},
+			'filter' => false,
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'html',
 		];

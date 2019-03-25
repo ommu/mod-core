@@ -259,20 +259,20 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 		];
 		$this->templateColumns['cities'] = [
 			'attribute' => 'cities',
-			'filter' => false,
 			'value' => function($model, $key, $index, $column) {
 				$cities = $model->getCities(true);
 				return Html::a($cities, ['zone/city/manage', 'province'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} cities', ['count'=>$cities])]);
 			},
+			'filter' => false,
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['checked'] = [
 			'attribute' => 'checked',
-			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
 				return $this->filterYesNo($model->checked);
 			},
+			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
 		];
 		if(!Yii::$app->request->get('trash')) {

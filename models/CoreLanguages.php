@@ -194,31 +194,31 @@ class CoreLanguages extends \app\components\ActiveRecord
 		];
 		$this->templateColumns['users'] = [
 			'attribute' => 'users',
-			'filter' => false,
 			'value' => function($model, $key, $index, $column) {
 				$users = $model->getUsers(true);
 				return Html::a($users, ['/users/member/index', 'language'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} users', ['count'=>$users])]);
 			},
+			'filter' => false,
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['actived'] = [
 			'attribute' => 'actived',
-			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
 				$url = Url::to(['actived', 'id'=>$model->primaryKey]);
 				return $this->quickAction($url, $model->actived, 'Enable,Disable');
 			},
+			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['default'] = [
 			'attribute' => 'default',
-			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
 				$url = Url::to(['default', 'id'=>$model->primaryKey]);
 				return $this->quickAction($url, $model->default, 'Yes,No', true);
 			},
+			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
 			'format' => 'raw',
 		];
