@@ -117,7 +117,9 @@ class CoreMeta extends \app\components\ActiveRecord
 		];
 	}
 
-	// get scenarios
+	/**
+	 * {@inheritdoc}
+	 */
 	public function scenarios()
 	{
 		return [
@@ -573,7 +575,7 @@ class CoreMeta extends \app\components\ActiveRecord
 					$this->addError('meta_image', Yii::t('app', '{attribute} cannot be blank.', array('{attribute}'=>$this->getAttributeLabel('meta_image'))));
 			} */
 			
-			if($this->scenario == 'twitter') {
+			if($this->scenario == self::SCENARIO_TWITTER) {
 				if($this->twitter_card == 3) {
 					if($this->twitter_photo_size['width'] == '')
 						$this->addError('twitter_photo_size[width]', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('twitter_photo_size[width]')]));
@@ -582,7 +584,7 @@ class CoreMeta extends \app\components\ActiveRecord
 				}
 			}
 			
-			if($this->scenario == 'facebook') {
+			if($this->scenario == self::SCENARIO_FACEBOOK) {
 				if($this->facebook_type == 1) {
 					if($this->facebook_profile_firstname == '')
 						$this->addError('facebook_profile_firstname', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('facebook_profile_firstname')]));
@@ -619,10 +621,10 @@ class CoreMeta extends \app\components\ActiveRecord
 					$this->meta_image = $this->old_meta_image_i;
 			}
 			
-			if($this->scenario == 'setting')
+			if($this->scenario == self::SCENARIO_SETTING)
 				$this->map_icon_size = serialize($this->map_icon_size);
 			
-			if($this->scenario == 'twitter') {
+			if($this->scenario == self::SCENARIO_TWITTER) {
 				$this->twitter_photo_size = serialize($this->twitter_photo_size);
 				$this->twitter_iphone = serialize($this->twitter_iphone);
 				$this->twitter_ipad = serialize($this->twitter_ipad);
