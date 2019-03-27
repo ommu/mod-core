@@ -68,7 +68,7 @@ echo $form->field($model, 'office_on')
 
 <div class="form-group">
 	<?php echo $form->field($model, 'office_place', ['template' => '{label}', 'options' => ['tag' => null]])
-		->label($model->getAttributeLabel('office_place'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12 col-12']); ?>
+		->label($model->getAttributeLabel('office_place'), ['class'=>'control-label col-sm-3 col-xs-12 col-12']); ?>
 	<div class="col-md-6 col-sm-9 col-xs-12 col-12">
 		<?php echo $form->field($model, 'office_place', ['template' => '{input}{error}'])
 			->textarea(['rows'=>2,'rows'=>6])

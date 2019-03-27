@@ -80,7 +80,7 @@ echo $form->field($model, 'online', ['template' => '{label}{beginWrapper}{hint}{
 
 	<div id="comingsoon" class="form-group field-construction_text-comingsoon" <?php echo $model->online != '2' ? 'style="display: none;"' : ''; ?>>
 		<?php echo $form->field($model, 'construction_text[comingsoon]', ['template' => '{label}', 'options' => ['tag' => null]])
-			->label($model->getAttributeLabel('construction_text[comingsoon]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12 col-12']); ?>
+			->label($model->getAttributeLabel('construction_text[comingsoon]'), ['class'=>'control-label col-sm-3 col-xs-12 col-12']); ?>
 		<div class="col-md-6 col-sm-9 col-xs-12 col-12">
 			<?php echo $form->field($model, 'construction_text[comingsoon]', ['template' => '{input}{error}'])
 				->textarea(['rows'=>2,'rows'=>6])
@@ -90,7 +90,7 @@ echo $form->field($model, 'online', ['template' => '{label}{beginWrapper}{hint}{
 
 	<div id="maintenance" class="form-group field-construction_text-maintenance" <?php echo $model->online != '0' ? 'style="display: none;"' : ''; ?>>
 		<?php echo $form->field($model, 'construction_text[maintenance]', ['template' => '{label}', 'options' => ['tag' => null]])
-			->label($model->getAttributeLabel('construction_text[maintenance]'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12 col-12']); ?>
+			->label($model->getAttributeLabel('construction_text[maintenance]'), ['class'=>'control-label col-sm-3 col-xs-12 col-12']); ?>
 		<div class="col-md-6 col-sm-9 col-xs-12 col-12">
 			<?php echo $form->field($model, 'construction_text[maintenance]', ['template' => '{input}{error}'])
 				->textarea(['rows'=>2,'rows'=>6])
