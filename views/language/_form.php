@@ -30,25 +30,25 @@ use app\components\ActiveForm;
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php echo $form->field($model, 'name')
+<?php echo $form->field($model, 'name', ['horizontalCssClasses' => ['wrapper'=>'col-md-9 col-sm-9 col-xs-12 col-12']])
 	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('name')); ?>
 
-<?php echo $form->field($model, 'code')
+<?php echo $form->field($model, 'code', ['horizontalCssClasses' => ['wrapper'=>'col-md-9 col-sm-9 col-xs-12 col-12']])
 	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('code')); ?>
 
-<?php echo $form->field($model, 'actived')
+<?php echo $form->field($model, 'actived', ['horizontalCssClasses' => ['wrapper'=>'col-md-9 col-sm-9 col-xs-12 col-12']])
 	->checkbox()
 	->label($model->getAttributeLabel('actived')); ?>
 
-<?php echo $form->field($model, 'default')
+<?php echo $form->field($model, 'default', ['horizontalCssClasses' => ['wrapper'=>'col-md-9 col-sm-9 col-xs-12 col-12']])
 	->checkbox()
 	->label($model->getAttributeLabel('default')); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group row">
-	<div class="col-md-6 col-sm-9 col-xs-12 col-12 col-sm-offset-3">
+	<div class="col-md-9 col-sm-9 col-xs-12 col-12 col-sm-offset-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
 	</div>
 </div>
