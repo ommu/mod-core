@@ -209,7 +209,7 @@ class DistrictController extends Controller
 		$this->view->title = Yii::t('app', 'Detail {model-class}: {district-name}', ['model-class' => 'District', 'district-name' => $model->district_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_view', [
+		return $this->oRender('admin_view', [
 			'model' => $model,
 		]);
 	}

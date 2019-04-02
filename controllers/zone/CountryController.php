@@ -185,7 +185,7 @@ class CountryController extends Controller
 		$this->view->title = Yii::t('app', 'Detail {model-class}: {country-name}', ['model-class' => 'Country', 'country-name' => $model->country_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_view', [
+		return $this->oRender('admin_view', [
 			'model' => $model,
 		]);
 	}

@@ -197,7 +197,7 @@ class ProvinceController extends Controller
 		$this->view->title = Yii::t('app', 'Detail {model-class}: {province-name}', ['model-class' => 'Province', 'province-name' => $model->province_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_view', [
+		return $this->oRender('admin_view', [
 			'model' => $model,
 		]);
 	}

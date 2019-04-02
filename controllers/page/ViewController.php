@@ -118,7 +118,7 @@ class ViewController extends Controller
 		$this->view->title = Yii::t('app', 'Detail {model-class}: {page-id}', ['model-class' => 'View', 'page-id' => $model->page->title->message]);
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_view', [
+		return $this->oRender('admin_view', [
 			'model' => $model,
 		]);
 	}

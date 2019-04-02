@@ -215,7 +215,7 @@ class VillageController extends Controller
 		$this->view->title = Yii::t('app', 'Detail {model-class}: {village-name}', ['model-class' => 'Village', 'village-name' => $model->village_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_view', [
+		return $this->oRender('admin_view', [
 			'model' => $model,
 		]);
 	}

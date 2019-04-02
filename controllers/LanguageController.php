@@ -181,7 +181,7 @@ class LanguageController extends Controller
 		$this->view->title = Yii::t('app', 'Detail {model-class}: {name}', ['model-class' => 'Language', 'name' => $model->name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_view', [
+		return $this->oRender('admin_view', [
 			'model' => $model,
 		]);
 	}
