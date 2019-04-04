@@ -250,7 +250,7 @@ class CityController extends Controller
 	{
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-		$term = Yii::$app->request->get('term');
+		$term = Yii::$app->request->get('query');
 		$provinceId = Yii::$app->request->get('pid', null);
 		$extend = Yii::$app->request->get('extend', null);
 		
