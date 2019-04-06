@@ -33,8 +33,6 @@ use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\CorePageViews;
 use ommu\core\models\search\CorePageViews as CorePageViewsSearch;
-use ommu\core\models\CorePages;
-use ommu\users\models\Users;
 
 class ViewController extends Controller
 {
@@ -71,9 +69,6 @@ class ViewController extends Controller
 	 */
 	public function actionManage()
 	{
-		$page = Yii::$app->request->get('page');
-		$user = Yii::$app->request->get('user');
-
 		$searchModel = new CorePageViewsSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -87,10 +82,10 @@ class ViewController extends Controller
 		}
 		$columns = $searchModel->getGridColumn($cols);
 
-		if($page != null)
-			$pages = CorePages::findOne($page);
-		if($user != null)
-			$users = Users::findOne($user);
+		if(($page = Yii::$app->request->get('page')) != null)
+			$page = \ommu\core\models\CorePages::findOne($page);
+		if(($user = Yii::$app->request->get('user')) != null)
+			$user = \ommu\users\models\Users::findOne($user);
 
 		$this->view->title = Yii::t('app', 'Views');
 		$this->view->description = '';
@@ -100,9 +95,7 @@ class ViewController extends Controller
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
 			'page' => $page,
-			'pages' => $pages,
 			'user' => $user,
-			'users' => $users,
 		]);
 	}
 

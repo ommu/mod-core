@@ -37,10 +37,6 @@ use mdm\admin\components\AccessControl;
 use ommu\core\models\CoreZoneVillage;
 use ommu\core\models\search\CoreZoneVillage as CoreZoneVillageSearch;
 use ommu\core\models\view\CoreZoneVillage as CoreZoneVillageView;
-use ommu\core\models\CoreZoneCountry;
-use ommu\core\models\CoreZoneProvince;
-use ommu\core\models\CoreZoneCity;
-use ommu\core\models\CoreZoneDistrict;
 
 class VillageController extends Controller
 {
@@ -93,11 +89,6 @@ class VillageController extends Controller
 	 */
 	public function actionManage()
 	{
-		$country = Yii::$app->request->get('country');
-		$province = Yii::$app->request->get('province');
-		$city = Yii::$app->request->get('city');
-		$district = Yii::$app->request->get('district');
-
 		$searchModel = new CoreZoneVillageSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -111,14 +102,14 @@ class VillageController extends Controller
 		}
 		$columns = $searchModel->getGridColumn($cols);
 
-		if($country != null)
-			$countries = CoreZoneCountry::findOne($country);
-		if($province != null)
-			$provinces = CoreZoneProvince::findOne($province);
-		if($city != null)
-			$cities = CoreZoneCity::findOne($city);
-		if($district != null)
-			$districts = CoreZoneDistrict::findOne($district);
+		if(($country = Yii::$app->request->get('country')) != null)
+			$country = \ommu\core\models\CoreZoneCountry::findOne($country);
+		if(($province = Yii::$app->request->get('province')) != null)
+			$province = \ommu\core\models\CoreZoneProvince::findOne($province);
+		if(($city = Yii::$app->request->get('city')) != null)
+			$city = \ommu\core\models\CoreZoneCity::findOne($city);
+		if(($district = Yii::$app->request->get('district')) != null)
+			$district = \ommu\core\models\CoreZoneDistrict::findOne($district);
 
 		$this->view->title = Yii::t('app', 'Villages');
 		$this->view->description = '';
@@ -128,13 +119,9 @@ class VillageController extends Controller
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
 			'country' => $country,
-			'countries' => $countries,
 			'province' => $province,
-			'provinces' => $provinces,
 			'city' => $city,
-			'cities' => $cities,
 			'district' => $district,
-			'districts' => $districts,
 		]);
 	}
 

@@ -37,8 +37,6 @@ use mdm\admin\components\AccessControl;
 use ommu\core\models\CoreZoneCity;
 use ommu\core\models\search\CoreZoneCity as CoreZoneCitySearch;
 use ommu\core\models\view\CoreZoneCity as CoreZoneCityView;
-use ommu\core\models\CoreZoneCountry;
-use ommu\core\models\CoreZoneProvince;
 
 class CityController extends Controller
 {
@@ -91,9 +89,6 @@ class CityController extends Controller
 	 */
 	public function actionManage()
 	{
-		$country = Yii::$app->request->get('country');
-		$province = Yii::$app->request->get('province');
-
 		$searchModel = new CoreZoneCitySearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -107,10 +102,10 @@ class CityController extends Controller
 		}
 		$columns = $searchModel->getGridColumn($cols);
 
-		if($country != null)
-			$countries = CoreZoneCountry::findOne($country);
-		if($province != null)
-			$provinces = CoreZoneProvince::findOne($province);
+		if(($country = Yii::$app->request->get('country')) != null)
+			$country = \ommu\core\models\CoreZoneCountry::findOne($country);
+		if(($province = Yii::$app->request->get('province')) != null)
+			$province = \ommu\core\models\CoreZoneProvince::findOne($province);
 
 		$this->view->title = Yii::t('app', 'Cities');
 		$this->view->description = '';
@@ -120,9 +115,7 @@ class CityController extends Controller
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
 			'country' => $country,
-			'countries' => $countries,
 			'province' => $province,
-			'provinces' => $provinces,
 		]);
 	}
 

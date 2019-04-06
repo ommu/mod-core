@@ -41,9 +41,9 @@ $this->params['menu']['option'] = [
 <?php Pjax::begin(); ?>
 
 <?php if($page != null) {
-$model = $pages;
+$model = $page;
 echo DetailView::widget([
-	'model' => $pages,
+	'model' => $model,
 	'options' => [
 		'class'=>'table table-striped detail-view',
 	],
@@ -52,7 +52,7 @@ echo DetailView::widget([
 			'attribute' => 'name_i',
 			'value' => function ($model) {
 				if($model->name_i != '')
-					return Html::a($model->name_i, ['page/admin/view', 'id'=>$model->page_id], ['title'=>$model->name_i]);
+					return Html::a($model->name_i, ['page/admin/view', 'id'=>$model->page_id], ['title'=>$model->name_i, 'class'=>'modal-btn']);
 				return $model->name_i;
 			},
 			'format' => 'html',
@@ -70,9 +70,9 @@ echo DetailView::widget([
 }?>
 
 <?php if($user != null) {
-$model = $users;
+$model = $user;
 echo DetailView::widget([
-	'model' => $users,
+	'model' => $model,
 	'options' => [
 		'class'=>'table table-striped detail-view',
 	],

@@ -41,9 +41,9 @@ $this->params['menu']['option'] = [
 <?php Pjax::begin(); ?>
 
 <?php if($country != null) {
-$model = $countries;
+$model = $country;
 echo DetailView::widget([
-	'model' => $countries,
+	'model' => $model,
 	'options' => [
 		'class'=>'table table-striped detail-view',
 	],
@@ -51,7 +51,7 @@ echo DetailView::widget([
 		[
 			'attribute' => 'country_name',
 			'value' => function ($model) {
-				return Html::a($model->country_name, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$model->country_name]);
+				return Html::a($model->country_name, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$model->country_name, 'class'=>'modal-btn']);
 			},
 			'format' => 'html',
 		],
@@ -61,9 +61,9 @@ echo DetailView::widget([
 }?>
 
 <?php if($province != null) {
-$model = $provinces;
+$model = $province;
 echo DetailView::widget([
-	'model' => $provinces,
+	'model' => $model,
 	'options' => [
 		'class'=>'table table-striped detail-view',
 	],
@@ -71,7 +71,7 @@ echo DetailView::widget([
 		[
 			'attribute' => 'province_name',
 			'value' => function ($model) {
-				return Html::a($model->province_name, ['zone/province/view', 'id'=>$model->province_id], ['title'=>$model->province_name]);
+				return Html::a($model->province_name, ['zone/province/view', 'id'=>$model->province_id], ['title'=>$model->province_name, 'class'=>'modal-btn']);
 			},
 			'format' => 'html',
 		],
@@ -80,7 +80,7 @@ echo DetailView::widget([
 			'value' => function ($model) {
 				$countryName = isset($model->country) ? $model->country->country_name : '-';
 				if($countryName != '-')
-					return Html::a($countryName, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$countryName]);
+					return Html::a($countryName, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$countryName, 'class'=>'modal-btn']);
 				return $countryName;
 			},
 			'format' => 'html',
@@ -91,9 +91,9 @@ echo DetailView::widget([
 }?>
 
 <?php if($city != null) {
-$model = $cities;
+$model = $city;
 echo DetailView::widget([
-	'model' => $cities,
+	'model' => $model,
 	'options' => [
 		'class'=>'table table-striped detail-view',
 	],
@@ -101,7 +101,7 @@ echo DetailView::widget([
 		[
 			'attribute' => 'city_name',
 			'value' => function ($model) {
-				return Html::a($model->city_name, ['zone/city/view', 'id'=>$model->city_id], ['title'=>$model->city_name]);
+				return Html::a($model->city_name, ['zone/city/view', 'id'=>$model->city_id], ['title'=>$model->city_name, 'class'=>'modal-btn']);
 			},
 			'format' => 'html',
 		],
@@ -110,7 +110,7 @@ echo DetailView::widget([
 			'value' => function ($model) {
 				$provinceName = isset($model->province) ? $model->province->province_name : '-';
 				if($provinceName != '-')
-					return Html::a($provinceName, ['zone/province/view', 'id'=>$model->province_id], ['title'=>$provinceName]);
+					return Html::a($provinceName, ['zone/province/view', 'id'=>$model->province_id], ['title'=>$provinceName, 'class'=>'modal-btn']);
 				return $provinceName;
 			},
 			'format' => 'html',
@@ -120,7 +120,7 @@ echo DetailView::widget([
 			'value' => function ($model) {
 				$countryName = isset($model->province->country) ? $model->province->country->country_name : '-';
 				if($countryName != '-')
-					return Html::a($countryName, ['zone/country/view', 'id'=>$model->province->country_id], ['title'=>$countryName]);
+					return Html::a($countryName, ['zone/country/view', 'id'=>$model->province->country_id], ['title'=>$countryName, 'class'=>'modal-btn']);
 				return $countryName;
 			},
 			'format' => 'html',
@@ -131,9 +131,9 @@ echo DetailView::widget([
 }?>
 
 <?php if($district != null) {
-$model = $districts;
+$model = $district;
 echo DetailView::widget([
-	'model' => $districts,
+	'model' => $model,
 	'options' => [
 		'class'=>'table table-striped detail-view',
 	],
@@ -141,7 +141,7 @@ echo DetailView::widget([
 		[
 			'attribute' => 'district_name',
 			'value' => function ($model) {
-				return Html::a($model->district_name, ['zone/district/view', 'id'=>$model->district_id], ['title'=>$model->district_name]);
+				return Html::a($model->district_name, ['zone/district/view', 'id'=>$model->district_id], ['title'=>$model->district_name, 'class'=>'modal-btn']);
 			},
 			'format' => 'html',
 		],
@@ -150,7 +150,7 @@ echo DetailView::widget([
 			'value' => function ($model) {
 				$cityName = isset($model->city) ? $model->city->city_name : '-';
 				if($cityName != '-')
-					return Html::a($cityName, ['zone/city/view', 'id'=>$model->city_id], ['title'=>$cityName]);
+					return Html::a($cityName, ['zone/city/view', 'id'=>$model->city_id], ['title'=>$cityName, 'class'=>'modal-btn']);
 				return $cityName;
 			},
 			'format' => 'html',
@@ -160,7 +160,7 @@ echo DetailView::widget([
 			'value' => function ($model) {
 				$provinceName = isset($model->city->province) ? $model->city->province->province_name : '-';
 				if($provinceName != '-')
-					return Html::a($provinceName, ['zone/province/view', 'id'=>$model->city->province_id], ['title'=>$provinceName]);
+					return Html::a($provinceName, ['zone/province/view', 'id'=>$model->city->province_id], ['title'=>$provinceName, 'class'=>'modal-btn']);
 				return $provinceName;
 			},
 			'format' => 'html',
@@ -170,7 +170,7 @@ echo DetailView::widget([
 			'value' => function ($model) {
 				$countryName = isset($model->city->province->country) ? $model->city->province->country->country_name : '-';
 				if($countryName != '-')
-					return Html::a($countryName, ['zone/country/view', 'id'=>$model->city->province->country_id], ['title'=>$countryName]);
+					return Html::a($countryName, ['zone/country/view', 'id'=>$model->city->province->country_id], ['title'=>$countryName, 'class'=>'modal-btn']);
 				return $countryName;
 			},
 			'format' => 'html',

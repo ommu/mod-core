@@ -37,9 +37,6 @@ use mdm\admin\components\AccessControl;
 use ommu\core\models\CoreZoneDistrict;
 use ommu\core\models\search\CoreZoneDistrict as CoreZoneDistrictSearch;
 use ommu\core\models\view\CoreZoneDistrict as CoreZoneDistrictView;
-use ommu\core\models\CoreZoneCountry;
-use ommu\core\models\CoreZoneProvince;
-use ommu\core\models\CoreZoneCity;
 
 class DistrictController extends Controller
 {
@@ -92,10 +89,6 @@ class DistrictController extends Controller
 	 */
 	public function actionManage()
 	{
-		$country = Yii::$app->request->get('country');
-		$province = Yii::$app->request->get('province');
-		$city = Yii::$app->request->get('city');
-
 		$searchModel = new CoreZoneDistrictSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -109,12 +102,12 @@ class DistrictController extends Controller
 		}
 		$columns = $searchModel->getGridColumn($cols);
 
-		if($country != null)
-			$countries = CoreZoneCountry::findOne($country);
-		if($province != null)
-			$provinces = CoreZoneProvince::findOne($province);
-		if($city != null)
-			$cities = CoreZoneCity::findOne($city);
+		if(($country = Yii::$app->request->get('country')) != null)
+			$country = \ommu\core\models\CoreZoneCountry::findOne($country);
+		if(($province = Yii::$app->request->get('province')) != null)
+			$province = \ommu\core\models\CoreZoneProvince::findOne($province);
+		if(($city = Yii::$app->request->get('city')) != null)
+			$city = \ommu\core\models\CoreZoneCity::findOne($city);
 
 		$this->view->title = Yii::t('app', 'Districts');
 		$this->view->description = '';
@@ -124,11 +117,8 @@ class DistrictController extends Controller
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
 			'country' => $country,
-			'countries' => $countries,
 			'province' => $province,
-			'provinces' => $provinces,
 			'city' => $city,
-			'cities' => $cities,
 		]);
 	}
 

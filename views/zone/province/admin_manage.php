@@ -38,9 +38,9 @@ $this->params['menu']['option'] = [
 <?php Pjax::begin(); ?>
 
 <?php if($country != null) {
-$model = $countries;
+$model = $country;
 echo DetailView::widget([
-	'model' => $countries,
+	'model' => $model,
 	'options' => [
 		'class'=>'table table-striped detail-view',
 	],
@@ -48,7 +48,7 @@ echo DetailView::widget([
 		[
 			'attribute' => 'country_name',
 			'value' => function ($model) {
-				return Html::a($model->country_name, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$model->country_name]);
+				return Html::a($model->country_name, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$model->country_name, 'class'=>'modal-btn']);
 			},
 			'format' => 'html',
 		],

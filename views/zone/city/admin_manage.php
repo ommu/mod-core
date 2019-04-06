@@ -39,9 +39,9 @@ $this->params['menu']['option'] = [
 <?php Pjax::begin(); ?>
 
 <?php if($country != null) {
-$model = $countries;
+$model = $country;
 echo DetailView::widget([
-	'model' => $countries,
+	'model' => $model,
 	'options' => [
 		'class'=>'table table-striped detail-view',
 	],
@@ -49,7 +49,7 @@ echo DetailView::widget([
 		[
 			'attribute' => 'country_name',
 			'value' => function ($model) {
-				return Html::a($model->country_name, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$model->country_name]);
+				return Html::a($model->country_name, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$model->country_name, 'class'=>'modal-btn']);
 			},
 			'format' => 'html',
 		],
@@ -59,9 +59,9 @@ echo DetailView::widget([
 }?>
 
 <?php if($province != null) {
-$model = $provinces;
+$model = $province;
 echo DetailView::widget([
-	'model' => $provinces,
+	'model' => $model,
 	'options' => [
 		'class'=>'table table-striped detail-view',
 	],
@@ -69,7 +69,7 @@ echo DetailView::widget([
 		[
 			'attribute' => 'province_name',
 			'value' => function ($model) {
-				return Html::a($model->province_name, ['zone/province/view', 'id'=>$model->province_id], ['title'=>$model->province_name]);
+				return Html::a($model->province_name, ['zone/province/view', 'id'=>$model->province_id], ['title'=>$model->province_name, 'class'=>'modal-btn']);
 			},
 			'format' => 'html',
 		],
@@ -78,7 +78,7 @@ echo DetailView::widget([
 			'value' => function ($model) {
 				$countryName = isset($model->country) ? $model->country->country_name : '-';
 				if($countryName != '-')
-					return Html::a($countryName, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$countryName]);
+					return Html::a($countryName, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$countryName, 'class'=>'modal-btn']);
 				return $countryName;
 			},
 			'format' => 'html',

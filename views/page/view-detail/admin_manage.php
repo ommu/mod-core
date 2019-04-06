@@ -40,9 +40,9 @@ $this->params['menu']['option'] = [
 <?php Pjax::begin(); ?>
 
 <?php if($view != null) {
-$model = $views;
+$model = $view;
 echo DetailView::widget([
-	'model' => $views,
+	'model' => $model,
 	'options' => [
 		'class'=>'table table-striped detail-view',
 	],
@@ -52,7 +52,7 @@ echo DetailView::widget([
 			'value' => function ($model) {
 				$pageName = isset($model->page) ? $model->page->title->message : '-';
 				if($pageName != '-')
-					return Html::a($pageName, ['page/admin/view', 'id'=>$model->page_id], ['title'=>$pageName]);
+					return Html::a($pageName, ['page/admin/view', 'id'=>$model->page_id], ['title'=>$pageName, 'class'=>'modal-btn']);
 				return $pageName;
 			},
 			'format' => 'html',
