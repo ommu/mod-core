@@ -31,8 +31,8 @@
 namespace ommu\core\controllers;
 
 use Yii;
-use yii\filters\VerbFilter;
 use app\components\Controller;
+use yii\filters\VerbFilter;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\CoreTags;
 use ommu\core\models\search\CoreTags as CoreTagsSearch;
