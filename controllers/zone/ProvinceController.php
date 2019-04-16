@@ -173,7 +173,7 @@ class ProvinceController extends Controller
 			}
 		}
 
-		$this->view->title = Yii::t('app', 'Update {model-class}: {province-name}', ['model-class' => 'Province', 'province-name' => $model->province_name]);
+		$this->view->title = Yii::t('app', 'Update Province: {province-name}', ['province-name' => $model->province_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_update', [
@@ -190,7 +190,7 @@ class ProvinceController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		$this->view->title = Yii::t('app', 'Detail {model-class}: {province-name}', ['model-class' => 'Province', 'province-name' => $model->province_name]);
+		$this->view->title = Yii::t('app', 'Detail Province: {province-name}', ['province-name' => $model->province_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->oRender('admin_view', [

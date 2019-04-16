@@ -165,7 +165,7 @@ class CountryController extends Controller
 			}
 		}
 
-		$this->view->title = Yii::t('app', 'Update {model-class}: {country-name}', ['model-class' => 'Country', 'country-name' => $model->country_name]);
+		$this->view->title = Yii::t('app', 'Update Country: {country-name}', ['country-name' => $model->country_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_update', [
@@ -182,7 +182,7 @@ class CountryController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		$this->view->title = Yii::t('app', 'Detail {model-class}: {country-name}', ['model-class' => 'Country', 'country-name' => $model->country_name]);
+		$this->view->title = Yii::t('app', 'Detail Country: {country-name}', ['country-name' => $model->country_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->oRender('admin_view', [

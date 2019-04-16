@@ -103,7 +103,7 @@ class ModuleController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		$this->view->title = Yii::t('app', 'Detail {model-class}: {module-id}', ['model-class' => 'Module', 'module-id' => $model->module_id]);
+		$this->view->title = Yii::t('app', 'Detail Module: {module-id}', ['module-id' => $model->module_id]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->oRender('admin_view', [

@@ -161,7 +161,7 @@ class LanguageController extends Controller
 			}
 		}
 
-		$this->view->title = Yii::t('app', 'Update {model-class}: {name}', ['model-class' => 'Language', 'name' => $model->name]);
+		$this->view->title = Yii::t('app', 'Update Language: {name}', ['name' => $model->name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_update', [
@@ -178,7 +178,7 @@ class LanguageController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		$this->view->title = Yii::t('app', 'Detail {model-class}: {name}', ['model-class' => 'Language', 'name' => $model->name]);
+		$this->view->title = Yii::t('app', 'Detail Language: {name}', ['name' => $model->name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->oRender('admin_view', [

@@ -159,7 +159,7 @@ class TagController extends Controller
 			}
 		}
 
-		$this->view->title = Yii::t('app', 'Update {model-class}: {body}', ['model-class' => 'Tag', 'body' => $model->body]);
+		$this->view->title = Yii::t('app', 'Update Tag: {body}', ['body' => $model->body]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->oRender('admin_update', [
@@ -176,7 +176,7 @@ class TagController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		$this->view->title = Yii::t('app', 'Detail {model-class}: {body}', ['model-class' => 'Tag', 'body' => $model->body]);
+		$this->view->title = Yii::t('app', 'Detail Tag: {body}', ['body' => $model->body]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->oRender('admin_view', [

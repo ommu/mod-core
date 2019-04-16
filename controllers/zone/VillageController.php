@@ -182,7 +182,7 @@ class VillageController extends Controller
 			}
 		}
 
-		$this->view->title = Yii::t('app', 'Update {model-class}: {village-name}', ['model-class' => 'Village', 'village-name' => $model->village_name]);
+		$this->view->title = Yii::t('app', 'Update Village: {village-name}', ['village-name' => $model->village_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_update', [
@@ -199,7 +199,7 @@ class VillageController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		$this->view->title = Yii::t('app', 'Detail {model-class}: {village-name}', ['model-class' => 'Village', 'village-name' => $model->village_name]);
+		$this->view->title = Yii::t('app', 'Detail Village: {village-name}', ['village-name' => $model->village_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->oRender('admin_view', [

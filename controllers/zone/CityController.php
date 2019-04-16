@@ -176,7 +176,7 @@ class CityController extends Controller
 			}
 		}
 
-		$this->view->title = Yii::t('app', 'Update {model-class}: {city-name}', ['model-class' => 'City', 'city-name' => $model->city_name]);
+		$this->view->title = Yii::t('app', 'Update City: {city-name}', ['city-name' => $model->city_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_update', [
@@ -193,7 +193,7 @@ class CityController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		$this->view->title = Yii::t('app', 'Detail {model-class}: {city-name}', ['model-class' => 'City', 'city-name' => $model->city_name]);
+		$this->view->title = Yii::t('app', 'Detail City: {city-name}', ['city-name' => $model->city_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->oRender('admin_view', [
