@@ -33,7 +33,7 @@ use yii\web\JsExpression;
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php $district_id = $form->field($model, 'district_id', ['template' => '{input}', 'options' => ['tag' => null]])->hiddenInput()->label(false);
+<?php $district_id = $form->field($model, 'district_id', ['template' => '{input}', 'options' => ['tag' => null]])->hiddenInput();
 echo $form->field($model, 'districtName', ['template' => '{label}{beginWrapper}{input}'.$district_id.'{error}{hint}{endWrapper}'])
 	// ->textInput(['maxlength'=>true])
 	->widget(AutoComplete::className(), [
