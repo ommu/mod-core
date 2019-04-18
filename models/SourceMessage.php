@@ -32,12 +32,11 @@ namespace ommu\core\models;
 
 use Yii;
 use yii\helpers\Html;
+use yii\helpers\Inflector;
 use ommu\users\models\Users;
 
 class SourceMessage extends \app\components\ActiveRecord
 {
-	use \ommu\traits\UtilityTrait;
-
 	public $gridForbiddenColumn = ['modified_date', 'modifiedDisplayname'];
 
 	public $creationDisplayname;
@@ -252,7 +251,7 @@ class SourceMessage extends \app\components\ActiveRecord
 	{
 		if(parent::beforeSave($insert)) {
 			if($insert)
-				$this->location = $this->urlTitle($this->location);
+				$this->location = Inflector::slug($this->location);
 		}
 		return true;
 	}

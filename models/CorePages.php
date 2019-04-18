@@ -42,6 +42,7 @@ namespace ommu\core\models;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\helpers\Inflector;
 use yii\web\UploadedFile;
 use yii\behaviors\SluggableBehavior;
 use thamtech\uuid\helpers\UuidHelper;
@@ -322,11 +323,11 @@ class CorePages extends \app\components\ActiveRecord
 		if(!Yii::$app->request->get('trash')) {
 			$this->templateColumns['publish'] = [
 				'attribute' => 'publish',
-				'filter' => $this->filterYesNo(),
 				'value' => function($model, $key, $index, $column) {
 					$url = Url::to(['publish', 'id'=>$model->primaryKey]);
 					return $this->quickAction($url, $model->publish);
 				},
+				'filter' => $this->filterYesNo(),
 				'contentOptions' => ['class'=>'center'],
 				'format' => 'raw',
 			];
@@ -466,7 +467,7 @@ class CorePages extends \app\components\ActiveRecord
 		$controller = strtolower(Yii::$app->controller->id);
 		$action = strtolower(Yii::$app->controller->action->id);
 
-		$location = $this->urlTitle($controller);
+		$location = Inflector::slug($controller);
 
 		if(parent::beforeSave($insert)) {
 			if(!$insert) {
@@ -495,7 +496,7 @@ class CorePages extends \app\components\ActiveRecord
 				if($name->save())
 					$this->name = $name->id;
 
-				$this->slug = $this->urlTitle($this->name_i);
+				$this->slug = Inflector::slug($this->name_i);
 
 			} else {
 				$name = SourceMessage::findOne($this->name);

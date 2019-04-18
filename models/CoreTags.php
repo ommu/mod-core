@@ -31,6 +31,7 @@ namespace ommu\core\models;
 
 use Yii;
 use yii\helpers\Url;
+use yii\helpers\Inflector;
 use ommu\users\models\Users;
 
 class CoreTags extends \app\components\ActiveRecord
@@ -166,11 +167,11 @@ class CoreTags extends \app\components\ActiveRecord
 		if(!Yii::$app->request->get('trash')) {
 			$this->templateColumns['publish'] = [
 				'attribute' => 'publish',
-				'filter' => $this->filterYesNo(),
 				'value' => function($model, $key, $index, $column) {
 					$url = Url::to(['publish', 'id'=>$model->primaryKey]);
 					return $this->quickAction($url, $model->publish);
 				},
+				'filter' => $this->filterYesNo(),
 				'contentOptions' => ['class'=>'center'],
 				'format' => 'raw',
 			];
@@ -247,7 +248,7 @@ class CoreTags extends \app\components\ActiveRecord
 	{
 		if(parent::beforeSave($insert)) {
 			if($insert)
-				$this->body = $this->urlTitle($this->body);
+				$this->body = Inflector::slug($this->body);
 		}
 		return true;
 	}
