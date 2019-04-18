@@ -39,7 +39,7 @@ $this->params['menu']['content'] = [
 		'province_id',
 		[
 			'attribute' => 'publish',
-			'value' => $this->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish),
+			'value' => $model->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish),
 			'format' => 'raw',
 		],
 		'province_name',
@@ -56,7 +56,7 @@ $this->params['menu']['content'] = [
 		'mfdonline',
 		[
 			'attribute' => 'checked',
-			'value' => $this->filterYesNo($model->checked),
+			'value' => $model->filterYesNo($model->checked),
 		],
 		[
 			'attribute' => 'creation_date',

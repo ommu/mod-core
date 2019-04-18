@@ -36,7 +36,7 @@ $this->params['menu']['content'] = [
 		'module_id',
 		[
 			'attribute' => 'installed',
-			'value' => $this->filterYesNo($model->installed),
+			'value' => $model->filterYesNo($model->installed),
 		],
 		[
 			'attribute' => 'enabled',

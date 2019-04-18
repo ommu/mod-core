@@ -43,7 +43,7 @@ $this->params['menu']['content'] = [
 		'view_id',
 		[
 			'attribute' => 'publish',
-			'value' => $this->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish),
+			'value' => $model->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish),
 			'format' => 'raw',
 		],
 		[

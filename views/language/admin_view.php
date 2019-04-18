@@ -39,12 +39,12 @@ $this->params['menu']['content'] = [
 		'language_id',
 		[
 			'attribute' => 'actived',
-			'value' => $this->quickAction(Url::to(['actived', 'id'=>$model->primaryKey]), $model->actived, 'Enable,Disable'),
+			'value' => $model->quickAction(Url::to(['actived', 'id'=>$model->primaryKey]), $model->actived, 'Enable,Disable'),
 			'format' => 'raw',
 		],
 		[
 			'attribute' => 'default',
-			'value' => $this->quickAction(Url::to(['default', 'id'=>$model->primaryKey]), $model->default, 'Yes,No', true),
+			'value' => $model->quickAction(Url::to(['default', 'id'=>$model->primaryKey]), $model->default, 'Yes,No', true),
 			'format' => 'raw',
 		],
 		'code',
