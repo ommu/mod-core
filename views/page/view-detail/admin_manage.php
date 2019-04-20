@@ -19,7 +19,6 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use app\components\widgets\GridView;
 use yii\widgets\Pjax;
-use yii\helpers\ArrayHelper;
 use yii\widgets\DetailView;
 use ommu\core\models\CorePageViews;
 
@@ -27,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 if($view != null) {
 	$this->params['menu']['content'] = [
-		['label' => Yii::t('app', 'Back To Views'), 'url' => Url::to(ArrayHelper::merge(['page/view/manage'], Yii::$app->request->get())), 'icon' => 'table'],
+		['label' => Yii::t('app', 'Back To Views'), 'url' => Url::to(['page/view/manage']), 'icon' => 'table'],
 	];
 }
 $this->params['menu']['option'] = [
@@ -84,11 +83,11 @@ array_push($columnData, [
 	],
 	'buttons' => [
 		'view' => function ($url, $model, $key) {
-			$url = Url::to(ArrayHelper::merge(['view', 'id'=>$model->primaryKey], Yii::$app->request->get()));
+			$url = Url::to(['view', 'id'=>$model->primaryKey]);
 			return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title' => Yii::t('app', 'Detail View History')]);
 		},
 		'update' => function ($url, $model, $key) {
-			$url = Url::to(ArrayHelper::merge(['update', 'id'=>$model->primaryKey], Yii::$app->request->get()));
+			$url = Url::to(['update', 'id'=>$model->primaryKey]);
 			return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['title' => Yii::t('app', 'Update View History')]);
 		},
 		'delete' => function ($url, $model, $key) {
