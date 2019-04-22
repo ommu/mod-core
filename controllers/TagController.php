@@ -220,6 +220,21 @@ class TagController extends Controller
 	}
 
 	/**
+	 * Finds the CoreTags model based on its primary key value.
+	 * If the model is not found, a 404 HTTP exception will be thrown.
+	 * @param integer $id
+	 * @return CoreTags the loaded model
+	 * @throws NotFoundHttpException if the model cannot be found
+	 */
+	protected function findModel($id)
+	{
+		if(($model = CoreTags::findOne($id)) !== null)
+			return $model;
+
+		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function actionSuggest() 
@@ -241,20 +256,5 @@ class TagController extends Controller
 			];
 		}
 		return $result;
-	}
-
-	/**
-	 * Finds the CoreTags model based on its primary key value.
-	 * If the model is not found, a 404 HTTP exception will be thrown.
-	 * @param integer $id
-	 * @return CoreTags the loaded model
-	 * @throws NotFoundHttpException if the model cannot be found
-	 */
-	protected function findModel($id)
-	{
-		if(($model = CoreTags::findOne($id)) !== null)
-			return $model;
-
-		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}
 }

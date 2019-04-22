@@ -56,10 +56,10 @@ class Settings extends \app\components\ActiveRecord
 	public function rules()
 	{
 		return [
-			[['name', 'value', 'module_id'], 'required'],
+			[['name', 'module_id'], 'required'],
 			[['creation_id', 'modified_id'], 'integer'],
 			[['value'], 'string'],
-			[['creation_date', 'modified_date'], 'safe'],
+			[['value', 'creation_date', 'modified_date'], 'safe'],
 			[['name', 'module_id'], 'string', 'max' => 64],
 			[['input_type'], 'string', 'max' => 50],
 			[['option_value'], 'string', 'max' => 256],
