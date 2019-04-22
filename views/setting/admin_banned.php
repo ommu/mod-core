@@ -35,22 +35,22 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php //echo $form->errorSummary($model);?>
 
 <?php echo $form->field($model, 'banned_ips', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
-	->textarea(['rows'=>2,'rows'=>6])
+	->textarea(['rows'=>6, 'cols'=>50])
 	->label($model->getAttributeLabel('banned_ips'))
 	->hint(Yii::t('app', 'To ban users by their IP address, enter their address into the field below. Addresses should be separated by commas, like 123.456.789.123, 23.45.67.89')); ?>
 
 <?php echo $form->field($model, 'banned_emails', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
-	->textarea(['rows'=>2,'rows'=>6])
+	->textarea(['rows'=>6, 'cols'=>50])
 	->label($model->getAttributeLabel('banned_emails'))
 	->hint(Yii::t('app', 'To ban users by their email address, enter their email into the field below. Emails should be separated by commas, like user1@domain1.com, user2@domain2.com. Note that you can ban all email addresses with a specific domain as follows: *@domain.com')); ?>
 
 <?php echo $form->field($model, 'banned_usernames', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
-	->textarea(['rows'=>2,'rows'=>6])
+	->textarea(['rows'=>6, 'cols'=>50])
 	->label($model->getAttributeLabel('banned_usernames'))
 	->hint(Yii::t('app', 'Enter the usernames that are not permitted on your social network. Usernames should be separated by commas, like username1, username2')); ?>
 
 <?php echo $form->field($model, 'banned_words', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
-	->textarea(['rows'=>2,'rows'=>6])
+	->textarea(['rows'=>6, 'cols'=>50])
 	->label($model->getAttributeLabel('banned_words'))
 	->hint(Yii::t('app', 'Enter any words that you you want to censor on your users\' profiles as well as any plugins you have installed. These will be replaced with asterisks (*). Separate words by commas like word1, word2')); ?>
 	

@@ -35,7 +35,7 @@ use ommu\core\models\CoreMeta;
 <?php //echo $form->errorSummary($model);?>
 
 <?php echo $form->field($model, 'office_hour')
-	->textarea(['rows'=>2,'rows'=>6])
+	->textarea(['rows'=>6, 'cols'=>50])
 	->label($model->getAttributeLabel('office_hour')); ?>
 
 <?php echo $form->field($model, 'office_hotline')
@@ -47,7 +47,7 @@ use ommu\core\models\CoreMeta;
 	->label($model->getAttributeLabel('map_icons')); ?>
 
 <?php echo $form->field($model, 'map_icon_size')
-	->textarea(['rows'=>2,'rows'=>6])
+	->textarea(['rows'=>6, 'cols'=>50])
 	->label($model->getAttributeLabel('map_icon_size')); ?>
 	
 <div class="ln_solid"></div>

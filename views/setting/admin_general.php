@@ -83,7 +83,7 @@ echo $form->field($model, 'online', ['template' => '{label}{beginWrapper}{hint}{
 			->label($model->getAttributeLabel('construction_text[comingsoon]'), ['class'=>'control-label col-sm-3 col-xs-12 col-12']); ?>
 		<div class="col-md-6 col-sm-9 col-xs-12 col-12">
 			<?php echo $form->field($model, 'construction_text[comingsoon]', ['template' => '{input}{error}'])
-				->textarea(['rows'=>2,'rows'=>6])
+				->textarea(['rows'=>6, 'cols'=>50])
 				->label($model->getAttributeLabel('construction_text[comingsoon]')); ?>
 		</div>
 	</div>
@@ -93,7 +93,7 @@ echo $form->field($model, 'online', ['template' => '{label}{beginWrapper}{hint}{
 			->label($model->getAttributeLabel('construction_text[maintenance]'), ['class'=>'control-label col-sm-3 col-xs-12 col-12']); ?>
 		<div class="col-md-6 col-sm-9 col-xs-12 col-12">
 			<?php echo $form->field($model, 'construction_text[maintenance]', ['template' => '{input}{error}'])
-				->textarea(['rows'=>2,'rows'=>6])
+				->textarea(['rows'=>6, 'cols'=>50])
 				->label($model->getAttributeLabel('construction_text[maintenance]')); ?>
 		</div>
 	</div>
@@ -126,7 +126,7 @@ echo $form->field($model, 'event_i')
 		->label($model->getAttributeLabel('event_finishdate')); ?>
 
 	<?php echo $form->field($model, 'event_tag')
-		->textarea(['rows'=>2,'rows'=>6])
+		->textarea(['rows'=>6, 'cols'=>50])
 		->label($model->getAttributeLabel('event_tag'))
 		->hint(Yii::t('app', 'tambahkan tanda koma (,) jika ingin menambahkan event tag lebih dari satu.')); ?>
 </div>
@@ -137,12 +137,12 @@ echo $form->field($model, 'event_i')
 	->hint(Yii::t('app', 'Give your community a unique name. This will appear in the &lt;title&gt; tag throughout most of your site.')); ?>
 
 <?php echo $form->field($model, 'site_description')
-	->textarea(['rows'=>2,'rows'=>6,'maxlength' => true])
+	->textarea(['rows'=>6, 'cols'=>50,'maxlength' => true])
 	->label($model->getAttributeLabel('site_description'))
 	->hint(Yii::t('app', 'Enter a brief, concise description of your community. Include any key words or phrases that you want to appear in search engine listings.')); ?>
 
 <?php echo $form->field($model, 'site_keywords')
-	->textarea(['rows'=>2,'rows'=>6,'maxlength' => true])
+	->textarea(['rows'=>6, 'cols'=>50,'maxlength' => true])
 	->label($model->getAttributeLabel('site_keywords'))
 	->hint(Yii::t('app', 'Provide some keywords (separated by commas) that describe your community. These will be the default keywords that appear in the tag in your page header. Enter the most relevant keywords you can think of to help your community\'s search engine rankings.')); ?>
 
@@ -191,7 +191,7 @@ echo $form->field($model, 'event_i')
 }?>
 
 <?php echo $form->field($model, 'general_include')
-	->textarea(['rows'=>2,'rows'=>6])
+	->textarea(['rows'=>6, 'cols'=>50])
 	->label($model->getAttributeLabel('general_include'))
 	->hint(Yii::t('app', 'Anything entered into the box below will be included at the bottom of the <head> tag. If you want to include a script or stylesheet, be sure to use the &lt;script&gt; or &lt;link&gt; tag.')); ?>
 

@@ -71,7 +71,7 @@ echo $form->field($model, 'office_on')
 		->label($model->getAttributeLabel('office_place'), ['class'=>'control-label col-sm-3 col-xs-12 col-12']); ?>
 	<div class="col-md-6 col-sm-9 col-xs-12 col-12">
 		<?php echo $form->field($model, 'office_place', ['template' => '{input}{error}'])
-			->textarea(['rows'=>2,'rows'=>6])
+			->textarea(['rows'=>6, 'cols'=>50])
 			->label($model->getAttributeLabel('office_place')); ?>
 		<div class="row">
 			<div class="col-md-6 col-sm-6 col-xs-12 col-12">
