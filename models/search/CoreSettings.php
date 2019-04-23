@@ -27,7 +27,7 @@ class CoreSettings extends CoreSettingsModel
 	public function rules()
 	{
 		return [
-			[['id', 'site_title', 'site_keywords', 'site_description', 'site_creation', 'site_dateformat', 'site_timeformat', 'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'signup_numgiven', 'general_include', 'general_commenthtml', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 'spam_failedcount', 'analytic_id', 'analytic_profile_id', 'license_email', 'license_key', 'ommu_version', 'modified_date', 'modifiedDisplayname'], 'safe'],
+			[['id', 'site_creation', 'site_dateformat', 'site_timeformat', 'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'signup_numgiven', 'general_commenthtml', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 'spam_failedcount', 'analytic_id', 'analytic_profile_id', 'license_email', 'license_key', 'ommu_version', 'modified_date', 'modifiedDisplayname'], 'safe'],
 			[['online', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_signup', 'analytic', 'modified_id'], 'integer'],
 		];
 	}
@@ -128,14 +128,10 @@ class CoreSettings extends CoreSettingsModel
 			't.modified_id' => isset($params['modified']) ? $params['modified'] : $this->modified_id,
 		]);
 
-		$query->andFilterWhere(['like', 't.site_title', $this->site_title])
-			->andFilterWhere(['like', 't.site_keywords', $this->site_keywords])
-			->andFilterWhere(['like', 't.site_description', $this->site_description])
-			->andFilterWhere(['like', 't.site_dateformat', $this->site_dateformat])
+		$query->andFilterWhere(['like', 't.site_dateformat', $this->site_dateformat])
 			->andFilterWhere(['like', 't.site_timeformat', $this->site_timeformat])
 			->andFilterWhere(['like', 't.construction_text', $this->construction_text])
 			->andFilterWhere(['like', 't.event_tag', $this->event_tag])
-			->andFilterWhere(['like', 't.general_include', $this->general_include])
 			->andFilterWhere(['like', 't.general_commenthtml', $this->general_commenthtml])
 			->andFilterWhere(['like', 't.banned_ips', $this->banned_ips])
 			->andFilterWhere(['like', 't.banned_emails', $this->banned_emails])

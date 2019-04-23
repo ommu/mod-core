@@ -131,21 +131,6 @@ echo $form->field($model, 'event_i')
 		->hint(Yii::t('app', 'tambahkan tanda koma (,) jika ingin menambahkan event tag lebih dari satu.')); ?>
 </div>
 
-<?php echo $form->field($model, 'site_title')
-	->textInput(['maxlength' => true])
-	->label($model->getAttributeLabel('site_title'))
-	->hint(Yii::t('app', 'Give your community a unique name. This will appear in the &lt;title&gt; tag throughout most of your site.')); ?>
-
-<?php echo $form->field($model, 'site_description')
-	->textarea(['rows'=>6, 'cols'=>50,'maxlength' => true])
-	->label($model->getAttributeLabel('site_description'))
-	->hint(Yii::t('app', 'Enter a brief, concise description of your community. Include any key words or phrases that you want to appear in search engine listings.')); ?>
-
-<?php echo $form->field($model, 'site_keywords')
-	->textarea(['rows'=>6, 'cols'=>50,'maxlength' => true])
-	->label($model->getAttributeLabel('site_keywords'))
-	->hint(Yii::t('app', 'Provide some keywords (separated by commas) that describe your community. These will be the default keywords that appear in the tag in your page header. Enter the most relevant keywords you can think of to help your community\'s search engine rankings.')); ?>
-
 <?php if(Yii::$app->isSocialMedia()) {
 	$generalProfile = [
 		1 => Yii::t('app', 'Yes, the public can view profiles unless they are made private.'),
@@ -189,11 +174,6 @@ echo $form->field($model, 'event_i')
 		->label($model->getAttributeLabel('signup_username'))
 		->hint(Yii::t('app', 'By default, usernames are used to uniquely identify your users. If you choose to disable this feature, your users will not be given the option to enter a username. Instead, their user ID will be used. Note that if you do decide to enable this feature, you should make sure to create special REQUIRED display name profile fields - otherwise the users\' IDs will be displayed. Also note that if you disable usernames after users have already signed up, their usernames will be deleted and any previous links to their content will not work, as the links will no longer use their username! Finally, all recent activity and all notifications will be deleted if you choose to disable usernames after previously having them enabled.'));
 }?>
-
-<?php echo $form->field($model, 'general_include')
-	->textarea(['rows'=>6, 'cols'=>50])
-	->label($model->getAttributeLabel('general_include'))
-	->hint(Yii::t('app', 'Anything entered into the box below will be included at the bottom of the <head> tag. If you want to include a script or stylesheet, be sure to use the &lt;script&gt; or &lt;link&gt; tag.')); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group row">
