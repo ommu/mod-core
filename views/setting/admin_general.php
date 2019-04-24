@@ -23,21 +23,6 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 
 $js = <<<JS
-	$('.field-online input[name="online"]').on('change', function() {
-		var id = $(this).val();
-		if(id == '1') {
-			$('div#construction').slideUp();
-		} else {
-			$('div#construction').slideDown();
-			if(id == '0') {
-				$('div#comingsoon').slideUp();
-				$('div#maintenance').slideDown();
-			} else {
-				$('div#maintenance').slideUp();
-				$('div#comingsoon').slideDown();
-			}
-		}
-	});
 	$('.field-event_i input[name="event_i"]').on('change', function() {
 		var id = $(this).val();
 		if(id == '0') {
@@ -60,44 +45,6 @@ JS;
 ]); ?>
 
 <?php echo $form->errorSummary($model);?>
-
-<?php $online = [
-	1 => Yii::t('app', 'Online'),
-	2 => Yii::t('app', 'Offline (Coming Soon)'),
-	0 => Yii::t('app', 'Offline (Maintenance Mode)'),
-];
-echo $form->field($model, 'online', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
-	->radioList($online)
-	->label($model->getAttributeLabel('online'))
-	->hint(Yii::t('app', 'Maintenance Mode will prevent site visitors from accessing your website. You can customize the maintenance mode page by manually editing the file "/application/maintenance.html".')); ?>
-
-<div id="construction" <?php echo $model->online == '1' ? 'style="display: none;"' : ''; ?>>
-	<?php 
-	$model->construction_date = !$model->isNewRecord ? (!in_array($model->construction_date, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? $model->construction_date : '') : '';
-	echo $form->field($model, 'construction_date')
-		->textInput(['type' => 'date'])
-		->label($model->getAttributeLabel('construction_date')); ?>
-
-	<div id="comingsoon" class="form-group field-construction_text-comingsoon" <?php echo $model->online != '2' ? 'style="display: none;"' : ''; ?>>
-		<?php echo $form->field($model, 'construction_text[comingsoon]', ['template' => '{label}', 'options' => ['tag' => null]])
-			->label($model->getAttributeLabel('construction_text[comingsoon]'), ['class'=>'control-label col-sm-3 col-xs-12 col-12']); ?>
-		<div class="col-md-6 col-sm-9 col-xs-12 col-12">
-			<?php echo $form->field($model, 'construction_text[comingsoon]', ['template' => '{input}{error}'])
-				->textarea(['rows'=>6, 'cols'=>50])
-				->label($model->getAttributeLabel('construction_text[comingsoon]')); ?>
-		</div>
-	</div>
-
-	<div id="maintenance" class="form-group field-construction_text-maintenance" <?php echo $model->online != '0' ? 'style="display: none;"' : ''; ?>>
-		<?php echo $form->field($model, 'construction_text[maintenance]', ['template' => '{label}', 'options' => ['tag' => null]])
-			->label($model->getAttributeLabel('construction_text[maintenance]'), ['class'=>'control-label col-sm-3 col-xs-12 col-12']); ?>
-		<div class="col-md-6 col-sm-9 col-xs-12 col-12">
-			<?php echo $form->field($model, 'construction_text[maintenance]', ['template' => '{input}{error}'])
-				->textarea(['rows'=>6, 'cols'=>50])
-				->label($model->getAttributeLabel('construction_text[maintenance]')); ?>
-		</div>
-	</div>
-</div>
 
 <?php if(!$model->getErrors()) {
 	$model->event_i = 0;

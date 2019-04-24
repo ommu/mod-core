@@ -13,12 +13,9 @@
  *
  * The followings are the available columns in table "ommu_core_settings":
  * @property integer $id
- * @property integer $online
  * @property string $site_creation
  * @property string $site_dateformat
  * @property string $site_timeformat
- * @property string $construction_date
- * @property string $construction_text
  * @property string $event_startdate
  * @property string $event_finishdate
  * @property string $event_tag
@@ -71,7 +68,6 @@ namespace ommu\core\models;
 use Yii;
 use yii\helpers\Url;
 use ommu\users\models\Users;
-use ommu\core\models\view\CoreSettings as CoreSettingsView;
 
 class CoreSettings extends \app\components\ActiveRecord
 {
@@ -102,17 +98,15 @@ class CoreSettings extends \app\components\ActiveRecord
 	public function rules()
 	{
 		return [
-			[['online'], 'required'],
 			[['signup_username', 'general_profile', 'general_invite', 'general_search', 'general_portal'], 'required', 'on' => self::SCENARIO_GENERAL],
 			[['general_commenthtml', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup'], 'required', 'on' => self::SCENARIO_BANNED],
 			[['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'spam_signup'], 'required', 'on' => self::SCENARIO_SIGNUP],
 			[['lang_allow', 'lang_autodetect', 'lang_anonymous'], 'required', 'on' => self::SCENARIO_LANGUAGE],
 			[['analytic', 'analytic_id', 'analytic_profile_id'], 'required', 'on' => self::SCENARIO_ANALYTIC],
-			[['online', 'signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup', 'analytic', 'modified_id'], 'integer'],
+			[['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup', 'analytic', 'modified_id'], 'integer'],
 			[['event_tag', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words'], 'string'],
-			//[['construction_text'], 'serialize'],
 			[['site_creation', 'site_dateformat', 'site_timeformat', 
-				'construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'event_i',
+				'event_startdate', 'event_finishdate', 'event_tag', 'event_i',
 				'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 
 				'ommu_version'], 'safe'],
 			[['analytic_id', 'analytic_profile_id', 'license_key'], 'string', 'max' => 32],
@@ -128,7 +122,7 @@ class CoreSettings extends \app\components\ActiveRecord
 	public function scenarios()
 	{
 		$scenarios = parent::scenarios();
-		$scenarios[self::SCENARIO_GENERAL] = ['construction_date', 'construction_text', 'event_startdate', 'event_finishdate', 'event_tag', 'signup_username', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'event_i'];
+		$scenarios[self::SCENARIO_GENERAL] = ['event_startdate', 'event_finishdate', 'event_tag', 'signup_username', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'event_i'];
 		$scenarios[self::SCENARIO_BANNED] = ['general_commenthtml', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup'];
 		$scenarios[self::SCENARIO_SIGNUP] = ['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'spam_signup'];
 		$scenarios[self::SCENARIO_LANGUAGE] = ['lang_allow', 'lang_autodetect', 'lang_anonymous'];
@@ -143,14 +137,9 @@ class CoreSettings extends \app\components\ActiveRecord
 	{
 		return [
 			'id' => Yii::t('app', 'ID'),
-			'online' => Yii::t('app', 'Maintenance Mode'),
 			'site_creation' => Yii::t('app', 'Site Creation'),
 			'site_dateformat' => Yii::t('app', 'Site Dateformat'),
 			'site_timeformat' => Yii::t('app', 'Site Timeformat'),
-			'construction_date' => Yii::t('app', 'Offline Date'),
-			'construction_text' => Yii::t('app', 'Maintenance Text'),
-			'construction_text[comingsoon]' => Yii::t('app', 'Coming Soon Text'),
-			'construction_text[maintenance]' => Yii::t('app', 'Maintenance Text'),
 			'event_startdate' => Yii::t('app', 'Event Startdate'),
 			'event_finishdate' => Yii::t('app', 'Event Finishdate'),
 			'event_tag' => Yii::t('app', 'Event Tag'),
@@ -206,14 +195,6 @@ class CoreSettings extends \app\components\ActiveRecord
 	}
 
 	/**
-	 * @return \yii\db\ActiveQuery
-	 */
-	public function getView()
-	{
-		return $this->hasOne(CoreSettingsView::className(), ['id' => 'id']);
-	}
-
-	/**
 	 * {@inheritdoc}
 	 * @return \ommu\core\models\query\CoreSettings the active query used by this AR class.
 	 */
@@ -251,19 +232,6 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'site_timeformat',
 			'value' => function($model, $key, $index, $column) {
 				return $model->site_timeformat;
-			},
-		];
-		$this->templateColumns['construction_date'] = [
-			'attribute' => 'construction_date',
-			'value' => function($model, $key, $index, $column) {
-				return Yii::$app->formatter->asDate($model->construction_date, 'medium');
-			},
-			'filter' => $this->filterDatepicker($this, 'construction_date'),
-		];
-		$this->templateColumns['construction_text'] = [
-			'attribute' => 'construction_text',
-			'value' => function($model, $key, $index, $column) {
-				return $model->construction_text;
 			},
 		];
 		$this->templateColumns['event_startdate'] = [
@@ -566,14 +534,6 @@ class CoreSettings extends \app\components\ActiveRecord
 			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
 		];
-		$this->templateColumns['online'] = [
-			'attribute' => 'online',
-			'filter' => self::getOnline(),
-			'value' => function($model, $key, $index, $column) {
-				return self::getOnline($model->online);
-			},
-			'contentOptions' => ['class'=>'center'],
-		];
 	}
 
 	/**
@@ -595,30 +555,12 @@ class CoreSettings extends \app\components\ActiveRecord
 	}
 
 	/**
-	 * function getOnline
-	 */
-	public static function getOnline($value=null)
-	{
-		$items = array(
-			'0' => Yii::t('app', 'Undercontruction'),
-			'1' => Yii::t('app', 'Online'),
-			'2' => Yii::t('app', 'Coming-soon'),
-		);
-
-		if($value !== null)
-			return $items[$value];
-		else
-			return $items;
-	}
-
-	/**
 	 * after find attributes
 	 */
 	public function afterFind()
 	{
 		parent::afterFind();
 
-		$this->construction_text = unserialize($this->construction_text);
 		// $this->modifiedDisplayname = isset($this->modified) ? $this->modified->displayname : '-';
 	}
 
@@ -638,15 +580,6 @@ class CoreSettings extends \app\components\ActiveRecord
 			}
 
 			if($this->scenario == self::SCENARIO_GENERAL) {
-				if($this->online != 1) {
-					if($this->construction_date == '')
-						$this->addError('construction_date', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('construction_date')]));
-					if($this->online == 0 && $this->construction_text['maintenance'] == '')
-						$this->addError('construction_text[maintenance]', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('construction_text[maintenance]')]));
-					if($this->online == 2 && $this->construction_text['comingsoon'] == '')
-						$this->addError('construction_text[comingsoon]', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('construction_text[comingsoon]')]));
-				}
-
 				if($this->event_i == 0) {
 					$this->event_startdate = '00-00-0000';
 					$this->event_finishdate = '00-00-0000';
@@ -682,9 +615,6 @@ class CoreSettings extends \app\components\ActiveRecord
 	{
 		if(parent::beforeSave($insert)) {
 			// $this->site_creation = Yii::$app->formatter->asDate($this->site_creation, 'php:Y-m-d');
-			$this->construction_date = Yii::$app->formatter->asDate($this->construction_date, 'php:Y-m-d');
-			if($this->scenario == self::SCENARIO_GENERAL)
-				$this->construction_text = serialize($this->construction_text);
 			$this->event_startdate = Yii::$app->formatter->asDate($this->event_startdate, 'php:Y-m-d');
 			$this->event_finishdate = Yii::$app->formatter->asDate($this->event_finishdate, 'php:Y-m-d');
 		}
