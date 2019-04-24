@@ -15,8 +15,6 @@
  * @property string $name
  * @property string $value
  * @property string $module_id
- * @property string $input_type
- * @property string $option_value
  * @property string $creation_date
  * @property integer $creation_id
  * @property string $modified_date
@@ -61,8 +59,6 @@ class Settings extends \app\components\ActiveRecord
 			[['value'], 'string'],
 			[['value', 'creation_date', 'modified_date'], 'safe'],
 			[['name', 'module_id'], 'string', 'max' => 64],
-			[['input_type'], 'string', 'max' => 50],
-			[['option_value'], 'string', 'max' => 256],
 		];
 	}
 
@@ -76,8 +72,6 @@ class Settings extends \app\components\ActiveRecord
 			'name' => Yii::t('app', 'Name'),
 			'value' => Yii::t('app', 'Value'),
 			'module_id' => Yii::t('app', 'Module'),
-			'input_type' => Yii::t('app', 'Input Type'),
-			'option_value' => Yii::t('app', 'Option Value'),
 			'creation_date' => Yii::t('app', 'Creation Date'),
 			'creation_id' => Yii::t('app', 'Creation'),
 			'modified_date' => Yii::t('app', 'Modified Date'),
@@ -131,18 +125,6 @@ class Settings extends \app\components\ActiveRecord
 			'attribute' => 'module_id',
 			'value' => function($model, $key, $index, $column) {
 				return $model->module_id;
-			},
-		];
-		$this->templateColumns['input_type'] = [
-			'attribute' => 'input_type',
-			'value' => function($model, $key, $index, $column) {
-				return $model->input_type;
-			},
-		];
-		$this->templateColumns['option_value'] = [
-			'attribute' => 'option_value',
-			'value' => function($model, $key, $index, $column) {
-				return $model->option_value;
 			},
 		];
 		$this->templateColumns['creation_date'] = [
