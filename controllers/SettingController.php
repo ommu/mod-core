@@ -12,7 +12,6 @@
  *	Banned
  *	Signup
  *	Language
- *	Analytic
  *
  *	findModel
  *
@@ -192,38 +191,6 @@ class SettingController extends Controller
 		$this->view->description = Yii::t('app', 'The layout of your {app-name} platform includes hundreds of apps of text which are stored in a language pack. {app-name} platform comes with an English pack which is the default when you first install the platform. If you want to change any of these apps on your {app-name} platform, you can edit the pack below. If you want to allow users to pick from multiple languages, you can also create additional packs below. If you have multiple language packs, the pack you\'ve selected as your "default" will be the language that displays if a user has not selected any other language. Note: You can not delete the default language. To edit a language\'s details, click its name.', ['app-name'=>Yii::$app->name]);
 		$this->view->keywords = '';
 		return $this->render('admin_language', [
-			'model' => $model,
-		]);
-	}
-
-	/**
-	 * Creates a new CoreSettings model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 * @return mixed
-	 */
-	public function actionAnalytic()
-	{
-		$model = CoreSettings::findOne(1);
-		if ($model === null) 
-			$model = new CoreSettings();
-		$model->scenario = CoreSettings::SCENARIO_ANALYTIC;
-
-		if(Yii::$app->request->isPost) {
-			$model->load(Yii::$app->request->post());
-			if($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('app', 'Google analytics setting success updated.'));
-				return $this->redirect(['analytic']);
-
-			} else {
-				if(Yii::$app->request->isAjax)
-					return \yii\helpers\Json::encode(\app\components\ActiveForm::validate($model));
-			}
-		}
-		
-		$this->view->title = Yii::t('app', 'Google Analytic Settings');
-		$this->view->description = Yii::t('app', 'Want to use Google Analytics to keep track of your site\'s traffic data? Setup is super easy. Just enter your Google Analytics Tracking ID and *bam*... you\'re tracking your site\'s traffic stats! If you need help finding your ID, check here.');
-		$this->view->keywords = '';
-		return $this->render('admin_analytic', [
 			'model' => $model,
 		]);
 	}

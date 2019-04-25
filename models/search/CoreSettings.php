@@ -27,8 +27,8 @@ class CoreSettings extends CoreSettingsModel
 	public function rules()
 	{
 		return [
-			[['id', 'site_creation', 'site_dateformat', 'site_timeformat', 'event_startdate', 'event_finishdate', 'event_tag', 'signup_numgiven', 'general_commenthtml', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 'spam_failedcount', 'analytic_id', 'analytic_profile_id', 'license_email', 'license_key', 'ommu_version', 'modified_date', 'modifiedDisplayname'], 'safe'],
-			[['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_signup', 'analytic', 'modified_id'], 'integer'],
+			[['id', 'site_creation', 'site_dateformat', 'site_timeformat', 'event_startdate', 'event_finishdate', 'event_tag', 'signup_numgiven', 'general_commenthtml', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 'spam_failedcount', 'license_email', 'license_key', 'ommu_version', 'modified_date', 'modifiedDisplayname'], 'safe'],
+			[['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_signup', 'modified_id'], 'integer'],
 		];
 	}
 
@@ -121,7 +121,6 @@ class CoreSettings extends CoreSettingsModel
 			't.spam_login' => $this->spam_login,
 			't.spam_failedcount' => $this->spam_failedcount,
 			't.spam_signup' => $this->spam_signup,
-			't.analytic' => $this->analytic,
 			'cast(t.modified_date as date)' => $this->modified_date,
 			't.modified_id' => isset($params['modified']) ? $params['modified'] : $this->modified_id,
 		]);
@@ -134,8 +133,6 @@ class CoreSettings extends CoreSettingsModel
 			->andFilterWhere(['like', 't.banned_emails', $this->banned_emails])
 			->andFilterWhere(['like', 't.banned_usernames', $this->banned_usernames])
 			->andFilterWhere(['like', 't.banned_words', $this->banned_words])
-			->andFilterWhere(['like', 't.analytic_id', $this->analytic_id])
-			->andFilterWhere(['like', 't.analytic_profile_id', $this->analytic_profile_id])
 			->andFilterWhere(['like', 't.license_email', $this->license_email])
 			->andFilterWhere(['like', 't.license_key', $this->license_key])
 			->andFilterWhere(['like', 't.ommu_version', $this->ommu_version])

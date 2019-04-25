@@ -49,9 +49,6 @@
  * @property integer $spam_login
  * @property integer $spam_failedcount
  * @property integer $spam_signup
- * @property integer $analytic
- * @property string $analytic_id
- * @property string $analytic_profile_id
  * @property string $license_email
  * @property string $license_key
  * @property string $ommu_version
@@ -82,7 +79,6 @@ class CoreSettings extends \app\components\ActiveRecord
 	const SCENARIO_BANNED = 'banned';
 	const SCENARIO_SIGNUP = 'signup';
 	const SCENARIO_LANGUAGE = 'language';
-	const SCENARIO_ANALYTIC = 'analytic';
 
 	/**
 	 * @return string the associated database table name
@@ -102,14 +98,13 @@ class CoreSettings extends \app\components\ActiveRecord
 			[['general_commenthtml', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup'], 'required', 'on' => self::SCENARIO_BANNED],
 			[['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'spam_signup'], 'required', 'on' => self::SCENARIO_SIGNUP],
 			[['lang_allow', 'lang_autodetect', 'lang_anonymous'], 'required', 'on' => self::SCENARIO_LANGUAGE],
-			[['analytic', 'analytic_id', 'analytic_profile_id'], 'required', 'on' => self::SCENARIO_ANALYTIC],
-			[['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup', 'analytic', 'modified_id'], 'integer'],
+			[['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup', 'modified_id'], 'integer'],
 			[['event_tag', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words'], 'string'],
 			[['site_creation', 'site_dateformat', 'site_timeformat', 
 				'event_startdate', 'event_finishdate', 'event_tag', 'event_i',
 				'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 
 				'ommu_version'], 'safe'],
-			[['analytic_id', 'analytic_profile_id', 'license_key'], 'string', 'max' => 32],
+			[['license_key'], 'string', 'max' => 32],
 			[['license_email'], 'string', 'max' => 64],
 			[['general_commenthtml'], 'string', 'max' => 256],
 			[['site_dateformat', 'site_timeformat', 'ommu_version'], 'string', 'max' => 8],
@@ -126,7 +121,6 @@ class CoreSettings extends \app\components\ActiveRecord
 		$scenarios[self::SCENARIO_BANNED] = ['general_commenthtml', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup'];
 		$scenarios[self::SCENARIO_SIGNUP] = ['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'spam_signup'];
 		$scenarios[self::SCENARIO_LANGUAGE] = ['lang_allow', 'lang_autodetect', 'lang_anonymous'];
-		$scenarios[self::SCENARIO_ANALYTIC] = ['analytic', 'analytic_id', 'analytic_profile_id'];
 		return $scenarios;
 	}
 
@@ -173,9 +167,6 @@ class CoreSettings extends \app\components\ActiveRecord
 			'spam_login' => Yii::t('app', 'Require users to enter validation code when logging in?'),
 			'spam_failedcount' => Yii::t('app', 'Spam Failedcount'),
 			'spam_signup' => Yii::t('app', 'Require Users to Enter a Verification Code?'),
-			'analytic' => Yii::t('app', 'Analytic'),
-			'analytic_id' => Yii::t('app', 'Analytic ID'),
-			'analytic_profile_id' => Yii::t('app', 'Analytic Profile ID'),
 			'license_email' => Yii::t('app', 'License Email'),
 			'license_key' => Yii::t('app', 'License Key'),
 			'ommu_version' => Yii::t('app', 'Ommu Version'),
@@ -294,18 +285,6 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'spam_failedcount',
 			'value' => function($model, $key, $index, $column) {
 				return $model->spam_failedcount;
-			},
-		];
-		$this->templateColumns['analytic_id'] = [
-			'attribute' => 'analytic_id',
-			'value' => function($model, $key, $index, $column) {
-				return $model->analytic_id;
-			},
-		];
-		$this->templateColumns['analytic_profile_id'] = [
-			'attribute' => 'analytic_profile_id',
-			'value' => function($model, $key, $index, $column) {
-				return $model->analytic_profile_id;
 			},
 		];
 		$this->templateColumns['license_email'] = [
@@ -522,14 +501,6 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'spam_signup',
 			'value' => function($model, $key, $index, $column) {
 				return $this->filterYesNo($model->spam_signup);
-			},
-			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
-		];
-		$this->templateColumns['analytic'] = [
-			'attribute' => 'analytic',
-			'value' => function($model, $key, $index, $column) {
-				return $this->filterYesNo($model->analytic);
 			},
 			'filter' => $this->filterYesNo(),
 			'contentOptions' => ['class'=>'center'],
