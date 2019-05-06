@@ -4,7 +4,7 @@
  * @var $this app\components\View
  * @var $this ommu\core\controllers\page\ViewController
  * @var $model ommu\core\models\search\CorePageViews
- * @var $form app\components\ActiveForm
+ * @var $form yii\widgets\ActiveForm
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
