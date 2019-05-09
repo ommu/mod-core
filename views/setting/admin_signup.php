@@ -87,12 +87,12 @@ echo $form->field($model, 'signup_inviteonly', ['template' => '{label}{beginWrap
 	1 => Yii::t('app', 'Yes, check that a user\'s email address was invited before accepting their invite code.'),
 	0 => Yii::t('app', 'No, anyone with an invite code can signup, regardless of their email address.'),
 ];
-echo $form->field($model, 'signup_checkemail', ['template' => '{beginWrapper}{hint}{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-12 col-sm-offset-3']])
+echo $form->field($model, 'signup_checkemail', ['template' => '{beginWrapper}{hint}{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
 	->radioList($signupCheckemail)
 	->label($model->getAttributeLabel('signup_checkemail'))
 	->hint(Yii::t('app', 'Should each invite code be bound to each invited email address? If set to NO, anyone with a valid invite code can signup regardless of their email address. If set to YES, anyone with a valid invite code that matches an email address that was invited can signup.')); ?>
 
-<?php echo $form->field($model, 'signup_numgiven', ['template' => '{beginWrapper}{hint}{input}{error}<div>'.Yii::t('app', 'invites are given to each user when they signup.').'</div>{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-12 col-sm-offset-3']])
+<?php echo $form->field($model, 'signup_numgiven', ['template' => '{beginWrapper}{hint}{input}{error}<div>'.Yii::t('app', 'invites are given to each user when they signup.').'</div>{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
 	->textInput()
 	->label($model->getAttributeLabel('signup_numgiven'))
 	->hint(Yii::t('app', 'How many invites do users get when they signup? (If you want to give a particular user extra invites, you can do so via the View Users page. Please enter a number between 0 and 999 below.')); ?>
@@ -158,11 +158,9 @@ echo $form->field($model, 'signup_adminemail', ['template' => '{label}{beginWrap
 	->hint(Yii::t('app', 'Send Admin and email when a new user signs up? If set to YES, admin will be recieve an email with information about new user.')); ?>
 
 <div class="ln_solid"></div>
-<div class="form-group row">
-	<div class="col-md-6 col-sm-9 col-xs-12 col-12 col-sm-offset-3">
-		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
-	</div>
-</div>
+
+<?php echo $form->field($model, 'submitButton')
+	->submitButton(); ?>
 
 <?php ActiveForm::end(); ?>
 

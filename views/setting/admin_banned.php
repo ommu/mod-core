@@ -81,7 +81,7 @@ echo $form->field($model, 'spam_login', ['template' => '{label}{beginWrapper}{hi
 	->label(Yii::t('app', 'Require users to enter validation code when logging in?'))
 	->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "login" page. Users will be required to enter these numbers into the Verification Code field in order to login. This feature helps prevent users from trying to spam the login form. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
 
-<?php echo $form->field($model, 'spam_failedcount', ['template' => '{beginWrapper}{hint}{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-12 col-sm-offset-3']])
+<?php echo $form->field($model, 'spam_failedcount', ['template' => '{beginWrapper}{hint}{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
 	->textInput()
 	->label($model->getAttributeLabel('spam_failedcount'))
 	->hint(Yii::t('app', 'If "no" is selected in the setting directly above, a Verification Code will be displayed to the user only after a certain number of failed logins. You can set this to 0 to never display a code.')); ?>
@@ -110,11 +110,9 @@ echo $form->field($model, 'spam_comment', ['template' => '{label}{beginWrapper}{
 	->hint(Yii::t('app', 'By default, the user may not enter any HTML tags into comments. If you want to allow specific tags, you can enter them below (separated by commas). Example: b, img, a, embed, font')); ?>
 	
 <div class="ln_solid"></div>
-<div class="form-group row">
-	<div class="col-md-6 col-sm-9 col-xs-12 col-12 col-sm-offset-3">
-		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
-	</div>
-</div>
+
+<?php echo $form->field($model, 'submitButton')
+	->submitButton(); ?>
 
 <?php ActiveForm::end(); ?>
 

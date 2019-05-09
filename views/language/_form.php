@@ -30,28 +30,26 @@ use app\components\widgets\ActiveForm;
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php echo $form->field($model, 'name', ['horizontalCssClasses' => ['wrapper'=>'col-sm-9 col-xs-12 col-12']])
+<?php echo $form->field($model, 'name')
 	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('name')); ?>
 
-<?php echo $form->field($model, 'code', ['horizontalCssClasses' => ['wrapper'=>'col-sm-9 col-xs-12 col-12']])
+<?php echo $form->field($model, 'code')
 	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('code')); ?>
 
-<?php echo $form->field($model, 'actived', ['horizontalCssClasses' => ['wrapper'=>'col-sm-9 col-xs-12 col-12']])
+<?php echo $form->field($model, 'actived')
 	->checkbox()
 	->label($model->getAttributeLabel('actived')); ?>
 
-<?php echo $form->field($model, 'default', ['horizontalCssClasses' => ['wrapper'=>'col-sm-9 col-xs-12 col-12']])
+<?php echo $form->field($model, 'default')
 	->checkbox()
 	->label($model->getAttributeLabel('default')); ?>
 
 <div class="ln_solid"></div>
-<div class="form-group row">
-	<div class="col-sm-9 col-xs-12 col-12 col-sm-offset-3">
-		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
-	</div>
-</div>
+
+<?php echo $form->field($model, 'submitButton')
+	->submitButton(); ?>
 
 <?php ActiveForm::end(); ?>
 

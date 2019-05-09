@@ -92,7 +92,7 @@ echo $form->field($model, 'event_i')
 		1 => Yii::t('app', 'Yes, the public can use the invite page.'),
 		0 => Yii::t('app', 'No, the public cannot use the invite page.'),
 	];
-	echo $form->field($model, 'general_invite', ['template' => '{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_invite').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-12 col-sm-offset-3']])
+	echo $form->field($model, 'general_invite', ['template' => '{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_invite').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
 		->radioList($generalInvite)
 		->label($model->getAttributeLabel('general_invite'));
 
@@ -100,7 +100,7 @@ echo $form->field($model, 'event_i')
 		1 => Yii::t('app', 'Yes, the public can use the search page.'),
 		0 => Yii::t('app', 'No, the public cannot use the search page.'),
 	];
-	echo $form->field($model, 'general_search', ['template' => '{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_search').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-12 col-sm-offset-3']])
+	echo $form->field($model, 'general_search', ['template' => '{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_search').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
 		->radioList($generalSearch)
 		->label($model->getAttributeLabel('general_search'));
 		
@@ -108,7 +108,7 @@ echo $form->field($model, 'event_i')
 		1 => Yii::t('app', 'Yes, the public view use the portal page.'),
 		0 => Yii::t('app', 'No, the public cannot view the portal page.'),
 	];
-	echo $form->field($model, 'general_portal', ['template' => '{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_portal').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-12 col-sm-offset-3']])
+	echo $form->field($model, 'general_portal', ['template' => '{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_portal').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
 		->radioList($generalPortal)
 		->label($model->getAttributeLabel('general_portal'));
 	
@@ -123,11 +123,9 @@ echo $form->field($model, 'event_i')
 }?>
 
 <div class="ln_solid"></div>
-<div class="form-group row">
-	<div class="col-md-6 col-sm-9 col-xs-12 col-12 col-sm-offset-3">
-		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
-	</div>
-</div>
+
+<?php echo $form->field($model, 'submitButton')
+	->submitButton(); ?>
 
 <?php ActiveForm::end(); ?>
 
