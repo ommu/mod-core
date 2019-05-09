@@ -81,7 +81,7 @@ class SettingController extends Controller
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			if($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('app', 'General setting success updated.'));
+				Yii::$app->session->setFlash('success', Yii::t('app', 'Public permissions success updated.'));
 				return $this->redirect(['general']);
 
 			} else {
@@ -90,8 +90,8 @@ class SettingController extends Controller
 			}
 		}
 
-		$this->view->title = Yii::t('app', 'General Settings');
-		$this->view->description = Yii::t('app', 'This page contains general settings that affect your entire {app-name} platform.', ['app-name'=>Yii::$app->name]);
+		$this->view->title = Yii::t('app', 'Public Permissions');
+		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_general', [
 			'model' => $model,

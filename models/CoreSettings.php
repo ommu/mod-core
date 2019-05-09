@@ -16,9 +16,6 @@
  * @property string $site_creation
  * @property string $site_dateformat
  * @property string $site_timeformat
- * @property string $event_startdate
- * @property string $event_finishdate
- * @property string $event_tag
  * @property integer $signup_username
  * @property integer $signup_approve
  * @property integer $signup_verifyemail
@@ -72,7 +69,6 @@ class CoreSettings extends \app\components\ActiveRecord
 
 	public $gridForbiddenColumn = [];
 
-	public $event_i;
 	public $modifiedDisplayname;
 
 	const SCENARIO_GENERAL = 'general';
@@ -99,9 +95,8 @@ class CoreSettings extends \app\components\ActiveRecord
 			[['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'spam_signup'], 'required', 'on' => self::SCENARIO_SIGNUP],
 			[['lang_allow', 'lang_autodetect', 'lang_anonymous'], 'required', 'on' => self::SCENARIO_LANGUAGE],
 			[['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'lang_allow', 'lang_autodetect', 'lang_anonymous', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup', 'modified_id'], 'integer'],
-			[['event_tag', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words'], 'string'],
+			[['banned_ips', 'banned_emails', 'banned_usernames', 'banned_words'], 'string'],
 			[['site_creation', 'site_dateformat', 'site_timeformat', 
-				'event_startdate', 'event_finishdate', 'event_tag', 'event_i',
 				'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 
 				'ommu_version'], 'safe'],
 			[['license_key'], 'string', 'max' => 32],
@@ -117,7 +112,7 @@ class CoreSettings extends \app\components\ActiveRecord
 	public function scenarios()
 	{
 		$scenarios = parent::scenarios();
-		$scenarios[self::SCENARIO_GENERAL] = ['event_startdate', 'event_finishdate', 'event_tag', 'signup_username', 'general_profile', 'general_invite', 'general_search', 'general_portal', 'event_i'];
+		$scenarios[self::SCENARIO_GENERAL] = ['signup_username', 'general_profile', 'general_invite', 'general_search', 'general_portal'];
 		$scenarios[self::SCENARIO_BANNED] = ['general_commenthtml', 'banned_ips', 'banned_emails', 'banned_usernames', 'banned_words', 'spam_comment', 'spam_contact', 'spam_invite', 'spam_login', 'spam_failedcount', 'spam_signup'];
 		$scenarios[self::SCENARIO_SIGNUP] = ['signup_username', 'signup_approve', 'signup_verifyemail', 'signup_photo', 'signup_welcome', 'signup_random', 'signup_terms', 'signup_invitepage', 'signup_inviteonly', 'signup_checkemail', 'signup_numgiven', 'signup_adminemail', 'spam_signup'];
 		$scenarios[self::SCENARIO_LANGUAGE] = ['lang_allow', 'lang_autodetect', 'lang_anonymous'];
@@ -134,9 +129,6 @@ class CoreSettings extends \app\components\ActiveRecord
 			'site_creation' => Yii::t('app', 'Site Creation'),
 			'site_dateformat' => Yii::t('app', 'Site Dateformat'),
 			'site_timeformat' => Yii::t('app', 'Site Timeformat'),
-			'event_startdate' => Yii::t('app', 'Event Startdate'),
-			'event_finishdate' => Yii::t('app', 'Event Finishdate'),
-			'event_tag' => Yii::t('app', 'Event Tag'),
 			'signup_username' => Yii::t('app', 'Enable Profile Address?'),
 			'signup_approve' => Yii::t('app', 'Enable Users?'),
 			'signup_verifyemail' => Yii::t('app', 'Verify Email Address?'),
@@ -172,7 +164,6 @@ class CoreSettings extends \app\components\ActiveRecord
 			'ommu_version' => Yii::t('app', 'Ommu Version'),
 			'modified_date' => Yii::t('app', 'Modified Date'),
 			'modified_id' => Yii::t('app', 'Modified'),
-			'event_i' => Yii::t('app', 'Event'),
 			'modifiedDisplayname' => Yii::t('app', 'Modified'),
 		];
 	}
@@ -223,26 +214,6 @@ class CoreSettings extends \app\components\ActiveRecord
 			'attribute' => 'site_timeformat',
 			'value' => function($model, $key, $index, $column) {
 				return $model->site_timeformat;
-			},
-		];
-		$this->templateColumns['event_startdate'] = [
-			'attribute' => 'event_startdate',
-			'value' => function($model, $key, $index, $column) {
-				return Yii::$app->formatter->asDate($model->event_startdate, 'medium');
-			},
-			'filter' => $this->filterDatepicker($this, 'event_startdate'),
-		];
-		$this->templateColumns['event_finishdate'] = [
-			'attribute' => 'event_finishdate',
-			'value' => function($model, $key, $index, $column) {
-				return Yii::$app->formatter->asDate($model->event_finishdate, 'medium');
-			},
-			'filter' => $this->filterDatepicker($this, 'event_finishdate'),
-		];
-		$this->templateColumns['event_tag'] = [
-			'attribute' => 'event_tag',
-			'value' => function($model, $key, $index, $column) {
-				return $model->event_tag;
 			},
 		];
 		$this->templateColumns['signup_numgiven'] = [
@@ -549,32 +520,6 @@ class CoreSettings extends \app\components\ActiveRecord
 				if($this->modified_id == null)
 					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
 			}
-
-			if($this->scenario == self::SCENARIO_GENERAL) {
-				if($this->event_i == 0) {
-					$this->event_startdate = '00-00-0000';
-					$this->event_finishdate = '00-00-0000';
-
-				} else {
-					$condition = 0;
-					if($this->event_startdate != '' && in_array(Yii::$app->formatter->asDate($this->event_startdate, 'php:Y-m-d'), array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30'))) {
-						$condition = 0;
-						$this->addError('event_startdate', Yii::t('app', '{attribute} cannot be blank or default date.', ['attribute'=>$this->getAttributeLabel('event_startdate')]));
-					} else
-						$condition = 1;
-					if($this->event_finishdate != '' && in_array(Yii::$app->formatter->asDate($this->event_finishdate, 'php:Y-m-d'), array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30'))) {
-						$condition = 0;
-						$this->addError('event_finishdate', Yii::t('app', '{attribute} cannot be blank or default date.', ['attribute'=>$this->getAttributeLabel('event_finishdate')]));
-					} else
-						$condition = 1;
-						
-					if($condition == 1 && (Yii::$app->formatter->asDate($this->event_startdate, 'php:Y-m-d') >= Yii::$app->formatter->asDate($this->event_finishdate, 'php:Y-m-d')))
-						$this->addError('event_finishdate', Yii::t('app', '{attribute} tidak boleh lebih kecil', ['attribute'=>$this->getAttributeLabel('event_finishdate')]));
-						
-					if(trim($this->event_tag) == '')
-						$this->addError('event_tag', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('event_tag')]));
-				}
-			}
 		}
 		return true;
 	}
@@ -586,8 +531,6 @@ class CoreSettings extends \app\components\ActiveRecord
 	{
 		if(parent::beforeSave($insert)) {
 			// $this->site_creation = Yii::$app->formatter->asDate($this->site_creation, 'php:Y-m-d');
-			$this->event_startdate = Yii::$app->formatter->asDate($this->event_startdate, 'php:Y-m-d');
-			$this->event_finishdate = Yii::$app->formatter->asDate($this->event_finishdate, 'php:Y-m-d');
 		}
 		return true;
 	}

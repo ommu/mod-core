@@ -21,18 +21,6 @@ use app\components\widgets\ActiveForm;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-
-$js = <<<JS
-	$('.field-event_i input[name="event_i"]').on('change', function() {
-		var id = $(this).val();
-		if(id == '0') {
-			$('div#events').slideUp();
-		} else {
-			$('div#events').slideDown();
-		}
-	});
-JS;
-	$this->registerJs($js, \app\components\View::POS_READY);
 ?>
 
 <div class="core-settings-form">
@@ -46,81 +34,47 @@ JS;
 
 <?php echo $form->errorSummary($model);?>
 
-<?php if(!$model->getErrors()) {
-	$model->event_i = 0;
-	if($model->isNewRecord || (!$model->isNewRecord && !in_array($model->event_startdate, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) && !in_array($model->event_finishdate, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30'))))
-		$model->event_i = 1;
-}
-$event_i = [
-	1 => Yii::t('app', 'Enable'),
-	0 => Yii::t('app', 'Disable'),
+<?php $generalProfile = [
+	1 => Yii::t('app', 'Yes, the public can view profiles unless they are made private.'),
+	0 => Yii::t('app', 'No, the public cannot view profiles.'),
 ];
-echo $form->field($model, 'event_i')
-	->radioList($event_i)
-	->label($model->getAttributeLabel('event_i')); ?>
+echo $form->field($model, 'general_profile', ['template' => '{label}{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_profile').'</div>{input}{error}{endWrapper}'])
+	->radioList($generalProfile)
+	->label(Yii::t('app', 'Public Permission Defaults'))
+	->hint(Yii::t('app', 'Select whether or not you want to let the public (visitors that are not logged-in) to view the following sections of your social network. In some cases (such as Profiles), if you have given them the option, your users will be able to make their pages private even though you have made them publically viewable here.')); ?>
 
-<div id="events" <?php echo $model->event_i == '0' ? 'style="display: none;"' : ''; ?>>
-	<?php 
-	$model->event_startdate = !$model->isNewRecord ? (!in_array($model->event_startdate, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? $model->event_startdate : '') : '';
-	echo $form->field($model, 'event_startdate')
-		->textInput(['type' => 'date'])
-		->label($model->getAttributeLabel('event_startdate')); ?>
+<?php $generalInvite = [
+	1 => Yii::t('app', 'Yes, the public can use the invite page.'),
+	0 => Yii::t('app', 'No, the public cannot use the invite page.'),
+];
+echo $form->field($model, 'general_invite', ['template' => '{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_invite').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
+	->radioList($generalInvite)
+	->label($model->getAttributeLabel('general_invite')); ?>
 
-	<?php 
-	$model->event_finishdate = !$model->isNewRecord ? (!in_array($model->event_finishdate, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? $model->event_finishdate : '') : '';
-	echo $form->field($model, 'event_finishdate')
-		->textInput(['type' => 'date'])
-		->label($model->getAttributeLabel('event_finishdate')); ?>
-
-	<?php echo $form->field($model, 'event_tag')
-		->textarea(['rows'=>6, 'cols'=>50])
-		->label($model->getAttributeLabel('event_tag'))
-		->hint(Yii::t('app', 'tambahkan tanda koma (,) jika ingin menambahkan event tag lebih dari satu.')); ?>
-</div>
-
-<?php if(Yii::$app->isSocialMedia()) {
-	$generalProfile = [
-		1 => Yii::t('app', 'Yes, the public can view profiles unless they are made private.'),
-		0 => Yii::t('app', 'No, the public cannot view profiles.'),
-	];
-	echo $form->field($model, 'general_profile', ['template' => '{label}{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_profile').'</div>{input}{error}{endWrapper}'])
-		->radioList($generalProfile)
-		->label(Yii::t('app', 'Public Permission Defaults'))
-		->hint(Yii::t('app', 'Select whether or not you want to let the public (visitors that are not logged-in) to view the following sections of your social network. In some cases (such as Profiles), if you have given them the option, your users will be able to make their pages private even though you have made them publically viewable here.'));
-
-	$generalInvite = [
-		1 => Yii::t('app', 'Yes, the public can use the invite page.'),
-		0 => Yii::t('app', 'No, the public cannot use the invite page.'),
-	];
-	echo $form->field($model, 'general_invite', ['template' => '{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_invite').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
-		->radioList($generalInvite)
-		->label($model->getAttributeLabel('general_invite'));
-
-	$generalSearch = [
-		1 => Yii::t('app', 'Yes, the public can use the search page.'),
-		0 => Yii::t('app', 'No, the public cannot use the search page.'),
-	];
-	echo $form->field($model, 'general_search', ['template' => '{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_search').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
-		->radioList($generalSearch)
-		->label($model->getAttributeLabel('general_search'));
+<?php $generalSearch = [
+	1 => Yii::t('app', 'Yes, the public can use the search page.'),
+	0 => Yii::t('app', 'No, the public cannot use the search page.'),
+];
+echo $form->field($model, 'general_search', ['template' => '{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_search').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
+	->radioList($generalSearch)
+	->label($model->getAttributeLabel('general_search')); ?>
 		
-	$generalPortal = [
-		1 => Yii::t('app', 'Yes, the public view use the portal page.'),
-		0 => Yii::t('app', 'No, the public cannot view the portal page.'),
-	];
-	echo $form->field($model, 'general_portal', ['template' => '{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_portal').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
-		->radioList($generalPortal)
-		->label($model->getAttributeLabel('general_portal'));
+<?php $generalPortal = [
+	1 => Yii::t('app', 'Yes, the public view use the portal page.'),
+	0 => Yii::t('app', 'No, the public cannot view the portal page.'),
+];
+echo $form->field($model, 'general_portal', ['template' => '{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_portal').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
+	->radioList($generalPortal)
+	->label($model->getAttributeLabel('general_portal')); ?>
 	
-	$signupUsername = [
-		1 => Yii::t('app', 'Yes, users are uniquely identified by their username.'),
-		0 => Yii::t('app', 'No, usernames will not be used in this network.'),
-	];
-	echo $form->field($model, 'signup_username', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
-		->radioList($signupUsername)
-		->label($model->getAttributeLabel('signup_username'))
-		->hint(Yii::t('app', 'By default, usernames are used to uniquely identify your users. If you choose to disable this feature, your users will not be given the option to enter a username. Instead, their user ID will be used. Note that if you do decide to enable this feature, you should make sure to create special REQUIRED display name profile fields - otherwise the users\' IDs will be displayed. Also note that if you disable usernames after users have already signed up, their usernames will be deleted and any previous links to their content will not work, as the links will no longer use their username! Finally, all recent activity and all notifications will be deleted if you choose to disable usernames after previously having them enabled.'));
-}?>
+<?php $signupUsername = [
+	1 => Yii::t('app', 'Yes, users are uniquely identified by their username.'),
+	0 => Yii::t('app', 'No, usernames will not be used in this network.'),
+];
+echo $form->field($model, 'signup_username', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
+	->radioList($signupUsername)
+	->label($model->getAttributeLabel('signup_username'))
+	->hint(Yii::t('app', 'By default, usernames are used to uniquely identify your users. If you choose to disable this feature, your users will not be given the option to enter a username. Instead, their user ID will be used. Note that if you do decide to enable this feature, you should make sure to create special REQUIRED display name profile fields - otherwise the users\' IDs will be displayed. Also note that if you disable usernames after users have already signed up, their usernames will be deleted and any previous links to their content will not work, as the links will no longer use their username! Finally, all recent activity and all notifications will be deleted if you choose to disable usernames after previously having them enabled.')); ?>
 
 <div class="ln_solid"></div>
 
