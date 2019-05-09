@@ -16,7 +16,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\ActiveForm;
+use app\components\widgets\ActiveForm;
 use yii\web\JsExpression;
 use yii\jui\AutoComplete;
 use ommu\core\models\CoreZoneCity;
