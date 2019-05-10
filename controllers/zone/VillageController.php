@@ -1,7 +1,7 @@
 <?php
 /**
  * VillageController
- * @var $this app\components\View
+ * @var $this ommu\core\controllers\zone\VillageController
  * @var $model ommu\core\models\CoreZoneVillage
  *
  * VillageController implements the CRUD actions for CoreZoneVillage model.

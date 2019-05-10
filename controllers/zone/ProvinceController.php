@@ -1,7 +1,7 @@
 <?php
 /**
  * ProvinceController
- * @var $this app\components\View
+ * @var $this ommu\core\controllers\zone\ProvinceController
  * @var $model ommu\core\models\CoreZoneProvince
  *
  * ProvinceController implements the CRUD actions for CoreZoneProvince model.

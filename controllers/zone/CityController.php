@@ -1,7 +1,7 @@
 <?php
 /**
  * CityController
- * @var $this app\components\View
+ * @var $this ommu\core\controllers\zone\CityController
  * @var $model ommu\core\models\CoreZoneCity
  *
  * CityController implements the CRUD actions for CoreZoneCity model.

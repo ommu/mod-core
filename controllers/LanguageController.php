@@ -1,7 +1,7 @@
 <?php
 /**
  * LanguageController
- * @var $this app\components\View
+ * @var $this ommu\core\controllers\LanguageController
  * @var $model ommu\core\models\CoreLanguages
  *
  * LanguageController implements the CRUD actions for CoreLanguages model.

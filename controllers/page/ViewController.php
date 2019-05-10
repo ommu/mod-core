@@ -1,7 +1,7 @@
 <?php
 /**
  * ViewController
- * @var $this app\components\View
+ * @var $this ommu\core\controllers\page\ViewController
  * @var $model ommu\core\models\CorePageViews
  *
  * ViewController implements the CRUD actions for CorePageViews model.

@@ -1,7 +1,7 @@
 <?php
 /**
  * ViewDetailController
- * @var $this app\components\View
+ * @var $this ommu\core\controllers\page\ViewDetailController
  * @var $model ommu\core\models\CorePageViewHistory
  *
  * ViewDetailController implements the CRUD actions for CorePageViewHistory model.

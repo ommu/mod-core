@@ -1,7 +1,7 @@
 <?php
 /**
  * AdminController
- * @var $this app\components\View
+ * @var $this ommu\core\controllers\page\AdminController
  * @var $model ommu\core\models\CorePages
  *
  * AdminController implements the CRUD actions for CorePages model.

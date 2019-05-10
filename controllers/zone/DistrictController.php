@@ -1,7 +1,7 @@
 <?php
 /**
  * DistrictController
- * @var $this app\components\View
+ * @var $this ommu\core\controllers\zone\DistrictController
  * @var $model ommu\core\models\CoreZoneDistrict
  *
  * DistrictController implements the CRUD actions for CoreZoneDistrict model.

@@ -1,7 +1,7 @@
 <?php
 /**
  * SettingController
- * @var $this app\components\View
+ * @var $this ommu\core\controllers\SettingController
  * @var $model ommu\core\models\CoreSettings
  *
  * SettingController implements the CRUD actions for CoreSettings model.

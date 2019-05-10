@@ -1,7 +1,7 @@
 <?php
 /**
  * CountryController
- * @var $this app\components\View
+ * @var $this ommu\core\controllers\zone\CountryController
  * @var $model ommu\core\models\CoreZoneCountry
  *
  * CountryController implements the CRUD actions for CoreZoneCountry model.

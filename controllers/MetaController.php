@@ -1,7 +1,7 @@
 <?php
 /**
  * MetaController
- * @var $this app\components\View
+ * @var $this ommu\core\controllers\MetaController
  * @var $model ommu\core\models\CoreMeta
  *
  * MetaController implements the CRUD actions for CoreMeta model.
