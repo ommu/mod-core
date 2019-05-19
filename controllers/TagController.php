@@ -144,6 +144,7 @@ class TagController extends Controller
 	public function actionUpdate($id)
 	{
 		$model = $this->findModel($id);
+
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
@@ -241,7 +242,7 @@ class TagController extends Controller
 	{
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-		$term = Yii::$app->request->get('query');
+		$term = Yii::$app->request->get('term');
 
 		if($term == null) return [];
 

@@ -1,6 +1,7 @@
 {
 	"name": "ommu/core",
 	"description": "Core Module from Ommu Platform",
+	"type": "ommu-module",
 	"keywords": [
 		"module",
 		"core",
@@ -9,9 +10,8 @@
 		"ommu-platform",
 		"yii2"
 	],
-	"homepage": "https://github.com/ommu/mod-core",
-	"type": "ommu-module",
 	"license": "Apache-2.0",
+	"homepage": "https://github.com/ommu/mod-core",
 	"support": {
 		"issues": "https://github.com/ommu/mod-core/issues",
 		"wiki": "https://github.com/ommu/mod-core/wiki",
