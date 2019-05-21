@@ -20,7 +20,7 @@ use yii\helpers\Url;
 use app\components\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\DetailView;
-use ommu\banner\models\CoreZoneCountry;
+use ommu\core\models\CoreZoneCountry;
 
 $this->params['breadcrumbs'][] = $this->title;
 
