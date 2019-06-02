@@ -247,10 +247,12 @@ class ProvinceController extends Controller
 		
 		$model = CoreZoneProvince::find()
 			->alias('t')
-			->where(['like', 't.province_name', $term]);
+			->andWhere(['like', 't.province_name', $term]);
 		if($countryId != null)
 			$model->andWhere(['t.country_id' => $countryId]);
-		$model = $model->published()->limit(15)->all();
+		$model = $model->published()
+			->limit(15)
+			->all();
 		
 		$result = [];
 		$i = 0;

@@ -220,6 +220,7 @@ class CoreTags extends \app\components\ActiveRecord
 	{
 		parent::afterFind();
 
+		$this->body = Inflector::camel2words(Inflector::id2camel($this->body));
 		// $this->creationDisplayname = isset($this->creation) ? $this->creation->displayname : '-';
 		// $this->modifiedDisplayname = isset($this->modified) ? $this->modified->displayname : '-';
 	}

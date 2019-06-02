@@ -253,10 +253,12 @@ class DistrictController extends Controller
 		
 		$model = CoreZoneDistrict::find()
 			->alias('t')
-			->where(['like', 't.district_name', $term]);
+			->andWhere(['like', 't.district_name', $term]);
 		if($cityId != null)
 			$model->andWhere(['t.city_id' => $cityId]);
-		$model = $model->published()->limit(15)->all();
+		$model = $model->published()
+			->limit(15)
+			->all();
 
 		$result = [];
 		$i = 0;

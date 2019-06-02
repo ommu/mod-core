@@ -250,7 +250,7 @@ class CityController extends Controller
 		
 		$model = CoreZoneCity::find()
 			->alias('t')
-			->where(['like', 't.city_name', $term]);
+			->andWhere(['like', 't.city_name', $term]);
 		if($provinceId != null)
 			$model->andWhere(['t.province_id' => $provinceId]);
 		$model = $model->published()->limit(15)->all();

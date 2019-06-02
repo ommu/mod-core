@@ -256,10 +256,12 @@ class VillageController extends Controller
 
 		$model = CoreZoneVillage::find()
 			->alias('t')
-			->where(['like', 't.village_name', $term]);
+			->andWhere(['like', 't.village_name', $term]);
 		if($districtId != null)
 			$model->andWhere(['t.district_id' => $districtId]);
-		$model = $model->published()->limit(15)->all();
+		$model = $model->published()
+			->limit(15)
+			->all();
 			
 		$result = [];
 		$i = 0;
