@@ -21,12 +21,12 @@
  * @link https://github.com/ommu/mod-core
  *
  */
- 
+
 namespace ommu\core\controllers;
 
 use Yii;
-use app\components\Controller;
 use yii\filters\VerbFilter;
+use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\Modules;
 use ommu\core\models\search\Modules as ModulesSearch;

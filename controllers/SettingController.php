@@ -23,7 +23,7 @@
  * @link https://github.com/ommu/mod-core
  *
  */
- 
+
 namespace ommu\core\controllers;
 
 use Yii;
@@ -80,6 +80,9 @@ class SettingController extends Controller
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
+
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Public permissions success updated.'));
 				return $this->redirect(['general']);
@@ -112,6 +115,9 @@ class SettingController extends Controller
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
+
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Spam & banning setting success updated.'));
 				return $this->redirect(['banned']);
@@ -144,6 +150,9 @@ class SettingController extends Controller
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
+
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Signup setting success updated.'));
 				return $this->redirect(['signup']);
@@ -176,6 +185,9 @@ class SettingController extends Controller
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
+
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Language setting success updated.'));
 				return $this->redirect(['language']);

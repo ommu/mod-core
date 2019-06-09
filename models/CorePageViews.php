@@ -78,7 +78,7 @@ class CorePageViews extends \app\components\ActiveRecord
 			'user_id' => Yii::t('app', 'User'),
 			'views' => Yii::t('app', 'Views'),
 			'view_date' => Yii::t('app', 'View Date'),
-			'view_ip' => Yii::t('app', 'View Ip'),
+			'view_ip' => Yii::t('app', 'View IP'),
 			'deleted_date' => Yii::t('app', 'Deleted Date'),
 			'histories' => Yii::t('app', 'Histories'),
 			'pageName' => Yii::t('app', 'Page'),

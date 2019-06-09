@@ -30,8 +30,8 @@
 namespace ommu\core\controllers;
 
 use Yii;
-use app\components\Controller;
 use yii\filters\VerbFilter;
+use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\CoreLanguages;
 use ommu\core\models\search\CoreLanguages as CoreLanguagesSearch;
@@ -195,8 +195,9 @@ class LanguageController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->findModel($id)->delete();
-		
+		$model = $this->findModel($id);
+		$model->delete();
+
 		Yii::$app->session->setFlash('success', Yii::t('app', 'Language success deleted.'));
 		return $this->redirect(['manage']);
 	}

@@ -22,7 +22,7 @@
  * @link https://github.com/ommu/mod-core
  *
  */
- 
+
 namespace ommu\core\controllers;
 
 use Yii;
@@ -76,6 +76,9 @@ class MetaController extends Controller
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
+
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Meta setting success updated.'));
 				return $this->redirect(['update']);
@@ -105,6 +108,9 @@ class MetaController extends Controller
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
+
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Google owner meta success updated.'));
 				return $this->redirect(['google']);
@@ -134,6 +140,9 @@ class MetaController extends Controller
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
+
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Facebook meta success updated.'));
 				return $this->redirect(['facebook']);
@@ -163,6 +172,9 @@ class MetaController extends Controller
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
+
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Twitter meta success updated.'));
 				return $this->redirect(['twitter']);
@@ -192,6 +204,9 @@ class MetaController extends Controller
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			// $postData = Yii::$app->request->post();
+			// $model->load($postData);
+
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Address success updated.'));
 				return $this->redirect(['facebook']);

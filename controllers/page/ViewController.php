@@ -28,8 +28,8 @@
 namespace ommu\core\controllers\page;
 
 use Yii;
-use app\components\Controller;
 use yii\filters\VerbFilter;
+use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\CorePageViews;
 use ommu\core\models\search\CorePageViews as CorePageViewsSearch;

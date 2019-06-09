@@ -26,8 +26,8 @@
 namespace ommu\core\controllers\page;
 
 use Yii;
-use app\components\Controller;
 use yii\filters\VerbFilter;
+use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\CorePageViewHistory;
 use ommu\core\models\search\CorePageViewHistory as CorePageViewHistorySearch;
@@ -118,8 +118,9 @@ class ViewDetailController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->findModel($id)->delete();
-		
+		$model = $this->findModel($id);
+		$model->delete();
+
 		Yii::$app->session->setFlash('success', Yii::t('app', 'Page view history success deleted.'));
 		return $this->redirect(['manage']);
 	}
