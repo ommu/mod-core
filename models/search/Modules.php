@@ -14,6 +14,7 @@
 
 namespace ommu\core\models\search;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use ommu\core\models\Modules as ModulesModel;
