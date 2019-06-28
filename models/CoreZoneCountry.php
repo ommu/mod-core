@@ -105,7 +105,8 @@ class CoreZoneCountry extends \app\components\ActiveRecord
 	{
 		if($count == false) {
 			return $this->hasMany(CoreZoneProvince::className(), ['country_id' => 'country_id'])
-				->andOnCondition([sprintf('%s.publish', CoreZoneProvince::tableName()) => $publish]);
+				->alias('provinces')
+				->andOnCondition([sprintf('%s.publish', 'provinces') => $publish]);
 		}
 
 		$model = CoreZoneProvince::find()

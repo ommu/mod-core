@@ -139,7 +139,8 @@ class CoreZoneCity extends \app\components\ActiveRecord
 	{
 		if($count == false) {
 			return $this->hasMany(CoreZoneDistrict::className(), ['city_id' => 'city_id'])
-				->andOnCondition([sprintf('%s.publish', CoreZoneDistrict::tableName()) => $publish]);
+				->alias('districts')
+				->andOnCondition([sprintf('%s.publish', 'districts') => $publish]);
 		}
 
 		$model = CoreZoneDistrict::find()

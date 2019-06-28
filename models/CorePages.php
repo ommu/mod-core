@@ -137,7 +137,8 @@ class CorePages extends \app\components\ActiveRecord
 	{
 		if($count == false) {
 			return $this->hasMany(CorePageViews::className(), ['page_id' => 'page_id'])
-				->andOnCondition([sprintf('%s.publish', CorePageViews::tableName()) => $publish]);
+				->alias('views')
+				->andOnCondition([sprintf('%s.publish', 'views') => $publish]);
 		}
 
 		$model = CorePageViews::find()
