@@ -25,12 +25,14 @@ $this->params['breadcrumbs'][] = $model->page->title->message;
 $getAttr = Yii::$app->request->get();
 unset($getAttr['id']);
 $setAttr = ArrayHelper::merge(['id'=>$model->view_id], $getAttr);
+
+if(!$small) {
 $this->params['menu']['content'] = [
 	['label' => Yii::t('app', 'Back To Manage'), 'url' => Url::to(ArrayHelper::merge(['manage'], $getAttr)), 'icon' => 'table'],
 	['label' => Yii::t('app', 'Detail'), 'url' => Url::to(ArrayHelper::merge(['view'], $setAttr)), 'icon' => 'eye', 'htmlOptions' => ['class'=>'btn btn-success']],
 	['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->view_id]), 'htmlOptions' => ['data-confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method'=>'post', 'class'=>'btn btn-danger'], 'icon' => 'trash'],
 ];
-?>
+} ?>
 
 <div class="core-page-views-view">
 

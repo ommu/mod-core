@@ -30,7 +30,7 @@ use app\components\widgets\ActiveForm;
 <?php //echo $form->errorSummary($model);?>
 
 <?php echo $form->field($model, 'site_creation')
-	->textInput(['type' => 'date'])
+	->textInput(['type'=>'date'])
 	->label($model->getAttributeLabel('site_creation')); ?>
 
 <?php echo $form->field($model, 'site_dateformat')
