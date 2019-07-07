@@ -70,7 +70,8 @@ class CoreZoneProvince extends CoreZoneProvinceModel
 			'country country', 
 			'creation creation', 
 			'modified modified'
-		]);
+		])
+		->groupBy(['province_id']);
 
 		// add conditions that should always apply here
 		$dataParams = [

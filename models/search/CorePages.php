@@ -73,7 +73,8 @@ class CorePages extends CorePagesModel
 			'quoteRltn quoteRltn', 
 			'creation creation', 
 			'modified modified'
-		]);
+		])
+		->groupBy(['page_id']);
 
 		// add conditions that should always apply here
 		$dataParams = [

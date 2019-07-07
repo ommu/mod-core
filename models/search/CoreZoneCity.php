@@ -71,7 +71,8 @@ class CoreZoneCity extends CoreZoneCityModel
 			'creation creation', 
 			'modified modified',
 			'province.country country'
-		]);
+		])
+		->groupBy(['city_id']);
 
 		// add conditions that should always apply here
 		$dataParams = [

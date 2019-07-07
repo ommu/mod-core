@@ -69,7 +69,8 @@ class CoreLanguages extends CoreLanguagesModel
 		$query->joinWith([
 			'creation creation', 
 			'modified modified'
-		]);
+		])
+		->groupBy(['language_id']);
 
 		// add conditions that should always apply here
 		$dataParams = [

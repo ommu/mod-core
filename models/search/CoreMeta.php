@@ -67,7 +67,8 @@ class CoreMeta extends CoreMetaModel
 			$query = CoreMetaModel::find()->alias('t')->select($column);
 		$query->joinWith([
 			'modified modified'
-		]);
+		])
+		->groupBy(['id']);
 
 		// add conditions that should always apply here
 		$dataProvider = new ActiveDataProvider([

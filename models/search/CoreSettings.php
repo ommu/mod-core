@@ -65,7 +65,8 @@ class CoreSettings extends CoreSettingsModel
 			$query = CoreSettingsModel::find()->alias('t')->select($column);
 		$query->joinWith([
 			'modified modified'
-		]);
+		])
+		->groupBy(['id']);
 
 		// add conditions that should always apply here
 		$dataProvider = new ActiveDataProvider([

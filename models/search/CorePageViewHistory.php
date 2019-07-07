@@ -69,7 +69,8 @@ class CorePageViewHistory extends CorePageViewHistoryModel
 		$query->joinWith([
 			'view.page.title page',
 			'view.user user'
-		]);
+		])
+		->groupBy(['id']);
 
 		// add conditions that should always apply here
 		$dataParams = [

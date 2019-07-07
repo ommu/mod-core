@@ -69,7 +69,8 @@ class CorePageViews extends CorePageViewsModel
 		$query->joinWith([
 			'page.title page', 
 			'user user'
-		]);
+		])
+		->groupBy(['view_id']);
 
 		// add conditions that should always apply here
 		$dataParams = [

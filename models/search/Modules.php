@@ -68,7 +68,8 @@ class Modules extends ModulesModel
 		$query->joinWith([
 			'creation creation', 
 			'modified modified'
-		]);
+		])
+		->groupBy(['id']);
 
 		// add conditions that should always apply here
 		$dataParams = [

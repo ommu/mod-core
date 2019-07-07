@@ -72,7 +72,8 @@ class CoreZoneDistrict extends CoreZoneDistrictModel
 			'modified modified',
 			'city.province province',
 			'city.province.country country',
-		]);
+		])
+		->groupBy(['district_id']);
 
 		// add conditions that should always apply here
 		$dataParams = [

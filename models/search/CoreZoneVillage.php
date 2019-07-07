@@ -73,7 +73,8 @@ class CoreZoneVillage extends CoreZoneVillageModel
 			'district.city city', 
 			'district.city.province province', 
 			'district.city.province.country country',
-		]);
+		])
+		->groupBy(['village_id']);
 
 		// add conditions that should always apply here
 		$dataParams = [

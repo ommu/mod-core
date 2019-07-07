@@ -69,7 +69,8 @@ class CoreZoneCountry extends CoreZoneCountryModel
 		$query->joinWith([
 			'creation creation', 
 			'modified modified'
-		]);
+		])
+		->groupBy(['country_id']);
 
 		// add conditions that should always apply here
 		$dataParams = [
