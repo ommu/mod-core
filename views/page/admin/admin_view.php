@@ -61,7 +61,7 @@ $this->params['menu']['content'] = [
 			'attribute' => 'media',
 			'value' => function ($model) {
 				$uploadPath = CorePages::getUploadPath(false);
-				return $model->media ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->media])), ['width' => '100%']).'<br/><br/>'.$model->media : '-';
+				return $model->media ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->media])), ['alt'=>$model->media, 'class'=>'mb-3']).'<br/>'.$model->media : '-';
 			},
 			'format' => 'html',
 		],

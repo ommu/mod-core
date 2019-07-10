@@ -249,7 +249,7 @@ class CorePages extends \app\components\ActiveRecord
 			'attribute' => 'media',
 			'value' => function($model, $key, $index, $column) {
 				$uploadPath = self::getUploadPath(false);
-				return $model->media ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->media])), ['alt' => $model->media]) : '-';
+				return $model->media ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->media])), ['alt'=>$model->media]) : '-';
 			},
 			'format' => 'html',
 		];

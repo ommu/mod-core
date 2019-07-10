@@ -62,7 +62,7 @@ $redactorOptions = [
 	->label($model->getAttributeLabel('quote_i')); ?>
 
 <?php $uploadPath = CorePages::getUploadPath(false);
-$media = !$model->isNewRecord && $model->old_media != '' ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->old_media])), ['class'=>'mb-15', 'width'=>'100%']) : '';
+$media = !$model->isNewRecord && $model->old_media != '' ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->old_media])), ['alt'=>$model->old_media, 'class'=>'mb-3']) : '';
 echo $form->field($model, 'media', ['template' => '{label}{beginWrapper}<div>'.$media.'</div>{input}{error}{hint}{endWrapper}'])
 	->fileInput()
 	->label($model->getAttributeLabel('media')); ?>
