@@ -247,18 +247,18 @@ class DistrictController extends Controller
 	{
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-		$term = Yii::$app->request->get('query');
+		$term = Yii::$app->request->get('term', null);
 		$cityId = Yii::$app->request->get('cid', null);
 		$extend = Yii::$app->request->get('extend', null);
 		
 		$model = CoreZoneDistrict::find()
 			->alias('t')
-			->andWhere(['like', 't.district_name', $term]);
+			->suggest();
+		if($term != null)
+			$model->andWhere(['like', 't.district_name', $term]);
 		if($cityId != null)
 			$model->andWhere(['t.city_id' => $cityId]);
-		$model = $model->published()
-			->limit(15)
-			->all();
+		$model = $model->limit(30)->orderBy('t.district_name asc')->all();
 
 		$result = [];
 		$i = 0;
@@ -269,11 +269,10 @@ class DistrictController extends Controller
 					'label' => $val->district_name, 
 				];
 			} else {
-				$i++;
 				$extendArray = array_map("trim", explode(',', $extend));
 				$result[$i] = [
 					'id' => $val->district_id,
-					'label' => join(', ', [$val->district_name, $val->city->city_name, $val->city->province->province_name, $val->city->province->country->country_name]), 
+					'label' => join(', ', [$val->district_name, $val->city->city_name, $val->city->province->province_name]), 
 				];
 				if(!empty($extendArray)) {
 					if(in_array('district_name', $extendArray))
@@ -292,6 +291,7 @@ class DistrictController extends Controller
 						$result[$i]['country_name'] = $val->city->province->country->country_name;
 				} else
 					$result[$i]['district_name'] =  $val->district_name;
+				$i++;
 			}
 		}
 		return $result;

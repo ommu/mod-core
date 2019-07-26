@@ -250,18 +250,18 @@ class VillageController extends Controller
 	{
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-		$term = Yii::$app->request->get('query');
+		$term = Yii::$app->request->get('term', null);
 		$districtId = Yii::$app->request->get('did', null);
 		$extend = Yii::$app->request->get('extend', null);
 
 		$model = CoreZoneVillage::find()
 			->alias('t')
-			->andWhere(['like', 't.village_name', $term]);
+			->suggest();
+		if($term != null)
+			$model->andWhere(['like', 't.village_name', $term]);
 		if($districtId != null)
 			$model->andWhere(['t.district_id' => $districtId]);
-		$model = $model->published()
-			->limit(15)
-			->all();
+		$model = $model->limit(30)->orderBy('t.village_name asc')->all();
 			
 		$result = [];
 		$i = 0;
@@ -272,11 +272,10 @@ class VillageController extends Controller
 					'label' => $val->village_name, 
 				];
 			} else {
-				$i++;
 				$extendArray = array_map("trim", explode(',', $extend));
 				$result[$i] = [
 					'id' => $val->village_id,
-					'label' => join(', ', [$val->village_name, $val->district->district_name, $val->district->city->city_name, $val->district->city->province->province_name, $val->district->city->province->country->country_name]),
+					'label' => join(', ', [$val->village_name, $val->district->district_name, $val->district->city->city_name, $val->district->city->province->province_name]),
 				];
 				if(!empty($extendArray)) {
 					if(in_array('village_name', $extendArray))
@@ -297,8 +296,11 @@ class VillageController extends Controller
 						$result[$i]['country_id'] = $val->district->city->province->country_id;
 					if(in_array('country_name', $extendArray))
 						$result[$i]['country_name'] = $val->district->city->province->country->country_name;
+					if(in_array('zipcode', $extendArray))
+						$result[$i]['zipcode'] = $val->zipcode;
 				} else
 					$result[$i]['village_name'] =  $val->village_name;
+				$i++;
 			}
 		}
 		return $result;

@@ -241,18 +241,18 @@ class ProvinceController extends Controller
 	{
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-		$term = Yii::$app->request->get('query');
+		$term = Yii::$app->request->get('term', null);
 		$countryId = Yii::$app->request->get('cid', null);
 		$extend = Yii::$app->request->get('extend', null);
 		
 		$model = CoreZoneProvince::find()
 			->alias('t')
-			->andWhere(['like', 't.province_name', $term]);
+			->suggest();
+		if($term != null)
+			$model->andWhere(['like', 't.province_name', $term]);
 		if($countryId != null)
 			$model->andWhere(['t.country_id' => $countryId]);
-		$model = $model->published()
-			->limit(15)
-			->all();
+		$model = $model->all();
 		
 		$result = [];
 		$i = 0;

@@ -244,16 +244,18 @@ class CityController extends Controller
 	{
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-		$term = Yii::$app->request->get('query');
+		$term = Yii::$app->request->get('term', null);
 		$provinceId = Yii::$app->request->get('pid', null);
 		$extend = Yii::$app->request->get('extend', null);
 		
 		$model = CoreZoneCity::find()
 			->alias('t')
-			->andWhere(['like', 't.city_name', $term]);
+			->suggest();
+		if($term != null)
+			$model->andWhere(['like', 't.city_name', $term]);
 		if($provinceId != null)
 			$model->andWhere(['t.province_id' => $provinceId]);
-		$model = $model->published()->limit(15)->all();
+		$model = $model->all();
 
 		$result = [];
 		$i = 0;

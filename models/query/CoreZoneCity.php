@@ -51,6 +51,15 @@ class CoreZoneCity extends \yii\db\ActiveQuery
 
 	/**
 	 * {@inheritdoc}
+	 */
+	public function suggest() 
+	{
+		return $this->select(['city_id', 'province_id', 'city_name'])
+			->published();
+	}
+
+	/**
+	 * {@inheritdoc}
 	 * @return \ommu\core\models\CoreZoneCity[]|array
 	 */
 	public function all($db = null)

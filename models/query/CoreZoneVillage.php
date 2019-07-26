@@ -51,6 +51,15 @@ class CoreZoneVillage extends \yii\db\ActiveQuery
 
 	/**
 	 * {@inheritdoc}
+	 */
+	public function suggest() 
+	{
+		return $this->select(['village_id', 'district_id', 'village_name', 'zipcode'])
+			->published();
+	}
+
+	/**
+	 * {@inheritdoc}
 	 * @return \ommu\core\models\CoreZoneVillage[]|array
 	 */
 	public function all($db = null)

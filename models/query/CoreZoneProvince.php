@@ -51,6 +51,15 @@ class CoreZoneProvince extends \yii\db\ActiveQuery
 
 	/**
 	 * {@inheritdoc}
+	 */
+	public function suggest() 
+	{
+		return $this->select(['province_id', 'country_id', 'province_name'])
+			->published();
+	}
+
+	/**
+	 * {@inheritdoc}
 	 * @return \ommu\core\models\CoreZoneProvince[]|array
 	 */
 	public function all($db = null)

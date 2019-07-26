@@ -213,10 +213,10 @@ class CountryController extends Controller
 	{
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-		$term = Yii::$app->request->get('query');
+		$term = Yii::$app->request->get('term');
 		$model = CoreZoneCountry::find()
-			->where(['like', 'country_name', $term])
-			->limit(15)
+			->suggest()
+			->andWhere(['like', 'country_name', $term])
 			->all();
 
 		$result = [];
