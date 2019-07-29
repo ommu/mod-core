@@ -17,7 +17,6 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
-use ommu\core\models\CorePages;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->title->message;
@@ -60,18 +59,18 @@ $this->params['menu']['content'] = [
 		[
 			'attribute' => 'media',
 			'value' => function ($model) {
-				$uploadPath = CorePages::getUploadPath(false);
+				$uploadPath = $model::getUploadPath(false);
 				return $model->media ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->media])), ['alt'=>$model->media, 'class'=>'mb-3']).'<br/>'.$model->media : '-';
 			},
 			'format' => 'html',
 		],
 		[
 			'attribute' => 'media_show',
-			'value' => CorePages::getMediaShow($model->media_show),
+			'value' => $model::getMediaShow($model->media_show),
 		],
 		[
 			'attribute' => 'media_type',
-			'value' => CorePages::getMediaType($model->media_type),
+			'value' => $model::getMediaType($model->media_type),
 		],
 		[
 			'attribute' => 'creation_date',

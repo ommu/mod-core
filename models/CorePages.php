@@ -414,7 +414,7 @@ class CorePages extends \app\components\ActiveRecord
 	 */
 	public static function getUploadPath($returnAlias=true) 
 	{
-		return ($returnAlias ? Yii::getAlias('@public/page') : 'public/page');
+		return ($returnAlias ? Yii::getAlias('@public/page') : 'page');
 	}
 
 	/**
