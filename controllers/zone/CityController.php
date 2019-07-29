@@ -266,11 +266,10 @@ class CityController extends Controller
 					'label' => $val->city_name, 
 				];
 			} else {
-				$i++;
 				$extendArray = array_map("trim", explode(',', $extend));
 				$result[$i] = [
 					'id' => $val->city_id,
-					'label' => join(', ', [$val->city_name, $val->province->province_name, $val->province->country->country_name]), 
+					'label' => join(', ', [$val->city_name, $val->province->province_name]), 
 				];
 				if(!empty($extendArray)) {
 					if(in_array('city_name', $extendArray))
@@ -285,6 +284,7 @@ class CityController extends Controller
 						$result[$i]['country_name'] = $val->province->country->country_name;
 				} else
 					$result[$i]['city_name'] =  $val->city_name;
+				$i++;
 			}
 		}
 		return $result;

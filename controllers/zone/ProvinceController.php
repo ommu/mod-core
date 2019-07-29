@@ -263,11 +263,10 @@ class ProvinceController extends Controller
 					'label' => $val->province_name, 
 				];
 			} else {
-				$i++;
 				$extendArray = array_map("trim", explode(',', $extend));
 				$result[$i] = [
 					'id' => $val->province_id,
-					'label' => $join(', ', [$val->province_name, $val->country->country_name]), 
+					'label' => join(', ', [$val->province_name]), 
 				];
 				if(!empty($extendArray)) {
 					if(in_array('province_name', $extendArray))
@@ -278,6 +277,7 @@ class ProvinceController extends Controller
 						$result[$i]['country_name'] = $val->country->country_name;
 				} else
 					$result[$i]['province_name'] =  $val->province_name;
+				$i++;
 			}
 		}
 		return $result;

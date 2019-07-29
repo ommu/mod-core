@@ -223,7 +223,7 @@ class CountryController extends Controller
 		foreach($model as $val) {
 			$result[] = [
 				'id' => $val->country_id,
-				'label' => trim($val->country_name), 
+				'label' => $val->country_name, 
 			];
 		}
 		return $result;

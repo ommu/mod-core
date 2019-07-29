@@ -248,7 +248,9 @@ class CoreZoneCountry extends \app\components\ActiveRecord
 	 */
 	public static function getCountry($array=true) 
 	{
-		$model = self::find()->alias('t');
+		$model = self::find()
+			->alias('t')
+			->suggest();
 		$model = $model->orderBy('t.country_name ASC')->all();
 
 		if($array == true)

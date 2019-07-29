@@ -336,7 +336,9 @@ class CoreZoneCity extends \app\components\ActiveRecord
 	 */
 	public static function getCity($publish=null, $array=true) 
 	{
-		$model = self::find()->alias('t');
+		$model = self::find()
+			->alias('t')
+			->suggest();
 		if($publish != null)
 			$model = $model->andWhere(['t.publish' => $publish]);
 
