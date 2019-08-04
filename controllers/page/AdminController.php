@@ -169,7 +169,6 @@ class AdminController extends Controller
 	public function actionView($id)
 	{
 		$model = $this->findModel($id);
-		// \ommu\core\models\CorePageViews::insertView($model->page_id);
 
 		$this->view->title = Yii::t('app', 'Detail Page: {name}', ['name' => $model->title->message]);
 		$this->view->description = '';
