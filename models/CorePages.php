@@ -95,8 +95,7 @@ class CorePages extends \app\components\ActiveRecord
 			[['publish', 'name', 'desc', 'quote', 'media_show', 'media_type', 'creation_id', 'modified_id'], 'integer'],
 			[['name_i', 'desc_i', 'quote_i', 'media', 'slug'], 'string'],
 			[['media', 'quote_i'], 'safe'],
-			[['name_i'], 'string', 'max' => 64],
-			[['quote_i'], 'string', 'max' => 128],
+			[['name_i'], 'string', 'max' => 128],
 		];
 	}
 
