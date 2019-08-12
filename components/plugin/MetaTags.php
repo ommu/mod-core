@@ -2,7 +2,7 @@
 /**
  * MetaTags class file.
  *
- * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @author Putra Sudaryanto <putra@ommu.co>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2015 Ommu Platform (www.ommu.co)
  * @create date February 20, 2014 14:02 WIB

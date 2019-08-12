@@ -40,7 +40,7 @@
  *	cleanImageContent
  *	formatSizeUnits
  *
- * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @author Putra Sudaryanto <putra@ommu.co>
  * @contact (+62)856-299-4114
  * @create date November 27, 2013 15:02 WIB
  * @update date April 3, 2014 15:02 WIB

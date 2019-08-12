@@ -415,7 +415,7 @@ class Calendar {
 				if ($date == $edate) {
 					$h .= $this->processEvent($event);
 					
-					/* count by putra@sudaryanto.id */
+					/* count by putra@ommu.co */
 					foreach ($event as $e) {
 						$count = $count + 1;
 					}

@@ -10,7 +10,7 @@
  *	getDefaultTheme
  *	getRulePos
  *
- * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @author Putra Sudaryanto <putra@ommu.co>
  * @contact (+62)856-299-4114
  * @create date August 6, 2012 15:02 WIB
  * @updated date February 20, 2014 15:50 WIB

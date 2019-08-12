@@ -24,7 +24,7 @@
  *	getIdMax
  *	installModule
  *
- * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @author Putra Sudaryanto <putra@ommu.co>
  * @contact (+62)856-299-4114
  * @create date November 27, 2013 15:02 WIB
  * @copyright Copyright (c) 2013 Ommu Platform (www.ommu.co)
@@ -381,7 +381,7 @@ class ModuleHandle extends CApplicationComponent
 					$config .= "/**\n";
 					$config .= " * $moduleClass\n";
 					$config .= " *\n";
-					$config .= " * @author Putra Sudaryanto <putra@sudaryanto.id>\n";
+					$config .= " * @author Putra Sudaryanto <putra@ommu.co>\n";
 					$config .= " * @contact (+62)856-299-4114\n";
 					$config .= " * @copyright Copyright (c) ".date('Y')." Ommu Platform (www.ommu.co)\n";
 					$config .= " * @created date ".date('j F Y, H:i')." WIB\n";
