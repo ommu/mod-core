@@ -5,7 +5,7 @@
  * @var $this ommu\core\controllers\page\ViewDetailController
  * @var $model ommu\core\models\CorePageViewHistory
  *
- * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @author Putra Sudaryanto <putra@ommu.co>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 23:05 WIB

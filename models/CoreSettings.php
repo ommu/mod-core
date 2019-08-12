@@ -2,7 +2,7 @@
 /**
  * CoreSettings
  * 
- * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @author Putra Sudaryanto <putra@ommu.co>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 2 October 2017, 01:10 WIB
@@ -518,7 +518,7 @@ class CoreSettings extends \app\components\ActiveRecord
 	{
 		if(parent::beforeValidate()) {
 			if($this->isNewRecord) {
-				$this->license_email = 'putra@sudaryanto.id';
+				$this->license_email = 'putra@ommu.co';
 				$this->license_key = $this->licenseCode();
 
 			} else {

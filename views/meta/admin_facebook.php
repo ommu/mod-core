@@ -6,7 +6,7 @@
  * @var $model ommu\core\models\CoreMeta
  * @var $form yii\widgets\ActiveForm
  *
- * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @author Putra Sudaryanto <putra@ommu.co>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2018 OMMU (www.ommu.co)
  * @created date 24 April 2018, 14:11 WIB
@@ -97,7 +97,7 @@ echo $form->field($model, 'facebook_type')
 <?php echo $form->field($model, 'facebook_sitename')
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('facebook_sitename'))
-	->hint(Yii::t('app', 'The name of the web site upon which the object resides (.i.e. "Ommu Platform, Sudaryanto.ID")')); ?>
+	->hint(Yii::t('app', 'The name of the web site upon which the object resides (.i.e. "Ommu Platform, ommu.co")')); ?>
 
 <?php echo $form->field($model, 'facebook_see_also')
 	->textInput(['maxlength' => true])

@@ -5,7 +5,7 @@
  * This is the ActiveQuery class for [[\ommu\core\models\CorePageViewHistory]].
  * @see \ommu\core\models\CorePageViewHistory
  * 
- * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @author Putra Sudaryanto <putra@ommu.co>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2019 OMMU (www.ommu.co)
  * @created date 31 January 2019, 16:07 WIB

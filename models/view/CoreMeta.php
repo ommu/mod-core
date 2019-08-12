@@ -2,12 +2,10 @@
 /**
  * CoreMeta
  * 
- * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @author Putra Sudaryanto <putra@ommu.co>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2018 OMMU (www.ommu.co)
  * @created date 22 April 2018, 19:28 WIB
- * @modified date 22 April 2018, 19:28 WIB
- * @modified by Putra Sudaryanto <putra@sudaryanto.id>
  * @link https://github.com/ommu/mod-core
  *
  * This is the model class for table "_core_meta".

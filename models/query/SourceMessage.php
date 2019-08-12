@@ -5,7 +5,7 @@
  * This is the ActiveQuery class for [[\ommu\core\models\SourceMessage]].
  * @see \ommu\core\models\SourceMessage
  * 
- * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @author Putra Sudaryanto <putra@ommu.co>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2019 OMMU (www.ommu.co)
  * @created date 22 March 2019, 18:23 WIB

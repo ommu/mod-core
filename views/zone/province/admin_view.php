@@ -5,7 +5,7 @@
  * @var $this ommu\core\controllers\zone\ProvinceController
  * @var $model ommu\core\models\CoreZoneProvince
  *
- * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @author Putra Sudaryanto <putra@ommu.co>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 8 September 2017, 15:02 WIB
