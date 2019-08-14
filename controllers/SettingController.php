@@ -82,6 +82,7 @@ class SettingController extends Controller
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
+			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Public permissions success updated.'));
@@ -117,6 +118,7 @@ class SettingController extends Controller
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
+			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Spam & banning setting success updated.'));
@@ -152,6 +154,7 @@ class SettingController extends Controller
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
+			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Signup setting success updated.'));
@@ -187,6 +190,7 @@ class SettingController extends Controller
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
+			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Language setting success updated.'));
