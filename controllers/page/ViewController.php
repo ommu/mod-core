@@ -129,7 +129,7 @@ class ViewController extends Controller
 
 		if($model->save(false, ['publish'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Page view success deleted.'));
-			return $this->redirect(['manage']);
+			return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 		}
 	}
 
@@ -147,7 +147,7 @@ class ViewController extends Controller
 
 		if($model->save(false, ['publish'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Page view success updated.'));
-			return $this->redirect(['manage']);
+			return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 		}
 	}
 

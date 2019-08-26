@@ -201,7 +201,7 @@ class LanguageController extends Controller
 		$model->delete();
 
 		Yii::$app->session->setFlash('success', Yii::t('app', 'Language success deleted.'));
-		return $this->redirect(['manage']);
+		return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 	}
 
 	/**
@@ -218,7 +218,7 @@ class LanguageController extends Controller
 		
 		if($model->save(false, ['actived','modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Language success updated.'));
-			return $this->redirect(['manage']);
+			return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 		}
 	}
 
@@ -236,7 +236,7 @@ class LanguageController extends Controller
 		
 		if($model->save(false, ['default','modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Language success updated.'));
-			return $this->redirect(['manage']);
+			return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 		}
 	}
 
