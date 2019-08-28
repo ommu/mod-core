@@ -43,20 +43,28 @@ $this->params['menu']['content'] = [
 		[
 			'attribute' => 'creation_date',
 			'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),
+			'visible' => !$small,
 		],
 		[
 			'attribute' => 'creationDisplayname',
 			'value' => isset($model->creation) ? $model->creation->displayname : '-',
+			'visible' => !$small,
 		],
 		[
 			'attribute' => 'modified_date',
 			'value' => Yii::$app->formatter->asDatetime($model->modified_date, 'medium'),
+			'visible' => !$small,
 		],
 		[
 			'attribute' => 'modifiedDisplayname',
 			'value' => isset($model->modified) ? $model->modified->displayname : '-',
+			'visible' => !$small,
 		],
-		'slug',
+		[
+			'attribute' => 'slug',
+			'value' => $model->slug ? $model->slug : '-',
+			'visible' => !$small,
+		],
 		[
 			'attribute' => 'provinces',
 			'value' => function ($model) {
@@ -64,6 +72,7 @@ $this->params['menu']['content'] = [
 				return Html::a($provinces, ['zone/province/manage', 'country'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} provinces', ['count'=>$provinces])]);
 			},
 			'format' => 'html',
+			'visible' => !$small,
 		],
 	],
 ]) ?>

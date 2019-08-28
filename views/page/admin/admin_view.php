@@ -75,26 +75,32 @@ $this->params['menu']['content'] = [
 		[
 			'attribute' => 'creation_date',
 			'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),
+			'visible' => !$small,
 		],
 		[
 			'attribute' => 'creationDisplayname',
 			'value' => isset($model->creation) ? $model->creation->displayname : '-',
+			'visible' => !$small,
 		],
 		[
 			'attribute' => 'modified_date',
 			'value' => Yii::$app->formatter->asDatetime($model->modified_date, 'medium'),
+			'visible' => !$small,
 		],
 		[
 			'attribute' => 'modifiedDisplayname',
 			'value' => isset($model->modified) ? $model->modified->displayname : '-',
+			'visible' => !$small,
 		],
 		[
 			'attribute' => 'updated_date',
 			'value' => Yii::$app->formatter->asDatetime($model->updated_date, 'medium'),
+			'visible' => !$small,
 		],
 		[
 			'attribute' => 'slug',
 			'value' => $model->slug ? $model->slug : '-',
+			'visible' => !$small,
 		],
 		[
 			'attribute' => 'views',
@@ -103,6 +109,7 @@ $this->params['menu']['content'] = [
 				return Html::a($views, ['page/view/manage', 'page'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} views', ['count'=>$views])]);
 			},
 			'format' => 'html',
+			'visible' => !$small,
 		],
 	],
 ]) ?>

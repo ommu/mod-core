@@ -78,6 +78,7 @@ $this->params['menu']['content'] = [
 				return Html::a($views, ['page/view-detail/manage', 'view'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} views', ['count'=>$views])]);
 			},
 			'format' => 'html',
+			'visible' => !$small,
 		],
 	],
 ]) ?>

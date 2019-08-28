@@ -59,43 +59,19 @@ echo DetailView::widget([
 		[
 			'attribute' => 'creation_date',
 			'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),
+			'visible' => !$small,
 		],
 		[
 			'attribute' => 'creationDisplayname',
 			'value' => isset($model->creation) ? $model->creation->displayname : '-',
+			'visible' => !$small,
 		],
 	],
 ]);
 }?>
 
-<?php if($user != null) {
-$model = $user;
-echo DetailView::widget([
-	'model' => $model,
-	'options' => [
-		'class'=>'table table-striped detail-view',
-	],
-	'attributes' => [
-		[
-			'attribute' => 'enabled',
-			'value' => Users::getEnabled($model->enabled),
-		],
-		[
-			'attribute' => 'verified',
-			'value' => $model->verified == 1 ? Yii::t('app', 'Verified') : Yii::t('app', 'Unverified'),
-		],
-		[
-			'attribute' => 'levelName',
-			'value' => isset($model->level) ? $model->level->title->message : '-',
-		],
-		'email:email',
-		[
-			'attribute' => 'lastlogin_date',
-			'value' => Yii::$app->formatter->asDatetime($model->lastlogin_date, 'medium'),
-		],
-	],
-]);
-}?>
+<?php if($user != null)
+	echo $this->render('@users/views/member/admin_view', ['model'=>$user, 'small'=>true]); ?>
 
 <?php //echo $this->render('_search', ['model'=>$searchModel]); ?>
 
