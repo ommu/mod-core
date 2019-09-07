@@ -155,7 +155,8 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 		}
 
 		$model = CoreZoneVillage::find()
-			->where(['district_id' => $this->district_id]);
+			->alias('t')
+			->where(['t.district_id' => $this->district_id]);
 		if($publish == 0)
 			$model->unpublish();
 		elseif($publish == 1)

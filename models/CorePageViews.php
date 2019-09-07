@@ -95,7 +95,8 @@ class CorePageViews extends \app\components\ActiveRecord
 			return $this->hasMany(CorePageViewHistory::className(), ['view_id' => 'view_id']);
 
 		$model = CorePageViewHistory::find()
-			->where(['view_id' => $this->view_id]);
+			->alias('t')
+			->where(['t.view_id' => $this->view_id]);
 		$histories = $model->count();
 
 		return $histories ? $histories : 0;

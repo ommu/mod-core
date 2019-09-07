@@ -98,7 +98,8 @@ class CoreLanguages extends \app\components\ActiveRecord
 			return $this->hasMany(Users::className(), ['language_id' => 'language_id']);
 
 		$model = Users::find()
-			->where(['language_id' => $this->language_id]);
+			->alias('t')
+			->where(['t.language_id' => $this->language_id]);
 		$users = $model->count();
 
 		return $users ? $users : 0;

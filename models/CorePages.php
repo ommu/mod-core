@@ -141,7 +141,8 @@ class CorePages extends \app\components\ActiveRecord
 		}
 
 		$model = CorePageViews::find()
-			->where(['page_id' => $this->page_id]);
+			->alias('t')
+			->where(['t.page_id' => $this->page_id]);
 		if($publish == 0)
 			$model->unpublish();
 		elseif($publish == 1)

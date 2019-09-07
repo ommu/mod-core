@@ -113,6 +113,6 @@ $this->params['menu']['content'] = [
 		],
 		'slug',
 	],
-]) ?>
+]); ?>
 
 </div>

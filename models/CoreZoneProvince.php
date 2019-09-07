@@ -125,7 +125,8 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 		}
 
 		$model = CoreZoneCity::find()
-			->where(['province_id' => $this->province_id]);
+			->alias('t')
+			->where(['t.province_id' => $this->province_id]);
 		if($publish == 0)
 			$model->unpublish();
 		elseif($publish == 1)

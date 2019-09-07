@@ -92,7 +92,8 @@ class SourceMessage extends \app\components\ActiveRecord
 			return $this->hasMany(Message::className(), ['id' => 'id']);
 
 		$model = Message::find()
-			->where(['id' => $this->id]);
+			->alias('t')
+			->where(['t.id' => $this->id]);
 		$messages = $model->count();
 
 		return $messages ? $messages : 0;

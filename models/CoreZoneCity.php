@@ -144,7 +144,8 @@ class CoreZoneCity extends \app\components\ActiveRecord
 		}
 
 		$model = CoreZoneDistrict::find()
-			->where(['city_id' => $this->city_id]);
+			->alias('t')
+			->where(['t.city_id' => $this->city_id]);
 		if($publish == 0)
 			$model->unpublish();
 		elseif($publish == 1)

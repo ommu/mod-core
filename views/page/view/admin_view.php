@@ -81,6 +81,6 @@ $this->params['menu']['content'] = [
 			'visible' => !$small,
 		],
 	],
-]) ?>
+]); ?>
 
 </div>

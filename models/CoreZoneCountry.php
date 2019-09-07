@@ -110,7 +110,8 @@ class CoreZoneCountry extends \app\components\ActiveRecord
 		}
 
 		$model = CoreZoneProvince::find()
-			->where(['country_id' => $this->country_id]);
+			->alias('t')
+			->where(['t.country_id' => $this->country_id]);
 		if($publish == 0)
 			$model->unpublish();
 		elseif($publish == 1)
