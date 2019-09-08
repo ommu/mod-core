@@ -11,7 +11,6 @@
  * This is the model class for table "ommu_settings".
  *
  * The followings are the available columns in table "ommu_settings":
- * @property integer $id
  * @property string $name
  * @property string $value
  * @property string $module_id
@@ -68,7 +67,6 @@ class Settings extends \app\components\ActiveRecord
 	public function attributeLabels()
 	{
 		return [
-			'id' => Yii::t('app', 'ID'),
 			'name' => Yii::t('app', 'Name'),
 			'value' => Yii::t('app', 'Value'),
 			'module_id' => Yii::t('app', 'Module'),
