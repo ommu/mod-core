@@ -35,6 +35,7 @@ use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use ommu\core\models\CorePages;
 use ommu\core\models\search\CorePages as CorePagesSearch;
+use yii\web\UploadedFile;
 
 class AdminController extends Controller
 {
@@ -108,6 +109,7 @@ class AdminController extends Controller
 			$model->load($postData);
 			$model->media_show = $postData['media_show'] ? $postData['media_show'] : 0;
 			$model->media_type = $postData['media_type'] ? $postData['media_type'] : 0;
+			$model->media = UploadedFile::getInstance($model, 'media');
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Page success created.'));
@@ -140,6 +142,7 @@ class AdminController extends Controller
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
+			$model->media = UploadedFile::getInstance($model, 'media');
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;

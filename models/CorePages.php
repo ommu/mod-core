@@ -439,12 +439,12 @@ class CorePages extends \app\components\ActiveRecord
 	{
 		if(parent::beforeValidate()) {
 			$mediaFileType = ['bmp','gif','jpg','png'];
-			$media = UploadedFile::getInstance($this, 'media');
 
-			if($media instanceof UploadedFile && !$media->getHasError()) {
-				if(!in_array(strtolower($media->getExtension()), $mediaFileType)) {
+			// $this->media = UploadedFile::getInstance($this, 'media');
+			if($this->media instanceof UploadedFile && !$this->media->getHasError()) {
+				if(!in_array(strtolower($this->media->getExtension()), $mediaFileType)) {
 					$this->addError('media', Yii::t('app', 'The file {name} cannot be uploaded. Only files with these extensions are allowed: {extensions}', [
-						'name'=>$media->name,
+						'name'=>$this->media->name,
 						'extensions'=>$this->formatFileType($mediaFileType, false),
 					]));
 				}
@@ -481,7 +481,7 @@ class CorePages extends \app\components\ActiveRecord
 				$verwijderenPath = join('/', [self::getUploadPath(), 'verwijderen']);
 				$this->createUploadDirectory(self::getUploadPath());
 
-				$this->media = UploadedFile::getInstance($this, 'media');
+				// $this->media = UploadedFile::getInstance($this, 'media');
 				if($this->media instanceof UploadedFile && !$this->media->getHasError()) {
 					$fileName = join('-', [time(), UuidHelper::uuid(), $this->page_id]).'.'.strtolower($this->media->getExtension()); 
 					if($this->media->saveAs(join('/', [$uploadPath, $fileName]))) {
@@ -552,7 +552,7 @@ class CorePages extends \app\components\ActiveRecord
 		$this->createUploadDirectory(self::getUploadPath());
 
 		if($insert) {
-			$this->media = UploadedFile::getInstance($this, 'media');
+			// $this->media = UploadedFile::getInstance($this, 'media');
 			if($this->media instanceof UploadedFile && !$this->media->getHasError()) {
 				$fileName = join('-', [time(), UuidHelper::uuid(), $this->page_id]).'.'.strtolower($this->media->getExtension()); 
 				if($this->media->saveAs(join('/', [$uploadPath, $fileName])))

@@ -217,8 +217,9 @@ class CountryController extends Controller
 
 		$term = Yii::$app->request->get('term');
 		$model = CoreZoneCountry::find()
+			->alias('t')
 			->suggest()
-			->andWhere(['like', 'country_name', $term])
+			->andWhere(['like', 't.country_name', $term])
 			->all();
 
 		$result = [];
