@@ -18,6 +18,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['/setting/update']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Zone'), 'url' => ['zone/country/index']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Districts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->district_name;
 
@@ -80,6 +82,15 @@ $this->params['menu']['content'] = [
 			'value' => $model->filterYesNo($model->checked),
 		],
 		[
+			'attribute' => 'villages',
+			'value' => function ($model) {
+				$villages = $model->getVillages(true);
+				return Html::a($villages, ['zone/village/manage', 'district'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} villages', ['count'=>$villages])]);
+			},
+			'format' => 'html',
+			'visible' => !$small,
+		],
+		[
 			'attribute' => 'creation_date',
 			'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),
 			'visible' => !$small,
@@ -110,13 +121,10 @@ $this->params['menu']['content'] = [
 			'visible' => !$small,
 		],
 		[
-			'attribute' => 'villages',
-			'value' => function ($model) {
-				$villages = $model->getVillages(true);
-				return Html::a($villages, ['zone/village/manage', 'district'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} villages', ['count'=>$villages])]);
-			},
+			'attribute' => '',
+			'value' => Html::a(Yii::t('app', 'Update'), ['update', 'id'=>$model->primaryKey], ['title'=>Yii::t('app', 'Update'), 'class'=>'btn modal-btn btn-primary']),
 			'format' => 'html',
-			'visible' => !$small,
+			'visible' => !$small && Yii::$app->request->isAjax ? true : false,
 		],
 	],
 ]); ?>

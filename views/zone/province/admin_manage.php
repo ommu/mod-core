@@ -22,10 +22,17 @@ use yii\widgets\Pjax;
 use yii\widgets\DetailView;
 use ommu\core\models\CoreZoneCountry;
 
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['/setting/update']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Zone'), 'url' => ['zone/country/index']];
+if($country != null)
+	$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Country: {country-name}', ['country-name'=>$country->country_name]), 'url' => ['zone/country/view', 'id'=>$country->country_id]];
 $this->params['breadcrumbs'][] = $this->title;
 
+$createUrl = Url::to(['create']);
+if($country != null)
+	$createUrl = Url::to(['create', 'id'=>$country->country_id]);
 $this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Add Province'), 'url' => Url::to(['create']), 'icon' => 'plus-square', 'htmlOptions' => ['class'=>'btn btn-success']],
+	['label' => Yii::t('app', 'Add Province'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class'=>'btn modal-btn btn-success']],
 ];
 $this->params['menu']['option'] = [
 	//['label' => Yii::t('app', 'Search'), 'url' => 'javascript:void(0);'],
@@ -68,17 +75,20 @@ array_push($columnData, [
 	'urlCreator' => function($action, $model, $key, $index) {
 		if($action == 'view')
 			return Url::to(['view', 'id'=>$key]);
-		if($action == 'update')
+		if($action == 'update') {
+			if(($country = Yii::$app->request->get('country')) != null)
+				return Url::to(['update', 'id'=>$key, 'country'=>$country]);
 			return Url::to(['update', 'id'=>$key]);
+		}
 		if($action == 'delete')
 			return Url::to(['delete', 'id'=>$key]);
 	},
 	'buttons' => [
 		'view' => function ($url, $model, $key) {
-			return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title'=>Yii::t('app', 'Detail')]);
+			return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title'=>Yii::t('app', 'Detail'), 'class'=>'modal-btn']);
 		},
 		'update' => function ($url, $model, $key) {
-			return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['title'=>Yii::t('app', 'Update')]);
+			return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['title'=>Yii::t('app', 'Update'), 'class'=>'modal-btn']);
 		},
 		'delete' => function ($url, $model, $key) {
 			return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [

@@ -127,6 +127,8 @@ class CityController extends Controller
 	public function actionCreate()
 	{
 		$model = new CoreZoneCity();
+		if(($id = Yii::$app->request->get('id')) != null)
+			$model->province_id = $id;
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
@@ -136,8 +138,14 @@ class CityController extends Controller
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'City success created.'));
-				return $this->redirect(['manage']);
-				//return $this->redirect(['view', 'id'=>$model->city_id]);
+				if(!Yii::$app->request->isAjax) {
+					if($id != null)
+						return $this->redirect(['manage', 'province'=>$model->province_id]);
+					return $this->redirect(['manage']);
+				}
+				if($id != null)
+					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'province'=>$model->province_id]);
+				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
 			} else {
 				if(Yii::$app->request->isAjax)
@@ -148,7 +156,7 @@ class CityController extends Controller
 		$this->view->title = Yii::t('app', 'Create City');
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_create', [
+		return $this->oRender('admin_create', [
 			'model' => $model,
 		]);
 	}
@@ -171,7 +179,11 @@ class CityController extends Controller
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'City success updated.'));
-				return $this->redirect(['manage']);
+				if(!Yii::$app->request->isAjax)
+					return $this->redirect(['update', 'id'=>$model->city_id]);
+				if(($province = Yii::$app->request->get('province')) != null)
+					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'province'=>$province]);
+				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
 			} else {
 				if(Yii::$app->request->isAjax)
@@ -182,7 +194,7 @@ class CityController extends Controller
 		$this->view->title = Yii::t('app', 'Update City: {city-name}', ['city-name' => $model->city_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_update', [
+		return $this->oRender('admin_update', [
 			'model' => $model,
 		]);
 	}

@@ -18,6 +18,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['/setting/update']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Zone'), 'url' => ['zone/country/index']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Villages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->village_name;
 
@@ -112,6 +114,12 @@ $this->params['menu']['content'] = [
 			'visible' => !$small,
 		],
 		'slug',
+		[
+			'attribute' => '',
+			'value' => Html::a(Yii::t('app', 'Update'), ['update', 'id'=>$model->primaryKey], ['title'=>Yii::t('app', 'Update'), 'class'=>'btn modal-btn btn-primary']),
+			'format' => 'html',
+			'visible' => !$small && Yii::$app->request->isAjax ? true : false,
+		],
 	],
 ]); ?>
 

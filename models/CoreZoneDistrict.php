@@ -305,11 +305,11 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 			'attribute' => 'villages',
 			'value' => function($model, $key, $index, $column) {
 				$villages = $model->getVillages(true);
-				return Html::a($villages, ['zone/village/manage', 'district'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} villages', ['count'=>$villages])]);
+				return Html::a($villages, ['zone/village/manage', 'district'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} villages', ['count'=>$villages]), 'data-pjax'=>0]);
 			},
 			'filter' => false,
 			'contentOptions' => ['class'=>'center'],
-			'format' => 'html',
+			'format' => 'raw',
 		];
 		$this->templateColumns['checked'] = [
 			'attribute' => 'checked',

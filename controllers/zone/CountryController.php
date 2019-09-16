@@ -125,8 +125,9 @@ class CountryController extends Controller
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Country success created.'));
-				return $this->redirect(['manage']);
-				//return $this->redirect(['view', 'id'=>$model->country_id]);
+				if(!Yii::$app->request->isAjax)
+					return $this->redirect(['manage']);
+				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
 			} else {
 				if(Yii::$app->request->isAjax)
@@ -137,7 +138,7 @@ class CountryController extends Controller
 		$this->view->title = Yii::t('app', 'Create Country');
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_create', [
+		return $this->oRender('admin_create', [
 			'model' => $model,
 		]);
 	}
@@ -160,7 +161,9 @@ class CountryController extends Controller
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Country success updated.'));
-				return $this->redirect(['manage']);
+				if(!Yii::$app->request->isAjax)
+					return $this->redirect(['manage']);
+				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
 			} else {
 				if(Yii::$app->request->isAjax)
@@ -171,7 +174,7 @@ class CountryController extends Controller
 		$this->view->title = Yii::t('app', 'Update Country: {country-name}', ['country-name' => $model->country_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_update', [
+		return $this->oRender('admin_update', [
 			'model' => $model,
 		]);
 	}

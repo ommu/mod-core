@@ -133,6 +133,8 @@ class VillageController extends Controller
 	public function actionCreate()
 	{
 		$model = new CoreZoneVillage();
+		if(($id = Yii::$app->request->get('id')) != null)
+			$model->district_id = $id;
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
@@ -142,8 +144,14 @@ class VillageController extends Controller
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Village success created.'));
-				return $this->redirect(['manage']);
-				//return $this->redirect(['view', 'id'=>$model->village_id]);
+				if(!Yii::$app->request->isAjax) {
+					if($id != null)
+						return $this->redirect(['manage', 'district'=>$model->district_id]);
+					return $this->redirect(['manage']);
+				}
+				if($id != null)
+					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'district'=>$model->district_id]);
+				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
 			} else {
 				if(Yii::$app->request->isAjax)
@@ -154,7 +162,7 @@ class VillageController extends Controller
 		$this->view->title = Yii::t('app', 'Create Village');
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_create', [
+		return $this->oRender('admin_create', [
 			'model' => $model,
 		]);
 	}
@@ -177,7 +185,11 @@ class VillageController extends Controller
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Village success updated.'));
-				return $this->redirect(['manage']);
+				if(!Yii::$app->request->isAjax)
+					return $this->redirect(['update', 'id'=>$model->village_id]);
+				if(($district = Yii::$app->request->get('district')) != null)
+					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'district'=>$district]);
+				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
 			} else {
 				if(Yii::$app->request->isAjax)
@@ -188,7 +200,7 @@ class VillageController extends Controller
 		$this->view->title = Yii::t('app', 'Update Village: {village-name}', ['village-name' => $model->village_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_update', [
+		return $this->oRender('admin_update', [
 			'model' => $model,
 		]);
 	}

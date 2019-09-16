@@ -17,6 +17,8 @@
 
 use yii\helpers\Url;
 
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['/setting/update']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Zone'), 'url' => ['zone/country/index']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Villages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->village_name, 'url' => ['view', 'id'=>$model->village_id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');

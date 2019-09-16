@@ -130,6 +130,8 @@ class DistrictController extends Controller
 	public function actionCreate()
 	{
 		$model = new CoreZoneDistrict();
+		if(($id = Yii::$app->request->get('id')) != null)
+			$model->city_id = $id;
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
@@ -139,8 +141,14 @@ class DistrictController extends Controller
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'District success created.'));
-				return $this->redirect(['manage']);
-				//return $this->redirect(['view', 'id'=>$model->district_id]);
+				if(!Yii::$app->request->isAjax) {
+					if($id != null)
+						return $this->redirect(['manage', 'city'=>$model->city_id]);
+					return $this->redirect(['manage']);
+				}
+				if($id != null)
+					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'city'=>$model->city_id]);
+				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
 			} else {
 				if(Yii::$app->request->isAjax)
@@ -151,7 +159,7 @@ class DistrictController extends Controller
 		$this->view->title = Yii::t('app', 'Create District');
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_create', [
+		return $this->oRender('admin_create', [
 			'model' => $model,
 		]);
 	}
@@ -174,7 +182,11 @@ class DistrictController extends Controller
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'District success updated.'));
-				return $this->redirect(['manage']);
+				if(!Yii::$app->request->isAjax)
+					return $this->redirect(['update', 'id'=>$model->district_id]);
+				if(($city = Yii::$app->request->get('city')) != null)
+					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'city'=>$city]);
+				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
 			} else {
 				if(Yii::$app->request->isAjax)
@@ -185,7 +197,7 @@ class DistrictController extends Controller
 		$this->view->title = Yii::t('app', 'Update District: {district-name}', ['district-name' => $model->district_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_update', [
+		return $this->oRender('admin_update', [
 			'model' => $model,
 		]);
 	}

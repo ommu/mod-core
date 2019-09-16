@@ -18,6 +18,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['/setting/update']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Zone'), 'url' => ['zone/country/index']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Countries'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->country_name;
 
@@ -40,6 +42,15 @@ $this->params['menu']['content'] = [
 		'country_id',
 		'country_name',
 		'code',
+		[
+			'attribute' => 'provinces',
+			'value' => function ($model) {
+				$provinces = $model->getProvinces(true);
+				return Html::a($provinces, ['zone/province/manage', 'country'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} provinces', ['count'=>$provinces])]);
+			},
+			'format' => 'html',
+			'visible' => !$small,
+		],
 		[
 			'attribute' => 'creation_date',
 			'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),
@@ -66,13 +77,10 @@ $this->params['menu']['content'] = [
 			'visible' => !$small,
 		],
 		[
-			'attribute' => 'provinces',
-			'value' => function ($model) {
-				$provinces = $model->getProvinces(true);
-				return Html::a($provinces, ['zone/province/manage', 'country'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} provinces', ['count'=>$provinces])]);
-			},
+			'attribute' => '',
+			'value' => Html::a(Yii::t('app', 'Update'), ['update', 'id'=>$model->primaryKey], ['title'=>Yii::t('app', 'Update'), 'class'=>'btn modal-btn btn-primary']),
 			'format' => 'html',
-			'visible' => !$small,
+			'visible' => !$small && Yii::$app->request->isAjax ? true : false,
 		],
 	],
 ]); ?>

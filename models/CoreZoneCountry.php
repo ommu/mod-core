@@ -218,11 +218,11 @@ class CoreZoneCountry extends \app\components\ActiveRecord
 			'attribute' => 'provinces',
 			'value' => function($model, $key, $index, $column) {
 				$provinces = $model->getProvinces(true);
-				return Html::a($provinces, ['zone/province/manage', 'country'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} provinces', ['count'=>$provinces])]);
+				return Html::a($provinces, ['zone/province/manage', 'country'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} provinces', ['count'=>$provinces]), 'data-pjax'=>0]);
 			},
 			'filter' => false,
 			'contentOptions' => ['class'=>'center'],
-			'format' => 'html',
+			'format' => 'raw',
 		];
 	}
 

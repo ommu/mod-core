@@ -124,6 +124,8 @@ class ProvinceController extends Controller
 	public function actionCreate()
 	{
 		$model = new CoreZoneProvince();
+		if(($id = Yii::$app->request->get('id')) != null)
+			$model->country_id = $id;
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
@@ -133,8 +135,14 @@ class ProvinceController extends Controller
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Province success created.'));
-				return $this->redirect(['manage']);
-				//return $this->redirect(['view', 'id'=>$model->province_id]);
+				if(!Yii::$app->request->isAjax) {
+					if($id != null)
+						return $this->redirect(['manage', 'country'=>$model->country_id]);
+					return $this->redirect(['manage']);
+				}
+				if($id != null)
+					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'country'=>$model->country_id]);
+				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
 			} else {
 				if(Yii::$app->request->isAjax)
@@ -145,7 +153,7 @@ class ProvinceController extends Controller
 		$this->view->title = Yii::t('app', 'Create Province');
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_create', [
+		return $this->oRender('admin_create', [
 			'model' => $model,
 		]);
 	}
@@ -168,7 +176,11 @@ class ProvinceController extends Controller
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Province success updated.'));
-				return $this->redirect(['manage']);
+				if(!Yii::$app->request->isAjax)
+					return $this->redirect(['update', 'id'=>$model->province_id]);
+				if(($country = Yii::$app->request->get('country')) != null)
+					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'country'=>$country]);
+				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
 			} else {
 				if(Yii::$app->request->isAjax)
@@ -179,7 +191,7 @@ class ProvinceController extends Controller
 		$this->view->title = Yii::t('app', 'Update Province: {province-name}', ['province-name' => $model->province_name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
-		return $this->render('admin_update', [
+		return $this->oRender('admin_update', [
 			'model' => $model,
 		]);
 	}
