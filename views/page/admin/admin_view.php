@@ -18,7 +18,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Publication'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Static Pages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->title->message;
 
 if(!$small) {
@@ -73,6 +74,15 @@ $this->params['menu']['content'] = [
 			'value' => $model::getMediaType($model->media_type),
 		],
 		[
+			'attribute' => 'views',
+			'value' => function ($model) {
+				$views = $model->getViews(true);
+				return Html::a($views, ['page/view/manage', 'page'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} views', ['count'=>$views])]);
+			},
+			'format' => 'html',
+			'visible' => !$small,
+		],
+		[
 			'attribute' => 'creation_date',
 			'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),
 			'visible' => !$small,
@@ -103,13 +113,10 @@ $this->params['menu']['content'] = [
 			'visible' => !$small,
 		],
 		[
-			'attribute' => 'views',
-			'value' => function ($model) {
-				$views = $model->getViews(true);
-				return Html::a($views, ['page/view/manage', 'page'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} views', ['count'=>$views])]);
-			},
+			'attribute' => '',
+			'value' => Html::a(Yii::t('app', 'Update'), ['update', 'id'=>$model->primaryKey], ['title'=>Yii::t('app', 'Update'), 'class'=>'btn btn-primary']),
 			'format' => 'html',
-			'visible' => !$small,
+			'visible' => !$small && Yii::$app->request->isAjax ? true : false,
 		],
 	],
 ]); ?>

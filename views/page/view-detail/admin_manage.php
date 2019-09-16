@@ -22,13 +22,15 @@ use yii\widgets\Pjax;
 use yii\widgets\DetailView;
 use ommu\core\models\CorePageViews;
 
-$this->params['breadcrumbs'][] = $this->title;
-
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Publication'), 'url' => ['page/admin/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Static Pages'), 'url' => ['page/admin/index']];
 if($view != null) {
-	$this->params['menu']['content'] = [
-		['label' => Yii::t('app', 'Back To Views'), 'url' => Url::to(['page/view/manage']), 'icon' => 'table'],
-	];
+	$this->params['breadcrumbs'][] = ['label' => $view->page->title->message, 'url' => ['page/admin/view', 'id'=>$view->page_id]];
+	$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Views'), 'url' => ['page/view/manage', 'page'=>$view->page_id]];
+	$this->params['breadcrumbs'][] = ['label' => isset($view->user) ? $view->user->displayname : 'Anonymous', 'url' => ['page/view-detail/manage', 'view'=>$view->view_id]];
 }
+$this->params['breadcrumbs'][] = Yii::t('app', 'Histories');
+
 $this->params['menu']['option'] = [
 	//['label' => Yii::t('app', 'Search'), 'url' => 'javascript:void(0);'],
 	['label' => Yii::t('app', 'Grid Option'), 'url' => 'javascript:void(0);'],
@@ -88,10 +90,10 @@ array_push($columnData, [
 	},
 	'buttons' => [
 		'view' => function ($url, $model, $key) {
-			return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title'=>Yii::t('app', 'Detail')]);
+			return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title'=>Yii::t('app', 'Detail'), 'class'=>'modal-btn']);
 		},
 		'update' => function ($url, $model, $key) {
-			return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['title'=>Yii::t('app', 'Update')]);
+			return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['title'=>Yii::t('app', 'Update'), 'class'=>'modal-btn']);
 		},
 		'delete' => function ($url, $model, $key) {
 			return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [

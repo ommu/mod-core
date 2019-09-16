@@ -18,15 +18,12 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'View Histories'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $model->view->page->title->message;
-
-if(!$small) {
-$this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Detail'), 'url' => Url::to(['view', 'id'=>$model->id]), 'icon' => 'eye', 'htmlOptions' => ['class'=>'btn btn-success']],
-	['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->id]), 'htmlOptions' => ['data-confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method'=>'post', 'class'=>'btn btn-danger'], 'icon' => 'trash'],
-];
-} ?>
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Publication'), 'url' => ['page/admin/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Static Pages'), 'url' => ['page/admin/index']];
+$this->params['breadcrumbs'][] = ['label' => $model->view->page->title->message, 'url' => ['page/admin/view', 'id'=>$model->view->page_id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Views'), 'url' => ['page/view/manage', 'page'=>$model->view->page_id]];
+$this->params['breadcrumbs'][] = ['label' => isset($model->view->user) ? $model->view->user->displayname : 'Anonymous', 'url' => ['page/view-detail/manage', 'view'=>$model->view_id]];
+$this->params['breadcrumbs'][] = Yii::t('app', 'Histories'); ?>
 
 <div class="core-page-view-history-view">
 

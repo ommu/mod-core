@@ -18,7 +18,7 @@
 use yii\helpers\Html;
 use app\components\widgets\ActiveForm;
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['/setting/update']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

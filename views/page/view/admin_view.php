@@ -19,20 +19,11 @@ use yii\helpers\Url;
 use yii\widgets\DetailView;
 use yii\helpers\ArrayHelper;
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Views'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $model->page->title->message;
-
-$getAttr = Yii::$app->request->get();
-unset($getAttr['id']);
-$setAttr = ArrayHelper::merge(['id'=>$model->view_id], $getAttr);
-
-if(!$small) {
-$this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Back To Manage'), 'url' => Url::to(ArrayHelper::merge(['manage'], $getAttr)), 'icon' => 'table'],
-	['label' => Yii::t('app', 'Detail'), 'url' => Url::to(ArrayHelper::merge(['view'], $setAttr)), 'icon' => 'eye', 'htmlOptions' => ['class'=>'btn btn-success']],
-	['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->view_id]), 'htmlOptions' => ['data-confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method'=>'post', 'class'=>'btn btn-danger'], 'icon' => 'trash'],
-];
-} ?>
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Publication'), 'url' => ['page/admin/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Static Pages'), 'url' => ['page/admin/index']];
+$this->params['breadcrumbs'][] = ['label' => $model->page->title->message, 'url' => ['page/admin/view', 'id'=>$model->page_id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Views'), 'url' => ['manage', 'page'=>$model->page_id]];
+$this->params['breadcrumbs'][] = isset($model->user) ? $model->user->displayname : 'Anonymous'; ?>
 
 <div class="core-page-views-view">
 
@@ -63,15 +54,6 @@ $this->params['menu']['content'] = [
 			'value' => isset($model->user) ? $model->user->displayname : '-',
 		],
 		[
-			'attribute' => 'view_date',
-			'value' => Yii::$app->formatter->asDatetime($model->view_date, 'medium'),
-		],
-		'view_ip',
-		[
-			'attribute' => 'deleted_date',
-			'value' => Yii::$app->formatter->asDatetime($model->deleted_date, 'medium'),
-		],
-		[
 			'attribute' => 'views',
 			'value' => function ($model) {
 				$views = $model->views;
@@ -79,6 +61,15 @@ $this->params['menu']['content'] = [
 			},
 			'format' => 'html',
 			'visible' => !$small,
+		],
+		[
+			'attribute' => 'view_date',
+			'value' => Yii::$app->formatter->asDatetime($model->view_date, 'medium'),
+		],
+		'view_ip',
+		[
+			'attribute' => 'deleted_date',
+			'value' => Yii::$app->formatter->asDatetime($model->deleted_date, 'medium'),
 		],
 	],
 ]); ?>

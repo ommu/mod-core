@@ -85,7 +85,7 @@ class AdminController extends Controller
 		}
 		$columns = $searchModel->getGridColumn($cols);
 
-		$this->view->title = Yii::t('app', 'Pages');
+		$this->view->title = Yii::t('app', 'Static Pages');
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_manage', [
@@ -110,6 +110,8 @@ class AdminController extends Controller
 			$model->media_show = $postData['media_show'] ? $postData['media_show'] : 0;
 			$model->media_type = $postData['media_type'] ? $postData['media_type'] : 0;
 			$model->media = UploadedFile::getInstance($model, 'media');
+			if(!($model->media instanceof UploadedFile && !$model->media->getHasError()))
+				$model->media = $postData['media'] ? $postData['media'] : '';
 
 			if($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Page success created.'));
