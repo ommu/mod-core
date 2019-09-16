@@ -18,12 +18,12 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
+if(!$small) {
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['/setting/update']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Languages'), 'url' => ['setting/language']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'i18n Package'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->name;
 
-if(!$small) {
 $this->params['menu']['content'] = [
 	['label' => Yii::t('app', 'Detail'), 'url' => Url::to(['view', 'id'=>$model->language_id]), 'icon' => 'eye', 'htmlOptions' => ['class'=>'btn btn-success']],
 	['label' => Yii::t('app', 'Update'), 'url' => Url::to(['update', 'id'=>$model->language_id]), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
