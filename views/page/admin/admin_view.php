@@ -31,93 +31,96 @@ $this->params['menu']['content'] = [
 
 <div class="core-pages-view">
 
-<?php echo DetailView::widget([
+<?php
+$attributes = [
+	'page_id',
+	[
+		'attribute' => 'publish',
+		'value' => $model->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish),
+		'format' => 'raw',
+	],
+	[
+		'attribute' => 'name_i',
+		'value' => $model->name_i,
+	],
+	[
+		'attribute' => 'desc_i',
+		'value' => $model->desc_i,
+		'format' => 'html',
+	],
+	[
+		'attribute' => 'quote_i',
+		'value' => $model->quote_i,
+	],
+	[
+		'attribute' => 'media',
+		'value' => function ($model) {
+			$uploadPath = $model::getUploadPath(false);
+			return $model->media ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->media])), ['alt'=>$model->media, 'class'=>'mb-3']).'<br/>'.$model->media : '-';
+		},
+		'format' => 'html',
+	],
+	[
+		'attribute' => 'media_show',
+		'value' => $model::getMediaShow($model->media_show),
+	],
+	[
+		'attribute' => 'media_type',
+		'value' => $model::getMediaType($model->media_type),
+	],
+	[
+		'attribute' => 'views',
+		'value' => function ($model) {
+			$views = $model->getViews(true);
+			return Html::a($views, ['page/view/manage', 'page'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} views', ['count'=>$views])]);
+		},
+		'format' => 'html',
+		'visible' => !$small,
+	],
+	[
+		'attribute' => 'creation_date',
+		'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),
+		'visible' => !$small,
+	],
+	[
+		'attribute' => 'creationDisplayname',
+		'value' => isset($model->creation) ? $model->creation->displayname : '-',
+		'visible' => !$small,
+	],
+	[
+		'attribute' => 'modified_date',
+		'value' => Yii::$app->formatter->asDatetime($model->modified_date, 'medium'),
+		'visible' => !$small,
+	],
+	[
+		'attribute' => 'modifiedDisplayname',
+		'value' => isset($model->modified) ? $model->modified->displayname : '-',
+		'visible' => !$small,
+	],
+	[
+		'attribute' => 'updated_date',
+		'value' => Yii::$app->formatter->asDatetime($model->updated_date, 'medium'),
+		'visible' => !$small,
+	],
+	[
+		'attribute' => 'slug',
+		'value' => $model->slug ? $model->slug : '-',
+		'visible' => !$small,
+	],
+	[
+		'attribute' => '',
+		'value' => Html::a(Yii::t('app', 'Update'), ['update', 'id'=>$model->primaryKey], ['title'=>Yii::t('app', 'Update'), 'class'=>'btn btn-success btn-sm']),
+		'format' => 'html',
+		'visible' => !$small && Yii::$app->request->isAjax ? true : false,
+	],
+];
+
+echo DetailView::widget([
 	'model' => $model,
 	'options' => [
 		'class'=>'table table-striped detail-view',
 	],
-	'attributes' => [
-		'page_id',
-		[
-			'attribute' => 'publish',
-			'value' => $model->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish),
-			'format' => 'raw',
-		],
-		[
-			'attribute' => 'name_i',
-			'value' => $model->name_i,
-		],
-		[
-			'attribute' => 'desc_i',
-			'value' => $model->desc_i,
-			'format' => 'html',
-		],
-		[
-			'attribute' => 'quote_i',
-			'value' => $model->quote_i,
-		],
-		[
-			'attribute' => 'media',
-			'value' => function ($model) {
-				$uploadPath = $model::getUploadPath(false);
-				return $model->media ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->media])), ['alt'=>$model->media, 'class'=>'mb-3']).'<br/>'.$model->media : '-';
-			},
-			'format' => 'html',
-		],
-		[
-			'attribute' => 'media_show',
-			'value' => $model::getMediaShow($model->media_show),
-		],
-		[
-			'attribute' => 'media_type',
-			'value' => $model::getMediaType($model->media_type),
-		],
-		[
-			'attribute' => 'views',
-			'value' => function ($model) {
-				$views = $model->getViews(true);
-				return Html::a($views, ['page/view/manage', 'page'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} views', ['count'=>$views])]);
-			},
-			'format' => 'html',
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'creation_date',
-			'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'creationDisplayname',
-			'value' => isset($model->creation) ? $model->creation->displayname : '-',
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'modified_date',
-			'value' => Yii::$app->formatter->asDatetime($model->modified_date, 'medium'),
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'modifiedDisplayname',
-			'value' => isset($model->modified) ? $model->modified->displayname : '-',
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'updated_date',
-			'value' => Yii::$app->formatter->asDatetime($model->updated_date, 'medium'),
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'slug',
-			'value' => $model->slug ? $model->slug : '-',
-			'visible' => !$small,
-		],
-		[
-			'attribute' => '',
-			'value' => Html::a(Yii::t('app', 'Update'), ['update', 'id'=>$model->primaryKey], ['title'=>Yii::t('app', 'Update'), 'class'=>'btn btn-primary']),
-			'format' => 'html',
-			'visible' => !$small && Yii::$app->request->isAjax ? true : false,
-		],
-	],
+	'attributes' => $attributes,
 ]); ?>
 
 </div>

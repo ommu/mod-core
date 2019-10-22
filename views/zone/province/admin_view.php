@@ -32,80 +32,83 @@ $this->params['menu']['content'] = [
 
 <div class="core-zone-province-view">
 
-<?php echo DetailView::widget([
+<?php
+$attributes = [
+	'province_id',
+	[
+		'attribute' => 'publish',
+		'value' => $model->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish),
+		'format' => 'raw',
+	],
+	'province_name',
+	[
+		'attribute' => 'countryName',
+		'value' => function ($model) {
+			$countryName = isset($model->country) ? $model->country->country_name : '-';
+			if($countryName != '-')
+				return Html::a($countryName, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$countryName]);
+			return $countryName;
+		},
+		'format' => 'html',
+	],
+	'mfdonline',
+	[
+		'attribute' => 'checked',
+		'value' => $model->filterYesNo($model->checked),
+	],
+	[
+		'attribute' => 'cities',
+		'value' => function ($model) {
+			$cities = $model->getCities(true);
+			return Html::a($cities, ['zone/city/manage', 'province'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} cities', ['count'=>$cities])]);
+		},
+		'format' => 'html',
+		'visible' => !$small,
+	],
+	[
+		'attribute' => 'creation_date',
+		'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),
+		'visible' => !$small,
+	],
+	[
+		'attribute' => 'creationDisplayname',
+		'value' => isset($model->creation) ? $model->creation->displayname : '-',
+		'visible' => !$small,
+	],
+	[
+		'attribute' => 'modified_date',
+		'value' => Yii::$app->formatter->asDatetime($model->modified_date, 'medium'),
+		'visible' => !$small,
+	],
+	[
+		'attribute' => 'modifiedDisplayname',
+		'value' => isset($model->modified) ? $model->modified->displayname : '-',
+		'visible' => !$small,
+	],
+	[
+		'attribute' => 'updated_date',
+		'value' => Yii::$app->formatter->asDatetime($model->updated_date, 'medium'),
+		'visible' => !$small,
+	],
+	[
+		'attribute' => 'slug',
+		'value' => $model->slug ? $model->slug : '-',
+		'visible' => !$small,
+	],
+	[
+		'attribute' => '',
+		'value' => Html::a(Yii::t('app', 'Update'), ['update', 'id'=>$model->primaryKey], ['title'=>Yii::t('app', 'Update'), 'class'=>'btn btn-success btn-sm modal-btn']),
+		'format' => 'html',
+		'visible' => !$small && Yii::$app->request->isAjax ? true : false,
+	],
+];
+
+echo DetailView::widget([
 	'model' => $model,
 	'options' => [
 		'class'=>'table table-striped detail-view',
 	],
-	'attributes' => [
-		'province_id',
-		[
-			'attribute' => 'publish',
-			'value' => $model->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish),
-			'format' => 'raw',
-		],
-		'province_name',
-		[
-			'attribute' => 'countryName',
-			'value' => function ($model) {
-				$countryName = isset($model->country) ? $model->country->country_name : '-';
-				if($countryName != '-')
-					return Html::a($countryName, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$countryName]);
-				return $countryName;
-			},
-			'format' => 'html',
-		],
-		'mfdonline',
-		[
-			'attribute' => 'checked',
-			'value' => $model->filterYesNo($model->checked),
-		],
-		[
-			'attribute' => 'cities',
-			'value' => function ($model) {
-				$cities = $model->getCities(true);
-				return Html::a($cities, ['zone/city/manage', 'province'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} cities', ['count'=>$cities])]);
-			},
-			'format' => 'html',
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'creation_date',
-			'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'creationDisplayname',
-			'value' => isset($model->creation) ? $model->creation->displayname : '-',
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'modified_date',
-			'value' => Yii::$app->formatter->asDatetime($model->modified_date, 'medium'),
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'modifiedDisplayname',
-			'value' => isset($model->modified) ? $model->modified->displayname : '-',
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'updated_date',
-			'value' => Yii::$app->formatter->asDatetime($model->updated_date, 'medium'),
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'slug',
-			'value' => $model->slug ? $model->slug : '-',
-			'visible' => !$small,
-		],
-		[
-			'attribute' => '',
-			'value' => Html::a(Yii::t('app', 'Update'), ['update', 'id'=>$model->primaryKey], ['title'=>Yii::t('app', 'Update'), 'class'=>'btn modal-btn btn-primary']),
-			'format' => 'html',
-			'visible' => !$small && Yii::$app->request->isAjax ? true : false,
-		],
-	],
+	'attributes' => $attributes,
 ]); ?>
 
 </div>
