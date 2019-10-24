@@ -452,15 +452,14 @@ class CoreMeta extends \app\components\ActiveRecord
 			'filter' => $this->filterDatepicker($this, 'modified_date'),
 			'format' => 'html',
 		];
-		if(!Yii::$app->request->get('modified')) {
-			$this->templateColumns['modifiedDisplayname'] = [
-				'attribute' => 'modifiedDisplayname',
-				'value' => function($model, $key, $index, $column) {
-					return isset($model->modified) ? $model->modified->displayname : '-';
-					// return $model->modifiedDisplayname;
-				},
-			];
-		}
+		$this->templateColumns['modifiedDisplayname'] = [
+			'attribute' => 'modifiedDisplayname',
+			'value' => function($model, $key, $index, $column) {
+				return isset($model->modified) ? $model->modified->displayname : '-';
+				// return $model->modifiedDisplayname;
+			},
+			'visible' => !Yii::$app->request->get('modified') ? true : false,
+		];
 		$this->templateColumns['twitter_card'] = [
 			'attribute' => 'twitter_card',
 			'value' => function($model, $key, $index, $column) {

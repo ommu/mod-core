@@ -105,22 +105,22 @@ class CorePageViewHistory extends \app\components\ActiveRecord
 			'class' => 'yii\grid\SerialColumn',
 			'contentOptions' => ['class'=>'center'],
 		];
-		if(!Yii::$app->request->get('view')) {
-			$this->templateColumns['pageName'] = [
-				'attribute' => 'pageName',
-				'value' => function($model, $key, $index, $column) {
-					return isset($model->view->page) ? $model->view->page->title->message : '-';
-					// return $model->pageName;
-				},
-			];
-			$this->templateColumns['userDisplayname'] = [
-				'attribute' => 'userDisplayname',
-				'value' => function($model, $key, $index, $column) {
-					return isset($model->view->user) ? $model->view->user->displayname : '-';
-					// return $model->userDisplayname;
-				},
-			];
-		}
+		$this->templateColumns['pageName'] = [
+			'attribute' => 'pageName',
+			'value' => function($model, $key, $index, $column) {
+				return isset($model->view->page) ? $model->view->page->title->message : '-';
+				// return $model->pageName;
+			},
+			'visible' => !Yii::$app->request->get('view') ? true : false,
+		];
+		$this->templateColumns['userDisplayname'] = [
+			'attribute' => 'userDisplayname',
+			'value' => function($model, $key, $index, $column) {
+				return isset($model->view->user) ? $model->view->user->displayname : '-';
+				// return $model->userDisplayname;
+			},
+			'visible' => !Yii::$app->request->get('view') ? true : false,
+		];
 		$this->templateColumns['view_date'] = [
 			'attribute' => 'view_date',
 			'value' => function($model, $key, $index, $column) {
