@@ -40,7 +40,6 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\behaviors\SluggableBehavior;
 use ommu\users\models\Users;
-use ommu\core\models\view\CoreZoneCity as CoreZoneCityView;
 
 class CoreZoneCity extends \app\components\ActiveRecord
 {
@@ -171,14 +170,6 @@ class CoreZoneCity extends \app\components\ActiveRecord
 	public function getModified()
 	{
 		return $this->hasOne(Users::className(), ['user_id' => 'modified_id']);
-	}
-
-	/**
-	 * @return \yii\db\ActiveQuery
-	 */
-	public function getView()
-	{
-		return $this->hasOne(CoreZoneCityView::className(), ['city_id' => 'city_id']);
 	}
 
 	/**

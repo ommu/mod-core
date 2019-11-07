@@ -39,7 +39,6 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\behaviors\SluggableBehavior;
 use ommu\users\models\Users;
-use ommu\core\models\view\CoreZoneVillage as CoreZoneVillageView;
 
 class CoreZoneVillage extends \app\components\ActiveRecord
 {
@@ -167,14 +166,6 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 	public function getModified()
 	{
 		return $this->hasOne(Users::className(), ['user_id' => 'modified_id']);
-	}
-
-	/**
-	 * @return \yii\db\ActiveQuery
-	 */
-	public function getView()
-	{
-		return $this->hasOne(CoreZoneVillageView::className(), ['village_id' => 'village_id']);
 	}
 
 	/**

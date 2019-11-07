@@ -40,7 +40,6 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\behaviors\SluggableBehavior;
 use ommu\users\models\Users;
-use ommu\core\models\view\CoreZoneProvince as CoreZoneProvinceView;
 
 class CoreZoneProvince extends \app\components\ActiveRecord
 {
@@ -160,14 +159,6 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 	public function getModified()
 	{
 		return $this->hasOne(Users::className(), ['user_id' => 'modified_id']);
-	}
-
-	/**
-	 * @return \yii\db\ActiveQuery
-	 */
-	public function getView()
-	{
-		return $this->hasOne(CoreZoneProvinceView::className(), ['province_id' => 'province_id']);
 	}
 
 	/**

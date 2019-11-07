@@ -68,7 +68,6 @@ use ommu\core\models\CoreZoneProvince;
 use ommu\core\models\CoreZoneCity;
 use yii\helpers\Html;
 use yii\web\UploadedFile;
-use ommu\core\models\view\CoreMeta as CoreMetaView;
 
 class CoreMeta extends \app\components\ActiveRecord
 {
@@ -224,14 +223,6 @@ class CoreMeta extends \app\components\ActiveRecord
 	public function getCity()
 	{
 		return $this->hasOne(CoreZoneCity::className(), ['city_id' => 'office_city_id']);
-	}
-
-	/**
-	 * @return \yii\db\ActiveQuery
-	 */
-	public function getView()
-	{
-		return $this->hasOne(CoreMetaView::className(), ['id' => 'id']);
 	}
 
 	/**
