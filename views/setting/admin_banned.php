@@ -58,7 +58,18 @@ $this->params['breadcrumbs'][] = $this->title;
 	->textarea(['rows'=>6, 'cols'=>50])
 	->label($model->getAttributeLabel('banned_words'))
 	->hint(Yii::t('app', 'Enter any words that you you want to censor on your users\' profiles as well as any plugins you have installed. These will be replaced with asterisks (*). Separate words by commas like word1, word2')); ?>
-	
+
+<div class="ln_solid"></div>
+
+<?php $spamLogin = [
+	1 => Yii::t('app', 'Yes, enable validation code for logging in.'),
+	0 => Yii::t('app', 'No, disable validation code for logging in.'),
+];
+echo $form->field($model, 'spam_login', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
+	->radioList($spamLogin)
+	->label(Yii::t('app', 'Require users to enter validation code when logging in?'))
+	->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "login" page. Users will be required to enter these numbers into the Verification Code field in order to login. This feature helps prevent users from trying to spam the login form. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
+
 <?php $spamSignup = [
 	1 => Yii::t('app', 'Yes, show verification code image.'),
 	0 => Yii::t('app', 'No, do not show verification code image.'),
@@ -77,20 +88,11 @@ echo $form->field($model, 'spam_invite', ['template' => '{label}{beginWrapper}{h
 	->label($model->getAttributeLabel('spam_invite'))
 	->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "invite" page. Users will be required to enter these numbers into the Verification Code field in order to send their invitation. This feature helps prevent users from trying to create comment spam. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
 
-<?php $spamLogin = [
-	1 => Yii::t('app', 'Yes, enable validation code for logging in.'),
-	0 => Yii::t('app', 'No, disable validation code for logging in.'),
-];
-echo $form->field($model, 'spam_login', ['template' => '{label}{beginWrapper}{hint}{input}{error}{endWrapper}'])
-	->radioList($spamLogin)
-	->label(Yii::t('app', 'Require users to enter validation code when logging in?'))
-	->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "login" page. Users will be required to enter these numbers into the Verification Code field in order to login. This feature helps prevent users from trying to spam the login form. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
-
 <?php echo $form->field($model, 'spam_failedcount', ['template' => '{beginWrapper}{hint}{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
 	->textInput()
 	->label($model->getAttributeLabel('spam_failedcount'))
 	->hint(Yii::t('app', 'If "no" is selected in the setting directly above, a Verification Code will be displayed to the user only after a certain number of failed logins. You can set this to 0 to never display a code.')); ?>
-	
+
 <?php $spamContact = [
 	1 => Yii::t('app', 'Yes, enable validation code for the contact form.'),
 	0 => Yii::t('app', 'No, disable validation code for the contact form.'),
@@ -109,11 +111,13 @@ echo $form->field($model, 'spam_comment', ['template' => '{label}{beginWrapper}{
 	->label($model->getAttributeLabel('spam_comment'))
 	->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "write a comment" page. Users will be required to enter these numbers into the Verification Code field in order to post their comment. This feature helps prevent users from trying to create comment spam. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
 
+<div class="ln_solid"></div>
+
 <?php echo $form->field($model, 'general_commenthtml')
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('general_commenthtml'))
 	->hint(Yii::t('app', 'By default, the user may not enter any HTML tags into comments. If you want to allow specific tags, you can enter them below (separated by commas). Example: b, img, a, embed, font')); ?>
-	
+
 <div class="ln_solid"></div>
 
 <?php echo $form->field($model, 'submitButton')
