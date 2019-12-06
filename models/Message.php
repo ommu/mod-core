@@ -33,7 +33,7 @@ class Message extends \app\components\ActiveRecord
 {
 	public $gridForbiddenColumn = [];
 
-	public $phraseMessage;
+	public $message;
 	public $creationDisplayname;
 
 	/**
@@ -52,8 +52,8 @@ class Message extends \app\components\ActiveRecord
 		return [
 			[['id', 'language', 'translation'], 'required'],
 			[['id', 'creation_id'], 'integer'],
-			[['translation', 'phraseMessage'], 'string'],
-			[['language'], 'string', 'max' => 16],
+			[['translation', 'message'], 'string'],
+			[['language'], 'string', 'max' => 6],
 			[['id', 'language'], 'unique', 'targetAttribute' => ['id', 'language']],
 			[['id'], 'exist', 'skipOnError' => true, 'targetClass' => SourceMessage::className(), 'targetAttribute' => ['id' => 'id']],
 		];
@@ -70,7 +70,7 @@ class Message extends \app\components\ActiveRecord
 			'translation' => Yii::t('app', 'Translation'),
 			'creation_date' => Yii::t('app', 'Creation Date'),
 			'creation_id' => Yii::t('app', 'Creation'),
-			'phraseMessage' => Yii::t('app', 'Phrase'),
+			'message' => Yii::t('app', 'Phrase'),
 			'creationDisplayname' => Yii::t('app', 'Creation'),
 		];
 	}
@@ -118,11 +118,11 @@ class Message extends \app\components\ActiveRecord
 			'class' => 'yii\grid\SerialColumn',
 			'contentOptions' => ['class'=>'center'],
 		];
-		$this->templateColumns['phraseMessage'] = [
-			'attribute' => 'phraseMessage',
+		$this->templateColumns['message'] = [
+			'attribute' => 'message',
 			'value' => function($model, $key, $index, $column) {
 				return isset($model->phrase) ? $model->phrase->message : '-';
-				// return $model->phraseMessage;
+				// return $model->message;
 			},
 			'format' => 'html',
 			'visible' => !Yii::$app->request->get('phrase') ? true : false,
@@ -185,7 +185,7 @@ class Message extends \app\components\ActiveRecord
 	{
 		parent::afterFind();
 
-		// $this->phraseMessage = isset($this->phrase) ? $this->phrase->message : '-';
+		// $this->message = isset($this->phrase) ? $this->phrase->message : '-';
 		// $this->creationDisplayname = isset($this->creation) ? $this->creation->displayname : '-';
 	}
 

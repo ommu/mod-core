@@ -255,6 +255,8 @@ class CoreLanguages extends \app\components\ActiveRecord
 	public static function getLanguage($array=true, $key='id')
 	{
 		$model = self::find()->alias('t');
+		if($array)
+			$model->select(['t.language_id', 't.code', 't.name']);
 		$model = $model->orderBy('t.name ASC')->all();
 
 		if($array == true)

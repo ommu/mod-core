@@ -22,7 +22,7 @@
  * @property integer $modified_id
  *
  * The followings are the available model relations:
- * @property Message[] $messages
+ * @property Message[] $translates
  * @property Users $creation
  * @property Users $modified
  *
@@ -33,7 +33,9 @@ namespace ommu\core\models;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
+use ommu\core\models\Message;
 use ommu\users\models\Users;
+use yii\helpers\ArrayHelper;
 
 class SourceMessage extends \app\components\ActiveRecord
 {
@@ -41,6 +43,8 @@ class SourceMessage extends \app\components\ActiveRecord
 
 	public $creationDisplayname;
 	public $modifiedDisplayname;
+
+	public $translate = [];
 
 	/**
 	 * @return string the associated database table name
@@ -59,6 +63,7 @@ class SourceMessage extends \app\components\ActiveRecord
 			[['message'], 'required'],
 			[['creation_id', 'modified_id'], 'integer'],
 			[['message', 'location'], 'string'],
+			[['translate'], 'safe'],
 			[['category'], 'string', 'max' => 255],
 		];
 	}
@@ -77,26 +82,29 @@ class SourceMessage extends \app\components\ActiveRecord
 			'creation_id' => Yii::t('app', 'Creation'),
 			'modified_date' => Yii::t('app', 'Modified Date'),
 			'modified_id' => Yii::t('app', 'Modified'),
-			'messages' => Yii::t('app', 'Messages'),
+			'translates' => Yii::t('app', 'Translates'),
 			'creationDisplayname' => Yii::t('app', 'Creation'),
 			'modifiedDisplayname' => Yii::t('app', 'Modified'),
+			'translate' => Yii::t('app', 'Translate'),
 		];
 	}
 
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getMessages($count=false)
+	public function getTranslates($count=false)
 	{
 		if($count == false)
-			return $this->hasMany(Message::className(), ['id' => 'id']);
+			return $this->hasMany(Message::className(), ['id' => 'id'])
+				->select(['language', 'translation']);
 
 		$model = Message::find()
 			->alias('t')
-			->where(['t.id' => $this->id]);
-		$messages = $model->count();
+			->where(['t.id' => $this->id])
+			->andWhere(['<>', 't.translation', '']);
+		$translates = $model->count();
 
-		return $messages ? $messages : 0;
+		return $translates ? $translates : 0;
 	}
 
 	/**
@@ -191,11 +199,10 @@ class SourceMessage extends \app\components\ActiveRecord
 			},
 			'visible' => !Yii::$app->request->get('modified') ? true : false,
 		];
-		$this->templateColumns['messages'] = [
-			'attribute' => 'messages',
+		$this->templateColumns['translates'] = [
+			'attribute' => 'translates',
 			'value' => function($model, $key, $index, $column) {
-				$messages = $model->getMessages(true);
-				return Html::a($messages, ['message/manage', 'id'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} messages', ['count'=>$messages])]);
+				return $model->getTranslates(true);
 			},
 			'filter' => false,
 			'contentOptions' => ['class'=>'center'],
@@ -224,6 +231,32 @@ class SourceMessage extends \app\components\ActiveRecord
 	}
 
 	/**
+	 * function getLanguages
+	 */
+	public function getLanguages()
+	{
+		return CoreLanguages::getLanguage(true, 'code');
+	}
+
+	/**
+	 * function parseAnswer
+	 */
+	public static function parseTranslate($translate, $sep='li')
+	{
+		if(!is_array($translate) || (is_array($translate) && empty($translate)))
+			return '-';
+
+		if($sep == 'li') {
+			return Html::ul($translate, ['item' => function($item, $index) {
+				$languages = self::getLanguages();
+				return Html::tag('li', $languages[$index].': '.($item ? $item : '-'));
+			}, 'class'=>'list-boxed']);
+		}
+
+		return implode($sep, $translate);
+	}
+
+	/**
 	 * after find attributes
 	 */
 	public function afterFind()
@@ -232,6 +265,9 @@ class SourceMessage extends \app\components\ActiveRecord
 
 		// $this->creationDisplayname = isset($this->creation) ? $this->creation->displayname : '-';
 		// $this->modifiedDisplayname = isset($this->modified) ? $this->modified->displayname : '-';
+
+		if(!empty($this->getLanguages()))
+			$this->translate = ArrayHelper::map($this->translates, 'language', 'translation');
 	}
 
 	/**
@@ -257,9 +293,52 @@ class SourceMessage extends \app\components\ActiveRecord
 	public function beforeSave($insert)
 	{
 		if(parent::beforeSave($insert)) {
-			if($insert)
+			if($insert) {
+				if($this->location == null) {
+					$module = strtolower(Yii::$app->controller->module->id);
+					$controller = strtolower(Yii::$app->controller->id);
+
+					$this->location = $module == null ? $controller : $module.' '.$controller;
+				}
+
 				$this->location = Inflector::slug($this->location);
+			}
 		}
 		return true;
+	}
+
+	/**
+	 * After save attributes
+	 */
+	public function afterSave($insert, $changedAttributes)
+	{
+		parent::afterSave($insert, $changedAttributes);
+
+		// insert and update translate message
+		if(!empty($this->getLanguages())) {
+			foreach ($this->translate as $key => $value) {
+				$model = Message::find()->alias('t')
+					->select(['t.id', 't.language'])
+					->where(['t.id' => $this->id])
+					->andWhere(['t.language' => $key])
+					->one();
+
+				if($value == '') {
+					if($model == null)
+						continue;
+					$model->updateAttributes(['translation' => $value]);
+
+				} else {
+					if($model == null) {
+						$data = new Message();
+						$data->id = $this->id;
+						$data->language = $key;
+						$data->translation = $value;
+						$data->save();
+					} else 
+						$model->updateAttributes(['translation' => $value]);
+				}
+			}
+		}
 	}
 }
