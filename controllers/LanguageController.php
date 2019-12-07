@@ -30,9 +30,9 @@
 namespace ommu\core\controllers;
 
 use Yii;
-use yii\filters\VerbFilter;
 use app\components\Controller;
 use mdm\admin\components\AccessControl;
+use yii\filters\VerbFilter;
 use ommu\core\models\CoreLanguages;
 use ommu\core\models\search\CoreLanguages as CoreLanguagesSearch;
 

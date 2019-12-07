@@ -27,15 +27,14 @@
 namespace ommu\core\controllers;
 
 use Yii;
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
 use app\components\Controller;
 use mdm\admin\components\AccessControl;
+use yii\filters\VerbFilter;
 use ommu\core\models\CoreSettings;
-use ommu\core\models\CoreLanguages;
 use ommu\core\models\search\CoreLanguages as CoreLanguagesSearch;
+use ommu\core\models\CoreLanguages;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 class SettingController extends Controller
 {
@@ -220,9 +219,9 @@ class SettingController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = CoreSettings::findOne($id)) !== null) 
+		if(($model = CoreSettings::findOne($id)) !== null)
 			return $model;
-		else
-			throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+
+		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}
 }
