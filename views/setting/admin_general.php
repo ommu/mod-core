@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	1 => Yii::t('app', 'Yes, the public can view profiles unless they are made private.'),
 	0 => Yii::t('app', 'No, the public cannot view profiles.'),
 ];
-echo $form->field($model, 'general_profile', ['template' => '{label}{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_profile').'</div>{input}{error}{endWrapper}'])
+echo $form->field($model, 'general_profile', ['template' => '{label}{beginWrapper}{hint}<div class="h6 mt-3 mb-3">'.$model->getAttributeLabel('general_profile').'</div>{input}{error}{endWrapper}'])
 	->radioList($generalProfile)
 	->label(Yii::t('app', 'Public Permission Defaults'))
 	->hint(Yii::t('app', 'Select whether or not you want to let the public (visitors that are not logged-in) to view the following sections of your social network. In some cases (such as Profiles), if you have given them the option, your users will be able to make their pages private even though you have made them publically viewable here.')); ?>
@@ -52,7 +52,7 @@ echo $form->field($model, 'general_profile', ['template' => '{label}{beginWrappe
 	1 => Yii::t('app', 'Yes, the public can use the invite page.'),
 	0 => Yii::t('app', 'No, the public cannot use the invite page.'),
 ];
-echo $form->field($model, 'general_invite', ['template' => '{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_invite').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
+echo $form->field($model, 'general_invite', ['template' => '{beginWrapper}{hint}<div class="h6 mt-3 mb-3">'.$model->getAttributeLabel('general_invite').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
 	->radioList($generalInvite)
 	->label($model->getAttributeLabel('general_invite')); ?>
 
@@ -60,7 +60,7 @@ echo $form->field($model, 'general_invite', ['template' => '{beginWrapper}{hint}
 	1 => Yii::t('app', 'Yes, the public can use the search page.'),
 	0 => Yii::t('app', 'No, the public cannot use the search page.'),
 ];
-echo $form->field($model, 'general_search', ['template' => '{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_search').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
+echo $form->field($model, 'general_search', ['template' => '{beginWrapper}{hint}<div class="h6 mt-3 mb-3">'.$model->getAttributeLabel('general_search').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
 	->radioList($generalSearch)
 	->label($model->getAttributeLabel('general_search')); ?>
 		
@@ -68,7 +68,7 @@ echo $form->field($model, 'general_search', ['template' => '{beginWrapper}{hint}
 	1 => Yii::t('app', 'Yes, the public view use the portal page.'),
 	0 => Yii::t('app', 'No, the public cannot view the portal page.'),
 ];
-echo $form->field($model, 'general_portal', ['template' => '{beginWrapper}{hint}<div class="h5">'.$model->getAttributeLabel('general_portal').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
+echo $form->field($model, 'general_portal', ['template' => '{beginWrapper}{hint}<div class="h6 mt-3 mb-3">'.$model->getAttributeLabel('general_portal').'</div>{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
 	->radioList($generalPortal)
 	->label($model->getAttributeLabel('general_portal')); ?>
 	

@@ -125,7 +125,7 @@ echo $form->field($model, 'twitter_card')
 		<?php echo $form->field($model, 'twitter_iphone[i]', ['template' => '{label}', 'options' => ['tag' => null]])
 			->label($model->getAttributeLabel('twitter_iphone[i]'), ['class'=>'control-label col-sm-3 col-xs-12']); ?>
 		<div class="col-md-6 col-sm-9 col-xs-12">
-			<div class="h5"><?php echo $model->getAttributeLabel('twitter_iphone[name]');?></div>
+			<div class="h6 mt-3 mb-3"><?php echo $model->getAttributeLabel('twitter_iphone[name]');?></div>
 			<?php 
 			if(!$model->isNewRecord && !$model->getErrors())
 				$model->twitter_iphone = unserialize($model->twitter_iphone);
@@ -134,13 +134,13 @@ echo $form->field($model, 'twitter_card')
 				->label($model->getAttributeLabel('twitter_iphone[name]'))
 				->hint(Yii::t('app', 'Name of your iPhone app')); ?>
 
-			<div class="h5"><?php echo $model->getAttributeLabel('twitter_iphone[id]');?></div>
+			<div class="h6 mt-3 mb-3"><?php echo $model->getAttributeLabel('twitter_iphone[id]');?></div>
 			<?php echo $form->field($model, 'twitter_iphone[id]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => 32])
 				->label($model->getAttributeLabel('twitter_iphone[id]'))
 				->hint(Yii::t('app', 'String value, and should be the numeric representation of your app ID in the App Store (.i.e. "307234931")')); ?>
 			
-			<div class="h5"><?php echo $model->getAttributeLabel('twitter_iphone[url]');?></div>
+			<div class="h6 mt-3 mb-3"><?php echo $model->getAttributeLabel('twitter_iphone[url]');?></div>
 			<?php echo $form->field($model, 'twitter_iphone[url]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => false])
 				->label($model->getAttributeLabel('twitter_iphone[url]'))
@@ -152,7 +152,7 @@ echo $form->field($model, 'twitter_card')
 		<?php echo $form->field($model, 'twitter_ipad[i]', ['template' => '{label}', 'options' => ['tag' => null]])
 			->label($model->getAttributeLabel('twitter_ipad[i]'), ['class'=>'control-label col-sm-3 col-xs-12']); ?>
 		<div class="col-md-6 col-sm-9 col-xs-12">
-			<div class="h5"><?php echo $model->getAttributeLabel('twitter_ipad[name]');?></div>
+			<div class="h6 mt-3 mb-3"><?php echo $model->getAttributeLabel('twitter_ipad[name]');?></div>
 			<?php 
 			if(!$model->isNewRecord && !$model->getErrors())
 				$model->twitter_ipad = unserialize($model->twitter_ipad);
@@ -161,13 +161,13 @@ echo $form->field($model, 'twitter_card')
 				->label($model->getAttributeLabel('twitter_ipad[name]'))
 				->hint(Yii::t('app', 'Name of your iPad optimized app')); ?>
 
-			<div class="h5"><?php echo $model->getAttributeLabel('twitter_ipad[id]');?></div>
+			<div class="h6 mt-3 mb-3"><?php echo $model->getAttributeLabel('twitter_ipad[id]');?></div>
 			<?php echo $form->field($model, 'twitter_ipad[id]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => 32])
 				->label($model->getAttributeLabel('twitter_ipad[id]'))
 				->hint(Yii::t('app', 'String value, should be the numeric representation of your app ID in the App Store (.i.e. “307234931”)')); ?>
 			
-			<div class="h5"><?php echo $model->getAttributeLabel('twitter_ipad[url]');?></div>
+			<div class="h6 mt-3 mb-3"><?php echo $model->getAttributeLabel('twitter_ipad[url]');?></div>
 			<?php echo $form->field($model, 'twitter_ipad[url]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => false])
 				->label($model->getAttributeLabel('twitter_ipad[url]'))
@@ -179,7 +179,7 @@ echo $form->field($model, 'twitter_card')
 		<?php echo $form->field($model, 'twitter_googleplay[i]', ['template' => '{label}', 'options' => ['tag' => null]])
 			->label($model->getAttributeLabel('twitter_googleplay[i]'), ['class'=>'control-label col-sm-3 col-xs-12']); ?>
 		<div class="col-md-6 col-sm-9 col-xs-12">
-			<div class="h5"><?php echo $model->getAttributeLabel('twitter_googleplay[name]');?></div>
+			<div class="h6 mt-3 mb-3"><?php echo $model->getAttributeLabel('twitter_googleplay[name]');?></div>
 			<?php 
 			if(!$model->isNewRecord && !$model->getErrors())
 				$model->twitter_googleplay = unserialize($model->twitter_googleplay);
@@ -188,13 +188,13 @@ echo $form->field($model, 'twitter_card')
 				->label($model->getAttributeLabel('twitter_googleplay[name]'))
 				->hint(Yii::t('app', 'Name of your Android app')); ?>
 
-			<div class="h5"><?php echo $model->getAttributeLabel('twitter_googleplay[id]');?></div>
+			<div class="h6 mt-3 mb-3"><?php echo $model->getAttributeLabel('twitter_googleplay[id]');?></div>
 			<?php echo $form->field($model, 'twitter_googleplay[id]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => 32])
 				->label($model->getAttributeLabel('twitter_googleplay[id]'))
 				->hint(Yii::t('app', 'String value, and should be the numeric representation of your app ID in Google Play (.i.e. "co.ommu.nirwasita")')); ?>
 			
-			<div class="h5"><?php echo $model->getAttributeLabel('twitter_googleplay[url]');?></div>
+			<div class="h6 mt-3 mb-3"><?php echo $model->getAttributeLabel('twitter_googleplay[url]');?></div>
 			<?php echo $form->field($model, 'twitter_googleplay[url]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => false])
 				->label($model->getAttributeLabel('twitter_googleplay[url]'))
