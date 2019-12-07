@@ -109,7 +109,7 @@ echo $form->field($model, 'facebook_type')
 	->label($model->getAttributeLabel('facebook_admins'))
 	->hint(Yii::t('app', 'Facebook IDs of the app\'s administrators (.i.e. "PutraSudaryanto")')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'submitButton')
 	->submitButton(); ?>

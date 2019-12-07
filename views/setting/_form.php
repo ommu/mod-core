@@ -51,7 +51,7 @@ use app\components\widgets\ActiveForm;
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('ommu_version')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'submitButton')
 	->submitButton(); ?>

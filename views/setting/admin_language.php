@@ -65,7 +65,7 @@ echo $form->field($model, 'lang_autodetect', ['template' => '{label}{beginWrappe
 	->label($model->getAttributeLabel('lang_autodetect'))
 	->hint(Yii::t('app', 'If you have more than one language pack, do you want to display a select box on your homepage so that unregistered users can change the language in which they view the social network? Note that this will only apply if you have more than one language pack.')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'submitButton')
 	->submitButton(); ?>

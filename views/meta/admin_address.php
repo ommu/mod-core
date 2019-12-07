@@ -163,7 +163,7 @@ echo $form->field($model, 'office_country_id')
 	->label($model->getAttributeLabel('office_website'))
 	->hint(Yii::t('app', 'A website for this business')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'submitButton')
 	->submitButton(); ?>

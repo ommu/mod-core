@@ -43,7 +43,7 @@ use app\components\widgets\ActiveForm;
 	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('code')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'submitButton')
 	->submitButton(); ?>

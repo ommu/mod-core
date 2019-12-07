@@ -203,7 +203,7 @@ echo $form->field($model, 'twitter_card')
 	</div>
 </div>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'submitButton')
 	->submitButton(); ?>

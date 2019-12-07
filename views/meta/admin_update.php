@@ -78,7 +78,7 @@ echo $form->field($model, 'office_on')
 	->radioList($setting)
 	->label($model->getAttributeLabel('facebook_on')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'submitButton')
 	->submitButton(); ?>

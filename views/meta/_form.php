@@ -53,7 +53,7 @@ use ommu\core\models\CoreMeta;
 	->textarea(['rows'=>6, 'cols'=>50])
 	->label($model->getAttributeLabel('map_icon_size')); ?>
 	
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'submitButton')
 	->submitButton(); ?>

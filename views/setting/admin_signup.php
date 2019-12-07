@@ -86,7 +86,7 @@ echo $form->field($model, 'signup_adminemail', ['template' => '{label}{beginWrap
 	->label($model->getAttributeLabel('signup_adminemail'))
 	->hint(Yii::t('app', 'Send Admin and email when a new user signs up? If set to YES, admin will be recieve an email with information about new user.')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php $signupInviteonly = [
 	2 => Yii::t('app', 'Yes, admins and users must invite new users before they can signup.'),
@@ -122,7 +122,7 @@ echo $form->field($model, 'signup_invitepage', ['template' => '{label}{beginWrap
 	->label($model->getAttributeLabel('signup_invitepage'))
 	->hint(Yii::t('app', 'If you have selected YES, your users will be shown a page asking them to optionally invite one or more friends to signup. The "invite friends" feature is different from the "invite only" feature because "invite friends" simply sends an email to the invitee instead of sending them an actual invitation code. Because of this, you probably do not want to enable both "invite friends" and "invite only" features simultaneously.')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php $signupVerifyemail = [
 	1 => Yii::t('app', 'Yes, verify email addresses.'),
@@ -133,7 +133,7 @@ echo $form->field($model, 'signup_verifyemail', ['template' => '{label}{beginWra
 	->label($model->getAttributeLabel('signup_verifyemail'))
 	->hint(Yii::t('app', 'Force users to verify their email address before they can login? If set to YES, users will be sent an email with a verification link which they must click to activate their account.')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php $signupRandom = [
 	1 => Yii::t('app', 'Yes, generate random passwords and email to new users.'),
@@ -144,7 +144,7 @@ echo $form->field($model, 'signup_random', ['template' => '{label}{beginWrapper}
 	->label($model->getAttributeLabel('signup_random'))
 	->hint(Yii::t('app', 'If you have selected YES, a random password will be created for users when they signup. The password will be emailed to them upon the completion of the signup process. This is another method of verifying users\' email addresses.')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php
 $spamSignup = [
@@ -156,7 +156,7 @@ echo $form->field($model, 'spam_signup', ['template' => '{label}{beginWrapper}{h
 	->label($model->getAttributeLabel('spam_signup'))
 	->hint(Yii::t('app', 'If you have selected YES, an image containing a random sequence of 6 numbers will be shown to users on the signup page. Users will be required to enter these numbers into the Verification Code field before they can continue. This feature helps prevent users from trying to automatically create accounts on your system. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors or users cannot signup, try turning this off.')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php
 $signupTerms = [
@@ -168,7 +168,7 @@ echo $form->field($model, 'signup_terms', ['template' => '{label}{beginWrapper}{
 	->label($model->getAttributeLabel('signup_terms'))
 	->hint(Yii::t('app', 'Note: If you have selected YES, users will be forced to click a during the signup process which signifies that they have read, understand, and agree to your terms of service. Enter your terms of service text in the field below. HTML is OK.')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'submitButton')
 	->submitButton(); ?>
