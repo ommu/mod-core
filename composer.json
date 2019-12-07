@@ -29,6 +29,9 @@
 			"role": "Creator"
 		}
 	],
+	"provide": {
+		"bower-asset/eliberty-bootstrap-iconpicker": "1.8.1",
+	},
 	"require": {
 		"php": "~7.0",
 		"yiisoft/yii2": "~2.0.13",
