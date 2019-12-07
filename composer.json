@@ -30,13 +30,12 @@
 		}
 	],
 	"provide": {
-		"bower-asset/eliberty-bootstrap-iconpicker": "1.8.1"
+		"bower-asset/eliberty-bootstrap-iconpicker": "~1.8"
 	},
 	"require": {
 		"php": "~7.0",
 		"yiisoft/yii2": "~2.0.13",
-		"insolita/yii2-iconpicker": "^3.0",
-		"bower-asset/eliberty-bootstrap-iconpicker": "^1.8"
+		"insolita/yii2-iconpicker": "^3.0"
 	},
 	"autoload": {
 		"psr-4": {
