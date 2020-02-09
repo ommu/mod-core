@@ -56,7 +56,7 @@ $attributes = [
 		'attribute' => 'media',
 		'value' => function ($model) {
 			$uploadPath = $model::getUploadPath(false);
-			return $model->media ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->media])), ['alt'=>$model->media, 'class'=>'mb-3']).'<br/>'.$model->media : '-';
+			return $model->media ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->media])), ['alt'=>$model->media, 'class'=>'d-block border border-width-3 mb-3']).$model->media : '-';
 		},
 		'format' => 'html',
 	],

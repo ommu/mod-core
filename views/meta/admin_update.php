@@ -48,7 +48,7 @@ $this->params['menu']['content'] = [
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php $metaImage = !$model->isNewRecord && $model->old_meta_image_i != '' ? Html::img(Url::to(join('/', ['@webpublic', CoreMeta::getUploadPath(false), $model->old_meta_image_i])), ['alt'=>$model->old_meta_image_i, 'class'=>'mb-3']) : '';
+<?php $metaImage = !$model->isNewRecord && $model->old_meta_image_i != '' ? Html::img(Url::to(join('/', ['@webpublic', CoreMeta::getUploadPath(false), $model->old_meta_image_i])), ['alt'=>$model->old_meta_image_i, 'class'=>'d-inline-block border border-width-3 mb-3']).$model->old_meta_image_i.'<hr/>' : '';
 echo $form->field($model, 'meta_image', ['template'=> '{label}{beginWrapper}<div>'.$metaImage.'</div>{input}{error}{hint}{endWrapper}'])
 	->fileInput()
 	->label($model->getAttributeLabel('meta_image')); ?>

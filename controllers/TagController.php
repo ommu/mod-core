@@ -252,8 +252,9 @@ class TagController extends Controller
 		if($term == null) return [];
 
 		$model = CoreTags::find()
+			->alias('t')
 			->published()
-			->andWhere(['like', 'body', $term])
+			->andWhere(['like', 't.body', $term])
 			->limit(15)
 			->all();
 
