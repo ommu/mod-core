@@ -227,7 +227,7 @@ class CorePages extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'yii\grid\SerialColumn',
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['name_i'] = [
 			'attribute' => 'name_i',
@@ -306,7 +306,7 @@ class CorePages extends \app\components\ActiveRecord
 				return Html::a($views, ['page/view/manage', 'page'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} views', ['count'=>$views]), 'data-pjax'=>0]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['media_show'] = [
@@ -315,7 +315,7 @@ class CorePages extends \app\components\ActiveRecord
 			'value' => function($model, $key, $index, $column) {
 				return self::getMediaShow($model->media_show);
 			},
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['media_type'] = [
 			'attribute' => 'media_type',
@@ -323,7 +323,7 @@ class CorePages extends \app\components\ActiveRecord
 			'value' => function($model, $key, $index, $column) {
 				return self::getMediaType($model->media_type);
 			},
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['publish'] = [
 			'attribute' => 'publish',
@@ -332,7 +332,7 @@ class CorePages extends \app\components\ActiveRecord
 				return $this->quickAction($url, $model->publish);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'raw',
 			'visible' => !Yii::$app->request->get('trash') ? true : false,
 		];

@@ -208,14 +208,14 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'yii\grid\SerialColumn',
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['mfdonline'] = [
 			'attribute' => 'mfdonline',
 			'value' => function($model, $key, $index, $column) {
 				return $model->mfdonline;
 			},
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['district_name'] = [
 			'attribute' => 'district_name',
@@ -299,7 +299,7 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 				return Html::a($villages, ['zone/village/manage', 'district'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} villages', ['count'=>$villages]), 'data-pjax'=>0]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['checked'] = [
@@ -308,7 +308,7 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->checked);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['publish'] = [
 			'attribute' => 'publish',
@@ -317,7 +317,7 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 				return $this->quickAction($url, $model->publish);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'raw',
 			'visible' => !Yii::$app->request->get('trash') ? true : false,
 		];

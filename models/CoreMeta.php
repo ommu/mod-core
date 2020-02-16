@@ -241,7 +241,7 @@ class CoreMeta extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'yii\grid\SerialColumn',
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['meta_image'] = [
 			'attribute' => 'meta_image',
@@ -458,7 +458,7 @@ class CoreMeta extends \app\components\ActiveRecord
 				return $this->quickAction($url, $model->twitter_card, '1=summary, 2=summary_large_image, 3=photo,4=app');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['facebook_type'] = [
@@ -468,7 +468,7 @@ class CoreMeta extends \app\components\ActiveRecord
 				return $this->quickAction($url, $model->facebook_type, '1=profile, 2=website');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['office_on'] = [
@@ -478,7 +478,7 @@ class CoreMeta extends \app\components\ActiveRecord
 				return $this->quickAction($url, $model->office_on, '0=disable, 1=enable');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['google_on'] = [
@@ -488,7 +488,7 @@ class CoreMeta extends \app\components\ActiveRecord
 				return $this->quickAction($url, $model->google_on, '0=disable, 1=enable');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['twitter_on'] = [
@@ -498,7 +498,7 @@ class CoreMeta extends \app\components\ActiveRecord
 				return $this->quickAction($url, $model->twitter_on, '0=disable, 1=enable');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['facebook_on'] = [
@@ -508,7 +508,7 @@ class CoreMeta extends \app\components\ActiveRecord
 				return $this->quickAction($url, $model->facebook_on, '0=disable, 1=enable');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'raw',
 		];
 	}

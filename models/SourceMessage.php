@@ -148,7 +148,7 @@ class SourceMessage extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'yii\grid\SerialColumn',
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['category'] = [
 			'attribute' => 'category',
@@ -205,7 +205,7 @@ class SourceMessage extends \app\components\ActiveRecord
 				return $model->getTranslates(true);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'html',
 		];
 	}

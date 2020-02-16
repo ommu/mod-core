@@ -193,14 +193,14 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'yii\grid\SerialColumn',
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['mfdonline'] = [
 			'attribute' => 'mfdonline',
 			'value' => function($model, $key, $index, $column) {
 				return $model->mfdonline;
 			},
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['village_name'] = [
 			'attribute' => 'village_name',
@@ -248,7 +248,7 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 			'value' => function($model, $key, $index, $column) {
 				return $model->zipcode;
 			},
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['creation_date'] = [
 			'attribute' => 'creation_date',
@@ -300,7 +300,7 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 				return $this->quickAction($url, $model->publish);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'raw',
 			'visible' => !Yii::$app->request->get('trash') ? true : false,
 		];

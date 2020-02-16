@@ -146,7 +146,7 @@ class CoreLanguages extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'yii\grid\SerialColumn',
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 		];
 		$this->templateColumns['name'] = [
 			'attribute' => 'name',
@@ -204,7 +204,7 @@ class CoreLanguages extends \app\components\ActiveRecord
 				return Html::a($users, ['/users/member/index', 'language'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} users', ['count'=>$users])]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['actived'] = [
@@ -214,7 +214,7 @@ class CoreLanguages extends \app\components\ActiveRecord
 				return $this->quickAction($url, $model->actived, 'Enable,Disable');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['default'] = [
@@ -224,7 +224,7 @@ class CoreLanguages extends \app\components\ActiveRecord
 				return $this->quickAction($url, $model->default, 'Yes,No', true);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'center'],
+			'contentOptions' => ['class'=>'text-center'],
 			'format' => 'raw',
 		];
 	}
