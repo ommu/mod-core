@@ -2,9 +2,9 @@
 /**
  * Modules
  * 
- * @author Putra Sudaryanto <putra@ommu.co>
+ * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
+ * @copyright Copyright (c) 2017 OMMU (www.ommu.id)
  * @created date 24 December 2017, 20:11 WIB
  * @link https://github.com/ommu/mod-core
  *

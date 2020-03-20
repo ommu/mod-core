@@ -6,9 +6,9 @@
  * @var $model ommu\core\models\CorePageViews
  * @var $searchModel ommu\core\models\search\CorePageViews
  *
- * @author Putra Sudaryanto <putra@ommu.co>
+ * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
+ * @copyright Copyright (c) 2017 OMMU (www.ommu.id)
  * @created date 2 October 2017, 22:42 WIB
  * @modified date 31 January 2019, 16:39 WIB
  * @link https://github.com/ommu/mod-core

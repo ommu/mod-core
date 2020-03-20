@@ -5,9 +5,9 @@
  * This is the ActiveQuery class for [[\ommu\core\models\CoreZoneCity]].
  * @see \ommu\core\models\CoreZoneCity
  * 
- * @author Putra Sudaryanto <putra@ommu.co>
+ * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2018 OMMU (www.ommu.co)
+ * @copyright Copyright (c) 2018 OMMU (www.ommu.id)
  * @created date 26 April 2018, 20:40 WIB
  * @modified date 30 January 2019, 16:09 WIB
  * @link https://github.com/ommu/mod-core

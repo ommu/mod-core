@@ -6,9 +6,9 @@
  * @var $model ommu\core\models\CoreMeta
  * @var $form yii\widgets\ActiveForm
  *
- * @author Putra Sudaryanto <putra@ommu.co>
+ * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2018 OMMU (www.ommu.co)
+ * @copyright Copyright (c) 2018 OMMU (www.ommu.id)
  * @created date 24 April 2018, 14:11 WIB
  * @link https://github.com/ommu/mod-core
  *
@@ -97,12 +97,12 @@ echo $form->field($model, 'facebook_type')
 <?php echo $form->field($model, 'facebook_sitename')
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('facebook_sitename'))
-	->hint(Yii::t('app', 'The name of the web site upon which the object resides (.i.e. "Ommu Platform, ommu.co")')); ?>
+	->hint(Yii::t('app', 'The name of the web site upon which the object resides (.i.e. "OMMU, ommu.id")')); ?>
 
 <?php echo $form->field($model, 'facebook_see_also')
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('facebook_see_also'))
-	->hint(Yii::t('app', 'URLs of related resources (.i.e. "http://www.ommu.co")')); ?>
+	->hint(Yii::t('app', 'URLs of related resources (.i.e. "http://www.ommu.id")')); ?>
 
 <?php echo $form->field($model, 'facebook_admins')
 	->textInput(['maxlength' => true])
