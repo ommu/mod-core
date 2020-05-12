@@ -85,7 +85,7 @@ class ViewController extends Controller
 		if(($page = Yii::$app->request->get('page')) != null)
 			$page = \ommu\core\models\CorePages::findOne($page);
 		if(($user = Yii::$app->request->get('user')) != null)
-			$user = \ommu\users\models\Users::findOne($user);
+			$user = \app\models\Users::findOne($user);
 
 		$this->view->title = Yii::t('app', 'Views');
 		$this->view->description = '';

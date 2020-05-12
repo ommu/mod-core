@@ -62,7 +62,7 @@ namespace ommu\core\models;
 
 use Yii;
 use yii\helpers\Url;
-use ommu\users\models\Users;
+use app\models\Users;
 use ommu\core\models\CoreZoneCountry;
 use ommu\core\models\CoreZoneProvince;
 use ommu\core\models\CoreZoneCity;

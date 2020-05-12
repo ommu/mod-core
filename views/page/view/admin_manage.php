@@ -21,7 +21,7 @@ use app\components\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\DetailView;
 use ommu\core\models\CorePages;
-use ommu\users\models\Users;
+use app\models\Users;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Publication'), 'url' => ['page/admin/index']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Static Pages'), 'url' => ['page/admin/index']];

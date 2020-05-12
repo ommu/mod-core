@@ -28,7 +28,7 @@
 namespace ommu\core\models;
 
 use Yii;
-use ommu\users\models\Users;
+use app\models\Users;
 
 class Settings extends \app\components\ActiveRecord
 {

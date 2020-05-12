@@ -33,7 +33,7 @@ namespace ommu\core\models;
 use Yii;
 use yii\helpers\Html;
 use yii\behaviors\SluggableBehavior;
-use ommu\users\models\Users;
+use app\models\Users;
 
 class CoreZoneCountry extends \app\components\ActiveRecord
 {

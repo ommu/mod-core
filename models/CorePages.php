@@ -47,7 +47,7 @@ use yii\web\UploadedFile;
 use yii\behaviors\SluggableBehavior;
 use thamtech\uuid\helpers\UuidHelper;
 use app\models\SourceMessage;
-use ommu\users\models\Users;
+use app\models\Users;
 use ommu\core\models\view\CorePages as CorePagesView;
 
 class CorePages extends \app\components\ActiveRecord

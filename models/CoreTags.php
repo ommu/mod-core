@@ -32,7 +32,7 @@ namespace ommu\core\models;
 use Yii;
 use yii\helpers\Url;
 use yii\helpers\Inflector;
-use ommu\users\models\Users;
+use app\models\Users;
 
 class CoreTags extends \app\components\ActiveRecord
 {

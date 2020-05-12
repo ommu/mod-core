@@ -34,7 +34,7 @@ use Yii;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
 use ommu\core\models\Message;
-use ommu\users\models\Users;
+use app\models\Users;
 use yii\helpers\ArrayHelper;
 
 class SourceMessage extends \app\components\ActiveRecord
