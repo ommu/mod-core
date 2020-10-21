@@ -39,11 +39,5 @@
 		"psr-4": {
 			"ommu\\core\\": ""
 		}
-	},
-    "extra": {
-        "class": "yii\\composer\\Plugin",
-        "branch-alias": {
-            "dev-master": "2.0.x-dev"
-        }
-    }
+	}
 }
