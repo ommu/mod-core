@@ -73,23 +73,25 @@ class SettingController extends Controller
 	public function actionGeneral()
 	{
 		$model = CoreSettings::findOne(1);
-		if ($model === null) 
-			$model = new CoreSettings();
+        if ($model === null) {
+            $model = new CoreSettings();
+        }
 		$model->scenario = CoreSettings::SCENARIO_GENERAL;
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Public permissions success updated.'));
 				return $this->redirect(['general']);
 
-			} else {
-				if(Yii::$app->request->isAjax)
-					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+            } else {
+                if (Yii::$app->request->isAjax) {
+                    return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -109,23 +111,25 @@ class SettingController extends Controller
 	public function actionBanned()
 	{
 		$model = CoreSettings::findOne(1);
-		if ($model === null) 
-			$model = new CoreSettings();
+        if ($model === null) {
+            $model = new CoreSettings();
+        }
 		$model->scenario = CoreSettings::SCENARIO_BANNED;
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Spam & banning setting success updated.'));
 				return $this->redirect(['banned']);
 
-			} else {
-				if(Yii::$app->request->isAjax)
-					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+            } else {
+                if (Yii::$app->request->isAjax) {
+                    return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 		
@@ -145,23 +149,25 @@ class SettingController extends Controller
 	public function actionSignup()
 	{
 		$model = CoreSettings::findOne(1);
-		if ($model === null) 
-			$model = new CoreSettings();
+        if ($model === null) {
+            $model = new CoreSettings();
+        }
 		$model->scenario = CoreSettings::SCENARIO_SIGNUP;
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Signup setting success updated.'));
 				return $this->redirect(['signup']);
 
-			} else {
-				if(Yii::$app->request->isAjax)
-					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+            } else {
+                if (Yii::$app->request->isAjax) {
+                    return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -181,23 +187,25 @@ class SettingController extends Controller
 	public function actionLanguage()
 	{
 		$model = CoreSettings::findOne(1);
-		if ($model === null) 
-			$model = new CoreSettings();
+        if ($model === null) {
+            $model = new CoreSettings();
+        }
 		$model->scenario = CoreSettings::SCENARIO_LANGUAGE;
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Language setting success updated.'));
 				return $this->redirect(['language']);
 
-			} else {
-				if(Yii::$app->request->isAjax)
-					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+            } else {
+                if (Yii::$app->request->isAjax) {
+                    return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -219,8 +227,9 @@ class SettingController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = CoreSettings::findOne($id)) !== null)
-			return $model;
+        if (($model = CoreSettings::findOne($id)) !== null) {
+            return $model;
+        }
 
 		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}

@@ -18,16 +18,16 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
-if(!$small) {
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['/setting/update']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Zone'), 'url' => ['zone/country/index']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Villages'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $model->village_name;
+if (!$small) {
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['/setting/update']];
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Zone'), 'url' => ['zone/country/index']];
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Villages'), 'url' => ['index']];
+    $this->params['breadcrumbs'][] = $model->village_name;
 
-$this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Update'), 'url' => Url::to(['update', 'id'=>$model->village_id]), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-	['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->village_id]), 'htmlOptions' => ['data-confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method'=>'post', 'class'=>'btn btn-danger'], 'icon' => 'trash'],
-];
+    $this->params['menu']['content'] = [
+        ['label' => Yii::t('app', 'Update'), 'url' => Url::to(['update', 'id'=>$model->village_id]), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
+        ['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->village_id]), 'htmlOptions' => ['data-confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method'=>'post', 'class'=>'btn btn-danger'], 'icon' => 'trash'],
+    ];
 } ?>
 
 <div class="core-zone-village-view">
@@ -45,8 +45,9 @@ $attributes = [
 		'attribute' => 'districtName',
 		'value' => function ($model) {
 			$districtName = isset($model->district) ? $model->district->district_name : '-';
-			if($districtName != '-')
-				return Html::a($districtName, ['zone/district/view', 'id'=>$model->district_id], ['title'=>$districtName]);
+            if ($districtName != '-') {
+                return Html::a($districtName, ['zone/district/view', 'id'=>$model->district_id], ['title'=>$districtName]);
+            }
 			return $districtName;
 		},
 		'format' => 'html',
@@ -55,8 +56,9 @@ $attributes = [
 		'attribute' => 'cityName',
 		'value' => function ($model) {
 			$cityName = isset($model->district->city) ? $model->district->city->city_name : '-';
-			if($cityName != '-')
-				return Html::a($cityName, ['zone/city/view', 'id'=>$model->district->city_id], ['title'=>$cityName]);
+            if ($cityName != '-') {
+                return Html::a($cityName, ['zone/city/view', 'id'=>$model->district->city_id], ['title'=>$cityName]);
+            }
 			return $cityName;
 		},
 		'format' => 'html',
@@ -65,8 +67,9 @@ $attributes = [
 		'attribute' => 'provinceName',
 		'value' => function ($model) {
 			$provinceName = isset($model->district->city->province) ? $model->district->city->province->province_name : '-';
-			if($provinceName != '-')
-				return Html::a($provinceName, ['zone/province/view', 'id'=>$model->district->city->province_id], ['title'=>$provinceName]);
+            if ($provinceName != '-') {
+                return Html::a($provinceName, ['zone/province/view', 'id'=>$model->district->city->province_id], ['title'=>$provinceName]);
+            }
 			return $provinceName;
 		},
 		'format' => 'html',
@@ -75,8 +78,9 @@ $attributes = [
 		'attribute' => 'countryName',
 		'value' => function ($model) {
 			$countryName = isset($model->district->city->province->country) ? $model->district->city->province->country->country_name : '-';
-			if($countryName != '-')
-				return Html::a($countryName, ['zone/country/view', 'id'=>$model->district->city->province->country_id], ['title'=>$countryName]);
+            if ($countryName != '-') {
+                return Html::a($countryName, ['zone/country/view', 'id'=>$model->district->city->province->country_id], ['title'=>$countryName]);
+            }
 			return $countryName;
 		},
 		'format' => 'html',

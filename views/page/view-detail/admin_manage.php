@@ -24,7 +24,7 @@ use ommu\core\models\CorePageViews;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Publication'), 'url' => ['page/admin/index']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Static Pages'), 'url' => ['page/admin/index']];
-if($view != null) {
+if ($view != null) {
 	$this->params['breadcrumbs'][] = ['label' => $view->page->title->message, 'url' => ['page/admin/view', 'id'=>$view->page_id]];
 	$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Views'), 'url' => ['page/view/manage', 'page'=>$view->page_id]];
 	$this->params['breadcrumbs'][] = ['label' => isset($view->user) ? $view->user->displayname : 'Anonymous', 'url' => ['page/view-detail/manage', 'view'=>$view->view_id]];
@@ -40,7 +40,7 @@ $this->params['menu']['option'] = [
 <div class="core-page-view-history-manage">
 <?php Pjax::begin(); ?>
 
-<?php if($view != null) {
+<?php if ($view != null) {
 $model = $view;
 echo DetailView::widget([
 	'model' => $model,
@@ -52,8 +52,9 @@ echo DetailView::widget([
 			'attribute' => 'pageName',
 			'value' => function ($model) {
 				$pageName = isset($model->page) ? $model->page->title->message : '-';
-				if($pageName != '-')
-					return Html::a($pageName, ['page/admin/view', 'id'=>$model->page_id], ['title'=>$pageName, 'class'=>'modal-btn']);
+                if ($pageName != '-') {
+                    return Html::a($pageName, ['page/admin/view', 'id'=>$model->page_id], ['title'=>$pageName, 'class'=>'modal-btn']);
+                }
 				return $pageName;
 			},
 			'format' => 'html',
@@ -81,12 +82,15 @@ array_push($columnData, [
 	'class' => 'app\components\grid\ActionColumn',
 	'header' => Yii::t('app', 'Option'),
 	'urlCreator' => function($action, $model, $key, $index) {
-		if($action == 'view')
-			return Url::to(['view', 'id'=>$key]);
-		if($action == 'update')
-			return Url::to(['update', 'id'=>$key]);
-		if($action == 'delete')
-			return Url::to(['delete', 'id'=>$key]);
+        if ($action == 'view') {
+            return Url::to(['view', 'id'=>$key]);
+        }
+        if ($action == 'update') {
+            return Url::to(['update', 'id'=>$key]);
+        }
+        if ($action == 'delete') {
+            return Url::to(['delete', 'id'=>$key]);
+        }
 	},
 	'buttons' => [
 		'view' => function ($url, $model, $key) {

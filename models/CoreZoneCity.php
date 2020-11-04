@@ -136,21 +136,22 @@ class CoreZoneCity extends \app\components\ActiveRecord
 	 */
 	public function getDistricts($count=false, $publish=1)
 	{
-		if($count == false) {
-			return $this->hasMany(CoreZoneDistrict::className(), ['city_id' => 'city_id'])
-				->alias('districts')
-				->andOnCondition([sprintf('%s.publish', 'districts') => $publish]);
-		}
+        if ($count == false) {
+            return $this->hasMany(CoreZoneDistrict::className(), ['city_id' => 'city_id'])
+                ->alias('districts')
+                ->andOnCondition([sprintf('%s.publish', 'districts') => $publish]);
+        }
 
 		$model = CoreZoneDistrict::find()
-			->alias('t')
-			->where(['t.city_id' => $this->city_id]);
-		if($publish == 0)
-			$model->unpublish();
-		elseif($publish == 1)
-			$model->published();
-		elseif($publish == 2)
-			$model->deleted();
+            ->alias('t')
+            ->where(['t.city_id' => $this->city_id]);
+        if ($publish == 0) {
+            $model->unpublish();
+        } else if ($publish == 1) {
+            $model->published();
+        } else if ($publish == 2) {
+            $model->deleted();
+        }
 		$districts = $model->count();
 
 		return $districts ? $districts : 0;
@@ -188,11 +189,13 @@ class CoreZoneCity extends \app\components\ActiveRecord
 	{
 		parent::init();
 
-		if(!(Yii::$app instanceof \app\components\Application))
-			return;
+        if (!(Yii::$app instanceof \app\components\Application)) {
+            return;
+        }
 
-		if(!$this->hasMethod('search'))
-			return;
+        if (!$this->hasMethod('search')) {
+            return;
+        }
 
 		$this->templateColumns['_no'] = [
 			'header' => '#',
@@ -221,15 +224,14 @@ class CoreZoneCity extends \app\components\ActiveRecord
 			// 'filter' => CoreZoneProvince::getProvince(),
 			'visible' => !Yii::$app->request->get('province') ? true : false,
 		];
-		if(!Yii::$app->request->get('country') && !Yii::$app->request->get('province')) {
-			$this->templateColumns['countryName'] = [
-				'attribute' => 'countryName',
-				'value' => function($model, $key, $index, $column) {
-					return isset($model->province->country) ? $model->province->country->country_name : '-';
-					// return $model->countryName;
-				},
-			];
-		}
+        $this->templateColumns['countryName'] = [
+            'attribute' => 'countryName',
+            'value' => function($model, $key, $index, $column) {
+                return isset($model->province->country) ? $model->province->country->country_name : '-';
+                // return $model->countryName;
+            },
+            'visible' => !Yii::$app->request->get('country') && !Yii::$app->request->get('province') ? true : false,
+        ];
 		$this->templateColumns['creation_date'] = [
 			'attribute' => 'creation_date',
 			'value' => function($model, $key, $index, $column) {
@@ -309,36 +311,39 @@ class CoreZoneCity extends \app\components\ActiveRecord
 	 */
 	public static function getInfo($id, $column=null)
 	{
-		if($column != null) {
-			$model = self::find();
-			if(is_array($column))
-				$model->select($column);
-			else
-				$model->select([$column]);
-			$model = $model->where(['city_id' => $id])->one();
-			return is_array($column) ? $model : $model->$column;
-			
-		} else {
-			$model = self::findOne($id);
-			return $model;
-		}
+        if ($column != null) {
+            $model = self::find();
+            if (is_array($column)) {
+                $model->select($column);
+            } else {
+                $model->select([$column]);
+            }
+            $model = $model->where(['city_id' => $id])->one();
+            return is_array($column) ? $model : $model->$column;
+
+        } else {
+            $model = self::findOne($id);
+            return $model;
+        }
 	}
 
 	/**
 	 * function getCity
 	 */
-	public static function getCity($publish=null, $array=true) 
+	public static function getCity($publish=null, $array=true)
 	{
 		$model = self::find()
-			->alias('t')
+            ->alias('t')
 			->suggest();
-		if($publish != null)
-			$model = $model->andWhere(['t.publish' => $publish]);
+        if ($publish != null) {
+            $model = $model->andWhere(['t.publish' => $publish]);
+        }
 
 		$model = $model->orderBy('t.city_name ASC')->all();
 
-		if($array == true)
-			return \yii\helpers\ArrayHelper::map($model, 'city_id', 'city_name');
+        if ($array == true) {
+            return \yii\helpers\ArrayHelper::map($model, 'city_id', 'city_name');
+        }
 
 		return $model;
 	}
@@ -361,15 +366,17 @@ class CoreZoneCity extends \app\components\ActiveRecord
 	 */
 	public function beforeValidate()
 	{
-		if(parent::beforeValidate()) {
-			if($this->isNewRecord) {
-				if($this->creation_id == null)
-					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			} else {
-				if($this->modified_id == null)
-					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			}
-		}
-		return true;
+        if (parent::beforeValidate()) {
+            if ($this->isNewRecord) {
+                if ($this->creation_id == null) {
+                    $this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            } else {
+                if ($this->modified_id == null) {
+                    $this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            }
+        }
+        return true;
 	}
 }

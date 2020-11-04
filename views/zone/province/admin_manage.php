@@ -24,13 +24,15 @@ use ommu\core\models\CoreZoneCountry;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['/setting/update']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Zone'), 'url' => ['zone/country/index']];
-if($country != null)
-	$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Country: {country-name}', ['country-name'=>$country->country_name]), 'url' => ['zone/country/view', 'id'=>$country->country_id]];
+if ($country != null) {
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Country: {country-name}', ['country-name'=>$country->country_name]), 'url' => ['zone/country/view', 'id'=>$country->country_id]];
+}
 $this->params['breadcrumbs'][] = $this->title;
 
 $createUrl = Url::to(['create']);
-if($country != null)
-	$createUrl = Url::to(['create', 'id'=>$country->country_id]);
+if ($country != null) {
+    $createUrl = Url::to(['create', 'id'=>$country->country_id]);
+}
 $this->params['menu']['content'] = [
 	['label' => Yii::t('app', 'Add Province'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class'=>'btn modal-btn btn-success']],
 ];
@@ -43,7 +45,7 @@ $this->params['menu']['option'] = [
 <div class="core-zone-province-manage">
 <?php Pjax::begin(); ?>
 
-<?php if($country != null) {
+<?php if ($country != null) {
 $model = $country;
 echo DetailView::widget([
 	'model' => $model,
@@ -73,15 +75,18 @@ array_push($columnData, [
 	'class' => 'app\components\grid\ActionColumn',
 	'header' => Yii::t('app', 'Option'),
 	'urlCreator' => function($action, $model, $key, $index) {
-		if($action == 'view')
-			return Url::to(['view', 'id'=>$key]);
-		if($action == 'update') {
-			if(($country = Yii::$app->request->get('country')) != null)
-				return Url::to(['update', 'id'=>$key, 'country'=>$country]);
+        if ($action == 'view') {
+            return Url::to(['view', 'id'=>$key]);
+        }
+        if ($action == 'update') {
+            if (($country = Yii::$app->request->get('country')) != null) {
+                return Url::to(['update', 'id'=>$key, 'country'=>$country]);
+            }
 			return Url::to(['update', 'id'=>$key]);
 		}
-		if($action == 'delete')
-			return Url::to(['delete', 'id'=>$key]);
+        if ($action == 'delete') {
+            return Url::to(['delete', 'id'=>$key]);
+        }
 	},
 	'buttons' => [
 		'view' => function ($url, $model, $key) {

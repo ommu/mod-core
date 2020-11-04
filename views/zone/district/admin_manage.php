@@ -26,17 +26,21 @@ use ommu\core\models\CoreZoneCity;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['/setting/update']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Zone'), 'url' => ['zone/country/index']];
-if($city != null)
-	$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'City: {city-name}', ['city-name'=>$city->city_name]), 'url' => ['zone/city/view', 'id'=>$city->city_id]];
-if($province != null)
-	$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Province: {province-name}', ['province-name'=>$province->province_name]), 'url' => ['zone/province/view', 'id'=>$province->province_id]];
-if($country != null)
-	$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Country: {country-name}', ['country-name'=>$country->country_name]), 'url' => ['zone/country/view', 'id'=>$country->country_id]];
+if ($city != null) {
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'City: {city-name}', ['city-name'=>$city->city_name]), 'url' => ['zone/city/view', 'id'=>$city->city_id]];
+}
+if ($province != null) {
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Province: {province-name}', ['province-name'=>$province->province_name]), 'url' => ['zone/province/view', 'id'=>$province->province_id]];
+}
+if ($country != null) {
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Country: {country-name}', ['country-name'=>$country->country_name]), 'url' => ['zone/country/view', 'id'=>$country->country_id]];
+}
 $this->params['breadcrumbs'][] = $this->title;
 
 $createUrl = Url::to(['create']);
-if($city != null)
-	$createUrl = Url::to(['create', 'id'=>$city->city_id]);
+if ($city != null) {
+    $createUrl = Url::to(['create', 'id'=>$city->city_id]);
+}
 $this->params['menu']['content'] = [
 	['label' => Yii::t('app', 'Add District'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class'=>'btn modal-btn btn-success']],
 ];
@@ -49,7 +53,7 @@ $this->params['menu']['option'] = [
 <div class="core-zone-district-manage">
 <?php Pjax::begin(); ?>
 
-<?php if($country != null) {
+<?php if ($country != null) {
 $model = $country;
 echo DetailView::widget([
 	'model' => $model,
@@ -69,7 +73,7 @@ echo DetailView::widget([
 ]);
 }?>
 
-<?php if($province != null) {
+<?php if ($province != null) {
 $model = $province;
 echo DetailView::widget([
 	'model' => $model,
@@ -88,8 +92,9 @@ echo DetailView::widget([
 			'attribute' => 'countryName',
 			'value' => function ($model) {
 				$countryName = isset($model->country) ? $model->country->country_name : '-';
-				if($countryName != '-')
-					return Html::a($countryName, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$countryName, 'class'=>'modal-btn']);
+                if ($countryName != '-') {
+                    return Html::a($countryName, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$countryName, 'class'=>'modal-btn']);
+                }
 				return $countryName;
 			},
 			'format' => 'html',
@@ -99,7 +104,7 @@ echo DetailView::widget([
 ]);
 }?>
 
-<?php if($city != null) {
+<?php if ($city != null) {
 $model = $city;
 echo DetailView::widget([
 	'model' => $model,
@@ -118,8 +123,9 @@ echo DetailView::widget([
 			'attribute' => 'provinceName',
 			'value' => function ($model) {
 				$provinceName = isset($model->province) ? $model->province->province_name : '-';
-				if($provinceName != '-')
-					return Html::a($provinceName, ['zone/province/view', 'id'=>$model->province_id], ['title'=>$provinceName, 'class'=>'modal-btn']);
+                if ($provinceName != '-') {
+                    return Html::a($provinceName, ['zone/province/view', 'id'=>$model->province_id], ['title'=>$provinceName, 'class'=>'modal-btn']);
+                }
 				return $provinceName;
 			},
 			'format' => 'html',
@@ -128,8 +134,9 @@ echo DetailView::widget([
 			'attribute' => 'countryName',
 			'value' => function ($model) {
 				$countryName = isset($model->province->country) ? $model->province->country->country_name : '-';
-				if($countryName != '-')
-					return Html::a($countryName, ['zone/country/view', 'id'=>$model->province->country_id], ['title'=>$countryName, 'class'=>'modal-btn']);
+                if ($countryName != '-') {
+                    return Html::a($countryName, ['zone/country/view', 'id'=>$model->province->country_id], ['title'=>$countryName, 'class'=>'modal-btn']);
+                }
 				return $countryName;
 			},
 			'format' => 'html',
@@ -149,15 +156,18 @@ array_push($columnData, [
 	'class' => 'app\components\grid\ActionColumn',
 	'header' => Yii::t('app', 'Option'),
 	'urlCreator' => function($action, $model, $key, $index) {
-		if($action == 'view')
-			return Url::to(['view', 'id'=>$key]);
-		if($action == 'update') {
-			if(($city = Yii::$app->request->get('city')) != null)
-				return Url::to(['update', 'id'=>$key, 'city'=>$city]);
+        if ($action == 'view') {
+            return Url::to(['view', 'id'=>$key]);
+        }
+        if ($action == 'update') {
+            if (($city = Yii::$app->request->get('city')) != null) {
+                return Url::to(['update', 'id'=>$key, 'city'=>$city]);
+            }
 			return Url::to(['update', 'id'=>$key]);
 		}
-		if($action == 'delete')
-			return Url::to(['delete', 'id'=>$key]);
+        if ($action == 'delete') {
+            return Url::to(['delete', 'id'=>$key]);
+        }
 	},
 	'buttons' => [
 		'view' => function ($url, $model, $key) {

@@ -103,21 +103,22 @@ class CoreZoneCountry extends \app\components\ActiveRecord
 	 */
 	public function getProvinces($count=false, $publish=1)
 	{
-		if($count == false) {
-			return $this->hasMany(CoreZoneProvince::className(), ['country_id' => 'country_id'])
-				->alias('provinces')
-				->andOnCondition([sprintf('%s.publish', 'provinces') => $publish]);
-		}
+        if ($count == false) {
+            return $this->hasMany(CoreZoneProvince::className(), ['country_id' => 'country_id'])
+                ->alias('provinces')
+                ->andOnCondition([sprintf('%s.publish', 'provinces') => $publish]);
+        }
 
 		$model = CoreZoneProvince::find()
-			->alias('t')
-			->where(['t.country_id' => $this->country_id]);
-		if($publish == 0)
-			$model->unpublish();
-		elseif($publish == 1)
-			$model->published();
-		elseif($publish == 2)
-			$model->deleted();
+            ->alias('t')
+            ->where(['t.country_id' => $this->country_id]);
+        if ($publish == 0) {
+            $model->unpublish();
+        } else if ($publish == 1) {
+            $model->published();
+        } else if ($publish == 2) {
+            $model->deleted();
+        }
 		$provinces = $model->count();
 
 		return $provinces ? $provinces : 0;
@@ -155,11 +156,13 @@ class CoreZoneCountry extends \app\components\ActiveRecord
 	{
 		parent::init();
 
-		if(!(Yii::$app instanceof \app\components\Application))
-			return;
+        if (!(Yii::$app instanceof \app\components\Application)) {
+            return;
+        }
 
-		if(!$this->hasMethod('search'))
-			return;
+        if (!$this->hasMethod('search')) {
+            return;
+        }
 
 		$this->templateColumns['_no'] = [
 			'header' => '#',
@@ -232,33 +235,35 @@ class CoreZoneCountry extends \app\components\ActiveRecord
 	 */
 	public static function getInfo($id, $column=null)
 	{
-		if($column != null) {
-			$model = self::find();
-			if(is_array($column))
-				$model->select($column);
-			else
-				$model->select([$column]);
-			$model = $model->where(['country_id' => $id])->one();
-			return is_array($column) ? $model : $model->$column;
-			
-		} else {
-			$model = self::findOne($id);
-			return $model;
-		}
+        if ($column != null) {
+            $model = self::find();
+            if (is_array($column)) {
+                $model->select($column);
+            } else {
+                $model->select([$column]);
+            }
+            $model = $model->where(['country_id' => $id])->one();
+            return is_array($column) ? $model : $model->$column;
+
+        } else {
+            $model = self::findOne($id);
+            return $model;
+        }
 	}
 
 	/**
 	 * function getCountry
 	 */
-	public static function getCountry($array=true) 
+	public static function getCountry($array=true)
 	{
 		$model = self::find()
-			->alias('t')
+            ->alias('t')
 			->suggest();
 		$model = $model->orderBy('t.country_name ASC')->all();
 
-		if($array == true)
-			return \yii\helpers\ArrayHelper::map($model, 'country_id', 'country_name');
+        if ($array == true) {
+            return \yii\helpers\ArrayHelper::map($model, 'country_id', 'country_name');
+        }
 
 		return $model;
 	}
@@ -279,15 +284,17 @@ class CoreZoneCountry extends \app\components\ActiveRecord
 	 */
 	public function beforeValidate()
 	{
-		if(parent::beforeValidate()) {
-			if($this->isNewRecord) {
-				if($this->creation_id == null)
-					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			} else {
-				if($this->modified_id == null)
-					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			}
-		}
-		return true;
+        if (parent::beforeValidate()) {
+            if ($this->isNewRecord) {
+                if ($this->creation_id == null) {
+                    $this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            } else {
+                if ($this->modified_id == null) {
+                    $this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            }
+        }
+        return true;
 	}
 }

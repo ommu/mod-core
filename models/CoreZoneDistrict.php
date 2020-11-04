@@ -147,21 +147,22 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 	 */
 	public function getVillages($count=false, $publish=1)
 	{
-		if($count == false) {
-			return $this->hasMany(CoreZoneVillage::className(), ['district_id' => 'district_id'])
-				->alias('villages')
-				->andOnCondition([sprintf('%s.publish', 'villages') => $publish]);
-		}
+        if ($count == false) {
+            return $this->hasMany(CoreZoneVillage::className(), ['district_id' => 'district_id'])
+                ->alias('villages')
+                ->andOnCondition([sprintf('%s.publish', 'villages') => $publish]);
+        }
 
 		$model = CoreZoneVillage::find()
-			->alias('t')
-			->where(['t.district_id' => $this->district_id]);
-		if($publish == 0)
-			$model->unpublish();
-		elseif($publish == 1)
-			$model->published();
-		elseif($publish == 2)
-			$model->deleted();
+            ->alias('t')
+            ->where(['t.district_id' => $this->district_id]);
+        if ($publish == 0) {
+            $model->unpublish();
+        } else if ($publish == 1) {
+            $model->published();
+        } else if ($publish == 2) {
+            $model->deleted();
+        }
 		$villages = $model->count();
 
 		return $villages ? $villages : 0;
@@ -199,11 +200,13 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 	{
 		parent::init();
 
-		if(!(Yii::$app instanceof \app\components\Application))
-			return;
+        if (!(Yii::$app instanceof \app\components\Application)) {
+            return;
+        }
 
-		if(!$this->hasMethod('search'))
-			return;
+        if (!$this->hasMethod('search')) {
+            return;
+        }
 
 		$this->templateColumns['_no'] = [
 			'header' => '#',
@@ -231,24 +234,22 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 			},
 			'visible' => !Yii::$app->request->get('city') ? true : false,
 		];
-		if(!Yii::$app->request->get('province') && !Yii::$app->request->get('city')) {
-			$this->templateColumns['provinceName'] = [
-				'attribute' => 'provinceName',
-				'value' => function($model, $key, $index, $column) {
-					return isset($model->city->province) ? $model->city->province->province_name : '-';
-					// return $model->provinceName;
-				},
-			];
-		}
-		if(!Yii::$app->request->get('country') && !Yii::$app->request->get('province') && !Yii::$app->request->get('city')) {
-			$this->templateColumns['countryName'] = [
-				'attribute' => 'countryName',
-				'value' => function($model, $key, $index, $column) {
-					return isset($model->city->province->country) ? $model->city->province->country->country_name : '-';
-					// return $model->countryName;
-				},
-			];
-		}
+        $this->templateColumns['provinceName'] = [
+            'attribute' => 'provinceName',
+            'value' => function($model, $key, $index, $column) {
+                return isset($model->city->province) ? $model->city->province->province_name : '-';
+                // return $model->provinceName;
+            },
+            'visible' => !Yii::$app->request->get('province') && !Yii::$app->request->get('city') ? true : false,
+        ];
+        $this->templateColumns['countryName'] = [
+            'attribute' => 'countryName',
+            'value' => function($model, $key, $index, $column) {
+                return isset($model->city->province->country) ? $model->city->province->country->country_name : '-';
+                // return $model->countryName;
+            },
+            'visible' => !Yii::$app->request->get('country') && !Yii::$app->request->get('province') && !Yii::$app->request->get('city') ? true : false,
+        ];
 		$this->templateColumns['creation_date'] = [
 			'attribute' => 'creation_date',
 			'value' => function($model, $key, $index, $column) {
@@ -328,36 +329,39 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 	 */
 	public static function getInfo($id, $column=null)
 	{
-		if($column != null) {
-			$model = self::find();
-			if(is_array($column))
-				$model->select($column);
-			else
-				$model->select([$column]);
-			$model = $model->where(['district_id' => $id])->one();
-			return is_array($column) ? $model : $model->$column;
-			
-		} else {
-			$model = self::findOne($id);
-			return $model;
-		}
+        if ($column != null) {
+            $model = self::find();
+            if (is_array($column)) {
+                $model->select($column);
+            } else {
+                $model->select([$column]);
+            }
+            $model = $model->where(['district_id' => $id])->one();
+            return is_array($column) ? $model : $model->$column;
+
+        } else {
+            $model = self::findOne($id);
+            return $model;
+        }
 	}
 
 	/**
 	 * function getDistrict
 	 */
-	public static function getDistrict($publish=null, $array=true) 
+	public static function getDistrict($publish=null, $array=true)
 	{
 		$model = self::find()
-			->alias('t')
+            ->alias('t')
 			->suggest();
-		if($publish != null)
-			$model = $model->andWhere(['t.publish' => $publish]);
+        if ($publish != null) {
+            $model = $model->andWhere(['t.publish' => $publish]);
+        }
 
 		$model = $model->orderBy('t.district_name ASC')->all();
 
-		if($array == true)
-			return \yii\helpers\ArrayHelper::map($model, 'district_id', 'district_name');
+        if ($array == true) {
+            return \yii\helpers\ArrayHelper::map($model, 'district_id', 'district_name');
+        }
 
 		return $model;
 	}
@@ -381,15 +385,17 @@ class CoreZoneDistrict extends \app\components\ActiveRecord
 	 */
 	public function beforeValidate()
 	{
-		if(parent::beforeValidate()) {
-			if($this->isNewRecord) {
-				if($this->creation_id == null)
-					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			} else {
-				if($this->modified_id == null)
-					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			}
-		}
-		return true;
+        if (parent::beforeValidate()) {
+            if ($this->isNewRecord) {
+                if ($this->creation_id == null) {
+                    $this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            } else {
+                if ($this->modified_id == null) {
+                    $this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            }
+        }
+        return true;
 	}
 }

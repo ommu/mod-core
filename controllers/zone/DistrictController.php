@@ -89,25 +89,29 @@ class DistrictController extends Controller
 	 */
 	public function actionManage()
 	{
-		$searchModel = new CoreZoneDistrictSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new CoreZoneDistrictSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-		$gridColumn = Yii::$app->request->get('GridColumn', null);
-		$cols = [];
-		if($gridColumn != null && count($gridColumn) > 0) {
-			foreach($gridColumn as $key => $val) {
-				if($gridColumn[$key] == 1)
-					$cols[] = $key;
-			}
-		}
-		$columns = $searchModel->getGridColumn($cols);
+        $gridColumn = Yii::$app->request->get('GridColumn', null);
+        $cols = [];
+        if ($gridColumn != null && count($gridColumn) > 0) {
+            foreach ($gridColumn as $key => $val) {
+                if ($gridColumn[$key] == 1) {
+                    $cols[] = $key;
+                }
+            }
+        }
+        $columns = $searchModel->getGridColumn($cols);
 
-		if(($country = Yii::$app->request->get('country')) != null)
-			$country = \ommu\core\models\CoreZoneCountry::findOne($country);
-		if(($province = Yii::$app->request->get('province')) != null)
-			$province = \ommu\core\models\CoreZoneProvince::findOne($province);
-		if(($city = Yii::$app->request->get('city')) != null)
-			$city = \ommu\core\models\CoreZoneCity::findOne($city);
+        if (($country = Yii::$app->request->get('country')) != null) {
+            $country = \ommu\core\models\CoreZoneCountry::findOne($country);
+        }
+        if (($province = Yii::$app->request->get('province')) != null) {
+            $province = \ommu\core\models\CoreZoneProvince::findOne($province);
+        }
+        if (($city = Yii::$app->request->get('city')) != null) {
+            $city = \ommu\core\models\CoreZoneCity::findOne($city);
+        }
 
 		$this->view->title = Yii::t('app', 'Districts');
 		$this->view->description = '';
@@ -130,29 +134,33 @@ class DistrictController extends Controller
 	public function actionCreate()
 	{
 		$model = new CoreZoneDistrict();
-		if(($id = Yii::$app->request->get('id')) != null)
-			$model->city_id = $id;
+        if (($id = Yii::$app->request->get('id')) != null) {
+            $model->city_id = $id;
+        }
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'District success created.'));
-				if(!Yii::$app->request->isAjax) {
-					if($id != null)
+                if (!Yii::$app->request->isAjax) {
+                    if ($id != null) {
 						return $this->redirect(['manage', 'city'=>$model->city_id]);
+                    }
 					return $this->redirect(['manage']);
 				}
-				if($id != null)
+                if ($id != null) {
 					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'city'=>$model->city_id]);
+                }
 				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
-			} else {
-				if(Yii::$app->request->isAjax)
-					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+            } else {
+                if (Yii::$app->request->isAjax) {
+                    return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -174,23 +182,26 @@ class DistrictController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'District success updated.'));
-				if(!Yii::$app->request->isAjax)
+                if (!Yii::$app->request->isAjax) {
 					return $this->redirect(['update', 'id'=>$model->district_id]);
-				if(($city = Yii::$app->request->get('city')) != null)
+                }
+                if (($city = Yii::$app->request->get('city')) != null) {
 					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'city'=>$city]);
+                }
 				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
-			} else {
-				if(Yii::$app->request->isAjax)
-					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+            } else {
+                if (Yii::$app->request->isAjax) {
+                    return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -230,7 +241,7 @@ class DistrictController extends Controller
 		$model = $this->findModel($id);
 		$model->publish = 2;
 
-		if($model->save(false, ['publish','modified_id'])) {
+        if ($model->save(false, ['publish', 'modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'District success deleted.'));
 			return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 		}
@@ -248,7 +259,7 @@ class DistrictController extends Controller
 		$replace = $model->publish == 1 ? 0 : 1;
 		$model->publish = $replace;
 
-		if($model->save(false, ['publish','modified_id'])) {
+        if ($model->save(false, ['publish', 'modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'District success updated.'));
 			return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 		}
@@ -266,18 +277,20 @@ class DistrictController extends Controller
 		$extend = Yii::$app->request->get('extend', null);
 		
 		$model = CoreZoneDistrict::find()
-			->alias('t')
+            ->alias('t')
 			->suggest();
-		if($term != null)
-			$model->andWhere(['like', 't.district_name', $term]);
-		if($cityId != null)
-			$model->andWhere(['t.city_id' => $cityId]);
+        if ($term != null) {
+            $model->andWhere(['like', 't.district_name', $term]);
+        }
+        if ($cityId != null) {
+            $model->andWhere(['t.city_id' => $cityId]);
+        }
 		$model = $model->limit(30)->orderBy('t.district_name asc')->all();
 
 		$result = [];
 		$i = 0;
-		foreach($model as $val) {
-			if($extend == null) {
+        foreach ($model as $val) {
+            if ($extend == null) {
 				$result[] = [
 					'id' => $val->district_id,
 					'label' => $val->district_name, 
@@ -288,23 +301,31 @@ class DistrictController extends Controller
 					'id' => $val->district_id,
 					'label' => join(', ', [$val->district_name, $val->city->city_name, $val->city->province->province_name]), 
 				];
-				if(!empty($extendArray)) {
-					if(in_array('district_name', $extendArray))
-						$result[$i]['district_name'] = $val->district_name;
-					if(in_array('city_id', $extendArray))
-						$result[$i]['city_id'] = $val->city_id;
-					if(in_array('city_name', $extendArray))
-						$result[$i]['city_name'] = $val->city->city_name;
-					if(in_array('province_id', $extendArray))
-						$result[$i]['province_id'] = $val->city->province_id;
-					if(in_array('province_name', $extendArray))
-						$result[$i]['province_name'] = $val->city->province->province_name;
-					if(in_array('country_id', $extendArray))
-						$result[$i]['country_id'] = $val->city->province->country_id;
-					if(in_array('country_name', $extendArray))
-						$result[$i]['country_name'] = $val->city->province->country->country_name;
-				} else
-					$result[$i]['district_name'] =  $val->district_name;
+                if (!empty($extendArray)) {
+                    if (in_array('district_name', $extendArray)) {
+                        $result[$i]['district_name'] = $val->district_name;
+                    }
+                    if (in_array('city_id', $extendArray)) {
+                        $result[$i]['city_id'] = $val->city_id;
+                    }
+                    if (in_array('city_name', $extendArray)) {
+                        $result[$i]['city_name'] = $val->city->city_name;
+                    }
+                    if (in_array('province_id', $extendArray)) {
+                        $result[$i]['province_id'] = $val->city->province_id;
+                    }
+                    if (in_array('province_name', $extendArray)) {
+                        $result[$i]['province_name'] = $val->city->province->province_name;
+                    }
+                    if (in_array('country_id', $extendArray)) {
+                        $result[$i]['country_id'] = $val->city->province->country_id;
+                    }
+                    if (in_array('country_name', $extendArray)) {
+                        $result[$i]['country_name'] = $val->city->province->country->country_name;
+                    }
+				} else {
+                    $result[$i]['district_name'] =  $val->district_name;
+                }
 				$i++;
 			}
 		}
@@ -320,8 +341,9 @@ class DistrictController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = CoreZoneDistrict::findOne($id)) !== null)
-			return $model;
+        if (($model = CoreZoneDistrict::findOne($id)) !== null) {
+            return $model;
+        }
 
 		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}

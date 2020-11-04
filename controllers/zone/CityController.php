@@ -89,23 +89,26 @@ class CityController extends Controller
 	 */
 	public function actionManage()
 	{
-		$searchModel = new CoreZoneCitySearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new CoreZoneCitySearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-		$gridColumn = Yii::$app->request->get('GridColumn', null);
-		$cols = [];
-		if($gridColumn != null && count($gridColumn) > 0) {
-			foreach($gridColumn as $key => $val) {
-				if($gridColumn[$key] == 1)
-					$cols[] = $key;
-			}
-		}
-		$columns = $searchModel->getGridColumn($cols);
+        $gridColumn = Yii::$app->request->get('GridColumn', null);
+        $cols = [];
+        if ($gridColumn != null && count($gridColumn) > 0) {
+            foreach ($gridColumn as $key => $val) {
+                if ($gridColumn[$key] == 1) {
+                    $cols[] = $key;
+                }
+            }
+        }
+        $columns = $searchModel->getGridColumn($cols);
 
-		if(($country = Yii::$app->request->get('country')) != null)
-			$country = \ommu\core\models\CoreZoneCountry::findOne($country);
-		if(($province = Yii::$app->request->get('province')) != null)
-			$province = \ommu\core\models\CoreZoneProvince::findOne($province);
+        if (($country = Yii::$app->request->get('country')) != null) {
+            $country = \ommu\core\models\CoreZoneCountry::findOne($country);
+        }
+        if (($province = Yii::$app->request->get('province')) != null) {
+            $province = \ommu\core\models\CoreZoneProvince::findOne($province);
+        }
 
 		$this->view->title = Yii::t('app', 'Cities');
 		$this->view->description = '';
@@ -127,29 +130,33 @@ class CityController extends Controller
 	public function actionCreate()
 	{
 		$model = new CoreZoneCity();
-		if(($id = Yii::$app->request->get('id')) != null)
-			$model->province_id = $id;
+        if (($id = Yii::$app->request->get('id')) != null) {
+            $model->province_id = $id;
+        }
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'City success created.'));
-				if(!Yii::$app->request->isAjax) {
-					if($id != null)
+                if (!Yii::$app->request->isAjax) {
+                    if ($id != null) {
 						return $this->redirect(['manage', 'province'=>$model->province_id]);
+                    }
 					return $this->redirect(['manage']);
 				}
-				if($id != null)
+                if ($id != null) {
 					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'province'=>$model->province_id]);
+                }
 				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
-			} else {
-				if(Yii::$app->request->isAjax)
-					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+            } else {
+                if (Yii::$app->request->isAjax) {
+                    return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -171,23 +178,26 @@ class CityController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'City success updated.'));
-				if(!Yii::$app->request->isAjax)
+                if (!Yii::$app->request->isAjax) {
 					return $this->redirect(['update', 'id'=>$model->city_id]);
-				if(($province = Yii::$app->request->get('province')) != null)
+                }
+                if (($province = Yii::$app->request->get('province')) != null) {
 					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'province'=>$province]);
+                }
 				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
-			} else {
-				if(Yii::$app->request->isAjax)
-					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+            } else {
+                if (Yii::$app->request->isAjax) {
+                    return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -227,7 +237,7 @@ class CityController extends Controller
 		$model = $this->findModel($id);
 		$model->publish = 2;
 
-		if($model->save(false, ['publish','modified_id'])) {
+        if ($model->save(false, ['publish', 'modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'City success deleted.'));
 			return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 		}
@@ -245,7 +255,7 @@ class CityController extends Controller
 		$replace = $model->publish == 1 ? 0 : 1;
 		$model->publish = $replace;
 
-		if($model->save(false, ['publish','modified_id'])) {
+        if ($model->save(false, ['publish', 'modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'City success updated.'));
 			return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 		}
@@ -263,18 +273,20 @@ class CityController extends Controller
 		$extend = Yii::$app->request->get('extend', null);
 		
 		$model = CoreZoneCity::find()
-			->alias('t')
+            ->alias('t')
 			->suggest();
-		if($term != null)
-			$model->andWhere(['like', 't.city_name', $term]);
-		if($provinceId != null)
-			$model->andWhere(['t.province_id' => $provinceId]);
+        if ($term != null) {
+            $model->andWhere(['like', 't.city_name', $term]);
+        }
+        if ($provinceId != null) {
+            $model->andWhere(['t.province_id' => $provinceId]);
+        }
 		$model = $model->all();
 
 		$result = [];
 		$i = 0;
-		foreach($model as $val) {
-			if($extend == null) {
+        foreach ($model as $val) {
+            if ($extend == null) {
 				$result[] = [
 					'id' => $val->city_id,
 					'label' => $val->city_name, 
@@ -285,19 +297,25 @@ class CityController extends Controller
 					'id' => $val->city_id,
 					'label' => join(', ', [$val->city_name, $val->province->province_name]), 
 				];
-				if(!empty($extendArray)) {
-					if(in_array('city_name', $extendArray))
-						$result[$i]['city_name'] = $val->city_name;
-					if(in_array('province_id', $extendArray))
-						$result[$i]['province_id'] = $val->province_id;
-					if(in_array('province_name', $extendArray))
-						$result[$i]['province_name'] = $val->province->province_name;
-					if(in_array('country_id', $extendArray))
-						$result[$i]['country_id'] = $val->province->country_id;
-					if(in_array('country_name', $extendArray))
-						$result[$i]['country_name'] = $val->province->country->country_name;
-				} else
-					$result[$i]['city_name'] =  $val->city_name;
+                if (!empty($extendArray)) {
+                    if (in_array('city_name', $extendArray)) {
+                        $result[$i]['city_name'] = $val->city_name;
+                    }
+                    if (in_array('province_id', $extendArray)) {
+                        $result[$i]['province_id'] = $val->province_id;
+                    }
+                    if (in_array('province_name', $extendArray)) {
+                        $result[$i]['province_name'] = $val->province->province_name;
+                    }
+                    if (in_array('country_id', $extendArray)) {
+                        $result[$i]['country_id'] = $val->province->country_id;
+                    }
+                    if (in_array('country_name', $extendArray)) {
+                        $result[$i]['country_name'] = $val->province->country->country_name;
+                    }
+				} else {
+                    $result[$i]['city_name'] =  $val->city_name;
+                }
 				$i++;
 			}
 		}
@@ -313,8 +331,9 @@ class CityController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = CoreZoneCity::findOne($id)) !== null)
-			return $model;
+        if (($model = CoreZoneCity::findOne($id)) !== null) {
+            return $model;
+        }
 
 		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}

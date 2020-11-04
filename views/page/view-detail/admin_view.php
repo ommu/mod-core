@@ -38,8 +38,9 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Histories'); ?>
 			'attribute' => 'pageName',
 			'value' => function ($model) {
 				$pageName = isset($model->view->page) ? $model->view->page->title->message : '-';
-				if($pageName != '-')
-					return Html::a($pageName, ['page/admin/view', 'id'=>$model->view_id], ['title'=>$pageName]);
+                if ($pageName != '-') {
+                    return Html::a($pageName, ['page/admin/view', 'id'=>$model->view_id], ['title'=>$pageName]);
+                }
 				return $pageName;
 			},
 			'format' => 'html',

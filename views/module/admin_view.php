@@ -16,14 +16,14 @@
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
-if(!$small) {
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Development Tools'), 'url' => ['module/manage']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Modules'), 'url' => ['manage']];
-$this->params['breadcrumbs'][] = $model->module_id;
+if (!$small) {
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Development Tools'), 'url' => ['module/manage']];
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Modules'), 'url' => ['manage']];
+    $this->params['breadcrumbs'][] = $model->module_id;
 
-$this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->module_id]), 'htmlOptions' => ['data-confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method'=>'post', 'class'=>'btn btn-danger'], 'icon' => 'trash'],
-];
+    $this->params['menu']['content'] = [
+        ['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->module_id]), 'htmlOptions' => ['data-confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method'=>'post', 'class'=>'btn btn-danger'], 'icon' => 'trash'],
+    ];
 } ?>
 
 <div class="modules-view">

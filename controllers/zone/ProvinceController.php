@@ -89,21 +89,23 @@ class ProvinceController extends Controller
 	 */
 	public function actionManage()
 	{
-		$searchModel = new CoreZoneProvinceSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new CoreZoneProvinceSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-		$gridColumn = Yii::$app->request->get('GridColumn', null);
-		$cols = [];
-		if($gridColumn != null && count($gridColumn) > 0) {
-			foreach($gridColumn as $key => $val) {
-				if($gridColumn[$key] == 1)
-					$cols[] = $key;
-			}
-		}
-		$columns = $searchModel->getGridColumn($cols);
+        $gridColumn = Yii::$app->request->get('GridColumn', null);
+        $cols = [];
+        if ($gridColumn != null && count($gridColumn) > 0) {
+            foreach ($gridColumn as $key => $val) {
+                if ($gridColumn[$key] == 1) {
+                    $cols[] = $key;
+                }
+            }
+        }
+        $columns = $searchModel->getGridColumn($cols);
 
-		if(($country = Yii::$app->request->get('country')) != null)
-			$country = \ommu\core\models\CoreZoneCountry::findOne($country);
+        if (($country = Yii::$app->request->get('country')) != null) {
+            $country = \ommu\core\models\CoreZoneCountry::findOne($country);
+        }
 
 		$this->view->title = Yii::t('app', 'Provinces');
 		$this->view->description = '';
@@ -124,29 +126,33 @@ class ProvinceController extends Controller
 	public function actionCreate()
 	{
 		$model = new CoreZoneProvince();
-		if(($id = Yii::$app->request->get('id')) != null)
-			$model->country_id = $id;
+        if (($id = Yii::$app->request->get('id')) != null) {
+            $model->country_id = $id;
+        }
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Province success created.'));
-				if(!Yii::$app->request->isAjax) {
-					if($id != null)
+                if (!Yii::$app->request->isAjax) {
+                    if ($id != null) {
 						return $this->redirect(['manage', 'country'=>$model->country_id]);
+                    }
 					return $this->redirect(['manage']);
 				}
-				if($id != null)
+                if ($id != null) {
 					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'country'=>$model->country_id]);
+                }
 				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
-			} else {
-				if(Yii::$app->request->isAjax)
-					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+            } else {
+                if (Yii::$app->request->isAjax) {
+                    return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -168,23 +174,26 @@ class ProvinceController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Province success updated.'));
-				if(!Yii::$app->request->isAjax)
+                if (!Yii::$app->request->isAjax) {
 					return $this->redirect(['update', 'id'=>$model->province_id]);
-				if(($country = Yii::$app->request->get('country')) != null)
+                }
+                if (($country = Yii::$app->request->get('country')) != null) {
 					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'country'=>$country]);
+                }
 				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
-			} else {
-				if(Yii::$app->request->isAjax)
-					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+            } else {
+                if (Yii::$app->request->isAjax) {
+                    return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -224,7 +233,7 @@ class ProvinceController extends Controller
 		$model = $this->findModel($id);
 		$model->publish = 2;
 
-		if($model->save(false, ['publish','modified_id'])) {
+        if ($model->save(false, ['publish', 'modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Province success deleted.'));
 			return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 		}
@@ -242,7 +251,7 @@ class ProvinceController extends Controller
 		$replace = $model->publish == 1 ? 0 : 1;
 		$model->publish = $replace;
 
-		if($model->save(false, ['publish','modified_id'])) {
+        if ($model->save(false, ['publish', 'modified_id'])) {
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Province success updated.'));
 			return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 		}
@@ -260,18 +269,20 @@ class ProvinceController extends Controller
 		$extend = Yii::$app->request->get('extend', null);
 		
 		$model = CoreZoneProvince::find()
-			->alias('t')
+            ->alias('t')
 			->suggest();
-		if($term != null)
-			$model->andWhere(['like', 't.province_name', $term]);
-		if($countryId != null)
-			$model->andWhere(['t.country_id' => $countryId]);
+        if ($term != null) {
+            $model->andWhere(['like', 't.province_name', $term]);
+        }
+        if ($countryId != null) {
+            $model->andWhere(['t.country_id' => $countryId]);
+        }
 		$model = $model->all();
 		
 		$result = [];
 		$i = 0;
-		foreach($model as $val) {
-			if($extend == null) {
+        foreach ($model as $val) {
+            if ($extend == null) {
 				$result[] = [
 					'id' => $val->province_id,
 					'label' => $val->province_name, 
@@ -282,15 +293,19 @@ class ProvinceController extends Controller
 					'id' => $val->province_id,
 					'label' => join(', ', [$val->province_name]), 
 				];
-				if(!empty($extendArray)) {
-					if(in_array('province_name', $extendArray))
-						$result[$i]['province_name'] = $val->province_name;
-					if(in_array('country_id', $extendArray))
-						$result[$i]['country_id'] = $val->country_id;
-					if(in_array('country_name', $extendArray))
-						$result[$i]['country_name'] = $val->country->country_name;
-				} else
-					$result[$i]['province_name'] =  $val->province_name;
+                if (!empty($extendArray)) {
+                    if (in_array('province_name', $extendArray)) {
+                        $result[$i]['province_name'] = $val->province_name;
+                    }
+                    if (in_array('country_id', $extendArray)) {
+                        $result[$i]['country_id'] = $val->country_id;
+                    }
+                    if (in_array('country_name', $extendArray)) {
+                        $result[$i]['country_name'] = $val->country->country_name;
+                    }
+				} else {
+                    $result[$i]['province_name'] =  $val->province_name;
+                }
 				$i++;
 			}
 		}
@@ -306,8 +321,9 @@ class ProvinceController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = CoreZoneProvince::findOne($id)) !== null)
-			return $model;
+        if (($model = CoreZoneProvince::findOne($id)) !== null) {
+            return $model;
+        }
 
 		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}

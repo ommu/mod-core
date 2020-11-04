@@ -104,7 +104,7 @@ class CoreMeta extends \app\components\ActiveRecord
 			[['twitter_on', 'twitter_card', 'twitter_site', 'twitter_creator', 'twitter_country'], 'required', 'on' => self::SCENARIO_TWITTER],
 			[['facebook_on', 'facebook_type', 'facebook_sitename', 'facebook_see_also', 'facebook_admins'], 'required', 'on' => self::SCENARIO_FACEBOOK],
 			[['office_name', 'office_location', 'office_place', 'office_country_id', 'office_province_id', 'office_city_id', 'office_district', 'office_district', 'office_village'], 'required', 'on' => self::SCENARIO_ADDRESS],
-			//[['office_on','office_name', 'office_place', 'office_country_id', 'office_province_id', 'office_city_id', 'office_district', 'office_village', 'office_zipcode', 'office_phone', 'office_email', 'office_website','google_on','twitter_on', 'twitter_card', 'twitter_site','facebook_on', 'facebook_sitename'], 'required'],
+			//[['office_on', 'office_name', 'office_place', 'office_country_id', 'office_province_id', 'office_city_id', 'office_district', 'office_village', 'office_zipcode', 'office_phone', 'office_email', 'office_website', 'google_on', 'twitter_on', 'twitter_card', 'twitter_site', 'facebook_on', 'facebook_sitename'], 'required'],
 			[['office_on', 'office_country_id', 'office_province_id', 'office_city_id', 'google_on', 'twitter_on', 'twitter_card', 'facebook_on', 'facebook_type', 'modified_id'], 'integer'],
 			[['meta_image', 'meta_image_alt', 'office_place', 'office_hour'], 'string'],
 			[['meta_image', 'meta_image_alt', 'office_location', 'office_hour', 'office_fax', 'office_hotline', 'map_icons', 'map_icon_size', 'twitter_creator', 'twitter_photo_size', 'twitter_country', 'twitter_iphone', 'twitter_ipad', 'twitter_googleplay', 'facebook_profile_firstname', 'facebook_profile_lastname', 'facebook_profile_username', 'facebook_see_also', 'facebook_admins', 'modified_date'], 'safe'],
@@ -232,11 +232,13 @@ class CoreMeta extends \app\components\ActiveRecord
 	{
 		parent::init();
 
-		if(!(Yii::$app instanceof \app\components\Application))
-			return;
+        if (!(Yii::$app instanceof \app\components\Application)) {
+            return;
+        }
 
-		if(!$this->hasMethod('search'))
-			return;
+        if (!$this->hasMethod('search')) {
+            return;
+        }
 
 		$this->templateColumns['_no'] = [
 			'header' => '#',
@@ -438,7 +440,7 @@ class CoreMeta extends \app\components\ActiveRecord
 		$this->templateColumns['modified_date'] = [
 			'attribute' => 'modified_date',
 			'value' => function($model, $key, $index, $column) {
-				return !in_array($model->modified_date, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->modified_date, 'datetime') : '-';
+				return !in_array($model->modified_date, ['0000-00-00 00:00:00', '1970-01-01 00:00:00', '0002-12-02 07:07:12', '-0001-11-30 00:00:00']) ? Yii::$app->formatter->format($model->modified_date, 'datetime') : '-';
 			},
 			'filter' => $this->filterDatepicker($this, 'modified_date'),
 			'format' => 'html',
@@ -518,26 +520,27 @@ class CoreMeta extends \app\components\ActiveRecord
 	 */
 	public static function getInfo($id, $column=null)
 	{
-		if($column != null) {
-			$model = self::find();
-			if(is_array($column))
-				$model->select($column);
-			else
-				$model->select([$column]);
-			$model = $model->where(['id' => $id])->one();
-			return is_array($column) ? $model : $model->$column;
-			
-		} else {
-			$model = self::findOne($id);
-			return $model;
-		}
+        if ($column != null) {
+            $model = self::find();
+            if (is_array($column)) {
+                $model->select($column);
+            } else {
+                $model->select([$column]);
+            }
+            $model = $model->where(['id' => $id])->one();
+            return is_array($column) ? $model : $model->$column;
+
+        } else {
+            $model = self::findOne($id);
+            return $model;
+        }
 	}
 
 	/**
 	 * @param returnAlias set true jika ingin kembaliannya path alias atau false jika ingin string
 	 * relative path. default true.
 	 */
-	public static function getUploadPath($returnAlias=true) 
+	public static function getUploadPath($returnAlias=true)
 	{
 		return ($returnAlias ? Yii::getAlias('@public') : 'public');
 	}
@@ -545,7 +548,7 @@ class CoreMeta extends \app\components\ActiveRecord
 	/**
 	 * after find attributes
 	 */
-	public function afterFind() 
+	public function afterFind()
 	{
 		$this->old_meta_image_i = $this->meta_image;
 	}
@@ -553,47 +556,53 @@ class CoreMeta extends \app\components\ActiveRecord
 	/**
 	 * before validate attributes
 	 */
-	public function beforeValidate() 
+	public function beforeValidate()
 	{
-		if(parent::beforeValidate()) {
+        if (parent::beforeValidate()) {
 			$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
 
-			$meta_imageFileType = ['bmp','gif','jpg','png'];
+			$meta_imageFileType = ['bmp', 'gif', 'jpg', 'png'];
 			$meta_image = UploadedFile::getInstance($this, 'meta_image');
 
-			if($meta_image instanceof UploadedFile && !$meta_image->getHasError()) {
-				if(!in_array(strtolower($meta_image->getExtension()), $meta_imageFileType)) {
+            if ($meta_image instanceof UploadedFile && !$meta_image->getHasError()) {
+                if (!in_array(strtolower($meta_image->getExtension()), $meta_imageFileType)) {
 					$this->addError('meta_image', Yii::t('app', 'The file {name} cannot be uploaded. Only files with these extensions are allowed: {extensions}', array(
 						'{name}'=>$meta_image->name,
 						'{extensions}'=>$this->formatFileType($meta_imageFileType, false),
 					)));
 				}
 			} /* else {
-				//if($this->isNewRecord)
-					$this->addError('meta_image', Yii::t('app', '{attribute} cannot be blank.', array('{attribute}'=>$this->getAttributeLabel('meta_image'))));
+				//if ($this->isNewRecord) {
+                    $this->addError('meta_image', Yii::t('app', '{attribute} cannot be blank.', array('{attribute}'=>$this->getAttributeLabel('meta_image'))));
+                }
 			} */
 			
-			if($this->scenario == self::SCENARIO_TWITTER) {
-				if($this->twitter_card == 3) {
-					if($this->twitter_photo_size['width'] == '')
-						$this->addError('twitter_photo_size[width]', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('twitter_photo_size[width]')]));
-					if($this->twitter_photo_size['height'] == '')
-						$this->addError('twitter_photo_size[height]', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('twitter_photo_size[height]')]));
+            if ($this->scenario == self::SCENARIO_TWITTER) {
+                if ($this->twitter_card == 3) {
+                    if ($this->twitter_photo_size['width'] == '') {
+                        $this->addError('twitter_photo_size[width]', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('twitter_photo_size[width]')]));
+                    }
+                    if ($this->twitter_photo_size['height'] == '') {
+                        $this->addError('twitter_photo_size[height]', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('twitter_photo_size[height]')]));
+                    }
 				}
 			}
 			
-			if($this->scenario == self::SCENARIO_FACEBOOK) {
-				if($this->facebook_type == 1) {
-					if($this->facebook_profile_firstname == '')
-						$this->addError('facebook_profile_firstname', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('facebook_profile_firstname')]));
-					if($this->facebook_profile_lastname == '')
-						$this->addError('facebook_profile_lastname', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('facebook_profile_lastname')]));
-					//if($this->facebook_profile_username == '')
-					//	$this->addError('facebook_profile_username', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('facebook_profile_username')]));
+            if ($this->scenario == self::SCENARIO_FACEBOOK) {
+                if ($this->facebook_type == 1) {
+                    if ($this->facebook_profile_firstname == '') {
+                        $this->addError('facebook_profile_firstname', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('facebook_profile_firstname')]));
+                    }
+                    if ($this->facebook_profile_lastname == '') {
+                        $this->addError('facebook_profile_lastname', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('facebook_profile_lastname')]));
+                    }
+					//if ($this->facebook_profile_username == '') {
+                    //	$this->addError('facebook_profile_username', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('facebook_profile_username')]));
+                    //}
 				}
-			}
-		}
-		return true;
+            }
+        }
+        return true;
 	}
 
 	/**
@@ -601,48 +610,52 @@ class CoreMeta extends \app\components\ActiveRecord
 	 */
 	public function beforeSave($insert)
 	{
-		if(parent::beforeSave($insert)) {
-			$uploadPath = self::getUploadPath();
-			$verwijderenPath = join('/', [self::getUploadPath(), 'verwijderen']);
-			$this->createUploadDirectory(self::getUploadPath());
+        if (parent::beforeSave($insert)) {
+            $uploadPath = self::getUploadPath();
+            $verwijderenPath = join('/', [self::getUploadPath(), 'verwijderen']);
+            $this->createUploadDirectory(self::getUploadPath());
 
 			$this->meta_image = UploadedFile::getInstance($this, 'meta_image');
-			if($this->meta_image instanceof UploadedFile && !$this->meta_image->getHasError()) {
-				$fileName = 'meta_'.time().'.'.strtolower($this->meta_image->getExtension()); 
-				if($this->meta_image->saveAs(join('/', [$uploadPath, $fileName]))) {
-					if($this->old_meta_image_i != '' && file_exists(join('/', [$uploadPath, $this->old_meta_image_i])))
-						rename(join('/', [$uploadPath, $this->old_meta_image_i]), join('/', [$verwijderenPath, time().'_change_'.$this->old_meta_image_i]));
+            if ($this->meta_image instanceof UploadedFile && !$this->meta_image->getHasError()) {
+				$fileName = 'meta_'.time().'.'.strtolower($this->meta_image->getExtension());
+                if ($this->meta_image->saveAs(join('/', [$uploadPath, $fileName]))) {
+                    if ($this->old_meta_image_i != '' && file_exists(join('/', [$uploadPath, $this->old_meta_image_i]))) {
+                        rename(join('/', [$uploadPath, $this->old_meta_image_i]), join('/', [$verwijderenPath, time().'_change_'.$this->old_meta_image_i]));
+                    }
 					$this->meta_image = $fileName;
-				}
-			} else {
-				if($this->meta_image == '')
-					$this->meta_image = $this->old_meta_image_i;
+                }
+            } else {
+                if ($this->meta_image == '') {
+                    $this->meta_image = $this->old_meta_image_i;
+                }
 			}
 			
-			if($this->scenario == self::SCENARIO_SETTING)
-				$this->map_icon_size = serialize($this->map_icon_size);
+            if ($this->scenario == self::SCENARIO_SETTING) {
+                $this->map_icon_size = serialize($this->map_icon_size);
+            }
 			
-			if($this->scenario == self::SCENARIO_TWITTER) {
+            if ($this->scenario == self::SCENARIO_TWITTER) {
 				$this->twitter_photo_size = serialize($this->twitter_photo_size);
 				$this->twitter_iphone = serialize($this->twitter_iphone);
 				$this->twitter_ipad = serialize($this->twitter_ipad);
 				$this->twitter_googleplay = serialize($this->twitter_googleplay);
-			}
-		}
-		return true;
+            }
+        }
+        return true;
 	}
 
 	/**
 	 * After delete attributes
 	 */
-	public function afterDelete() 
+	public function afterDelete()
 	{
-		parent::afterDelete();
+        parent::afterDelete();
 
-		$uploadPath = self::getUploadPath();
-		$verwijderenPath = join('/', [self::getUploadPath(), 'verwijderen']);
+        $uploadPath = self::getUploadPath();
+        $verwijderenPath = join('/', [self::getUploadPath(), 'verwijderen']);
 
-		if($this->meta_image != '' && file_exists(join('/', [$uploadPath, $this->meta_image])))
-			rename(join('/', [$uploadPath, $this->meta_image]), join('/', [$verwijderenPath, time().'_deleted_'.$this->meta_image]));
+        if ($this->meta_image != '' && file_exists(join('/', [$uploadPath, $this->meta_image]))) {
+            rename(join('/', [$uploadPath, $this->meta_image]), join('/', [$verwijderenPath, time().'_deleted_'.$this->meta_image]));
+        }
 	}
 }

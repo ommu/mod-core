@@ -53,8 +53,10 @@ echo $form->field($model, 'country_id')
 	->checkbox()
 	->label($model->getAttributeLabel('checked')); ?>
 
-<?php if($model->isNewRecord && !$model->getErrors())
-	$model->publish = 1;
+<?php 
+if ($model->isNewRecord && !$model->getErrors()) {
+    $model->publish = 1;
+}
 echo $form->field($model, 'publish')
 	->checkbox()
 	->label($model->getAttributeLabel('publish')); ?>

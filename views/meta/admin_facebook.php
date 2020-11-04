@@ -18,24 +18,24 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use app\components\widgets\ActiveForm;
 
-if(!$small) {
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Metas'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+if (!$small) {
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Metas'), 'url' => ['index']];
+    $this->params['breadcrumbs'][] = $this->title;
 
-$this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Global Meta'), 'url' => Url::to(['update']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-	['label' => Yii::t('app', 'Address'), 'url' => Url::to(['address']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-	['label' => Yii::t('app', 'Google Owner Meta'), 'url' => Url::to(['google']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-	['label' => Yii::t('app', 'Twitter Meta'), 'url' => Url::to(['twitter']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-	['label' => Yii::t('app', 'Facebook Meta'), 'url' => Url::to(['facebook']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-];
+    $this->params['menu']['content'] = [
+        ['label' => Yii::t('app', 'Global Meta'), 'url' => Url::to(['update']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
+        ['label' => Yii::t('app', 'Address'), 'url' => Url::to(['address']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
+        ['label' => Yii::t('app', 'Google Owner Meta'), 'url' => Url::to(['google']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
+        ['label' => Yii::t('app', 'Twitter Meta'), 'url' => Url::to(['twitter']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
+        ['label' => Yii::t('app', 'Facebook Meta'), 'url' => Url::to(['facebook']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
+    ];
 }
 
 $js = <<<JS
 	$('.field-facebook_type select[name="facebook_type"]').on('change', function() {
 		var id = $(this).val();
 		$('div.filter').slideUp();
-		if(id == '1') {
+        if (id == '1') {
 			$('div.filter#profile').slideDown();
 		}
 	});
@@ -71,8 +71,9 @@ $facebook_type = [
 	1 => Yii::t('app', 'Profile'),
 	2 => Yii::t('app', 'Website'),
 ];
-if($model->isNewRecord && !$model->getErrors())
+if ($model->isNewRecord && !$model->getErrors()) {
 	$model->facebook_type = 2;
+}
 echo $form->field($model, 'facebook_type')
 	->dropDownList($facebook_type)
 	->label($model->getAttributeLabel('facebook_type')); ?>
@@ -88,7 +89,7 @@ echo $form->field($model, 'facebook_type')
 		->label($model->getAttributeLabel('facebook_profile_lastname'))
 		->hint(Yii::t('app', 'The last name of the person that this profile represents')); ?>
 
-	<?php echo $form->field($model, 'facebook_profile_username',)
+	<?php echo $form->field($model, 'facebook_profile_username')
 		->textInput(['maxlength' => true])
 		->label($model->getAttributeLabel('facebook_profile_username'))
 		->hint(Yii::t('app', 'A username for the person that this profile represents (.i.e. "PutraSudaryanto")')); ?>

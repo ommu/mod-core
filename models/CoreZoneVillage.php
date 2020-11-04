@@ -184,11 +184,13 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 	{
 		parent::init();
 
-		if(!(Yii::$app instanceof \app\components\Application))
-			return;
+        if (!(Yii::$app instanceof \app\components\Application)) {
+            return;
+        }
 
-		if(!$this->hasMethod('search'))
-			return;
+        if (!$this->hasMethod('search')) {
+            return;
+        }
 
 		$this->templateColumns['_no'] = [
 			'header' => '#',
@@ -216,33 +218,30 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 			},
 			'visible' => !Yii::$app->request->get('district') ? true : false,
 		];
-		if(!isset($_GET['city']) && !Yii::$app->request->get('district')) {
-			$this->templateColumns['cityName'] = [
-				'attribute' => 'cityName',
-				'value' => function($model, $key, $index, $column) {
-					return isset($model->district->city) ? $model->district->city->city_name : '-';
-					// return $model->cityName;
-				},
-			];
-		}
-		if(!Yii::$app->request->get('province') && !isset($_GET['city']) && !Yii::$app->request->get('district')) {
-			$this->templateColumns['provinceName'] = [
-				'attribute' => 'provinceName',
-				'value' => function($model, $key, $index, $column) {
-					return isset($model->district->city->province) ? $model->district->city->province->province_name : '-';
-					// return $model->provinceName;
-				},
-			];
-		}
-		if(!Yii::$app->request->get('country') && !Yii::$app->request->get('province') && !isset($_GET['city']) && !Yii::$app->request->get('district')) {
-			$this->templateColumns['countryName'] = [
-				'attribute' => 'countryName',
-				'value' => function($model, $key, $index, $column) {
-					return isset($model->district->city->province->country) ? $model->district->city->province->country->country_name : '-';
-					// return $model->countryName;
-				},
-			];
-		}
+        $this->templateColumns['cityName'] = [
+            'attribute' => 'cityName',
+            'value' => function($model, $key, $index, $column) {
+                return isset($model->district->city) ? $model->district->city->city_name : '-';
+                // return $model->cityName;
+            },
+            'visible' => !isset($_GET['city']) && !Yii::$app->request->get('district') ? true : false,
+        ];
+        $this->templateColumns['provinceName'] = [
+            'attribute' => 'provinceName',
+            'value' => function($model, $key, $index, $column) {
+                return isset($model->district->city->province) ? $model->district->city->province->province_name : '-';
+                // return $model->provinceName;
+            },
+            'visible' => !Yii::$app->request->get('province') && !isset($_GET['city']) && !Yii::$app->request->get('district') ? true : false,
+        ];
+        $this->templateColumns['countryName'] = [
+            'attribute' => 'countryName',
+            'value' => function($model, $key, $index, $column) {
+                return isset($model->district->city->province->country) ? $model->district->city->province->country->country_name : '-';
+                // return $model->countryName;
+            },
+            'visible' => !Yii::$app->request->get('country') && !Yii::$app->request->get('province') && !isset($_GET['city']) && !Yii::$app->request->get('district') ? true : false,
+        ];
 		$this->templateColumns['zipcode'] = [
 			'attribute' => 'zipcode',
 			'value' => function($model, $key, $index, $column) {
@@ -311,36 +310,39 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 	 */
 	public static function getInfo($id, $column=null)
 	{
-		if($column != null) {
-			$model = self::find();
-			if(is_array($column))
-				$model->select($column);
-			else
-				$model->select([$column]);
-			$model = $model->where(['village_id' => $id])->one();
-			return is_array($column) ? $model : $model->$column;
-			
-		} else {
-			$model = self::findOne($id);
-			return $model;
-		}
+        if ($column != null) {
+            $model = self::find();
+            if (is_array($column)) {
+                $model->select($column);
+            } else {
+                $model->select([$column]);
+            }
+            $model = $model->where(['village_id' => $id])->one();
+            return is_array($column) ? $model : $model->$column;
+
+        } else {
+            $model = self::findOne($id);
+            return $model;
+        }
 	}
 
 	/**
 	 * function getVillage
 	 */
-	public static function getVillage($publish=null, $array=true) 
+	public static function getVillage($publish=null, $array=true)
 	{
 		$model = self::find()
-			->alias('t')
+            ->alias('t')
 			->suggest();
-		if($publish != null)
-			$model = $model->andWhere(['t.publish' => $publish]);
+        if ($publish != null) {
+            $model = $model->andWhere(['t.publish' => $publish]);
+        }
 
 		$model = $model->orderBy('t.village_name ASC')->all();
 
-		if($array == true)
-			return \yii\helpers\ArrayHelper::map($model, 'village_id', 'village_name');
+        if ($array == true) {
+            return \yii\helpers\ArrayHelper::map($model, 'village_id', 'village_name');
+        }
 
 		return $model;
 	}
@@ -365,15 +367,17 @@ class CoreZoneVillage extends \app\components\ActiveRecord
 	 */
 	public function beforeValidate()
 	{
-		if(parent::beforeValidate()) {
-			if($this->isNewRecord) {
-				if($this->creation_id == null)
-					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			} else {
-				if($this->modified_id == null)
-					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			}
-		}
-		return true;
+        if (parent::beforeValidate()) {
+            if ($this->isNewRecord) {
+                if ($this->creation_id == null) {
+                    $this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            } else {
+                if ($this->modified_id == null) {
+                    $this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            }
+        }
+        return true;
 	}
 }

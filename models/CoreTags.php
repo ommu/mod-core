@@ -38,7 +38,7 @@ class CoreTags extends \app\components\ActiveRecord
 {
 	use \ommu\traits\UtilityTrait;
 
-	public $gridForbiddenColumn = ['modified_date','modifiedDisplayname','updated_date'];
+	public $gridForbiddenColumn = ['modified_date', 'modifiedDisplayname', 'updated_date'];
 
 	public $creationDisplayname;
 	public $modifiedDisplayname;
@@ -114,11 +114,13 @@ class CoreTags extends \app\components\ActiveRecord
 	{
 		parent::init();
 
-		if(!(Yii::$app instanceof \app\components\Application))
-			return;
+        if (!(Yii::$app instanceof \app\components\Application)) {
+            return;
+        }
 
-		if(!$this->hasMethod('search'))
-			return;
+        if (!$this->hasMethod('search')) {
+            return;
+        }
 
 		$this->templateColumns['_no'] = [
 			'header' => '#',
@@ -186,34 +188,37 @@ class CoreTags extends \app\components\ActiveRecord
 	 */
 	public static function getInfo($id, $column=null)
 	{
-		if($column != null) {
-			$model = self::find();
-			if(is_array($column))
-				$model->select($column);
-			else
-				$model->select([$column]);
-			$model = $model->where(['tag_id' => $id])->one();
-			return is_array($column) ? $model : $model->$column;
-			
-		} else {
-			$model = self::findOne($id);
-			return $model;
-		}
+        if ($column != null) {
+            $model = self::find();
+            if (is_array($column)) {
+                $model->select($column);
+            } else {
+                $model->select([$column]);
+            }
+            $model = $model->where(['tag_id' => $id])->one();
+            return is_array($column) ? $model : $model->$column;
+
+        } else {
+            $model = self::findOne($id);
+            return $model;
+        }
 	}
 
 	/**
 	 * function getTags
 	 */
-	public static function getTag($publish=null, $array=true) 
+	public static function getTag($publish=null, $array=true)
 	{
 		$model = self::find()->alias('t');
-		if($publish != null)
-			$model = $model->andWhere(['t.publish' => $publish]);
+        if ($publish != null) {
+            $model = $model->andWhere(['t.publish' => $publish]);
+        }
 
 		$model = $model->orderBy('t.body ASC')->all();
 
-		if($array == true)
-			return \yii\helpers\ArrayHelper::map($model, 'tag_id', 'body');
+        if ($array == true) {
+            return \yii\helpers\ArrayHelper::map($model, 'tag_id', 'body');
+        }
 
 		return $model;
 	}
@@ -235,16 +240,18 @@ class CoreTags extends \app\components\ActiveRecord
 	 */
 	public function beforeValidate()
 	{
-		if(parent::beforeValidate()) {
-			if($this->isNewRecord) {
-				if($this->creation_id == null)
-					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			} else {
-				if($this->modified_id == null)
-					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			}
-		}
-		return true;
+        if (parent::beforeValidate()) {
+            if ($this->isNewRecord) {
+                if ($this->creation_id == null) {
+                    $this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            } else {
+                if ($this->modified_id == null) {
+                    $this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            }
+        }
+        return true;
 	}
 
 	/**
@@ -252,11 +259,12 @@ class CoreTags extends \app\components\ActiveRecord
 	 */
 	public function beforeSave($insert)
 	{
-		if(parent::beforeSave($insert)) {
-			if($insert)
-				$this->body = Inflector::slug($this->body);
-		}
-		return true;
+        if (parent::beforeSave($insert)) {
+            if ($insert) {
+                $this->body = Inflector::slug($this->body);
+            }
+        }
+        return true;
 	}
 
 }

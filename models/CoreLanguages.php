@@ -94,12 +94,13 @@ class CoreLanguages extends \app\components\ActiveRecord
 	 */
 	public function getUsers($count=false)
 	{
-		if($count == false)
-			return $this->hasMany(Users::className(), ['language_id' => 'language_id']);
+        if ($count == false) {
+            return $this->hasMany(Users::className(), ['language_id' => 'language_id']);
+        }
 
 		$model = Users::find()
-			->alias('t')
-			->where(['t.language_id' => $this->language_id]);
+            ->alias('t')
+            ->where(['t.language_id' => $this->language_id]);
 		$users = $model->count();
 
 		return $users ? $users : 0;
@@ -137,11 +138,13 @@ class CoreLanguages extends \app\components\ActiveRecord
 	{
 		parent::init();
 
-		if(!(Yii::$app instanceof \app\components\Application))
-			return;
+        if (!(Yii::$app instanceof \app\components\Application)) {
+            return;
+        }
 
-		if(!$this->hasMethod('search'))
-			return;
+        if (!$this->hasMethod('search')) {
+            return;
+        }
 
 		$this->templateColumns['_no'] = [
 			'header' => '#',
@@ -234,19 +237,20 @@ class CoreLanguages extends \app\components\ActiveRecord
 	 */
 	public static function getInfo($id, $column=null)
 	{
-		if($column != null) {
-			$model = self::find();
-			if(is_array($column))
-				$model->select($column);
-			else
-				$model->select([$column]);
-			$model = $model->where(['language_id' => $id])->one();
-			return is_array($column) ? $model : $model->$column;
-			
-		} else {
-			$model = self::findOne($id);
-			return $model;
-		}
+        if ($column != null) {
+            $model = self::find();
+            if (is_array($column)) {
+                $model->select($column);
+            } else {
+                $model->select([$column]);
+            }
+            $model = $model->where(['language_id' => $id])->one();
+            return is_array($column) ? $model : $model->$column;
+
+        } else {
+            $model = self::findOne($id);
+            return $model;
+        }
 	}
 
 	/**
@@ -255,12 +259,14 @@ class CoreLanguages extends \app\components\ActiveRecord
 	public static function getLanguage($array=true, $key='id')
 	{
 		$model = self::find()->alias('t');
-		if($array)
-			$model->select(['t.language_id', 't.code', 't.name']);
+        if ($array) {
+            $model->select(['t.language_id', 't.code', 't.name']);
+        }
 		$model = $model->orderBy('t.name ASC')->all();
 
-		if($array == true)
-			return \yii\helpers\ArrayHelper::map($model, $key == 'id' ? 'language_id' : 'code', 'name');
+        if ($array == true) {
+            return \yii\helpers\ArrayHelper::map($model, $key == 'id' ? 'language_id' : 'code', 'name');
+        }
 
 		return $model;
 	}
@@ -281,19 +287,22 @@ class CoreLanguages extends \app\components\ActiveRecord
 	 */
 	public function beforeValidate()
 	{
-		if(parent::beforeValidate()) {
-			if($this->isNewRecord) {
-				if($this->creation_id == null)
-					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			} else {
-				if($this->modified_id == null)
-					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			}
+        if (parent::beforeValidate()) {
+            if ($this->isNewRecord) {
+                if ($this->creation_id == null) {
+                    $this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            } else {
+                if ($this->modified_id == null) {
+                    $this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            }
 
-			if($this->default == 1)
-				$this->actived = 1;
-		}
-		return true;
+            if ($this->default == 1) {
+                $this->actived = 1;
+            }
+        }
+        return true;
 	}
 
 	/**
@@ -301,11 +310,12 @@ class CoreLanguages extends \app\components\ActiveRecord
 	 */
 	public function beforeSave($insert)
 	{
-		if(parent::beforeSave($insert)) {
+        if (parent::beforeSave($insert)) {
 			// Language set to default
-			if($this->default == 1)
-				self::updateAll(['default' => 0], 'language_id <> '.$this->language_id);
-		}
-		return true;
+            if ($this->default == 1) {
+                self::updateAll(['default' => 0], 'language_id <> '.$this->language_id);
+            }
+        }
+        return true;
 	}
 }

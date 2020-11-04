@@ -94,13 +94,14 @@ class SourceMessage extends \app\components\ActiveRecord
 	 */
 	public function getTranslates($count=false)
 	{
-		if($count == false)
-			return $this->hasMany(Message::className(), ['id' => 'id'])
-				->select(['language', 'translation']);
+        if ($count == false) {
+            return $this->hasMany(Message::className(), ['id' => 'id'])
+                ->select(['language', 'translation']);
+        }
 
 		$model = Message::find()
-			->alias('t')
-			->where(['t.id' => $this->id])
+            ->alias('t')
+            ->where(['t.id' => $this->id])
 			->andWhere(['<>', 't.translation', '']);
 		$translates = $model->count();
 
@@ -139,11 +140,13 @@ class SourceMessage extends \app\components\ActiveRecord
 	{
 		parent::init();
 
-		if(!(Yii::$app instanceof \app\components\Application))
-			return;
+        if (!(Yii::$app instanceof \app\components\Application)) {
+            return;
+        }
 
-		if(!$this->hasMethod('search'))
-			return;
+        if (!$this->hasMethod('search')) {
+            return;
+        }
 
 		$this->templateColumns['_no'] = [
 			'header' => '#',
@@ -215,19 +218,20 @@ class SourceMessage extends \app\components\ActiveRecord
 	 */
 	public static function getInfo($id, $column=null)
 	{
-		if($column != null) {
-			$model = self::find();
-			if(is_array($column))
-				$model->select($column);
-			else
-				$model->select([$column]);
-			$model = $model->where(['id' => $id])->one();
-			return is_array($column) ? $model : $model->$column;
-			
-		} else {
-			$model = self::findOne($id);
-			return $model;
-		}
+        if ($column != null) {
+            $model = self::find();
+            if (is_array($column)) {
+                $model->select($column);
+            } else {
+                $model->select([$column]);
+            }
+            $model = $model->where(['id' => $id])->one();
+            return is_array($column) ? $model : $model->$column;
+
+        } else {
+            $model = self::findOne($id);
+            return $model;
+        }
 	}
 
 	/**
@@ -256,10 +260,11 @@ class SourceMessage extends \app\components\ActiveRecord
 	 */
 	public static function parseTranslate($translate, $sep='li')
 	{
-		if(!is_array($translate) || (is_array($translate) && empty($translate)))
-			return '-';
+        if (!is_array($translate) || (is_array($translate) && empty($translate))) {
+            return '-';
+        }
 
-		if($sep == 'li') {
+        if ($sep == 'li') {
 			return Html::ul($translate, ['item' => function($item, $index) {
 				$languages = self::getLanguages();
 				return Html::tag('li', $languages[$index].': '.($item ? $item : '-'));
@@ -279,8 +284,9 @@ class SourceMessage extends \app\components\ActiveRecord
 		// $this->creationDisplayname = isset($this->creation) ? $this->creation->displayname : '-';
 		// $this->modifiedDisplayname = isset($this->modified) ? $this->modified->displayname : '-';
 
-		if(!empty($this->getLanguages()))
-			$this->translate = ArrayHelper::map($this->translates, 'language', 'translation');
+        if (!empty($this->getLanguages())) {
+            $this->translate = ArrayHelper::map($this->translates, 'language', 'translation');
+        }
 	}
 
 	/**
@@ -288,16 +294,18 @@ class SourceMessage extends \app\components\ActiveRecord
 	 */
 	public function beforeValidate()
 	{
-		if(parent::beforeValidate()) {
-			if($this->isNewRecord) {
-				if($this->creation_id == null)
-					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			} else {
-				if($this->modified_id == null)
-					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			}
-		}
-		return true;
+        if (parent::beforeValidate()) {
+            if ($this->isNewRecord) {
+                if ($this->creation_id == null) {
+                    $this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            } else {
+                if ($this->modified_id == null) {
+                    $this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            }
+        }
+        return true;
 	}
 
 	/**
@@ -305,9 +313,9 @@ class SourceMessage extends \app\components\ActiveRecord
 	 */
 	public function beforeSave($insert)
 	{
-		if(parent::beforeSave($insert)) {
-			if($insert) {
-				if($this->location == null) {
+        if (parent::beforeSave($insert)) {
+            if ($insert) {
+                if ($this->location == null) {
 					$module = strtolower(Yii::$app->controller->module->id);
 					$controller = strtolower(Yii::$app->controller->id);
 
@@ -315,9 +323,9 @@ class SourceMessage extends \app\components\ActiveRecord
 				}
 
 				$this->location = Inflector::slug($this->location);
-			}
-		}
-		return true;
+            }
+        }
+        return true;
 	}
 
 	/**
@@ -325,10 +333,10 @@ class SourceMessage extends \app\components\ActiveRecord
 	 */
 	public function afterSave($insert, $changedAttributes)
 	{
-		parent::afterSave($insert, $changedAttributes);
+        parent::afterSave($insert, $changedAttributes);
 
 		// insert and update translate message
-		if(!empty($this->getLanguages())) {
+        if (!empty($this->getLanguages())) {
 			foreach ($this->translate as $key => $value) {
 				$model = Message::find()->alias('t')
 					->select(['t.id', 't.language'])
@@ -336,20 +344,22 @@ class SourceMessage extends \app\components\ActiveRecord
 					->andWhere(['t.language' => $key])
 					->one();
 
-				if($value == '') {
-					if($model == null)
-						continue;
+                if ($value == '') {
+                    if ($model == null) {
+                        continue;
+                    }
 					$model->updateAttributes(['translation' => $value]);
 
 				} else {
-					if($model == null) {
+                    if ($model == null) {
 						$data = new Message();
 						$data->id = $this->id;
 						$data->language = $key;
 						$data->translation = $value;
 						$data->save();
-					} else 
-						$model->updateAttributes(['translation' => $value]);
+					} else  {
+                        $model->updateAttributes(['translation' => $value]);
+                    }
 				}
 			}
 		}

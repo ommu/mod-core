@@ -28,7 +28,7 @@ class CoreZoneCountry extends \yii\db\ActiveQuery
 	/**
 	 * {@inheritdoc}
 	 */
-	public function suggest() 
+	public function suggest()
 	{
 		return $this->select(['country_id', 'country_name', 'code']);
 	}

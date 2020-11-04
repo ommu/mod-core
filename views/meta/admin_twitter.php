@@ -18,26 +18,26 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use app\components\widgets\ActiveForm;
 
-if(!$small) {
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Metas'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+if (!$small) {
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Metas'), 'url' => ['index']];
+    $this->params['breadcrumbs'][] = $this->title;
 
-$this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Global Meta'), 'url' => Url::to(['update']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-	['label' => Yii::t('app', 'Address'), 'url' => Url::to(['address']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-	['label' => Yii::t('app', 'Google Owner Meta'), 'url' => Url::to(['google']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-	['label' => Yii::t('app', 'Twitter Meta'), 'url' => Url::to(['twitter']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-	['label' => Yii::t('app', 'Facebook Meta'), 'url' => Url::to(['facebook']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-];
+    $this->params['menu']['content'] = [
+        ['label' => Yii::t('app', 'Global Meta'), 'url' => Url::to(['update']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
+        ['label' => Yii::t('app', 'Address'), 'url' => Url::to(['address']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
+        ['label' => Yii::t('app', 'Google Owner Meta'), 'url' => Url::to(['google']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
+        ['label' => Yii::t('app', 'Twitter Meta'), 'url' => Url::to(['twitter']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
+        ['label' => Yii::t('app', 'Facebook Meta'), 'url' => Url::to(['facebook']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
+    ];
 }
 
 $js = <<<JS
 	$('.field-twitter_card select[name="twitter_card"]').on('change', function() {
 		var id = $(this).val();
 		$('div.filter').slideUp();
-		if(id == '3') {
+        if (id == '3') {
 			$('div.filter#photo').slideDown();
-		} else if(id == '4') {
+		} else if (id == '4') {
 			$('div.filter#application').slideDown();
 		}
 	});
@@ -98,9 +98,10 @@ echo $form->field($model, 'twitter_card')
 		->label($model->getAttributeLabel('twitter_photo_size[i]'), ['class'=>'control-label col-sm-3 col-xs-12']); ?>
 	<div class="col-md-6 col-sm-9 col-xs-12 row">
 		<div class="col-md-6 col-sm-6 col-xs-12">
-			<?php 
-			if(!$model->isNewRecord && !$model->getErrors())
-				$model->twitter_photo_size = unserialize($model->twitter_photo_size);
+			<?php
+            if (!$model->isNewRecord && !$model->getErrors()) {
+				$model->twitter_photo_size = unserialize($model->twitter_photo_size);s
+            }
 			echo $form->field($model, 'twitter_photo_size[width]', ['template' => '{input}{error}{hint}'])
 				->textInput(['type'=>'number', 'min'=>1, 'maxlength'=>'3', 'placeholder'=>$model->getAttributeLabel('twitter_photo_size[width]')])
 				->label($model->getAttributeLabel('twitter_photo_size[width]'))
@@ -126,9 +127,10 @@ echo $form->field($model, 'twitter_card')
 			->label($model->getAttributeLabel('twitter_iphone[i]'), ['class'=>'control-label col-sm-3 col-xs-12']); ?>
 		<div class="col-md-6 col-sm-9 col-xs-12">
 			<div class="h6 mt-3 mb-3"><?php echo $model->getAttributeLabel('twitter_iphone[name]');?></div>
-			<?php 
-			if(!$model->isNewRecord && !$model->getErrors())
+			<?php
+            if (!$model->isNewRecord && !$model->getErrors()) {
 				$model->twitter_iphone = unserialize($model->twitter_iphone);
+            }
 			echo $form->field($model, 'twitter_iphone[name]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => 64])
 				->label($model->getAttributeLabel('twitter_iphone[name]'))
@@ -153,9 +155,10 @@ echo $form->field($model, 'twitter_card')
 			->label($model->getAttributeLabel('twitter_ipad[i]'), ['class'=>'control-label col-sm-3 col-xs-12']); ?>
 		<div class="col-md-6 col-sm-9 col-xs-12">
 			<div class="h6 mt-3 mb-3"><?php echo $model->getAttributeLabel('twitter_ipad[name]');?></div>
-			<?php 
-			if(!$model->isNewRecord && !$model->getErrors())
+			<?php
+            if (!$model->isNewRecord && !$model->getErrors()) {
 				$model->twitter_ipad = unserialize($model->twitter_ipad);
+            }
 			echo $form->field($model, 'twitter_ipad[name]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => 64])
 				->label($model->getAttributeLabel('twitter_ipad[name]'))
@@ -180,9 +183,10 @@ echo $form->field($model, 'twitter_card')
 			->label($model->getAttributeLabel('twitter_googleplay[i]'), ['class'=>'control-label col-sm-3 col-xs-12']); ?>
 		<div class="col-md-6 col-sm-9 col-xs-12">
 			<div class="h6 mt-3 mb-3"><?php echo $model->getAttributeLabel('twitter_googleplay[name]');?></div>
-			<?php 
-			if(!$model->isNewRecord && !$model->getErrors())
+			<?php
+            if (!$model->isNewRecord && !$model->getErrors()) {
 				$model->twitter_googleplay = unserialize($model->twitter_googleplay);
+            }
 			echo $form->field($model, 'twitter_googleplay[name]', ['template' => '{input}{error}{hint}'])
 				->textInput(['maxlength' => 64])
 				->label($model->getAttributeLabel('twitter_googleplay[name]'))

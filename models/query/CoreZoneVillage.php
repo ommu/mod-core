@@ -28,7 +28,7 @@ class CoreZoneVillage extends \yii\db\ActiveQuery
 	/**
 	 * {@inheritdoc}
 	 */
-	public function published() 
+	public function published()
 	{
 		return $this->andWhere(['t.publish' => 1]);
 	}
@@ -36,7 +36,7 @@ class CoreZoneVillage extends \yii\db\ActiveQuery
 	/**
 	 * {@inheritdoc}
 	 */
-	public function unpublish() 
+	public function unpublish()
 	{
 		return $this->andWhere(['t.publish' => 0]);
 	}
@@ -44,7 +44,7 @@ class CoreZoneVillage extends \yii\db\ActiveQuery
 	/**
 	 * {@inheritdoc}
 	 */
-	public function deleted() 
+	public function deleted()
 	{
 		return $this->andWhere(['t.publish' => 2]);
 	}
@@ -52,7 +52,7 @@ class CoreZoneVillage extends \yii\db\ActiveQuery
 	/**
 	 * {@inheritdoc}
 	 */
-	public function suggest() 
+	public function suggest()
 	{
 		return $this->select(['village_id', 'district_id', 'village_name', 'zipcode'])
 			->published();

@@ -43,8 +43,9 @@ $this->params['breadcrumbs'][] = isset($model->user) ? $model->user->displayname
 			'attribute' => 'pageName',
 			'value' => function ($model) {
 				$pageName = isset($model->page) ? $model->page->title->message : '-';
-				if($pageName != '-')
-					return Html::a($pageName, ['page/admin/view', 'id'=>$model->page_id], ['title'=>$pageName]);
+                if ($pageName != '-') {
+                    return Html::a($pageName, ['page/admin/view', 'id'=>$model->page_id], ['title'=>$pageName]);
+                }
 				return $pageName;
 			},
 			'format' => 'html',

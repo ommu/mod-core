@@ -77,8 +77,10 @@ echo $form->field($model, 'media_type')
 	->dropDownList($mediaType, ['prompt'=>''])
 	->label($model->getAttributeLabel('media_type')); ?>
 
-<?php if($model->isNewRecord && !$model->getErrors())
-	$model->publish = 1;
+<?php 
+if ($model->isNewRecord && !$model->getErrors()) {
+    $model->publish = 1;
+}
 echo $form->field($model, 'publish')
 	->checkbox()
 	->label($model->getAttributeLabel('publish')); ?>

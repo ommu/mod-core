@@ -62,10 +62,11 @@ class CoreZoneCountry extends CoreZoneCountryModel
 	 */
 	public function search($params, $column=null)
 	{
-		if(!($column && is_array($column)))
-			$query = CoreZoneCountryModel::find()->alias('t');
-		else
-			$query = CoreZoneCountryModel::find()->alias('t')->select($column);
+        if (!($column && is_array($column))) {
+            $query = CoreZoneCountryModel::find()->alias('t');
+        } else {
+            $query = CoreZoneCountryModel::find()->alias('t')->select($column);
+        }
 		$query->joinWith([
 			'creation creation', 
 			'modified modified'
@@ -77,8 +78,9 @@ class CoreZoneCountry extends CoreZoneCountryModel
 			'query' => $query,
 		];
 		// disable pagination agar data pada api tampil semua
-		if(isset($params['pagination']) && $params['pagination'] == 0)
-			$dataParams['pagination'] = false;
+        if (isset($params['pagination']) && $params['pagination'] == 0) {
+            $dataParams['pagination'] = false;
+        }
 		$dataProvider = new ActiveDataProvider($dataParams);
 
 		$attributes = array_keys($this->getTableSchema()->columns);
@@ -97,7 +99,7 @@ class CoreZoneCountry extends CoreZoneCountryModel
 
 		$this->load($params);
 
-		if(!$this->validate()) {
+        if (!$this->validate()) {
 			// uncomment the following line if you do not want to return any records when validation fails
 			// $query->where('0=1');
 			return $dataProvider;

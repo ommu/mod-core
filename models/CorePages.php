@@ -134,21 +134,22 @@ class CorePages extends \app\components\ActiveRecord
 	 */
 	public function getViews($count=false, $publish=1)
 	{
-		if($count == false) {
-			return $this->hasMany(CorePageViews::className(), ['page_id' => 'page_id'])
-				->alias('views')
-				->andOnCondition([sprintf('%s.publish', 'views') => $publish]);
-		}
+        if ($count == false) {
+            return $this->hasMany(CorePageViews::className(), ['page_id' => 'page_id'])
+                ->alias('views')
+                ->andOnCondition([sprintf('%s.publish', 'views') => $publish]);
+        }
 
 		$model = CorePageViews::find()
-			->alias('t')
-			->where(['t.page_id' => $this->page_id]);
-		if($publish == 0)
-			$model->unpublish();
-		elseif($publish == 1)
-			$model->published();
-		elseif($publish == 2)
-			$model->deleted();
+            ->alias('t')
+            ->where(['t.page_id' => $this->page_id]);
+        if ($publish == 0) {
+            $model->unpublish();
+        } else if ($publish == 1) {
+            $model->published();
+        } else if ($publish == 2) {
+            $model->deleted();
+        }
 		$views = $model->sum('views');
 
 		return $views ? $views : 0;
@@ -218,11 +219,13 @@ class CorePages extends \app\components\ActiveRecord
 	{
 		parent::init();
 
-		if(!(Yii::$app instanceof \app\components\Application))
-			return;
+        if (!(Yii::$app instanceof \app\components\Application)) {
+            return;
+        }
 
-		if(!$this->hasMethod('search'))
-			return;
+        if (!$this->hasMethod('search')) {
+            return;
+        }
 
 		$this->templateColumns['_no'] = [
 			'header' => '#',
@@ -343,35 +346,38 @@ class CorePages extends \app\components\ActiveRecord
 	 */
 	public static function getInfo($id, $column=null)
 	{
-		if($column != null) {
-			$model = self::find();
-			if(is_array($column))
-				$model->select($column);
-			else
-				$model->select([$column]);
-			$model = $model->where(['page_id' => $id])->one();
-			return is_array($column) ? $model : $model->$column;
-			
-		} else {
-			$model = self::findOne($id);
-			return $model;
-		}
+        if ($column != null) {
+            $model = self::find();
+            if (is_array($column)) {
+                $model->select($column);
+            } else {
+                $model->select([$column]);
+            }
+            $model = $model->where(['page_id' => $id])->one();
+            return is_array($column) ? $model : $model->$column;
+
+        } else {
+            $model = self::findOne($id);
+            return $model;
+        }
 	}
 
 	/**
 	 * function getPage
 	 */
-	public static function getPage($publish=null, $array=true) 
+	public static function getPage($publish=null, $array=true)
 	{
 		$model = self::find()->alias('t');
 		$model->leftJoin(sprintf('%s title', SourceMessage::tableName()), 't.name=title.id');
-		if($publish != null)
-			$model->andWhere(['t.publish' => $publish]);
+        if ($publish != null) {
+            $model->andWhere(['t.publish' => $publish]);
+        }
 
 		$model = $model->orderBy('title.message ASC')->all();
 
-		if($array == true)
-			return \yii\helpers\ArrayHelper::map($model, 'page_id', 'name_i');
+        if ($array == true) {
+            return \yii\helpers\ArrayHelper::map($model, 'page_id', 'name_i');
+        }
 
 		return $model;
 	}
@@ -386,10 +392,11 @@ class CorePages extends \app\components\ActiveRecord
 			'0' => Yii::t('app', 'Hide'),
 		);
 
-		if($value !== null)
-			return $items[$value];
-		else
-			return $items;
+        if ($value !== null) {
+            return $items[$value];
+        } else {
+            return $items;
+        }
 	}
 
 	/**
@@ -402,17 +409,18 @@ class CorePages extends \app\components\ActiveRecord
 			'0' => Yii::t('app', 'Medium'),
 		);
 
-		if($value !== null)
-			return $items[$value];
-		else
-			return $items;
+        if ($value !== null) {
+            return $items[$value];
+        } else {
+            return $items;
+        }
 	}
 
 	/**
 	 * @param returnAlias set true jika ingin kembaliannya path alias atau false jika ingin string
 	 * relative path. default true.
 	 */
-	public static function getUploadPath($returnAlias=true) 
+	public static function getUploadPath($returnAlias=true)
 	{
 		return ($returnAlias ? Yii::getAlias('@public/page') : 'page');
 	}
@@ -437,31 +445,34 @@ class CorePages extends \app\components\ActiveRecord
 	 */
 	public function beforeValidate()
 	{
-		if(parent::beforeValidate()) {
-			$mediaFileType = ['bmp','gif','jpg','png'];
+        if (parent::beforeValidate()) {
+			$mediaFileType = ['bmp', 'gif', 'jpg', 'png'];
 
 			// $this->media = UploadedFile::getInstance($this, 'media');
-			if($this->media instanceof UploadedFile && !$this->media->getHasError()) {
-				if(!in_array(strtolower($this->media->getExtension()), $mediaFileType)) {
+            if ($this->media instanceof UploadedFile && !$this->media->getHasError()) {
+                if (!in_array(strtolower($this->media->getExtension()), $mediaFileType)) {
 					$this->addError('media', Yii::t('app', 'The file {name} cannot be uploaded. Only files with these extensions are allowed: {extensions}', [
 						'name'=>$this->media->name,
 						'extensions'=>$this->formatFileType($mediaFileType, false),
 					]));
 				}
 			} /* else {
-				if($this->isNewRecord || (!$this->isNewRecord && $this->old_media == ''))
-					$this->addError('media', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('media')]));
+                if ($this->isNewRecord || (!$this->isNewRecord && $this->old_media == '')) {
+                    $this->addError('media', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('media')]));
+                }
 			} */
 
-			if($this->isNewRecord) {
-				if($this->creation_id == null)
-					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			} else {
-				if($this->modified_id == null)
-					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			}
-		}
-		return true;
+            if ($this->isNewRecord) {
+                if ($this->creation_id == null) {
+                    $this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            } else {
+                if ($this->modified_id == null) {
+                    $this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            }
+        }
+        return true;
 	}
 
 	/**
@@ -475,69 +486,73 @@ class CorePages extends \app\components\ActiveRecord
 
 		$location = Inflector::slug($controller);
 
-		if(parent::beforeSave($insert)) {
-			if(!$insert) {
-				$uploadPath = self::getUploadPath();
-				$verwijderenPath = join('/', [self::getUploadPath(), 'verwijderen']);
-				$this->createUploadDirectory(self::getUploadPath());
+        if (parent::beforeSave($insert)) {
+            if (!$insert) {
+                $uploadPath = self::getUploadPath();
+                $verwijderenPath = join('/', [self::getUploadPath(), 'verwijderen']);
+                $this->createUploadDirectory(self::getUploadPath());
 
 				// $this->media = UploadedFile::getInstance($this, 'media');
-				if($this->media instanceof UploadedFile && !$this->media->getHasError()) {
-					$fileName = join('-', [time(), UuidHelper::uuid(), $this->page_id]).'.'.strtolower($this->media->getExtension()); 
-					if($this->media->saveAs(join('/', [$uploadPath, $fileName]))) {
-						if($this->old_media != '' && file_exists(join('/', [$uploadPath, $this->old_media])))
-							rename(join('/', [$uploadPath, $this->old_media]), join('/', [$verwijderenPath, time().'_change_'.$this->old_media]));
+                if ($this->media instanceof UploadedFile && !$this->media->getHasError()) {
+					$fileName = join('-', [time(), UuidHelper::uuid(), $this->page_id]).'.'.strtolower($this->media->getExtension());
+                    if ($this->media->saveAs(join('/', [$uploadPath, $fileName]))) {
+                        if ($this->old_media != '' && file_exists(join('/', [$uploadPath, $this->old_media]))) {
+                            rename(join('/', [$uploadPath, $this->old_media]), join('/', [$verwijderenPath, time().'_change_'.$this->old_media]));
+                        }
 						$this->media = $fileName;
 					}
 				} else {
-					if($this->media == '')
-						$this->media = $this->old_media;
+                    if ($this->media == '') {
+                        $this->media = $this->old_media;
+                    }
 				}
+            }
 
-			}
-			if($insert || (!$insert && !$this->name)) {
-				$name = new SourceMessage();
-				$name->location = $location.'_title';
-				$name->message = $this->name_i;
-				if($name->save())
-					$this->name = $name->id;
+            if ($insert || (!$insert && !$this->name)) {
+                $name = new SourceMessage();
+                $name->location = $location.'_title';
+                $name->message = $this->name_i;
+                if ($name->save()) {
+                    $this->name = $name->id;
+                }
 
-				$this->slug = Inflector::slug($this->name_i);
+                $this->slug = Inflector::slug($this->name_i);
 
-			} else {
-				$name = SourceMessage::findOne($this->name);
-				$name->message = $this->name_i;
-				$name->save();
-			}
+            } else {
+                $name = SourceMessage::findOne($this->name);
+                $name->message = $this->name_i;
+                $name->save();
+            }
 
-			if($insert || (!$insert && !$this->desc)) {
-				$desc = new SourceMessage();
-				$desc->location = $location.'_description';
-				$desc->message = $this->desc_i;
-				if($desc->save())
-					$this->desc = $desc->id;
+            if ($insert || (!$insert && !$this->desc)) {
+                $desc = new SourceMessage();
+                $desc->location = $location.'_description';
+                $desc->message = $this->desc_i;
+                if ($desc->save()) {
+                    $this->desc = $desc->id;
+                }
 
-			} else {
-				$desc = SourceMessage::findOne($this->desc);
-				$desc->message = $this->desc_i;
-				$desc->save();
-			}
+            } else {
+                $desc = SourceMessage::findOne($this->desc);
+                $desc->message = $this->desc_i;
+                $desc->save();
+            }
 
-			if($insert || (!$insert && !$this->quote)) {
-				$quote = new SourceMessage();
-				$quote->location = $location.'_quote';
-				$quote->message = $this->quote_i;
-				if($quote->save())
-					$this->quote = $quote->id;
+            if ($insert || (!$insert && !$this->quote)) {
+                $quote = new SourceMessage();
+                $quote->location = $location.'_quote';
+                $quote->message = $this->quote_i;
+                if ($quote->save()) {
+                    $this->quote = $quote->id;
+                }
 
-			} else {
-				$quote = SourceMessage::findOne($this->quote);
-				$quote->message = $this->quote_i;
-				$quote->save();
-			}
-
-		}
-		return true;
+            } else {
+                $quote = SourceMessage::findOne($this->quote);
+                $quote->message = $this->quote_i;
+                $quote->save();
+            }
+        }
+        return true;
 	}
 
 	/**
@@ -545,20 +560,20 @@ class CorePages extends \app\components\ActiveRecord
 	 */
 	public function afterSave($insert, $changedAttributes)
 	{
-		parent::afterSave($insert, $changedAttributes);
+        parent::afterSave($insert, $changedAttributes);
 
-		$uploadPath = self::getUploadPath();
-		$verwijderenPath = join('/', [self::getUploadPath(), 'verwijderen']);
-		$this->createUploadDirectory(self::getUploadPath());
+        $uploadPath = self::getUploadPath();
+        $verwijderenPath = join('/', [self::getUploadPath(), 'verwijderen']);
+        $this->createUploadDirectory(self::getUploadPath());
 
-		if($insert) {
+        if ($insert) {
 			// $this->media = UploadedFile::getInstance($this, 'media');
-			if($this->media instanceof UploadedFile && !$this->media->getHasError()) {
-				$fileName = join('-', [time(), UuidHelper::uuid(), $this->page_id]).'.'.strtolower($this->media->getExtension()); 
-				if($this->media->saveAs(join('/', [$uploadPath, $fileName])))
-					self::updateAll(['media' => $fileName], ['page_id' => $this->page_id]);
+            if ($this->media instanceof UploadedFile && !$this->media->getHasError()) {
+				$fileName = join('-', [time(), UuidHelper::uuid(), $this->page_id]).'.'.strtolower($this->media->getExtension());
+                if ($this->media->saveAs(join('/', [$uploadPath, $fileName]))) {
+                    self::updateAll(['media' => $fileName], ['page_id' => $this->page_id]);
+                }
 			}
-
 		}
 	}
 
@@ -567,13 +582,13 @@ class CorePages extends \app\components\ActiveRecord
 	 */
 	public function afterDelete()
 	{
-		parent::afterDelete();
+        parent::afterDelete();
 
-		$uploadPath = self::getUploadPath();
-		$verwijderenPath = join('/', [self::getUploadPath(), 'verwijderen']);
+        $uploadPath = self::getUploadPath();
+        $verwijderenPath = join('/', [self::getUploadPath(), 'verwijderen']);
 
-		if($this->media != '' && file_exists(join('/', [$uploadPath, $this->media])))
-			rename(join('/', [$uploadPath, $this->media]), join('/', [$verwijderenPath, time().'_deleted_'.$this->media]));
-
+        if ($this->media != '' && file_exists(join('/', [$uploadPath, $this->media]))) {
+            rename(join('/', [$uploadPath, $this->media]), join('/', [$verwijderenPath, time().'_deleted_'.$this->media]));
+        }
 	}
 }

@@ -72,17 +72,18 @@ class ModuleController extends Controller
 		Yii::$app->moduleManager->getModules(['includeCoreModules' => true]);
 
 		$searchModel = new ModulesSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-		$gridColumn = Yii::$app->request->get('GridColumn', null);
-		$cols = [];
-		if($gridColumn != null && count($gridColumn) > 0) {
-			foreach($gridColumn as $key => $val) {
-				if($gridColumn[$key] == 1)
-					$cols[] = $key;
-			}
-		}
-		$columns = $searchModel->getGridColumn($cols);
+        $gridColumn = Yii::$app->request->get('GridColumn', null);
+        $cols = [];
+        if ($gridColumn != null && count($gridColumn) > 0) {
+            foreach ($gridColumn as $key => $val) {
+                if ($gridColumn[$key] == 1) {
+                    $cols[] = $key;
+                }
+            }
+        }
+        $columns = $searchModel->getGridColumn($cols);
 
 		$this->view->title = Yii::t('app', 'Modules');
 		$this->view->description = '';
@@ -121,7 +122,7 @@ class ModuleController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		if(!(Yii::$app->moduleManager->hasModule($model->module_id) && Yii::$app->moduleManager->canRemoveModule($model->module_id))) {
+        if (!(Yii::$app->moduleManager->hasModule($model->module_id) && Yii::$app->moduleManager->canRemoveModule($model->module_id))) {
 			Yii::$app->session->setFlash('error', Yii::t('app', '{module-id} cannot be deleted.', array(
 				'module-id'=>ucfirst($model->module_id),
 			)));
@@ -129,13 +130,13 @@ class ModuleController extends Controller
 		}
 
 		$module = Yii::$app->moduleManager->getModule($model->module_id);
-		if($module == null) {
+        if ($module == null) {
 			// throw new HttpException(500, Yii::t('app', 'Could not find request module!'));
 			Yii::$app->session->setFlash('error', Yii::t('app', 'Could not find request module!'));
 			return $this->redirect(['manage']);
 		}
 
-		if(!is_writable($module->getBasePath())) {
+        if (!is_writable($module->getBasePath())) {
 			// throw new HttpException(500, Yii::t('app', 'Module path {module-path} is not writeable!', array(
 			// 	'module-path'=>$module->getPath(),
 			// )));
@@ -145,7 +146,7 @@ class ModuleController extends Controller
 			return $this->redirect(['manage']);
 		}
 
-		if($model->delete()) {
+        if ($model->delete()) {
 			$module->uninstall();
 
 			Yii::$app->session->setFlash('success', Yii::t('app', '{module-id} module success deleted.', array('module-id'=>ucfirst($model->module_id))));
@@ -166,24 +167,26 @@ class ModuleController extends Controller
 		$model->enabled = $replace;
 
 		$module = Yii::$app->moduleManager->getModule($model->module_id);
-		if($module == null) {
+        if ($module == null) {
 			// throw new HttpException(500, Yii::t('app', 'Could not find request module!'));
 			Yii::$app->session->setFlash('error', Yii::t('app', 'Could not find request module!'));
 			return $this->redirect(['manage']);
 		}
 
-		if($replace == 0) {
+        if ($replace == 0) {
 			$disable = $module->disable();
-			if(is_object($disable))
-				Yii::$app->session->setFlash('success', Yii::t('app', '{module-id} module success disabled.', array('module-id'=>ucfirst($model->module_id))));
-			else
-				Yii::$app->session->setFlash('error', $disable);
+            if (is_object($disable)) {
+                Yii::$app->session->setFlash('success', Yii::t('app', '{module-id} module success disabled.', array('module-id'=>ucfirst($model->module_id))));
+            } else {
+                Yii::$app->session->setFlash('error', $disable);
+            }
 		} else {
 			$enable = $module->enable();
-			if(is_object($enable))
-				Yii::$app->session->setFlash('success', Yii::t('app', '{module-id} module success enabled.', array('module-id'=>ucfirst($model->module_id))));
-			else
-				Yii::$app->session->setFlash('error', $enable);
+            if (is_object($enable)) {
+                Yii::$app->session->setFlash('success', Yii::t('app', '{module-id} module success enabled.', array('module-id'=>ucfirst($model->module_id))));
+            } else {
+                Yii::$app->session->setFlash('error', $enable);
+            }
 		}
 
 		return $this->redirect(['index']);
@@ -198,8 +201,9 @@ class ModuleController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = Modules::findOne($id)) !== null)
-			return $model;
+        if (($model = Modules::findOne($id)) !== null) {
+            return $model;
+        }
 
 		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}

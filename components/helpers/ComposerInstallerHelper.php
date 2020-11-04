@@ -39,7 +39,7 @@ class ComposerInstallerHelper extends \yii\composer\Installer
      */
     protected static function generateRandomString($uuid=false, $length=32)
     {
-        if($uuid == true) {
+        if ($uuid == true) {
             return UuidHelper::uuid();
         }
 

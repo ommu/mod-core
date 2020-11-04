@@ -117,21 +117,22 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 	 */
 	public function getCities($count=false, $publish=1)
 	{
-		if($count == false) {
-			return $this->hasMany(CoreZoneCity::className(), ['province_id' => 'province_id'])
-				->alias('cities')
-				->andOnCondition([sprintf('%s.publish', 'cities') => $publish]);
-		}
+        if ($count == false) {
+            return $this->hasMany(CoreZoneCity::className(), ['province_id' => 'province_id'])
+                ->alias('cities')
+                ->andOnCondition([sprintf('%s.publish', 'cities') => $publish]);
+        }
 
 		$model = CoreZoneCity::find()
-			->alias('t')
-			->where(['t.province_id' => $this->province_id]);
-		if($publish == 0)
-			$model->unpublish();
-		elseif($publish == 1)
-			$model->published();
-		elseif($publish == 2)
-			$model->deleted();
+            ->alias('t')
+            ->where(['t.province_id' => $this->province_id]);
+        if ($publish == 0) {
+            $model->unpublish();
+        } else if ($publish == 1) {
+            $model->published();
+        } else if ($publish == 2) {
+            $model->deleted();
+        }
 		$cities = $model->count();
 
 		return $cities ? $cities : 0;
@@ -177,11 +178,13 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 	{
 		parent::init();
 
-		if(!(Yii::$app instanceof \app\components\Application))
-			return;
+        if (!(Yii::$app instanceof \app\components\Application)) {
+            return;
+        }
 
-		if(!$this->hasMethod('search'))
-			return;
+        if (!$this->hasMethod('search')) {
+            return;
+        }
 
 		$this->templateColumns['_no'] = [
 			'header' => '#',
@@ -289,36 +292,39 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 	 */
 	public static function getInfo($id, $column=null)
 	{
-		if($column != null) {
-			$model = self::find();
-			if(is_array($column))
-				$model->select($column);
-			else
-				$model->select([$column]);
-			$model = $model->where(['province_id' => $id])->one();
-			return is_array($column) ? $model : $model->$column;
-			
-		} else {
-			$model = self::findOne($id);
-			return $model;
-		}
+        if ($column != null) {
+            $model = self::find();
+            if (is_array($column)) {
+                $model->select($column);
+            } else {
+                $model->select([$column]);
+            }
+            $model = $model->where(['province_id' => $id])->one();
+            return is_array($column) ? $model : $model->$column;
+
+        } else {
+            $model = self::findOne($id);
+            return $model;
+        }
 	}
 
 	/**
 	 * function getProvince
 	 */
-	public static function getProvince($publish=null, $array=true) 
+	public static function getProvince($publish=null, $array=true)
 	{
 		$model = self::find()
-			->alias('t')
+            ->alias('t')
 			->suggest();
-		if($publish != null)
-			$model->andWhere(['t.publish' => $publish]);
+        if ($publish != null) {
+            $model->andWhere(['t.publish' => $publish]);
+        }
 
 		$model = $model->orderBy('t.province_name ASC')->all();
 
-		if($array == true)
-			return \yii\helpers\ArrayHelper::map($model, 'province_id', 'province_name');
+        if ($array == true) {
+            return \yii\helpers\ArrayHelper::map($model, 'province_id', 'province_name');
+        }
 
 		return $model;
 	}
@@ -340,15 +346,17 @@ class CoreZoneProvince extends \app\components\ActiveRecord
 	 */
 	public function beforeValidate()
 	{
-		if(parent::beforeValidate()) {
-			if($this->isNewRecord) {
-				if($this->creation_id == null)
-					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			} else {
-				if($this->modified_id == null)
-					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
-			}
-		}
-		return true;
+        if (parent::beforeValidate()) {
+            if ($this->isNewRecord) {
+                if ($this->creation_id == null) {
+                    $this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            } else {
+                if ($this->modified_id == null) {
+                    $this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
+            }
+        }
+        return true;
 	}
 }

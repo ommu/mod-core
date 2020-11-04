@@ -70,21 +70,22 @@ class MetaController extends Controller
 	public function actionUpdate()
 	{
 		$model = CoreMeta::findOne(1);
-		if ($model === null) 
-			$model = new CoreMeta();
+        if ($model === null) {
+            $model = new CoreMeta();
+        }
 		$model->scenario = CoreMeta::SCENARIO_SETTING;
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Meta setting success updated.'));
 				return $this->redirect(['update']);
 				//return $this->redirect(['view', 'id' => $model->id]);
-			} 
+			}
 		}
 
 		$this->view->title = Yii::t('app', 'Meta Settings');
@@ -103,21 +104,22 @@ class MetaController extends Controller
 	public function actionGoogle()
 	{
 		$model = CoreMeta::findOne(1);
-		if ($model === null) 
-			$model = new CoreMeta();
+        if ($model === null) {
+            $model = new CoreMeta();
+        }
 		$model->scenario = CoreMeta::SCENARIO_GOOGLE;
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Google owner meta success updated.'));
 				return $this->redirect(['google']);
 				//return $this->redirect(['view', 'id' => $model->id]);
-			} 
+			}
 		}
 
 		$this->view->title = Yii::t('app', 'Meta Setting: {meta-name}', array('meta-name'=>'Google Owner'));
@@ -136,21 +138,22 @@ class MetaController extends Controller
 	public function actionFacebook()
 	{
 		$model = CoreMeta::findOne(1);
-		if ($model === null) 
-			$model = new CoreMeta();
+        if ($model === null) {
+            $model = new CoreMeta();
+        }
 		$model->scenario = CoreMeta::SCENARIO_FACEBOOK;
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Facebook meta success updated.'));
 				return $this->redirect(['facebook']);
 				//return $this->redirect(['view', 'id' => $model->id]);
-			} 
+			}
 		}
 
 		$this->view->title = Yii::t('app', 'Meta Setting: {meta-name}', array('meta-name'=>'Facebook'));
@@ -169,21 +172,22 @@ class MetaController extends Controller
 	public function actionTwitter()
 	{
 		$model = CoreMeta::findOne(1);
-		if ($model === null) 
-			$model = new CoreMeta();
+        if ($model === null) {
+            $model = new CoreMeta();
+        }
 		$model->scenario = CoreMeta::SCENARIO_TWITTER;
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Twitter meta success updated.'));
 				return $this->redirect(['twitter']);
 				//return $this->redirect(['view', 'id' => $model->id]);
-			} 
+			}
 		}
 
 		$this->view->title = Yii::t('app', 'Meta Setting: {meta-name}', array('meta-name'=>'Twitter'));
@@ -202,21 +206,22 @@ class MetaController extends Controller
 	public function actionAddress()
 	{
 		$model = CoreMeta::findOne(1);
-		if ($model === null) 
-			$model = new CoreMeta();
+        if ($model === null) {
+            $model = new CoreMeta();
+        }
 		$model->scenario = CoreMeta::SCENARIO_ADDRESS;
 
-		if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+            if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Address success updated.'));
 				return $this->redirect(['facebook']);
 				//return $this->redirect(['view', 'id' => $model->id]);
-			} 
+			}
 		}
 
 		$this->view->title = Yii::t('app', 'Meta Setting: {meta-name}', array('meta-name'=>'Address'));
@@ -236,9 +241,10 @@ class MetaController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = CoreMeta::findOne($id)) !== null) 
-			return $model;
-		else
-			throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        if (($model = CoreMeta::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}
 }
