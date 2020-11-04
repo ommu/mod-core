@@ -45,8 +45,9 @@ class CityController extends Controller
 	 */
 	public function init()
 	{
-		parent::init();
-		$this->subMenu = $this->module->params['zone_submenu'];
+        parent::init();
+
+        $this->subMenu = $this->module->params['zone_submenu'];
 	}
 
 	/**
@@ -54,18 +55,18 @@ class CityController extends Controller
 	 */
 	public function behaviors()
 	{
-		return [
-			'access' => [
-				'class' => AccessControl::className(),
-			],
-			'verbs' => [
-				'class' => VerbFilter::className(),
-				'actions' => [
-					'delete' => ['POST'],
-					'publish' => ['POST'],
-				],
-			],
-		];
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                    'publish' => ['POST'],
+                ],
+            ],
+        ];
 	}
 
 	/**
@@ -80,7 +81,7 @@ class CityController extends Controller
 	 */
 	public function actionIndex()
 	{
-		return $this->redirect(['manage']);
+        return $this->redirect(['manage']);
 	}
 
 	/**
@@ -129,19 +130,19 @@ class CityController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model = new CoreZoneCity();
+        $model = new CoreZoneCity();
         if (($id = Yii::$app->request->get('id')) != null) {
             $model->province_id = $id;
         }
 
         if (Yii::$app->request->isPost) {
-			$model->load(Yii::$app->request->post());
-			// $postData = Yii::$app->request->post();
-			// $model->load($postData);
-			// $model->order = $postData['order'] ? $postData['order'] : 0;
+            $model->load(Yii::$app->request->post());
+            // $postData = Yii::$app->request->post();
+            // $model->load($postData);
+            // $model->order = $postData['order'] ? $postData['order'] : 0;
 
             if ($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('app', 'City success created.'));
+                Yii::$app->session->setFlash('success', Yii::t('app', 'City success created.'));
                 if (!Yii::$app->request->isAjax) {
                     if ($id != null) {
 						return $this->redirect(['manage', 'province'=>$model->province_id]);
@@ -151,14 +152,14 @@ class CityController extends Controller
                 if ($id != null) {
 					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'province'=>$model->province_id]);
                 }
-				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
+                return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
             } else {
                 if (Yii::$app->request->isAjax) {
                     return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
                 }
-			}
-		}
+            }
+        }
 
 		$this->view->title = Yii::t('app', 'Create City');
 		$this->view->description = '';
@@ -179,27 +180,27 @@ class CityController extends Controller
 		$model = $this->findModel($id);
 
         if (Yii::$app->request->isPost) {
-			$model->load(Yii::$app->request->post());
-			// $postData = Yii::$app->request->post();
-			// $model->load($postData);
-			// $model->order = $postData['order'] ? $postData['order'] : 0;
+            $model->load(Yii::$app->request->post());
+            // $postData = Yii::$app->request->post();
+            // $model->load($postData);
+            // $model->order = $postData['order'] ? $postData['order'] : 0;
 
             if ($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('app', 'City success updated.'));
+                Yii::$app->session->setFlash('success', Yii::t('app', 'City success updated.'));
                 if (!Yii::$app->request->isAjax) {
 					return $this->redirect(['update', 'id'=>$model->city_id]);
                 }
                 if (($province = Yii::$app->request->get('province')) != null) {
 					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'province'=>$province]);
                 }
-				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
+                return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
             } else {
                 if (Yii::$app->request->isAjax) {
                     return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
                 }
-			}
-		}
+            }
+        }
 
 		$this->view->title = Yii::t('app', 'Update City: {city-name}', ['city-name' => $model->city_name]);
 		$this->view->description = '';
@@ -216,7 +217,7 @@ class CityController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$model = $this->findModel($id);
+        $model = $this->findModel($id);
 
 		$this->view->title = Yii::t('app', 'Detail City: {city-name}', ['city-name' => $model->city_name]);
 		$this->view->description = '';

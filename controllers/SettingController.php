@@ -43,17 +43,17 @@ class SettingController extends Controller
 	 */
 	public function behaviors()
 	{
-		return [
-			'access' => [
-				'class' => AccessControl::className(),
-			],
-			'verbs' => [
-				'class' => VerbFilter::className(),
-				'actions' => [
-					'delete' => ['POST'],
-				],
-			],
-		];
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
 	}
 
 	/**
@@ -79,21 +79,21 @@ class SettingController extends Controller
 		$model->scenario = CoreSettings::SCENARIO_GENERAL;
 
         if (Yii::$app->request->isPost) {
-			$model->load(Yii::$app->request->post());
-			// $postData = Yii::$app->request->post();
-			// $model->load($postData);
-			// $model->order = $postData['order'] ? $postData['order'] : 0;
+            $model->load(Yii::$app->request->post());
+            // $postData = Yii::$app->request->post();
+            // $model->load($postData);
+            // $model->order = $postData['order'] ? $postData['order'] : 0;
 
             if ($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('app', 'Public permissions success updated.'));
-				return $this->redirect(['general']);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Public permissions success updated.'));
+                return $this->redirect(['general']);
 
             } else {
                 if (Yii::$app->request->isAjax) {
                     return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
                 }
-			}
-		}
+            }
+        }
 
 		$this->view->title = Yii::t('app', 'Public Permissions');
 		$this->view->description = '';
@@ -117,21 +117,21 @@ class SettingController extends Controller
 		$model->scenario = CoreSettings::SCENARIO_BANNED;
 
         if (Yii::$app->request->isPost) {
-			$model->load(Yii::$app->request->post());
-			// $postData = Yii::$app->request->post();
-			// $model->load($postData);
-			// $model->order = $postData['order'] ? $postData['order'] : 0;
+            $model->load(Yii::$app->request->post());
+            // $postData = Yii::$app->request->post();
+            // $model->load($postData);
+            // $model->order = $postData['order'] ? $postData['order'] : 0;
 
             if ($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('app', 'Spam & banning setting success updated.'));
-				return $this->redirect(['banned']);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Spam & banning setting success updated.'));
+                return $this->redirect(['banned']);
 
             } else {
                 if (Yii::$app->request->isAjax) {
                     return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
                 }
-			}
-		}
+            }
+        }
 		
 		$this->view->title = Yii::t('app', 'Spam & Banning Tools');
 		$this->view->description = Yii::t('app', '{app-name} platform are often the target of aggressive spam tactics. This most often comes in the form of fake user accounts and spam in comments. On this page, you can manage various anti-spam and censorship features. Note: To turn on the signup image verification feature (a popular anti-spam tool), see the {setting} page.', ['app-name'=>Yii::$app->name, 'setting' => Html::a(Yii::t('app', 'Signup Setting'), Url::to(['signup']))]);
@@ -155,21 +155,21 @@ class SettingController extends Controller
 		$model->scenario = CoreSettings::SCENARIO_SIGNUP;
 
         if (Yii::$app->request->isPost) {
-			$model->load(Yii::$app->request->post());
-			// $postData = Yii::$app->request->post();
-			// $model->load($postData);
-			// $model->order = $postData['order'] ? $postData['order'] : 0;
+            $model->load(Yii::$app->request->post());
+            // $postData = Yii::$app->request->post();
+            // $model->load($postData);
+            // $model->order = $postData['order'] ? $postData['order'] : 0;
 
             if ($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('app', 'Signup setting success updated.'));
-				return $this->redirect(['signup']);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Signup setting success updated.'));
+                return $this->redirect(['signup']);
 
             } else {
                 if (Yii::$app->request->isAjax) {
                     return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
                 }
-			}
-		}
+            }
+        }
 
 		$this->view->title = Yii::t('app', 'Signup Settings');
 		$this->view->description = Yii::t('app', 'The user signup process is a crucial element of your {app-name} platform. You need to design a signup process that is user friendly but also gets the initial information you need from new users. On this page, you can configure your signup process.', ['app-name'=>Yii::$app->name]);
@@ -193,21 +193,21 @@ class SettingController extends Controller
 		$model->scenario = CoreSettings::SCENARIO_LANGUAGE;
 
         if (Yii::$app->request->isPost) {
-			$model->load(Yii::$app->request->post());
-			// $postData = Yii::$app->request->post();
-			// $model->load($postData);
-			// $model->order = $postData['order'] ? $postData['order'] : 0;
+            $model->load(Yii::$app->request->post());
+            // $postData = Yii::$app->request->post();
+            // $model->load($postData);
+            // $model->order = $postData['order'] ? $postData['order'] : 0;
 
             if ($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('app', 'Language setting success updated.'));
-				return $this->redirect(['language']);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Language setting success updated.'));
+                return $this->redirect(['language']);
 
             } else {
                 if (Yii::$app->request->isAjax) {
                     return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
                 }
-			}
-		}
+            }
+        }
 
 		$this->subMenu = $this->module->params['language_submenu'];
 		$this->view->title = Yii::t('app', 'Language Settings');

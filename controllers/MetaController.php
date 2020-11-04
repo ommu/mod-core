@@ -40,17 +40,17 @@ class MetaController extends Controller
 	 */
 	public function behaviors()
 	{
-		return [
-			'access' => [
-				'class' => AccessControl::className(),
-			],
-			'verbs' => [
-				'class' => VerbFilter::className(),
-				'actions' => [
-					'delete' => ['POST'],
-				],
-			],
-		];
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
 	}
 
 	/**
@@ -76,15 +76,15 @@ class MetaController extends Controller
 		$model->scenario = CoreMeta::SCENARIO_SETTING;
 
         if (Yii::$app->request->isPost) {
-			$model->load(Yii::$app->request->post());
-			// $postData = Yii::$app->request->post();
-			// $model->load($postData);
-			// $model->order = $postData['order'] ? $postData['order'] : 0;
+            $model->load(Yii::$app->request->post());
+            // $postData = Yii::$app->request->post();
+            // $model->load($postData);
+            // $model->order = $postData['order'] ? $postData['order'] : 0;
 
             if ($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('app', 'Meta setting success updated.'));
-				return $this->redirect(['update']);
-				//return $this->redirect(['view', 'id' => $model->id]);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Meta setting success updated.'));
+                return $this->redirect(['update']);
+                //return $this->redirect(['view', 'id' => $model->id]);
 			}
 		}
 
@@ -110,15 +110,15 @@ class MetaController extends Controller
 		$model->scenario = CoreMeta::SCENARIO_GOOGLE;
 
         if (Yii::$app->request->isPost) {
-			$model->load(Yii::$app->request->post());
-			// $postData = Yii::$app->request->post();
-			// $model->load($postData);
-			// $model->order = $postData['order'] ? $postData['order'] : 0;
+            $model->load(Yii::$app->request->post());
+            // $postData = Yii::$app->request->post();
+            // $model->load($postData);
+            // $model->order = $postData['order'] ? $postData['order'] : 0;
 
             if ($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('app', 'Google owner meta success updated.'));
-				return $this->redirect(['google']);
-				//return $this->redirect(['view', 'id' => $model->id]);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Google owner meta success updated.'));
+                return $this->redirect(['google']);
+                //return $this->redirect(['view', 'id' => $model->id]);
 			}
 		}
 
@@ -144,15 +144,15 @@ class MetaController extends Controller
 		$model->scenario = CoreMeta::SCENARIO_FACEBOOK;
 
         if (Yii::$app->request->isPost) {
-			$model->load(Yii::$app->request->post());
-			// $postData = Yii::$app->request->post();
-			// $model->load($postData);
-			// $model->order = $postData['order'] ? $postData['order'] : 0;
+            $model->load(Yii::$app->request->post());
+            // $postData = Yii::$app->request->post();
+            // $model->load($postData);
+            // $model->order = $postData['order'] ? $postData['order'] : 0;
 
             if ($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('app', 'Facebook meta success updated.'));
-				return $this->redirect(['facebook']);
-				//return $this->redirect(['view', 'id' => $model->id]);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Facebook meta success updated.'));
+                return $this->redirect(['facebook']);
+                //return $this->redirect(['view', 'id' => $model->id]);
 			}
 		}
 
@@ -178,15 +178,15 @@ class MetaController extends Controller
 		$model->scenario = CoreMeta::SCENARIO_TWITTER;
 
         if (Yii::$app->request->isPost) {
-			$model->load(Yii::$app->request->post());
-			// $postData = Yii::$app->request->post();
-			// $model->load($postData);
-			// $model->order = $postData['order'] ? $postData['order'] : 0;
+            $model->load(Yii::$app->request->post());
+            // $postData = Yii::$app->request->post();
+            // $model->load($postData);
+            // $model->order = $postData['order'] ? $postData['order'] : 0;
 
             if ($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('app', 'Twitter meta success updated.'));
-				return $this->redirect(['twitter']);
-				//return $this->redirect(['view', 'id' => $model->id]);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Twitter meta success updated.'));
+                return $this->redirect(['twitter']);
+                //return $this->redirect(['view', 'id' => $model->id]);
 			}
 		}
 
@@ -212,15 +212,15 @@ class MetaController extends Controller
 		$model->scenario = CoreMeta::SCENARIO_ADDRESS;
 
         if (Yii::$app->request->isPost) {
-			$model->load(Yii::$app->request->post());
-			// $postData = Yii::$app->request->post();
-			// $model->load($postData);
-			// $model->order = $postData['order'] ? $postData['order'] : 0;
+            $model->load(Yii::$app->request->post());
+            // $postData = Yii::$app->request->post();
+            // $model->load($postData);
+            // $model->order = $postData['order'] ? $postData['order'] : 0;
 
             if ($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('app', 'Address success updated.'));
-				return $this->redirect(['facebook']);
-				//return $this->redirect(['view', 'id' => $model->id]);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Address success updated.'));
+                return $this->redirect(['facebook']);
+                //return $this->redirect(['view', 'id' => $model->id]);
 			}
 		}
 

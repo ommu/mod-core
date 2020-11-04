@@ -217,7 +217,7 @@ class CorePages extends \app\components\ActiveRecord
 	 */
 	public function init()
 	{
-		parent::init();
+        parent::init();
 
         if (!(Yii::$app instanceof \app\components\Application)) {
             return;
@@ -573,8 +573,8 @@ class CorePages extends \app\components\ActiveRecord
                 if ($this->media->saveAs(join('/', [$uploadPath, $fileName]))) {
                     self::updateAll(['media' => $fileName], ['page_id' => $this->page_id]);
                 }
-			}
-		}
+            }
+        }
 	}
 
 	/**
