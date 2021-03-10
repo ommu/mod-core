@@ -151,7 +151,7 @@ class SourceMessage extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'app\components\grid\SerialColumn',
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['category'] = [
 			'attribute' => 'category',
@@ -208,7 +208,7 @@ class SourceMessage extends \app\components\ActiveRecord
 				return $model->getTranslates(true);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'html',
 		];
 	}
@@ -268,7 +268,7 @@ class SourceMessage extends \app\components\ActiveRecord
 			return Html::ul($translate, ['item' => function($item, $index) {
 				$languages = self::getLanguages();
 				return Html::tag('li', $languages[$index].': '.($item ? $item : '-'));
-			}, 'class'=>'list-boxed']);
+			}, 'class' => 'list-boxed']);
 		}
 
 		return implode($sep, $translate);

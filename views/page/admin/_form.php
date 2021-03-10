@@ -49,32 +49,32 @@ $redactorOptions = [
 <?php //echo $form->errorSummary($model);?>
 
 <?php echo $form->field($model, 'name_i')
-	->textInput(['maxlength'=>true])
+	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('name_i')); ?>
 
 <?php echo $form->field($model, 'desc_i')
-	->textarea(['rows'=>6, 'cols'=>50])
+	->textarea(['rows' => 6, 'cols' => 50])
 	->widget(Redactor::className(), ['clientOptions' => $redactorOptions])
 	->label($model->getAttributeLabel('desc_i')); ?>
 
 <?php echo $form->field($model, 'quote_i')
-	->textarea(['rows'=>6, 'cols'=>50, 'maxlength'=>true])
+	->textarea(['rows' => 6, 'cols' => 50, 'maxlength' => true])
 	->label($model->getAttributeLabel('quote_i')); ?>
 
 <?php $uploadPath = CorePages::getUploadPath(false);
-$media = !$model->isNewRecord && $model->old_media != '' ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->old_media])), ['alt'=>$model->old_media, 'class'=>'d-block border border-width-3 mb-3']).$model->old_media.'<hr/>' : '';
+$media = !$model->isNewRecord && $model->old_media != '' ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->old_media])), ['alt' => $model->old_media, 'class' => 'd-block border border-width-3 mb-4']).$model->old_media.'<hr/>' : '';
 echo $form->field($model, 'media', ['template' => '{label}{beginWrapper}<div>'.$media.'</div>{input}{error}{hint}{endWrapper}'])
 	->fileInput()
 	->label($model->getAttributeLabel('media')); ?>
 
 <?php $mediaShow = CorePages::getMediaShow();
 echo $form->field($model, 'media_show')
-	->dropDownList($mediaShow, ['prompt'=>''])
+	->dropDownList($mediaShow, ['prompt' => ''])
 	->label($model->getAttributeLabel('media_show')); ?>
 
 <?php $mediaType = CorePages::getMediaType();
 echo $form->field($model, 'media_type')
-	->dropDownList($mediaType, ['prompt'=>''])
+	->dropDownList($mediaType, ['prompt' => ''])
 	->label($model->getAttributeLabel('media_type')); ?>
 
 <?php 

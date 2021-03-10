@@ -14,7 +14,7 @@ namespace ommu\core\components\helpers;
 use Yii;
 use thamtech\uuid\helpers\UuidHelper;
 
-class ComposerInstallerHelper extends \yii\composer\Installer
+class ComposerInstallerHelper
 {
     /**
      * Generates a cookie validation key for every app config listed in "config" in extra section.

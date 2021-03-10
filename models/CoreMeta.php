@@ -243,7 +243,7 @@ class CoreMeta extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'app\components\grid\SerialColumn',
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['meta_image'] = [
 			'attribute' => 'meta_image',
@@ -456,61 +456,61 @@ class CoreMeta extends \app\components\ActiveRecord
 		$this->templateColumns['twitter_card'] = [
 			'attribute' => 'twitter_card',
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['twitter-card', 'id'=>$model->primaryKey]);
+				$url = Url::to(['twitter-card', 'id' => $model->primaryKey]);
 				return $this->quickAction($url, $model->twitter_card, '1=summary, 2=summary_large_image, 3=photo,4=app');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['facebook_type'] = [
 			'attribute' => 'facebook_type',
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['facebook-type', 'id'=>$model->primaryKey]);
+				$url = Url::to(['facebook-type', 'id' => $model->primaryKey]);
 				return $this->quickAction($url, $model->facebook_type, '1=profile, 2=website');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['office_on'] = [
 			'attribute' => 'office_on',
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['office-on', 'id'=>$model->primaryKey]);
+				$url = Url::to(['office-on', 'id' => $model->primaryKey]);
 				return $this->quickAction($url, $model->office_on, '0=disable, 1=enable');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['google_on'] = [
 			'attribute' => 'google_on',
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['google-on', 'id'=>$model->primaryKey]);
+				$url = Url::to(['google-on', 'id' => $model->primaryKey]);
 				return $this->quickAction($url, $model->google_on, '0=disable, 1=enable');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['twitter_on'] = [
 			'attribute' => 'twitter_on',
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['twitter-on', 'id'=>$model->primaryKey]);
+				$url = Url::to(['twitter-on', 'id' => $model->primaryKey]);
 				return $this->quickAction($url, $model->twitter_on, '0=disable, 1=enable');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['facebook_on'] = [
 			'attribute' => 'facebook_on',
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['facebook-on', 'id'=>$model->primaryKey]);
+				$url = Url::to(['facebook-on', 'id' => $model->primaryKey]);
 				return $this->quickAction($url, $model->facebook_on, '0=disable, 1=enable');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 		];
 	}
@@ -567,23 +567,23 @@ class CoreMeta extends \app\components\ActiveRecord
             if ($meta_image instanceof UploadedFile && !$meta_image->getHasError()) {
                 if (!in_array(strtolower($meta_image->getExtension()), $meta_imageFileType)) {
 					$this->addError('meta_image', Yii::t('app', 'The file {name} cannot be uploaded. Only files with these extensions are allowed: {extensions}', array(
-						'{name}'=>$meta_image->name,
-						'{extensions}'=>$this->formatFileType($meta_imageFileType, false),
+						'{name}' => $meta_image->name,
+						'{extensions}' => $this->formatFileType($meta_imageFileType, false),
 					)));
 				}
 			} /* else {
 				//if ($this->isNewRecord) {
-                    $this->addError('meta_image', Yii::t('app', '{attribute} cannot be blank.', array('{attribute}'=>$this->getAttributeLabel('meta_image'))));
+                    $this->addError('meta_image', Yii::t('app', '{attribute} cannot be blank.', array('{attribute}' => $this->getAttributeLabel('meta_image'))));
                 }
 			} */
 			
             if ($this->scenario == self::SCENARIO_TWITTER) {
                 if ($this->twitter_card == 3) {
                     if ($this->twitter_photo_size['width'] == '') {
-                        $this->addError('twitter_photo_size[width]', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('twitter_photo_size[width]')]));
+                        $this->addError('twitter_photo_size[width]', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('twitter_photo_size[width]')]));
                     }
                     if ($this->twitter_photo_size['height'] == '') {
-                        $this->addError('twitter_photo_size[height]', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('twitter_photo_size[height]')]));
+                        $this->addError('twitter_photo_size[height]', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('twitter_photo_size[height]')]));
                     }
 				}
 			}
@@ -591,13 +591,13 @@ class CoreMeta extends \app\components\ActiveRecord
             if ($this->scenario == self::SCENARIO_FACEBOOK) {
                 if ($this->facebook_type == 1) {
                     if ($this->facebook_profile_firstname == '') {
-                        $this->addError('facebook_profile_firstname', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('facebook_profile_firstname')]));
+                        $this->addError('facebook_profile_firstname', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('facebook_profile_firstname')]));
                     }
                     if ($this->facebook_profile_lastname == '') {
-                        $this->addError('facebook_profile_lastname', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('facebook_profile_lastname')]));
+                        $this->addError('facebook_profile_lastname', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('facebook_profile_lastname')]));
                     }
 					//if ($this->facebook_profile_username == '') {
-                    //	$this->addError('facebook_profile_username', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('facebook_profile_username')]));
+                    //	$this->addError('facebook_profile_username', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('facebook_profile_username')]));
                     //}
 				}
             }

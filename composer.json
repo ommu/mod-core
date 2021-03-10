@@ -31,7 +31,6 @@
 	],
 	"require": {
 		"php": "~7.0",
-		"yiisoft/yii2": "~2.0.13",
 		"insolita/yii2-iconpicker": "^3.0",
 		"bower-asset/eliberty-bootstrap-iconpicker": "*"
 	},

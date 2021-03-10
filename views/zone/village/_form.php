@@ -25,7 +25,7 @@ use yii\web\JsExpression;
 <div class="core-zone-village-form">
 
 <?php $form = ActiveForm::begin([
-	'options' => ['class'=>'form-horizontal form-label-left'],
+	'options' => ['class' => 'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
@@ -40,14 +40,14 @@ use yii\web\JsExpression;
 
 <?php $district_id = $form->field($model, 'district_id', ['template' => '{input}', 'options' => ['tag' => null]])->hiddenInput();
 echo $form->field($model, 'districtName', ['template' => '{label}{beginWrapper}{input}'.$district_id.'{error}{hint}{endWrapper}'])
-	// ->textInput(['maxlength'=>true])
+	// ->textInput(['maxlength' => true])
 	->widget(AutoComplete::className(), [
 		'options' => [
 			'data-toggle' => 'tooltip', 'data-placement' => 'top',
 			'class' => 'ui-autocomplete-input form-control'
 		],
 		'clientOptions' => [
-			'source' => Url::to(['zone/district/suggest', 'extend'=>'district_name']),
+			'source' => Url::to(['zone/district/suggest', 'extend' => 'district_name']),
 			'minLength' => 2,
 			'select' => new JsExpression("function(event, ui) {
 				\$('.field-districtname #district_id').val(ui.item.id);
@@ -59,15 +59,15 @@ echo $form->field($model, 'districtName', ['template' => '{label}{beginWrapper}{
 	->label($model->getAttributeLabel('districtName')); ?>
 
 <?php echo $form->field($model, 'village_name')
-	->textInput(['maxlength'=>true])
+	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('village_name')); ?>
 
 <?php echo $form->field($model, 'zipcode')
-	->textInput(['maxlength'=>true])
+	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('zipcode')); ?>
 
 <?php echo $form->field($model, 'mfdonline')
-	->textInput(['maxlength'=>true])
+	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('mfdonline')); ?>
 
 <?php 

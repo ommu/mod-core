@@ -122,7 +122,7 @@ class MetaController extends Controller
 			}
 		}
 
-		$this->view->title = Yii::t('app', 'Meta Setting: {meta-name}', array('meta-name'=>'Google Owner'));
+		$this->view->title = Yii::t('app', 'Meta Setting: {meta-name}', array('meta-name' => 'Google Owner'));
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_google', [
@@ -156,7 +156,7 @@ class MetaController extends Controller
 			}
 		}
 
-		$this->view->title = Yii::t('app', 'Meta Setting: {meta-name}', array('meta-name'=>'Facebook'));
+		$this->view->title = Yii::t('app', 'Meta Setting: {meta-name}', array('meta-name' => 'Facebook'));
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_facebook', [
@@ -190,7 +190,7 @@ class MetaController extends Controller
 			}
 		}
 
-		$this->view->title = Yii::t('app', 'Meta Setting: {meta-name}', array('meta-name'=>'Twitter'));
+		$this->view->title = Yii::t('app', 'Meta Setting: {meta-name}', array('meta-name' => 'Twitter'));
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_twitter', [
@@ -224,7 +224,7 @@ class MetaController extends Controller
 			}
 		}
 
-		$this->view->title = Yii::t('app', 'Meta Setting: {meta-name}', array('meta-name'=>'Address'));
+		$this->view->title = Yii::t('app', 'Meta Setting: {meta-name}', array('meta-name' => 'Address'));
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_address', [

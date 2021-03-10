@@ -203,7 +203,7 @@ class CoreSettings extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'app\components\grid\SerialColumn',
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['site_creation'] = [
 			'attribute' => 'site_creation',
@@ -305,7 +305,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->signup_username);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['signup_approve'] = [
 			'attribute' => 'signup_approve',
@@ -313,7 +313,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->signup_approve);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['signup_verifyemail'] = [
 			'attribute' => 'signup_verifyemail',
@@ -321,7 +321,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->signup_verifyemail);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['signup_photo'] = [
 			'attribute' => 'signup_photo',
@@ -329,7 +329,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->signup_photo);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['signup_welcome'] = [
 			'attribute' => 'signup_welcome',
@@ -337,7 +337,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->signup_welcome);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['signup_random'] = [
 			'attribute' => 'signup_random',
@@ -345,7 +345,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->signup_random);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['signup_terms'] = [
 			'attribute' => 'signup_terms',
@@ -353,7 +353,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->signup_terms);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['signup_invitepage'] = [
 			'attribute' => 'signup_invitepage',
@@ -361,7 +361,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->signup_invitepage);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['signup_inviteonly'] = [
 			'attribute' => 'signup_inviteonly',
@@ -369,7 +369,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->signup_inviteonly);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['signup_checkemail'] = [
 			'attribute' => 'signup_checkemail',
@@ -377,7 +377,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->signup_checkemail);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['signup_adminemail'] = [
 			'attribute' => 'signup_adminemail',
@@ -385,7 +385,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->signup_adminemail);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['general_profile'] = [
 			'attribute' => 'general_profile',
@@ -393,7 +393,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->general_profile);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['general_invite'] = [
 			'attribute' => 'general_invite',
@@ -401,7 +401,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->general_invite);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['general_search'] = [
 			'attribute' => 'general_search',
@@ -409,7 +409,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->general_search);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['general_portal'] = [
 			'attribute' => 'general_portal',
@@ -417,7 +417,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->general_portal);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['lang_allow'] = [
 			'attribute' => 'lang_allow',
@@ -425,7 +425,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->lang_allow);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['lang_autodetect'] = [
 			'attribute' => 'lang_autodetect',
@@ -433,7 +433,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->lang_autodetect);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['lang_anonymous'] = [
 			'attribute' => 'lang_anonymous',
@@ -441,7 +441,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->lang_anonymous);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['spam_comment'] = [
 			'attribute' => 'spam_comment',
@@ -449,7 +449,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->spam_comment);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['spam_contact'] = [
 			'attribute' => 'spam_contact',
@@ -457,7 +457,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->spam_contact);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['spam_invite'] = [
 			'attribute' => 'spam_invite',
@@ -465,7 +465,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->spam_invite);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['spam_login'] = [
 			'attribute' => 'spam_login',
@@ -473,7 +473,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->spam_login);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['spam_signup'] = [
 			'attribute' => 'spam_signup',
@@ -481,7 +481,7 @@ class CoreSettings extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->spam_signup);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 	}
 

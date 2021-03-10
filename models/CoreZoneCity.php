@@ -200,14 +200,14 @@ class CoreZoneCity extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'app\components\grid\SerialColumn',
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['mfdonline'] = [
 			'attribute' => 'mfdonline',
 			'value' => function($model, $key, $index, $column) {
 				return $model->mfdonline;
 			},
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['city_name'] = [
 			'attribute' => 'city_name',
@@ -279,10 +279,10 @@ class CoreZoneCity extends \app\components\ActiveRecord
 			'attribute' => 'districts',
 			'value' => function($model, $key, $index, $column) {
 				$districts = $model->getDistricts(true);
-				return Html::a($districts, ['zone/district/manage', 'city'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} districts', ['count'=>$districts]), 'data-pjax'=>0]);
+				return Html::a($districts, ['zone/district/manage', 'city' => $model->primaryKey, 'publish' => 1], ['title' => Yii::t('app', '{count} districts', ['count' => $districts]), 'data-pjax' => 0]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['checked'] = [
@@ -291,16 +291,16 @@ class CoreZoneCity extends \app\components\ActiveRecord
 				return $this->filterYesNo($model->checked);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['publish'] = [
 			'attribute' => 'publish',
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['publish', 'id'=>$model->primaryKey]);
+				$url = Url::to(['publish', 'id' => $model->primaryKey]);
 				return $this->quickAction($url, $model->publish);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 			'visible' => !Yii::$app->request->get('trash') ? true : false,
 		];

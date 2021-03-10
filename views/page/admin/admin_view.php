@@ -24,8 +24,8 @@ if (!$small) {
     $this->params['breadcrumbs'][] = $model->title->message;
 
     $this->params['menu']['content'] = [
-        ['label' => Yii::t('app', 'Update'), 'url' => Url::to(['update', 'id'=>$model->page_id]), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-        ['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->page_id]), 'htmlOptions' => ['data-confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method'=>'post', 'class'=>'btn btn-danger'], 'icon' => 'trash'],
+        ['label' => Yii::t('app', 'Update'), 'url' => Url::to(['update', 'id' => $model->page_id]), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],
+        ['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id' => $model->page_id]), 'htmlOptions' => ['data-confirm' => Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method' => 'post', 'class' => 'btn btn-danger'], 'icon' => 'trash'],
     ];
 } ?>
 
@@ -36,7 +36,7 @@ $attributes = [
 	'page_id',
 	[
 		'attribute' => 'publish',
-		'value' => $model->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish),
+		'value' => $model->quickAction(Url::to(['publish', 'id' => $model->primaryKey]), $model->publish),
 		'format' => 'raw',
 	],
 	[
@@ -56,7 +56,7 @@ $attributes = [
 		'attribute' => 'media',
 		'value' => function ($model) {
 			$uploadPath = $model::getUploadPath(false);
-			return $model->media ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->media])), ['alt'=>$model->media, 'class'=>'d-block border border-width-3 mb-3']).$model->media : '-';
+			return $model->media ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->media])), ['alt' => $model->media, 'class' => 'd-block border border-width-3 mb-4']).$model->media : '-';
 		},
 		'format' => 'html',
 	],
@@ -72,7 +72,7 @@ $attributes = [
 		'attribute' => 'views',
 		'value' => function ($model) {
 			$views = $model->getViews(true);
-			return Html::a($views, ['page/view/manage', 'page'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} views', ['count'=>$views])]);
+			return Html::a($views, ['page/view/manage', 'page' => $model->primaryKey, 'publish' => 1], ['title' => Yii::t('app', '{count} views', ['count' => $views])]);
 		},
 		'format' => 'html',
 		'visible' => !$small,
@@ -109,7 +109,7 @@ $attributes = [
 	],
 	[
 		'attribute' => '',
-		'value' => Html::a(Yii::t('app', 'Update'), ['update', 'id'=>$model->primaryKey], ['title'=>Yii::t('app', 'Update'), 'class'=>'btn btn-success btn-sm']),
+		'value' => Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->primaryKey], ['title' => Yii::t('app', 'Update'), 'class' => 'btn btn-primary btn-sm']),
 		'format' => 'html',
 		'visible' => !$small && Yii::$app->request->isAjax ? true : false,
 	],
@@ -118,7 +118,7 @@ $attributes = [
 echo DetailView::widget([
 	'model' => $model,
 	'options' => [
-		'class'=>'table table-striped detail-view',
+		'class' => 'table table-striped detail-view',
 	],
 	'attributes' => $attributes,
 ]); ?>

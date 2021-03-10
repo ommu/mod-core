@@ -26,19 +26,19 @@ use ommu\core\models\CoreZoneProvince;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['/setting/update']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Zone'), 'url' => ['zone/country/index']];
 if ($province != null) {
-    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Province: {province-name}', ['province-name'=>$province->province_name]), 'url' => ['zone/province/view', 'id'=>$province->province_id]];
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Province: {province-name}', ['province-name' => $province->province_name]), 'url' => ['zone/province/view', 'id' => $province->province_id]];
 }
 if ($country != null) {
-    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Country: {country-name}', ['country-name'=>$country->country_name]), 'url' => ['zone/country/view', 'id'=>$country->country_id]];
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Country: {country-name}', ['country-name' => $country->country_name]), 'url' => ['zone/country/view', 'id' => $country->country_id]];
 }
 $this->params['breadcrumbs'][] = $this->title;
 
 $createUrl = Url::to(['create']);
 if ($province != null) {
-    $createUrl = Url::to(['create', 'id'=>$province->province_id]);
+    $createUrl = Url::to(['create', 'id' => $province->province_id]);
 }
 $this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Add City'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class'=>'btn modal-btn btn-success']],
+	['label' => Yii::t('app', 'Add City'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class' => 'btn btn-primary modal-btn']],
 ];
 $this->params['menu']['option'] = [
 	//['label' => Yii::t('app', 'Search'), 'url' => 'javascript:void(0);'],
@@ -54,13 +54,13 @@ $model = $country;
 echo DetailView::widget([
 	'model' => $model,
 	'options' => [
-		'class'=>'table table-striped detail-view',
+		'class' => 'table table-striped detail-view',
 	],
 	'attributes' => [
 		[
 			'attribute' => 'country_name',
 			'value' => function ($model) {
-				return Html::a($model->country_name, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$model->country_name, 'class'=>'modal-btn']);
+				return Html::a($model->country_name, ['zone/country/view', 'id' => $model->country_id], ['title' => $model->country_name, 'class' => 'modal-btn']);
 			},
 			'format' => 'html',
 		],
@@ -74,13 +74,13 @@ $model = $province;
 echo DetailView::widget([
 	'model' => $model,
 	'options' => [
-		'class'=>'table table-striped detail-view',
+		'class' => 'table table-striped detail-view',
 	],
 	'attributes' => [
 		[
 			'attribute' => 'province_name',
 			'value' => function ($model) {
-				return Html::a($model->province_name, ['zone/province/view', 'id'=>$model->province_id], ['title'=>$model->province_name, 'class'=>'modal-btn']);
+				return Html::a($model->province_name, ['zone/province/view', 'id' => $model->province_id], ['title' => $model->province_name, 'class' => 'modal-btn']);
 			},
 			'format' => 'html',
 		],
@@ -89,7 +89,7 @@ echo DetailView::widget([
 			'value' => function ($model) {
 				$countryName = isset($model->country) ? $model->country->country_name : '-';
                 if ($countryName != '-') {
-                    return Html::a($countryName, ['zone/country/view', 'id'=>$model->country_id], ['title'=>$countryName, 'class'=>'modal-btn']);
+                    return Html::a($countryName, ['zone/country/view', 'id' => $model->country_id], ['title' => $countryName, 'class' => 'modal-btn']);
                 }
 				return $countryName;
 			},
@@ -100,9 +100,9 @@ echo DetailView::widget([
 ]);
 }?>
 
-<?php //echo $this->render('_search', ['model'=>$searchModel]); ?>
+<?php //echo $this->render('_search', ['model' => $searchModel]); ?>
 
-<?php echo $this->render('_option_form', ['model'=>$searchModel, 'gridColumns'=>$searchModel->activeDefaultColumns($columns), 'route'=>$this->context->route]); ?>
+<?php echo $this->render('_option_form', ['model' => $searchModel, 'gridColumns' => $searchModel->activeDefaultColumns($columns), 'route' => $this->context->route]); ?>
 
 <?php
 $columnData = $columns;
@@ -111,24 +111,24 @@ array_push($columnData, [
 	'header' => Yii::t('app', 'Option'),
 	'urlCreator' => function($action, $model, $key, $index) {
         if ($action == 'view') {
-            return Url::to(['view', 'id'=>$key]);
+            return Url::to(['view', 'id' => $key]);
         }
         if ($action == 'update') {
             if (($province = Yii::$app->request->get('province')) != null) {
-                return Url::to(['update', 'id'=>$key, 'province'=>$province]);
+                return Url::to(['update', 'id' => $key, 'province' => $province]);
             }
-			return Url::to(['update', 'id'=>$key]);
+			return Url::to(['update', 'id' => $key]);
 		}
         if ($action == 'delete') {
-            return Url::to(['delete', 'id'=>$key]);
+            return Url::to(['delete', 'id' => $key]);
         }
 	},
 	'buttons' => [
 		'view' => function ($url, $model, $key) {
-			return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title'=>Yii::t('app', 'Detail'), 'class'=>'modal-btn']);
+			return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title' => Yii::t('app', 'Detail'), 'class' => 'modal-btn']);
 		},
 		'update' => function ($url, $model, $key) {
-			return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['title'=>Yii::t('app', 'Update'), 'class'=>'modal-btn']);
+			return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['title' => Yii::t('app', 'Update'), 'class' => 'modal-btn']);
 		},
 		'delete' => function ($url, $model, $key) {
 			return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [

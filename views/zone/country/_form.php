@@ -22,7 +22,7 @@ use app\components\widgets\ActiveForm;
 <div class="core-zone-country-form">
 
 <?php $form = ActiveForm::begin([
-	'options' => ['class'=>'form-horizontal form-label-left'],
+	'options' => ['class' => 'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
@@ -36,11 +36,11 @@ use app\components\widgets\ActiveForm;
 <?php //echo $form->errorSummary($model);?>
 
 <?php echo $form->field($model, 'country_name')
-	->textInput(['maxlength'=>true])
+	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('country_name')); ?>
 
 <?php echo $form->field($model, 'code')
-	->textInput(['maxlength'=>true])
+	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('code')); ?>
 
 <hr/>

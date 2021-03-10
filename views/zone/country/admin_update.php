@@ -20,12 +20,12 @@ use yii\helpers\Url;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['/setting/update']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Zone'), 'url' => ['zone/country/index']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Countries'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->country_name, 'url' => ['view', 'id'=>$model->country_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->country_name, 'url' => ['view', 'id' => $model->country_id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
 $this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Detail'), 'url' => Url::to(['view', 'id'=>$model->country_id]), 'icon' => 'eye', 'htmlOptions' => ['class'=>'btn btn-success']],
-	['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->country_id]), 'htmlOptions' => ['data-confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method'=>'post', 'class'=>'btn btn-danger'], 'icon' => 'trash'],
+	['label' => Yii::t('app', 'Detail'), 'url' => Url::to(['view', 'id' => $model->country_id]), 'icon' => 'eye', 'htmlOptions' => ['class' => 'btn btn-info']],
+	['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id' => $model->country_id]), 'htmlOptions' => ['data-confirm' => Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method' => 'post', 'class' => 'btn btn-danger'], 'icon' => 'trash'],
 ];
 ?>
 

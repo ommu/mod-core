@@ -230,7 +230,7 @@ class CorePages extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'app\components\grid\SerialColumn',
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['name_i'] = [
 			'attribute' => 'name_i',
@@ -255,7 +255,7 @@ class CorePages extends \app\components\ActiveRecord
 			'attribute' => 'media',
 			'value' => function($model, $key, $index, $column) {
 				$uploadPath = self::getUploadPath(false);
-				return $model->media ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->media])), ['alt'=>$model->media]) : '-';
+				return $model->media ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->media])), ['alt' => $model->media]) : '-';
 			},
 			'format' => 'html',
 		];
@@ -306,10 +306,10 @@ class CorePages extends \app\components\ActiveRecord
 			'attribute' => 'views',
 			'value' => function($model, $key, $index, $column) {
 				$views = $model->getViews(true);
-				return Html::a($views, ['page/view/manage', 'page'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} views', ['count'=>$views]), 'data-pjax'=>0]);
+				return Html::a($views, ['page/view/manage', 'page' => $model->primaryKey, 'publish' => 1], ['title' => Yii::t('app', '{count} views', ['count' => $views]), 'data-pjax' => 0]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['media_show'] = [
@@ -318,7 +318,7 @@ class CorePages extends \app\components\ActiveRecord
 			'value' => function($model, $key, $index, $column) {
 				return self::getMediaShow($model->media_show);
 			},
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['media_type'] = [
 			'attribute' => 'media_type',
@@ -326,16 +326,16 @@ class CorePages extends \app\components\ActiveRecord
 			'value' => function($model, $key, $index, $column) {
 				return self::getMediaType($model->media_type);
 			},
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['publish'] = [
 			'attribute' => 'publish',
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['publish', 'id'=>$model->primaryKey]);
+				$url = Url::to(['publish', 'id' => $model->primaryKey]);
 				return $this->quickAction($url, $model->publish);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 			'visible' => !Yii::$app->request->get('trash') ? true : false,
 		];
@@ -452,13 +452,13 @@ class CorePages extends \app\components\ActiveRecord
             if ($this->media instanceof UploadedFile && !$this->media->getHasError()) {
                 if (!in_array(strtolower($this->media->getExtension()), $mediaFileType)) {
 					$this->addError('media', Yii::t('app', 'The file {name} cannot be uploaded. Only files with these extensions are allowed: {extensions}', [
-						'name'=>$this->media->name,
-						'extensions'=>$this->formatFileType($mediaFileType, false),
+						'name' => $this->media->name,
+						'extensions' => $this->formatFileType($mediaFileType, false),
 					]));
 				}
 			} /* else {
                 if ($this->isNewRecord || (!$this->isNewRecord && $this->old_media == '')) {
-                    $this->addError('media', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('media')]));
+                    $this->addError('media', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('media')]));
                 }
 			} */
 

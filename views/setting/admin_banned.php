@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="core-settings-form">
 
 <?php $form = ActiveForm::begin([
-	'options' => ['class'=>'form-horizontal form-label-left'],
+	'options' => ['class' => 'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
@@ -40,22 +40,22 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php //echo $form->errorSummary($model);?>
 
 <?php echo $form->field($model, 'banned_ips', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
-	->textarea(['rows'=>6, 'cols'=>50])
+	->textarea(['rows' => 6, 'cols' => 50])
 	->label($model->getAttributeLabel('banned_ips'))
 	->hint(Yii::t('app', 'To ban users by their IP address, enter their address into the field below. Addresses should be separated by commas, like 123.456.789.123, 23.45.67.89')); ?>
 
 <?php echo $form->field($model, 'banned_emails', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
-	->textarea(['rows'=>6, 'cols'=>50])
+	->textarea(['rows' => 6, 'cols' => 50])
 	->label($model->getAttributeLabel('banned_emails'))
 	->hint(Yii::t('app', 'To ban users by their email address, enter their email into the field below. Emails should be separated by commas, like user1@domain1.com, user2@domain2.com. Note that you can ban all email addresses with a specific domain as follows: *@domain.com')); ?>
 
 <?php echo $form->field($model, 'banned_usernames', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
-	->textarea(['rows'=>6, 'cols'=>50])
+	->textarea(['rows' => 6, 'cols' => 50])
 	->label($model->getAttributeLabel('banned_usernames'))
 	->hint(Yii::t('app', 'Enter the usernames that are not permitted on your social network. Usernames should be separated by commas, like username1, username2')); ?>
 
 <?php echo $form->field($model, 'banned_words', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
-	->textarea(['rows'=>6, 'cols'=>50])
+	->textarea(['rows' => 6, 'cols' => 50])
 	->label($model->getAttributeLabel('banned_words'))
 	->hint(Yii::t('app', 'Enter any words that you you want to censor on your users\' profiles as well as any plugins you have installed. These will be replaced with asterisks (*). Separate words by commas like word1, word2')); ?>
 
@@ -88,7 +88,7 @@ echo $form->field($model, 'spam_invite', ['template' => '{label}{beginWrapper}{h
 	->label($model->getAttributeLabel('spam_invite'))
 	->hint(Yii::t('app', 'If you have selected Yes, an image containing a random sequence of 6 numbers will be shown to users on the "invite" page. Users will be required to enter these numbers into the Verification Code field in order to send their invitation. This feature helps prevent users from trying to create comment spam. For this feature to work properly, your server must have the GD Libraries (2.0 or higher) installed and configured to work with PHP. If you are seeing errors, try turning this off.')); ?>
 
-<?php echo $form->field($model, 'spam_failedcount', ['template' => '{beginWrapper}{hint}{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
+<?php echo $form->field($model, 'spam_failedcount', ['template' => '{beginWrapper}{hint}{input}{error}{endWrapper}', 'horizontalCssClasses' => ['wrapper' => 'col-md-6 col-sm-9 col-xs-12 col-sm-offset-3']])
 	->textInput()
 	->label($model->getAttributeLabel('spam_failedcount'))
 	->hint(Yii::t('app', 'If "no" is selected in the setting directly above, a Verification Code will be displayed to the user only after a certain number of failed logins. You can set this to 0 to never display a code.')); ?>

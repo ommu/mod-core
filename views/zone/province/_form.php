@@ -23,7 +23,7 @@ use ommu\core\models\CoreZoneCountry;
 <div class="core-zone-province-form">
 
 <?php $form = ActiveForm::begin([
-	'options' => ['class'=>'form-horizontal form-label-left'],
+	'options' => ['class' => 'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
@@ -38,15 +38,15 @@ use ommu\core\models\CoreZoneCountry;
 
 <?php $country = CoreZoneCountry::getCountry();
 echo $form->field($model, 'country_id')
-	->dropDownList($country, ['prompt'=>''])
+	->dropDownList($country, ['prompt' => ''])
 	->label($model->getAttributeLabel('country_id')); ?>
 
 <?php echo $form->field($model, 'province_name')
-	->textInput(['maxlength'=>true])
+	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('province_name')); ?>
 
 <?php echo $form->field($model, 'mfdonline')
-	->textInput(['maxlength'=>true])
+	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('mfdonline')); ?>
 
 <?php echo $form->field($model, 'checked')

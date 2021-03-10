@@ -16,10 +16,11 @@
 
 use yii\helpers\Html;
 use app\components\widgets\ActiveForm;
+use ommu\flatpickr\Flatpickr;
 ?>
 
 <?php $form = ActiveForm::begin([
-	'options' => ['class'=>'form-horizontal form-label-left'],
+	'options' => ['class' => 'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => true,
 	//'enableClientScript' => true,
@@ -28,7 +29,7 @@ use app\components\widgets\ActiveForm;
 <?php //echo $form->errorSummary($model);?>
 
 <?php echo $form->field($model, 'site_creation')
-	->textInput(['type'=>'date'])
+    ->widget(Flatpickr::className(), ['model' => $model, 'attribute' => 'site_creation'])
 	->label($model->getAttributeLabel('site_creation')); ?>
 
 <?php echo $form->field($model, 'site_dateformat')

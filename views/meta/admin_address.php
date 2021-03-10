@@ -28,16 +28,16 @@ if (!$small) {
     $this->params['breadcrumbs'][] = $this->title;
 
     $this->params['menu']['content'] = [
-        ['label' => Yii::t('app', 'Global Meta'), 'url' => Url::to(['update']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-        ['label' => Yii::t('app', 'Address'), 'url' => Url::to(['address']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-        ['label' => Yii::t('app', 'Google Owner Meta'), 'url' => Url::to(['google']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-        ['label' => Yii::t('app', 'Twitter Meta'), 'url' => Url::to(['twitter']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-        ['label' => Yii::t('app', 'Facebook Meta'), 'url' => Url::to(['facebook']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
+        ['label' => Yii::t('app', 'Global Meta'), 'url' => Url::to(['update']), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],
+        ['label' => Yii::t('app', 'Address'), 'url' => Url::to(['address']), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],
+        ['label' => Yii::t('app', 'Google Owner Meta'), 'url' => Url::to(['google']), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],
+        ['label' => Yii::t('app', 'Twitter Meta'), 'url' => Url::to(['twitter']), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],
+        ['label' => Yii::t('app', 'Facebook Meta'), 'url' => Url::to(['facebook']), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],
     ];
 } ?>
 
 <?php $form = ActiveForm::begin([
-	'options' => ['class'=>'form-horizontal form-label-left'],
+	'options' => ['class' => 'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
@@ -61,15 +61,15 @@ if (!$small) {
 
 <div class="form-group">
 	<?php echo $form->field($model, 'office_place', ['template' => '{label}', 'options' => ['tag' => null]])
-		->label($model->getAttributeLabel('office_place'), ['class'=>'control-label col-sm-3 col-xs-12']); ?>
+		->label($model->getAttributeLabel('office_place'), ['class' => 'control-label col-sm-3 col-xs-12']); ?>
 	<div class="col-md-6 col-sm-9 col-xs-12">
 		<?php echo $form->field($model, 'office_place', ['template' => '{input}{error}'])
-			->textarea(['rows'=>6, 'cols'=>50])
+			->textarea(['rows' => 6, 'cols' => 50])
 			->label($model->getAttributeLabel('office_place')); ?>
 		<div class="row">
 			<div class="col-md-6 col-sm-6 col-xs-12">
 				<?php echo $form->field($model, 'office_district', ['template' => '{input}{error}'])
-					//->textInput(['maxlength' => true, 'placeholder'=>$model->getAttributeLabel('office_district')])
+					//->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('office_district')])
 					->widget(AutoComplete::className(), [
 						'options' => [
 							'placeholder' => 'Your district. *auto suggest',
@@ -77,7 +77,7 @@ if (!$small) {
 							'class' => 'ui-autocomplete-input form-control'
 						],
 						'clientOptions' => [
-							'source' => Url::to(['/district/suggest', 'extend'=>'district_name,city_id,province_id,country_id']),
+							'source' => Url::to(['/district/suggest', 'extend' => 'district_name,city_id,province_id,country_id']),
 							'minLength' => 2,
 							'select' => new JsExpression("function(event, ui) {
 								\$('.field-office_city_id #office_city_id').val(ui.item.city_id);
@@ -92,7 +92,7 @@ if (!$small) {
 			</div>
 			<div class="col-md-6 col-sm-6 col-xs-12">
 				<?php echo $form->field($model, 'office_village', ['template' => '{input}{error}'])
-					//->textInput(['maxlength' => true, 'placeholder'=>$model->getAttributeLabel('office_village')])
+					//->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('office_village')])
 					->widget(AutoComplete::className(), [
 						'options' => [
 							'placeholder' => 'Your village. *auto suggest',
@@ -100,7 +100,7 @@ if (!$small) {
 							'class' => 'ui-autocomplete-input form-control'
 						],
 						'clientOptions' => [
-							'source' => Url::to(['/village/suggest', 'extend'=>'village_name,district_name,city_id,province_id,country_id']),
+							'source' => Url::to(['/village/suggest', 'extend' => 'village_name,district_name,city_id,province_id,country_id']),
 							'minLength' => 2,
 							'select' => new JsExpression("function(event, ui) {
 								\$('.field-office_district #office_district').val(ui.item.district_name);
@@ -122,20 +122,20 @@ if (!$small) {
 <?php
 $office_city_id = CoreZoneCity::getCity(1);
 echo $form->field($model, 'office_city_id')
-	->dropDownList($office_city_id, ['prompt'=>''])
+	->dropDownList($office_city_id, ['prompt' => ''])
 	->label($model->getAttributeLabel('office_city_id'))
 	->hint(Yii::t('app', 'The city (or locality) line of the postal address for this business')); ?>
 
 <?php
 $office_province_id = CoreZoneProvince::getProvince(1);
 echo $form->field($model, 'office_province_id')
-	->dropDownList($office_province_id, ['prompt'=>''])
+	->dropDownList($office_province_id, ['prompt' => ''])
 	->label($model->getAttributeLabel('office_province_id')); ?>
 
 <?php
 $office_country_id = CoreZoneCountry::getCountry();
 echo $form->field($model, 'office_country_id')
-	->dropDownList($office_country_id, ['prompt'=>''])
+	->dropDownList($office_country_id, ['prompt' => ''])
 	->label($model->getAttributeLabel('office_country_id')); ?>
 
 <?php echo $form->field($model, 'office_zipcode')

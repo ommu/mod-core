@@ -167,7 +167,7 @@ class CoreZoneCountry extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'app\components\grid\SerialColumn',
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['country_name'] = [
 			'attribute' => 'country_name',
@@ -180,7 +180,7 @@ class CoreZoneCountry extends \app\components\ActiveRecord
 			'value' => function($model, $key, $index, $column) {
 				return $model->code;
 			},
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['creation_date'] = [
 			'attribute' => 'creation_date',
@@ -222,10 +222,10 @@ class CoreZoneCountry extends \app\components\ActiveRecord
 			'attribute' => 'provinces',
 			'value' => function($model, $key, $index, $column) {
 				$provinces = $model->getProvinces(true);
-				return Html::a($provinces, ['zone/province/manage', 'country'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} provinces', ['count'=>$provinces]), 'data-pjax'=>0]);
+				return Html::a($provinces, ['zone/province/manage', 'country' => $model->primaryKey, 'publish' => 1], ['title' => Yii::t('app', '{count} provinces', ['count' => $provinces]), 'data-pjax' => 0]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 		];
 	}

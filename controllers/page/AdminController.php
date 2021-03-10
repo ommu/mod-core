@@ -118,7 +118,7 @@ class AdminController extends Controller
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Page success created.'));
                 return $this->redirect(['manage']);
-                //return $this->redirect(['view', 'id'=>$model->page_id]);
+                //return $this->redirect(['view', 'id' => $model->page_id]);
 
             } else {
                 if (Yii::$app->request->isAjax) {

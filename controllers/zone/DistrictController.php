@@ -149,12 +149,12 @@ class DistrictController extends Controller
                 Yii::$app->session->setFlash('success', Yii::t('app', 'District success created.'));
                 if (!Yii::$app->request->isAjax) {
                     if ($id != null) {
-						return $this->redirect(['manage', 'city'=>$model->city_id]);
+						return $this->redirect(['manage', 'city' => $model->city_id]);
                     }
 					return $this->redirect(['manage']);
 				}
                 if ($id != null) {
-					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'city'=>$model->city_id]);
+					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'city' => $model->city_id]);
                 }
                 return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
@@ -192,10 +192,10 @@ class DistrictController extends Controller
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'District success updated.'));
                 if (!Yii::$app->request->isAjax) {
-					return $this->redirect(['update', 'id'=>$model->district_id]);
+					return $this->redirect(['update', 'id' => $model->district_id]);
                 }
                 if (($city = Yii::$app->request->get('city')) != null) {
-					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'city'=>$city]);
+					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'city' => $city]);
                 }
                 return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 

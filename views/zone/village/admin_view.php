@@ -25,8 +25,8 @@ if (!$small) {
     $this->params['breadcrumbs'][] = $model->village_name;
 
     $this->params['menu']['content'] = [
-        ['label' => Yii::t('app', 'Update'), 'url' => Url::to(['update', 'id'=>$model->village_id]), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-        ['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->village_id]), 'htmlOptions' => ['data-confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method'=>'post', 'class'=>'btn btn-danger'], 'icon' => 'trash'],
+        ['label' => Yii::t('app', 'Update'), 'url' => Url::to(['update', 'id' => $model->village_id]), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],
+        ['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id' => $model->village_id]), 'htmlOptions' => ['data-confirm' => Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method' => 'post', 'class' => 'btn btn-danger'], 'icon' => 'trash'],
     ];
 } ?>
 
@@ -37,7 +37,7 @@ $attributes = [
 	'village_id',
 	[
 		'attribute' => 'publish',
-		'value' => $model->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish),
+		'value' => $model->quickAction(Url::to(['publish', 'id' => $model->primaryKey]), $model->publish),
 		'format' => 'raw',
 	],
 	'village_name',
@@ -46,7 +46,7 @@ $attributes = [
 		'value' => function ($model) {
 			$districtName = isset($model->district) ? $model->district->district_name : '-';
             if ($districtName != '-') {
-                return Html::a($districtName, ['zone/district/view', 'id'=>$model->district_id], ['title'=>$districtName]);
+                return Html::a($districtName, ['zone/district/view', 'id' => $model->district_id], ['title' => $districtName]);
             }
 			return $districtName;
 		},
@@ -57,7 +57,7 @@ $attributes = [
 		'value' => function ($model) {
 			$cityName = isset($model->district->city) ? $model->district->city->city_name : '-';
             if ($cityName != '-') {
-                return Html::a($cityName, ['zone/city/view', 'id'=>$model->district->city_id], ['title'=>$cityName]);
+                return Html::a($cityName, ['zone/city/view', 'id' => $model->district->city_id], ['title' => $cityName]);
             }
 			return $cityName;
 		},
@@ -68,7 +68,7 @@ $attributes = [
 		'value' => function ($model) {
 			$provinceName = isset($model->district->city->province) ? $model->district->city->province->province_name : '-';
             if ($provinceName != '-') {
-                return Html::a($provinceName, ['zone/province/view', 'id'=>$model->district->city->province_id], ['title'=>$provinceName]);
+                return Html::a($provinceName, ['zone/province/view', 'id' => $model->district->city->province_id], ['title' => $provinceName]);
             }
 			return $provinceName;
 		},
@@ -79,7 +79,7 @@ $attributes = [
 		'value' => function ($model) {
 			$countryName = isset($model->district->city->province->country) ? $model->district->city->province->country->country_name : '-';
             if ($countryName != '-') {
-                return Html::a($countryName, ['zone/country/view', 'id'=>$model->district->city->province->country_id], ['title'=>$countryName]);
+                return Html::a($countryName, ['zone/country/view', 'id' => $model->district->city->province->country_id], ['title' => $countryName]);
             }
 			return $countryName;
 		},
@@ -115,7 +115,7 @@ $attributes = [
 	'slug',
 	[
 		'attribute' => '',
-		'value' => Html::a(Yii::t('app', 'Update'), ['update', 'id'=>$model->primaryKey], ['title'=>Yii::t('app', 'Update'), 'class'=>'btn btn-success btn-sm modal-btn']),
+		'value' => Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->primaryKey], ['title' => Yii::t('app', 'Update'), 'class' => 'btn btn-primary btn-sm modal-btn']),
 		'format' => 'html',
 		'visible' => !$small && Yii::$app->request->isAjax ? true : false,
 	],
@@ -124,7 +124,7 @@ $attributes = [
 echo DetailView::widget([
 	'model' => $model,
 	'options' => [
-		'class'=>'table table-striped detail-view',
+		'class' => 'table table-striped detail-view',
 	],
 	'attributes' => $attributes,
 ]); ?>

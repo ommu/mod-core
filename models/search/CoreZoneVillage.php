@@ -74,14 +74,15 @@ class CoreZoneVillage extends CoreZoneVillageModel
 			'district.city city', 
 			'district.city.province province', 
 			'district.city.province.country country',
-		])
-		->groupBy(['village_id']);
+		]);
 
-		// add conditions that should always apply here
+		$query->groupBy(['village_id']);
+
+        // add conditions that should always apply here
 		$dataParams = [
 			'query' => $query,
 		];
-		// disable pagination agar data pada api tampil semua
+        // disable pagination agar data pada api tampil semua
         if (isset($params['pagination']) && $params['pagination'] == 0) {
             $dataParams['pagination'] = false;
         }
@@ -120,10 +121,10 @@ class CoreZoneVillage extends CoreZoneVillageModel
 		$this->load($params);
 
         if (!$this->validate()) {
-			// uncomment the following line if you do not want to return any records when validation fails
-			// $query->where('0=1');
-			return $dataProvider;
-		}
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
 
 		// grid filtering conditions
 		$query->andFilterWhere([
@@ -154,7 +155,7 @@ class CoreZoneVillage extends CoreZoneVillageModel
             } else {
                 $query->andFilterWhere(['t.publish' => $this->publish]);
             }
-		}
+        }
 
 		$query->andFilterWhere(['like', 't.village_name', $this->village_name])
 			->andFilterWhere(['like', 't.zipcode', $this->zipcode])

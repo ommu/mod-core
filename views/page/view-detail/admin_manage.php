@@ -25,9 +25,9 @@ use ommu\core\models\CorePageViews;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Publication'), 'url' => ['page/admin/index']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Static Pages'), 'url' => ['page/admin/index']];
 if ($view != null) {
-	$this->params['breadcrumbs'][] = ['label' => $view->page->title->message, 'url' => ['page/admin/view', 'id'=>$view->page_id]];
-	$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Views'), 'url' => ['page/view/manage', 'page'=>$view->page_id]];
-	$this->params['breadcrumbs'][] = ['label' => isset($view->user) ? $view->user->displayname : 'Anonymous', 'url' => ['page/view-detail/manage', 'view'=>$view->view_id]];
+	$this->params['breadcrumbs'][] = ['label' => $view->page->title->message, 'url' => ['page/admin/view', 'id' => $view->page_id]];
+	$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Views'), 'url' => ['page/view/manage', 'page' => $view->page_id]];
+	$this->params['breadcrumbs'][] = ['label' => isset($view->user) ? $view->user->displayname : 'Anonymous', 'url' => ['page/view-detail/manage', 'view' => $view->view_id]];
 }
 $this->params['breadcrumbs'][] = Yii::t('app', 'Histories');
 
@@ -45,7 +45,7 @@ $model = $view;
 echo DetailView::widget([
 	'model' => $model,
 	'options' => [
-		'class'=>'table table-striped detail-view',
+		'class' => 'table table-striped detail-view',
 	],
 	'attributes' => [
 		[
@@ -53,7 +53,7 @@ echo DetailView::widget([
 			'value' => function ($model) {
 				$pageName = isset($model->page) ? $model->page->title->message : '-';
                 if ($pageName != '-') {
-                    return Html::a($pageName, ['page/admin/view', 'id'=>$model->page_id], ['title'=>$pageName, 'class'=>'modal-btn']);
+                    return Html::a($pageName, ['page/admin/view', 'id' => $model->page_id], ['title' => $pageName, 'class' => 'modal-btn']);
                 }
 				return $pageName;
 			},
@@ -72,9 +72,9 @@ echo DetailView::widget([
 ]);
 }?>
 
-<?php //echo $this->render('_search', ['model'=>$searchModel]); ?>
+<?php //echo $this->render('_search', ['model' => $searchModel]); ?>
 
-<?php echo $this->render('_option_form', ['model'=>$searchModel, 'gridColumns'=>$searchModel->activeDefaultColumns($columns), 'route'=>$this->context->route]); ?>
+<?php echo $this->render('_option_form', ['model' => $searchModel, 'gridColumns' => $searchModel->activeDefaultColumns($columns), 'route' => $this->context->route]); ?>
 
 <?php
 $columnData = $columns;
@@ -83,21 +83,21 @@ array_push($columnData, [
 	'header' => Yii::t('app', 'Option'),
 	'urlCreator' => function($action, $model, $key, $index) {
         if ($action == 'view') {
-            return Url::to(['view', 'id'=>$key]);
+            return Url::to(['view', 'id' => $key]);
         }
         if ($action == 'update') {
-            return Url::to(['update', 'id'=>$key]);
+            return Url::to(['update', 'id' => $key]);
         }
         if ($action == 'delete') {
-            return Url::to(['delete', 'id'=>$key]);
+            return Url::to(['delete', 'id' => $key]);
         }
 	},
 	'buttons' => [
 		'view' => function ($url, $model, $key) {
-			return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title'=>Yii::t('app', 'Detail'), 'class'=>'modal-btn']);
+			return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title' => Yii::t('app', 'Detail'), 'class' => 'modal-btn']);
 		},
 		'update' => function ($url, $model, $key) {
-			return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['title'=>Yii::t('app', 'Update'), 'class'=>'modal-btn']);
+			return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['title' => Yii::t('app', 'Update'), 'class' => 'modal-btn']);
 		},
 		'delete' => function ($url, $model, $key) {
 			return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [

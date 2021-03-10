@@ -149,7 +149,7 @@ class CoreLanguages extends \app\components\ActiveRecord
 		$this->templateColumns['_no'] = [
 			'header' => '#',
 			'class' => 'app\components\grid\SerialColumn',
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 		];
 		$this->templateColumns['name'] = [
 			'attribute' => 'name',
@@ -204,30 +204,30 @@ class CoreLanguages extends \app\components\ActiveRecord
 			'attribute' => 'users',
 			'value' => function($model, $key, $index, $column) {
 				$users = $model->getUsers(true);
-				return Html::a($users, ['/users/member/index', 'language'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} users', ['count'=>$users])]);
+				return Html::a($users, ['/users/member/index', 'language' => $model->primaryKey], ['title' => Yii::t('app', '{count} users', ['count' => $users])]);
 			},
 			'filter' => false,
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'html',
 		];
 		$this->templateColumns['actived'] = [
 			'attribute' => 'actived',
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['actived', 'id'=>$model->primaryKey]);
+				$url = Url::to(['actived', 'id' => $model->primaryKey]);
 				return $this->quickAction($url, $model->actived, 'Enable,Disable');
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 		];
 		$this->templateColumns['default'] = [
 			'attribute' => 'default',
 			'value' => function($model, $key, $index, $column) {
-				$url = Url::to(['default', 'id'=>$model->primaryKey]);
+				$url = Url::to(['default', 'id' => $model->primaryKey]);
 				return $this->quickAction($url, $model->default, 'Yes,No', true);
 			},
 			'filter' => $this->filterYesNo(),
-			'contentOptions' => ['class'=>'text-center'],
+			'contentOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 		];
 	}

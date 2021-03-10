@@ -153,12 +153,12 @@ class VillageController extends Controller
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Village success created.'));
                 if (!Yii::$app->request->isAjax) {
                     if ($id != null) {
-						return $this->redirect(['manage', 'district'=>$model->district_id]);
+						return $this->redirect(['manage', 'district' => $model->district_id]);
                     }
 					return $this->redirect(['manage']);
 				}
                 if ($id != null) {
-					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'district'=>$model->district_id]);
+					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'district' => $model->district_id]);
                 }
                 return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
@@ -196,10 +196,10 @@ class VillageController extends Controller
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Village success updated.'));
                 if (!Yii::$app->request->isAjax) {
-					return $this->redirect(['update', 'id'=>$model->village_id]);
+					return $this->redirect(['update', 'id' => $model->village_id]);
                 }
                 if (($district = Yii::$app->request->get('district')) != null) {
-					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'district'=>$district]);
+					return $this->redirect(Yii::$app->request->referrer ?: ['manage', 'district' => $district]);
                 }
                 return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 

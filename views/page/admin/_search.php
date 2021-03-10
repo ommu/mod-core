@@ -55,14 +55,14 @@ use ommu\core\models\CorePages;
 
 		<?php $mediaShow = CorePages::getMediaShow();
 			echo $form->field($model, 'media_show')
-			->dropDownList($mediaShow, ['prompt'=>'']);?>
+			->dropDownList($mediaShow, ['prompt' => '']);?>
 
 		<?php $mediaType = CorePages::getMediaType();
 			echo $form->field($model, 'media_type')
-			->dropDownList($mediaType, ['prompt'=>'']);?>
+			->dropDownList($mediaType, ['prompt' => '']);?>
 
 		<?php echo $form->field($model, 'publish')
-			->dropDownList($model->filterYesNo(), ['prompt'=>'']);?>
+			->dropDownList($model->filterYesNo(), ['prompt' => '']);?>
 
 		<div class="form-group">
 			<?php echo Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']); ?>

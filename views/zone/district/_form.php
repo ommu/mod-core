@@ -25,7 +25,7 @@ use yii\web\JsExpression;
 <div class="core-zone-district-form">
 
 <?php $form = ActiveForm::begin([
-	'options' => ['class'=>'form-horizontal form-label-left'],
+	'options' => ['class' => 'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
@@ -40,14 +40,14 @@ use yii\web\JsExpression;
 
 <?php $city_id = $form->field($model, 'city_id', ['template' => '{input}', 'options' => ['tag' => null]])->hiddenInput();
 echo $form->field($model, 'cityName', ['template' => '{label}{beginWrapper}{input}'.$city_id.'{error}{hint}{endWrapper}'])
-	// ->textInput(['maxlength'=>true])
+	// ->textInput(['maxlength' => true])
 	->widget(AutoComplete::className(), [
 		'options' => [
 			'data-toggle' => 'tooltip', 'data-placement' => 'top',
 			'class' => 'ui-autocomplete-input form-control'
 		],
 		'clientOptions' => [
-			'source' => Url::to(['zone/city/suggest', 'extend'=>'city_name']),
+			'source' => Url::to(['zone/city/suggest', 'extend' => 'city_name']),
 			'minLength' => 2,
 			'select' => new JsExpression("function(event, ui) {
 				\$('.field-cityname #city_id').val(ui.item.id);
@@ -59,11 +59,11 @@ echo $form->field($model, 'cityName', ['template' => '{label}{beginWrapper}{inpu
 	->label($model->getAttributeLabel('cityName')); ?>
 
 <?php echo $form->field($model, 'district_name')
-	->textInput(['maxlength'=>true])
+	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('district_name')); ?>
 
 <?php echo $form->field($model, 'mfdonline')
-	->textInput(['maxlength'=>true])
+	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('mfdonline')); ?>
 
 <?php echo $form->field($model, 'checked')

@@ -23,11 +23,11 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Metas'), 'url' => ['
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Global Meta'), 'url' => Url::to(['update']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-	['label' => Yii::t('app', 'Address'), 'url' => Url::to(['address']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-	['label' => Yii::t('app', 'Google Owner Meta'), 'url' => Url::to(['google']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-	['label' => Yii::t('app', 'Twitter Meta'), 'url' => Url::to(['twitter']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-	['label' => Yii::t('app', 'Facebook Meta'), 'url' => Url::to(['facebook']), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
+	['label' => Yii::t('app', 'Global Meta'), 'url' => Url::to(['update']), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],
+	['label' => Yii::t('app', 'Address'), 'url' => Url::to(['address']), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],
+	['label' => Yii::t('app', 'Google Owner Meta'), 'url' => Url::to(['google']), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],
+	['label' => Yii::t('app', 'Twitter Meta'), 'url' => Url::to(['twitter']), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],
+	['label' => Yii::t('app', 'Facebook Meta'), 'url' => Url::to(['facebook']), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],
 ];
 ?>
 
@@ -48,8 +48,8 @@ $this->params['menu']['content'] = [
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php $metaImage = !$model->isNewRecord && $model->old_meta_image_i != '' ? Html::img(Url::to(join('/', ['@webpublic', CoreMeta::getUploadPath(false), $model->old_meta_image_i])), ['alt'=>$model->old_meta_image_i, 'class'=>'d-inline-block border border-width-3 mb-3']).$model->old_meta_image_i.'<hr/>' : '';
-echo $form->field($model, 'meta_image', ['template'=> '{label}{beginWrapper}<div>'.$metaImage.'</div>{input}{error}{hint}{endWrapper}'])
+<?php $metaImage = !$model->isNewRecord && $model->old_meta_image_i != '' ? Html::img(Url::to(join('/', ['@webpublic', CoreMeta::getUploadPath(false), $model->old_meta_image_i])), ['alt' => $model->old_meta_image_i, 'class' => 'd-inline-block border border-width-3 mb-4']).$model->old_meta_image_i.'<hr/>' : '';
+echo $form->field($model, 'meta_image', ['template' => '{label}{beginWrapper}<div>'.$metaImage.'</div>{input}{error}{hint}{endWrapper}'])
 	->fileInput()
 	->label($model->getAttributeLabel('meta_image')); ?>
 

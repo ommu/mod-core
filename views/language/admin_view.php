@@ -25,67 +25,70 @@ if (!$small) {
     $this->params['breadcrumbs'][] = $model->name;
 
     $this->params['menu']['content'] = [
-        ['label' => Yii::t('app', 'Update'), 'url' => Url::to(['update', 'id'=>$model->language_id]), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-        ['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->language_id]), 'htmlOptions' => ['data-confirm'=>Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method'=>'post', 'class'=>'btn btn-danger'], 'icon' => 'trash'],
+        ['label' => Yii::t('app', 'Update'), 'url' => Url::to(['update', 'id' => $model->language_id]), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],
+        ['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id' => $model->language_id]), 'htmlOptions' => ['data-confirm' => Yii::t('app', 'Are you sure you want to delete this item?'), 'data-method' => 'post', 'class' => 'btn btn-danger'], 'icon' => 'trash'],
     ];
 } ?>
 
 <div class="core-languages-view">
 
-<?php echo DetailView::widget([
+<?php
+$attributes = [
+    'language_id',
+    [
+        'attribute' => 'actived',
+        'value' => $model->quickAction(Url::to(['actived', 'id' => $model->primaryKey]), $model->actived, 'Enable,Disable'),
+        'format' => 'raw',
+    ],
+    [
+        'attribute' => 'default',
+        'value' => $model->quickAction(Url::to(['default', 'id' => $model->primaryKey]), $model->default, 'Yes,No', true),
+        'format' => 'raw',
+    ],
+    'code',
+    'name',
+    [
+        'attribute' => 'creation_date',
+        'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),
+        'visible' => !$small,
+    ],
+    [
+        'attribute' => 'creationDisplayname',
+        'value' => isset($model->creation) ? $model->creation->displayname : '-',
+        'visible' => !$small,
+    ],
+    [
+        'attribute' => 'modified_date',
+        'value' => Yii::$app->formatter->asDatetime($model->modified_date, 'medium'),
+        'visible' => !$small,
+    ],
+    [
+        'attribute' => 'modifiedDisplayname',
+        'value' => isset($model->modified) ? $model->modified->displayname : '-',
+        'visible' => !$small,
+    ],
+    [
+        'attribute' => 'updated_date',
+        'value' => Yii::$app->formatter->asDatetime($model->updated_date, 'medium'),
+        'visible' => !$small,
+    ],
+    [
+        'attribute' => 'users',
+        'value' => function ($model) {
+            $users = $model->getUsers(true);
+            return Html::a($users, ['/users/member/index', 'language' => $model->primaryKey], ['title' => Yii::t('app', '{count} users', ['count' => $users])]);
+        },
+        'format' => 'html',
+        'visible' => !$small,
+    ],
+];
+
+echo DetailView::widget([
 	'model' => $model,
 	'options' => [
-		'class'=>'table table-striped detail-view',
+		'class' => 'table table-striped detail-view',
 	],
-	'attributes' => [
-		'language_id',
-		[
-			'attribute' => 'actived',
-			'value' => $model->quickAction(Url::to(['actived', 'id'=>$model->primaryKey]), $model->actived, 'Enable,Disable'),
-			'format' => 'raw',
-		],
-		[
-			'attribute' => 'default',
-			'value' => $model->quickAction(Url::to(['default', 'id'=>$model->primaryKey]), $model->default, 'Yes,No', true),
-			'format' => 'raw',
-		],
-		'code',
-		'name',
-		[
-			'attribute' => 'creation_date',
-			'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'creationDisplayname',
-			'value' => isset($model->creation) ? $model->creation->displayname : '-',
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'modified_date',
-			'value' => Yii::$app->formatter->asDatetime($model->modified_date, 'medium'),
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'modifiedDisplayname',
-			'value' => isset($model->modified) ? $model->modified->displayname : '-',
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'updated_date',
-			'value' => Yii::$app->formatter->asDatetime($model->updated_date, 'medium'),
-			'visible' => !$small,
-		],
-		[
-			'attribute' => 'users',
-			'value' => function ($model) {
-				$users = $model->getUsers(true);
-				return Html::a($users, ['/users/member/index', 'language'=>$model->primaryKey], ['title'=>Yii::t('app', '{count} users', ['count'=>$users])]);
-			},
-			'format' => 'html',
-			'visible' => !$small,
-		],
-	],
+	'attributes' => $attributes,
 ]); ?>
 
 </div>

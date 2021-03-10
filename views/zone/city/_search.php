@@ -32,7 +32,7 @@ use ommu\core\models\CoreZoneProvince;
 
 		<?php $province = CoreZoneProvince::getProvince();
 		echo $form->field($model, 'province_id')
-			->dropDownList($province, ['prompt'=>'']);?>
+			->dropDownList($province, ['prompt' => '']);?>
 
 		<?php echo $form->field($model, 'city_name');?>
 
@@ -54,10 +54,10 @@ use ommu\core\models\CoreZoneProvince;
 		<?php echo $form->field($model, 'slug');?>
 
 		<?php echo $form->field($model, 'checked')
-			->dropDownList($model->filterYesNo(), ['prompt'=>'']);?>
+			->dropDownList($model->filterYesNo(), ['prompt' => '']);?>
 
 		<?php echo $form->field($model, 'publish')
-			->dropDownList($model->filterYesNo(), ['prompt'=>'']);?>
+			->dropDownList($model->filterYesNo(), ['prompt' => '']);?>
 
 		<div class="form-group">
 			<?php echo Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']); ?>
