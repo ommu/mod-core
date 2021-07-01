@@ -33,13 +33,20 @@ if (!$small) {
 
 <?php
 $attributes = [
-	'tag_id',
+	[
+		'attribute' => 'tag_id',
+		'value' => $model->tag_id,
+	],
 	[
 		'attribute' => 'publish',
 		'value' => $model->quickAction(Url::to(['publish', 'id' => $model->primaryKey]), $model->publish),
 		'format' => 'raw',
+		'visible' => !$small,
 	],
-	'body',
+	[
+		'attribute' => 'body',
+		'value' => $model->body,
+	],
 	[
 		'attribute' => 'creation_date',
 		'value' => Yii::$app->formatter->asDatetime($model->creation_date, 'medium'),

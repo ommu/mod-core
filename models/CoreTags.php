@@ -69,9 +69,9 @@ class CoreTags extends \app\components\ActiveRecord
 	public function attributeLabels()
 	{
 		return [
-			'tag_id' => Yii::t('app', 'Tag'),
+			'tag_id' => Yii::t('app', 'ID'),
 			'publish' => Yii::t('app', 'Publish'),
-			'body' => Yii::t('app', 'Body'),
+			'body' => Yii::t('app', 'Tag'),
 			'creation_date' => Yii::t('app', 'Creation Date'),
 			'creation_id' => Yii::t('app', 'Creation'),
 			'modified_date' => Yii::t('app', 'Modified Date'),
@@ -230,7 +230,7 @@ class CoreTags extends \app\components\ActiveRecord
 	{
 		parent::afterFind();
 
-		$this->body = Inflector::camel2words(Inflector::id2camel($this->body));
+		$this->body = Inflector::camel2words($this->body);
 		// $this->creationDisplayname = isset($this->creation) ? $this->creation->displayname : '-';
 		// $this->modifiedDisplayname = isset($this->modified) ? $this->modified->displayname : '-';
 	}

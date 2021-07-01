@@ -36,6 +36,7 @@ use mdm\admin\components\AccessControl;
 use yii\filters\VerbFilter;
 use ommu\core\models\CoreTags;
 use ommu\core\models\search\CoreTags as CoreTagsSearch;
+use yii\helpers\Inflector;
 
 class TagController extends Controller
 {
@@ -260,7 +261,7 @@ class TagController extends Controller
 		$model = CoreTags::find()
             ->alias('t')
 			->published()
-			->andWhere(['like', 't.body', $term])
+			->andWhere(['like', 't.body', Inflector::camelize($term)])
 			->limit(15)
 			->all();
 
