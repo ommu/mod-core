@@ -261,7 +261,7 @@ class CoreTags extends \app\components\ActiveRecord
 	{
         if (parent::beforeSave($insert)) {
             if ($insert) {
-                $this->body = Inflector::slug($this->body);
+                $this->body = Inflector::camelize($this->body);
             }
         }
         return true;
