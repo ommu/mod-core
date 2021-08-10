@@ -245,11 +245,11 @@ class SourceMessage extends \app\components\ActiveRecord
 	/**
 	 * function setMessage
 	 */
-	public static function setMessage($message)
+	public static function setMessage($message, $location)
 	{
 		$model = new SourceMessage();
 		$model->message = $message;
-		$model->location = 'archive-storage_title';
+		$model->location = $location;
 		$model->save();
 
 		return $model->id;
