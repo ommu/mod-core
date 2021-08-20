@@ -213,7 +213,7 @@ class Modules extends \app\components\ActiveRecord
 			foreach (self::find()
 				->andWhere(['enabled' => '1'])
 				->all() as $item) {
-				$enabledModules[] = $item->module_id;
+				    $enabledModules[] = $item->module_id;
 			}
 			Yii::$app->cache->set(self::CACHE_ENABLE_MODULE_IDS, $enabledModules);
 		}
