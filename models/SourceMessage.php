@@ -96,7 +96,7 @@ class SourceMessage extends \app\components\ActiveRecord
 	{
         if ($count == false) {
             return $this->hasMany(Message::className(), ['id' => 'id'])
-                ->select(['language', 'translation']);
+                ->select(['id', 'language', 'translation']);
         }
 
 		$model = Message::find()
@@ -172,6 +172,15 @@ class SourceMessage extends \app\components\ActiveRecord
 				return $model->location;
 			},
 		];
+		$this->templateColumns['translates'] = [
+			'attribute' => 'translates',
+			'value' => function($model, $key, $index, $column) {
+				return $model->getTranslates(true);
+			},
+			'filter' => false,
+			'contentOptions' => ['class' => 'text-center'],
+			'format' => 'html',
+		];
 		$this->templateColumns['creation_date'] = [
 			'attribute' => 'creation_date',
 			'value' => function($model, $key, $index, $column) {
@@ -201,15 +210,6 @@ class SourceMessage extends \app\components\ActiveRecord
 				// return $model->modifiedDisplayname;
 			},
 			'visible' => !Yii::$app->request->get('modified') ? true : false,
-		];
-		$this->templateColumns['translates'] = [
-			'attribute' => 'translates',
-			'value' => function($model, $key, $index, $column) {
-				return $model->getTranslates(true);
-			},
-			'filter' => false,
-			'contentOptions' => ['class' => 'text-center'],
-			'format' => 'html',
 		];
 	}
 
@@ -284,9 +284,9 @@ class SourceMessage extends \app\components\ActiveRecord
 		// $this->creationDisplayname = isset($this->creation) ? $this->creation->displayname : '-';
 		// $this->modifiedDisplayname = isset($this->modified) ? $this->modified->displayname : '-';
 
-        if (!empty($this->getLanguages())) {
-            $this->translate = ArrayHelper::map($this->translates, 'language', 'translation');
-        }
+        // if (!empty($this->getLanguages())) {
+        //     $this->translate = ArrayHelper::map($this->translates, 'language', 'translation');
+        // }
 	}
 
 	/**
@@ -336,7 +336,7 @@ class SourceMessage extends \app\components\ActiveRecord
         parent::afterSave($insert, $changedAttributes);
 
 		// insert and update translate message
-        if (!empty($this->getLanguages())) {
+        if (!empty($this->languages)) {
 			foreach ($this->translate as $key => $value) {
 				$model = Message::find()->alias('t')
 					->select(['t.id', 't.language'])
