@@ -65,7 +65,8 @@ class CorePages extends CorePagesModel
         if (!($column && is_array($column))) {
             $query = CorePagesModel::find()->alias('t');
         } else {
-            $query = CorePagesModel::find()->alias('t')->select($column);
+            $query = CorePagesModel::find()->alias('t')
+                ->select($column);
         }
 		$query->joinWith([
 			'view view', 

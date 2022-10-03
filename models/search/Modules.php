@@ -64,7 +64,8 @@ class Modules extends ModulesModel
         if (!($column && is_array($column))) {
             $query = ModulesModel::find()->alias('t');
         } else {
-            $query = ModulesModel::find()->alias('t')->select($column);
+            $query = ModulesModel::find()->alias('t')
+                ->select($column);
         }
 		$query->joinWith([
 			'creation creation', 

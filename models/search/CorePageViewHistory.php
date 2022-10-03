@@ -65,7 +65,8 @@ class CorePageViewHistory extends CorePageViewHistoryModel
         if (!($column && is_array($column))) {
             $query = CorePageViewHistoryModel::find()->alias('t');
         } else {
-            $query = CorePageViewHistoryModel::find()->alias('t')->select($column);
+            $query = CorePageViewHistoryModel::find()->alias('t')
+                ->select($column);
         }
 		$query->joinWith([
 			'view.page.title page',

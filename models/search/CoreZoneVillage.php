@@ -65,7 +65,8 @@ class CoreZoneVillage extends CoreZoneVillageModel
         if (!($column && is_array($column))) {
             $query = CoreZoneVillageModel::find()->alias('t');
         } else {
-            $query = CoreZoneVillageModel::find()->alias('t')->select($column);
+            $query = CoreZoneVillageModel::find()->alias('t')
+                ->select($column);
         }
 		$query->joinWith([
 			'district district', 

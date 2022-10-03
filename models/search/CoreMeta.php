@@ -62,7 +62,8 @@ class CoreMeta extends CoreMetaModel
         if (!($column && is_array($column))) {
             $query = CoreMetaModel::find()->alias('t');
         } else {
-            $query = CoreMetaModel::find()->alias('t')->select($column);
+            $query = CoreMetaModel::find()->alias('t')
+                ->select($column);
         }
 		$query->joinWith([
 			'modified modified'

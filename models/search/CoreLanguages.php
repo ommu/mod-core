@@ -65,7 +65,8 @@ class CoreLanguages extends CoreLanguagesModel
         if (!($column && is_array($column))) {
             $query = CoreLanguagesModel::find()->alias('t');
         } else {
-            $query = CoreLanguagesModel::find()->alias('t')->select($column);
+            $query = CoreLanguagesModel::find()->alias('t')
+                ->select($column);
         }
 		$query->joinWith([
 			'creation creation', 

@@ -65,7 +65,8 @@ class CoreZoneProvince extends CoreZoneProvinceModel
         if (!($column && is_array($column))) {
             $query = CoreZoneProvinceModel::find()->alias('t');
         } else {
-            $query = CoreZoneProvinceModel::find()->alias('t')->select($column);
+            $query = CoreZoneProvinceModel::find()->alias('t')
+                ->select($column);
         }
 		$query->joinWith([
 			'country country', 

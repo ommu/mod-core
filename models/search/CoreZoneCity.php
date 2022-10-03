@@ -65,7 +65,8 @@ class CoreZoneCity extends CoreZoneCityModel
         if (!($column && is_array($column))) {
             $query = CoreZoneCityModel::find()->alias('t');
         } else {
-            $query = CoreZoneCityModel::find()->alias('t')->select($column);
+            $query = CoreZoneCityModel::find()->alias('t')
+                ->select($column);
         }
 		$query->joinWith([
 			'province province', 

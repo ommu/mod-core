@@ -65,7 +65,8 @@ class CoreTags extends CoreTagsModel
         if (!($column && is_array($column))) {
             $query = CoreTagsModel::find()->alias('t');
         } else {
-            $query = CoreTagsModel::find()->alias('t')->select($column);
+            $query = CoreTagsModel::find()->alias('t')
+                ->select($column);
         }
 		$query->joinWith([
 			'creation creation', 

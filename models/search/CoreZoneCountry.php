@@ -65,7 +65,8 @@ class CoreZoneCountry extends CoreZoneCountryModel
         if (!($column && is_array($column))) {
             $query = CoreZoneCountryModel::find()->alias('t');
         } else {
-            $query = CoreZoneCountryModel::find()->alias('t')->select($column);
+            $query = CoreZoneCountryModel::find()->alias('t')
+                ->select($column);
         }
 		$query->joinWith([
 			'creation creation', 
