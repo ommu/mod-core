@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Languages'), 'url' =
 $this->params['breadcrumbs'][] = Yii::t('app', 'i18n Package');
 
 $this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Add Language'), 'url' => Url::to(['create']), 'icon' => 'plus-square', 'htmlOptions' => ['class' => 'btn btn-primary']],
+	['label' => Yii::t('app', 'Add Language'), 'url' => Url::to(['create']), 'icon' => 'plus-square', 'htmlOptions' => ['class' => 'btn btn-success']],
 ];
 $this->params['menu']['option'] = [
 	//['label' => Yii::t('app', 'Search'), 'url' => 'javascript:void(0);'],

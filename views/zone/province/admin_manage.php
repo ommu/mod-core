@@ -34,7 +34,7 @@ if ($country != null) {
     $createUrl = Url::to(['create', 'id' => $country->country_id]);
 }
 $this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Add Province'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class' => 'btn btn-primary modal-btn']],
+	['label' => Yii::t('app', 'Add Province'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class' => 'btn btn-success modal-btn']],
 ];
 $this->params['menu']['option'] = [
 	//['label' => Yii::t('app', 'Search'), 'url' => 'javascript:void(0);'],
