@@ -100,7 +100,7 @@ echo $form->field($model, 'twitter_card')
 		<div class="col-md-6 col-sm-6 col-xs-12">
 			<?php
             if (!$model->isNewRecord && !$model->getErrors()) {
-				$model->twitter_photo_size = unserialize($model->twitter_photo_size);s
+				$model->twitter_photo_size = unserialize($model->twitter_photo_size);
             }
 			echo $form->field($model, 'twitter_photo_size[width]', ['template' => '{input}{error}{hint}'])
 				->textInput(['type' => 'number', 'min' => 1, 'maxlength' => '3', 'placeholder' => $model->getAttributeLabel('twitter_photo_size[width]')])
